@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         //Yerr a wizard harry
         //
 
-
+        //Feature-stuff
 
 
         //Magnus
