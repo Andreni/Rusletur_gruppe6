@@ -1,6 +1,7 @@
 # Rusletur_gruppe6
 
 -Read me
+
 *Code and comments in English
 
 Nameing convention for Activty elements:
