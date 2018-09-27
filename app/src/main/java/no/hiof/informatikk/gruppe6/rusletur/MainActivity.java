@@ -11,5 +11,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Yerr a wizard harry
+        //
+
+
+
+
+        //Magnus
     }
 }
