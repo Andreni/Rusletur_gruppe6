@@ -7,7 +7,7 @@
 Nameing convention for Activty elements:
 
 
-nameOfClass_intentOfButton_TypeOfElement
+nameOfClass_intentOfButton_typeOfElement
 
 Example: MainActivity_SwitchToOtherActivity_Button 
 
