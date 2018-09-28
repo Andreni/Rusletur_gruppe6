@@ -6,10 +6,21 @@
 
 1. Code and comments in English
 
-2. Nameing convention for Activty elements: nameOfClass_intentOfButton_typeOfElement
+2. Nameing convention for Activty elements:
+            nameOfClass_intentOfButton_typeOfElement
       Example: MainActivity_SwitchToOtherActivity_Button 
       
 3. /** Documentation
+
+Email(s) for signing up services:
+
+Andreas M:
+
+Andreas N: andreni@hiof.no
+
+Bjørnar P:
+
+Magnus M:
     
 
 If an API is added, insert all keys:
