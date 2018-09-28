@@ -14,4 +14,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO Make simple login screen:
         //TODO Make registration page:
     }
+
+
+    //some method
 }
