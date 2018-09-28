@@ -10,12 +10,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Yerr a wizard harry
-        //
 
-        //Feature-stuff
-
-
-        //Magnus
+        //TODO Make simple login screen:
+        //TODO Make registration page:
     }
 }
