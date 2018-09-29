@@ -11,7 +11,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        //TODO Make simple login screen:
-        //TODO Make registration page:
+        //TODO 1.1 Make simple login screen:
+        //TODO 1.2 Make registration page:
+        //TODO 1.3 If statement to check if user is logged in
     }
 }
