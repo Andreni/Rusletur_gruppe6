@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Rusletur</string>
+    <string name="email">Email</string>
+    <string name="passord">Passord</string>
+    <string name="login">Login</string>
+    <string name="lag_en_ny_bruker">Lag en ny bruker</string>
 </resources>
