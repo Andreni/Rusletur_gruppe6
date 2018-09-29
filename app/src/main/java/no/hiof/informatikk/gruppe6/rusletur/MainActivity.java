@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //Initialize elements:
+        edEmail = findViewById(R.id.mainA_loginEmail_editText);
+        edPass = findViewById(R.id.mainA_loginPass_editText);
+        loginPage = findViewById(R.id.mainA_loginLayout_cLayoutLogin);
 
         //TODO 1.1 Make simple login screen:
         //TODO 1.2 Make registration page:
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public void loginUser(View view){
         //TODO Animate login process
 
-        if(checkForValidUserInput(1)){
+        if(!checkForValidUserInput(1)){
             mAuth.signInWithEmailAndPassword(edEmail.getText().toString()
                     ,edPass.getText().toString())
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkForValidUserInput(int option){
 
         if(option==1) {
-            if ((edEmail.toString() != null || edEmail.toString().length() > 0)
+            if ((edEmail.toString() != "" && edEmail.toString().length() > 0)
                     && (edPass != null)) {
                 if (edPass.toString().length() > 5) {
                     return true;
@@ -111,8 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         }else if(option == 2){
-            if ((inputEmail.toString() != null && inputEmail.toString().length() > 0)){
-                if((inputPassword.toString()!=null)
+            if ((inputEmail.toString() != "" && inputEmail.toString().length() > 0)){
+                if((inputPassword.toString() != "")
                         &&inputPassword.toString()==secondInputPassword.toString()){
                     return true;
                 }
