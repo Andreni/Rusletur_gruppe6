@@ -29,7 +29,7 @@ public class MainScreen extends AppCompatActivity {
 
         userEmail = findViewById(R.id.mainScreen_emialField_editText);
         signOut = findViewById(R.id.mainScreen_logout_Button);
-        //TODO Remove Activy and class when done testing
+        //TODO Remove Activity and class when done testing
         mAuth = FirebaseAuth.getInstance();
         //Get user currently signed in
         mUser = mAuth.getCurrentUser();

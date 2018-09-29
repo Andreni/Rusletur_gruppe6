@@ -39,9 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+
+        //Check if there is an active session with firebase and user is logged in:
         if(mUser!=null){
             startActivity(new Intent(MainActivity.this,MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
-        }else {
+        }
+        //If no user is logged in, show login screen:
+        else {
 
             //Initialize elements:
             edEmail = findViewById(R.id.mainA_loginEmail_editText);
@@ -53,20 +57,17 @@ public class MainActivity extends AppCompatActivity {
             secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
             registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
 
-
-            //TODO 1.1 Make simple login screen:
-            //TODO 1.2 Make registration page:
-            //TODO 1.3 If statement to check if user is logged in
             //TODO 1.4 Make horizontal layout (Non priority)
 
         }
     }
 
-    //Click from button
+    //Login user from input values:
     public void loginUser(View view){
         //TODO Animate login process
 
         if(checkForValidUserInput(1)){
+            //Login in user with input values:
             mAuth.signInWithEmailAndPassword(edEmail.getText().toString()
                     ,edPass.getText().toString())
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -84,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //Click from button
+    //When registration is pushed:
     public void registerUser(View view){
         //Hide login page
         if(checkForValidUserInput(2)){
