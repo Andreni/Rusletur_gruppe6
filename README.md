@@ -1,6 +1,11 @@
 # Rusletur_gruppe6
 
--Read me
+***Must add "google-services.json" to the root of folder "app"***
+
+Can be retrived from firebase project
+
+
+
 
 
 
