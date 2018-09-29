@@ -15,6 +15,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText edPass;
@@ -36,24 +38,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        if(mUser!=null){
+            startActivity(new Intent(MainActivity.this,MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
+        }else {
 
-        //Initialize elements:
-        edEmail = findViewById(R.id.mainA_loginEmail_editText);
-        edPass = findViewById(R.id.mainA_loginPass_editText);
-        loginPage = findViewById(R.id.mainA_loginLayout_cLayoutLogin);
-        registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
-        inputEmail = findViewById(R.id.mainA_registrerEmail_editText);
-        inputPassword = findViewById(R.id.mainA_registrerPass_editText);
-        secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
-        registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
-
-
-        //TODO 1.1 Make simple login screen:
-        //TODO 1.2 Make registration page:
-        //TODO 1.3 If statement to check if user is logged in
-        //TODO 1.4 Make horizontal layout (Non priority)
+            //Initialize elements:
+            edEmail = findViewById(R.id.mainA_loginEmail_editText);
+            edPass = findViewById(R.id.mainA_loginPass_editText);
+            loginPage = findViewById(R.id.mainA_loginLayout_cLayoutLogin);
+            registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
+            inputEmail = findViewById(R.id.mainA_registrerEmail_editText);
+            inputPassword = findViewById(R.id.mainA_registrerPass_editText);
+            secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
+            registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
 
 
+            //TODO 1.1 Make simple login screen:
+            //TODO 1.2 Make registration page:
+            //TODO 1.3 If statement to check if user is logged in
+            //TODO 1.4 Make horizontal layout (Non priority)
+
+        }
     }
 
     //Click from button
@@ -89,8 +95,9 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 writeMessageToUser("Du er registrert :)");
-                                //TODO Go back to login view
-                                //TODO Add email to email field in login view
+                                registerPage.setVisibility(View.INVISIBLE);
+                                loginPage.setVisibility(View.VISIBLE);
+                                edEmail.setText(inputEmail.getText());
                             }else{
                                 writeMessageToUser(task.getException().toString());
                             }
