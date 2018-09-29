@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         edEmail = findViewById(R.id.mainA_loginEmail_editText);
         edPass = findViewById(R.id.mainA_loginPass_editText);
         loginPage = findViewById(R.id.mainA_loginLayout_cLayoutLogin);
+        registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
 
 
         //TODO 1.1 Make simple login screen:
@@ -76,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
     //Click from button
     public void registerUser(View view){
         //Hide login page
-        loginPage.setVisibility(View.INVISIBLE);
-        registerPage.setVisibility(View.VISIBLE);
         if(checkForValidUserInput(2)){
             mAuth.createUserWithEmailAndPassword(inputEmail.getText().toString(),
                     inputPassword.getText().toString())
@@ -94,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
                     });
         }
 
+    }
+    public void goToRegistration(View view){
+        loginPage.setVisibility(View.INVISIBLE);
+        registerPage.setVisibility(View.VISIBLE);
+    }
+    public void cancleRegistration(View view) {
+        loginPage.setVisibility(View.VISIBLE);
+        registerPage.setVisibility(View.INVISIBLE);
     }
 
     //Check if field values entered are correct:
@@ -138,4 +145,5 @@ public class MainActivity extends AppCompatActivity {
     private void writeMessageToUser(String messageToUser){
         Toast.makeText(this,messageToUser.toString(),Toast.LENGTH_SHORT).show();
     }
+
 }

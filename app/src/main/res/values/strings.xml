@@ -4,4 +4,7 @@
     <string name="passord">Passord</string>
     <string name="login">Login</string>
     <string name="lag_en_ny_bruker">Lag en ny bruker</string>
+    <string name="bekreft_passord">Bekreft Passord</string>
+    <string name="avbryt">Avbryt</string>
+    <string name="registrer">Registrer</string>
 </resources>
