@@ -89,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 writeMessageToUser("Du er registrert :)");
-
+                                //TODO Go back to login view
+                                //TODO Add email to email field in login view
                             }else{
                                 writeMessageToUser(task.getException().toString());
                             }
