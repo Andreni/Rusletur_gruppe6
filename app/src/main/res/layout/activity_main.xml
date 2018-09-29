@@ -20,7 +20,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.927">
+        app:layout_constraintVertical_bias="0.927"
+        >
 
         <EditText
             android:id="@+id/mainA_loginEmail_editText"
