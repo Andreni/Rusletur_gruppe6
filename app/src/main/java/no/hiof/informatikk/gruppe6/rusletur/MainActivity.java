@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         edPass = findViewById(R.id.mainA_loginPass_editText);
         loginPage = findViewById(R.id.mainA_loginLayout_cLayoutLogin);
 
+
         //TODO 1.1 Make simple login screen:
         //TODO 1.2 Make registration page:
         //TODO 1.3 If statement to check if user is logged in
@@ -53,14 +55,15 @@ public class MainActivity extends AppCompatActivity {
     public void loginUser(View view){
         //TODO Animate login process
 
-        if(!checkForValidUserInput(1)){
+        if(checkForValidUserInput(1)){
             mAuth.signInWithEmailAndPassword(edEmail.getText().toString()
                     ,edPass.getText().toString())
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                //TODO Make an intent that sends the user to the second activity
+                                //Send user to second screen
+                                startActivity(new Intent(MainActivity.this,MainScreen.class));
                             }else{
                                 //If the login process is interrupted: warn user:
                                 writeMessageToUser(task.getException().toString());
@@ -99,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean checkForValidUserInput(int option){
 
         if(option==1) {
-            if ((edEmail.toString() != "" && edEmail.toString().length() > 0)
-                    && (edPass != null)) {
-                if (edPass.toString().length() > 5) {
+            if ((!edEmail.getText().toString().isEmpty() && edEmail.toString().length() > 0)
+                    && (edPass.getText().toString() != "")) {
+                if (edPass.getText().toString().length() > 5) {
                     return true;
                 } else {
                     //TODO Write static variable
@@ -114,9 +117,9 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         }else if(option == 2){
-            if ((inputEmail.toString() != "" && inputEmail.toString().length() > 0)){
-                if((inputPassword.toString() != "")
-                        &&inputPassword.toString()==secondInputPassword.toString()){
+            if ((!inputEmail.getText().toString().isEmpty() && inputEmail.toString().length() > 0)){
+                if((!inputPassword.getText().toString().isEmpty())
+                        &&inputPassword.getText().toString().equals(secondInputPassword.getText().toString())){
                     return true;
                 }
             }else{
