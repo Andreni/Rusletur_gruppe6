@@ -4,7 +4,6 @@
 
 Can be retrived from firebase project
 
-or:
 
 
 
