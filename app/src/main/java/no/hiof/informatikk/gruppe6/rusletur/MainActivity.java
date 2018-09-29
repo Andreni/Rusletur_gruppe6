@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         edPass = findViewById(R.id.mainA_loginPass_editText);
         loginPage = findViewById(R.id.mainA_loginLayout_cLayoutLogin);
         registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
+        inputEmail = findViewById(R.id.mainA_registrerEmail_editText);
+        inputPassword = findViewById(R.id.mainA_registrerPass_editText);
+        secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
+        registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
 
 
         //TODO 1.1 Make simple login screen:

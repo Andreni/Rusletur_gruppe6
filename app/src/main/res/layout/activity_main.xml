@@ -139,6 +139,7 @@
             android:id="@+id/mainA_registrerButton_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="registerUser"
             android:text="@string/registrer"
             app:layout_constraintBottom_toTopOf="@+id/mainA_cancleRegistration_Button"
             app:layout_constraintEnd_toEndOf="parent"
