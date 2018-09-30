@@ -5,6 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,9 +18,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import no.hiof.informatikk.gruppe6.rusletur.ActionBar;
+
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class MainActivity extends AppCompatActivity {
+/**
+ * If no user is logged in, this is the first activity the user sees.
+ * By checking if a user is logged in via firebase,
+ * it is determind if the activity should be launched or not.
+ *
+ */
+public class MainActivity extends AppCompatActivity{
 
     EditText edPass;
     EditText edEmail;
@@ -85,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    
     //When registration is pushed:
     public void registerUser(View view){
         //Hide login page
