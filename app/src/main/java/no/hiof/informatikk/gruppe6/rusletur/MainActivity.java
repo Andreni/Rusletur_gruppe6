@@ -20,6 +20,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
+/**
+ * If no user is logged in, this is the first activity the user sees.
+ * By checking if a user is logged in via firebase,
+ * it is determind if the activity should be launched or not.
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     EditText edPass;
@@ -119,6 +125,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+    
     //When registration is pushed:
     public void registerUser(View view){
         //Hide login page
