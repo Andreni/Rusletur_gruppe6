@@ -45,6 +45,10 @@ public class MainScreen extends AppCompatActivity {
             }
         });
     }
+
+    public void goToMaps(View view) {
+        startActivity(new Intent(MainScreen.this, MapsActivity.class));
+    }
     /*
     REMOVE ME!!!
      */
