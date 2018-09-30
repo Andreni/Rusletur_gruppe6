@@ -6,6 +6,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+/*
+
+TEMPORARY CLASS
+JUST CONTAINS CODE TO USE LATER
+
+ */
+
+
+
+
 public class ActionBar extends AppCompatActivity{
 
         @Override
