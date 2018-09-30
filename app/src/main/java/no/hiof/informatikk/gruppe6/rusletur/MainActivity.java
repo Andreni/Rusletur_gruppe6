@@ -18,6 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import no.hiof.informatikk.gruppe6.rusletur.ActionBar;
+
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
@@ -26,7 +28,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
  * it is determind if the activity should be launched or not.
  *
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     EditText edPass;
     EditText edEmail;
@@ -68,37 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
             //TODO 1.4 Make horizontal layout (Non priority)
 
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_menu, menu);
-        getSupportActionBar().setTitle("RusleTur");
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // TODO 1.0: Add button action for actionbar
-
-        switch(item.getItemId()) {
-            //TODO 1.1: Add action for home button
-            case R.id.action_home:
-                //Intent intent = new Intent(this, home.class);
-                //startActivity(intent);
-                //return true;
-                writeMessageToUser("Home clicked");
-
-                //TODO 1.2: Add action for settings button
-            case R.id.action_settings:
-                //Intent intent = new Intent(this, settings.class);
-                //startActivity(intent);
-                //return true;
-                writeMessageToUser("Settings clicked");
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
