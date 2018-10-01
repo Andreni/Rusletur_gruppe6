@@ -8,11 +8,14 @@ public class Trip {
 
     private String name, description, author;
     private ArrayList<LatLng> coordinates;
+    public static ArrayList<Trip> trips;
 
     public Trip(String name, String author, ArrayList<LatLng> coordinates) {
         this.name = name;
         this.author = author;
         this.coordinates = coordinates;
+
+        trips.add(this);
     }
 
     public void setName(String name) {
