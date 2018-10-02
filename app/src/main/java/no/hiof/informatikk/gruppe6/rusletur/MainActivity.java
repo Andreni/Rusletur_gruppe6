@@ -172,4 +172,6 @@ public class MainActivity extends AppCompatActivity{
         Toast.makeText(this,messageToUser.toString(),Toast.LENGTH_SHORT).show();
     }
 
+    public void goToMaps(View view) {
+    }
 }
