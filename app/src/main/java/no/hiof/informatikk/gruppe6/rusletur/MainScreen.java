@@ -65,7 +65,6 @@ public class MainScreen extends AppCompatActivity {
 
         mUser = mAuth.getInstance().getCurrentUser();
 
-        testText = findViewById(R.id.testText);
         testButton = findViewById(R.id.testUIDButton);
 
         testButton.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +72,7 @@ public class MainScreen extends AppCompatActivity {
             public void onClick(View v) {
                 mUser.getUid();
                 mUser.getEmail();
-                testText.setText(mUser.getEmail());
+                testText.setText(mUser.getDisplayName());
 
                 //Get the current users ID.
                 mUser.getIdToken(true)
@@ -94,6 +93,11 @@ public class MainScreen extends AppCompatActivity {
 
 
 
+    }
+
+    public void openRegistrerView(View view) {
+        Intent intent = new Intent(MainScreen.this, UserManagement.class);
+        startActivity(intent);
     }
     /*
     REMOVE ME!!!
