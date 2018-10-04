@@ -57,6 +57,10 @@ public class MainScreen extends AppCompatActivity {
         startActivity(new Intent(MainScreen.this, MapsActivity.class));
     }
 
+    public void sendToDebugUserManagement(View view) {
+        startActivity(new Intent(this, UserManagmentDebug.class));
+    }
+
     public void testUIDRetrival(View view) {
         /*
         Method for getting userIDTokens. IDTokens must be used to reference backend, not UID.
