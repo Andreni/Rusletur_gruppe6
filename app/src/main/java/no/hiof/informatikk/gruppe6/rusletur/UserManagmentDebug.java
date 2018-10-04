@@ -21,10 +21,8 @@ import com.google.gson.Gson;
 public class UserManagmentDebug extends AppCompatActivity {
 
     private static final String TAG = "UserManagmentDebug";
-    FirebaseUser mUser;
-    FirebaseAuth mAuth;
+    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference uidRef = myRef.child("user").child(uid);
 
@@ -40,18 +38,7 @@ public class UserManagmentDebug extends AppCompatActivity {
 
     public void sendInfoToDatabase(View view) {
         Log.d(TAG, "sendInfoToDatabase exectued");
-        EditText textToSend = findViewById(R.id.debugInputToSendInToDatabase);
-
-
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
-        User user = new User("Magnus","Codemaster","93939393",mUser.getEmail());
-        Gson g = new Gson();
-        String string = g.toJson(user);
-
-        uidRef.setValue(string);
-
         Log.e(TAG,"---------------------------------------------------------");
-        Log.i(TAG,string);
         Log.e(TAG,"---------------------------------------------------------");
 
     }
