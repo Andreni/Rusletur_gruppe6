@@ -23,7 +23,7 @@ public class ActionBar extends AppCompatActivity{
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.actionbar_menu, menu);
             getSupportActionBar().setTitle("RusleTur");
-            return true;
+            return false;
         }
 
         @Override
