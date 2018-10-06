@@ -2,6 +2,9 @@ package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,9 +23,11 @@ public class MainScreen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private DrawerLayout drawerLayout;
 
     EditText testText;
     Button testButton;
+
 
     EditText userEmail;
     Button signOut;
@@ -37,6 +42,12 @@ public class MainScreen extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         userEmail = findViewById(R.id.mainScreen_emialField_editText);
         signOut = findViewById(R.id.mainScreen_logout_Button);
@@ -57,6 +68,15 @@ public class MainScreen extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     public void goToMaps(View view) {
         startActivity(new Intent(MainScreen.this, MapsActivity.class));
     }
@@ -73,10 +93,10 @@ public class MainScreen extends AppCompatActivity {
         Method for getting userIDTokens. IDTokens must be used to reference backend, not UID.
 
          */
-
+        /*
         mUser = mAuth.getInstance().getCurrentUser();
 
-        testButton = findViewById(R.id.testUIDButton);
+        //testButton = findViewById(R.id.testUIDButton);
 
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +122,7 @@ public class MainScreen extends AppCompatActivity {
         });
 
 
-
+        */
 
     }
 
