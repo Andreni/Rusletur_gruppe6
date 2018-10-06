@@ -60,6 +60,9 @@ public class MainScreen extends AppCompatActivity {
     public void sendToDebugUserManagement(View view) {
         startActivity(new Intent(this, UserManagmentDebug.class));
     }
+    public void goToUserRegistration(View view) {
+        startActivity(new Intent(this, UserRegistration.class));
+    }
 
     public void testUIDRetrival(View view) {
         /*
