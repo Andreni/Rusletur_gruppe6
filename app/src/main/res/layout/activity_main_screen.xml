@@ -33,6 +33,21 @@
         app:layout_constraintVertical_bias="0.375" />
 
     <Button
+        android:id="@+id/mainScreen_usermanagment_debug"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Debug"
+        android:onClick="sendToDebugUserManagement"
+        app:layout_constraintBottom_toBottomOf="@+id/mainScreen_logout_Button"
+        app:layout_constraintEnd_toStartOf="@+id/mainScreen_logout_Button"
+        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mainScreen_logout_Button"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
         android:id="@+id/mainScreen_goToMaps_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,4 +58,36 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/testUIDButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="testUIDRetrival"
+        android:text="TestButtonRemoveMe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainScreen_goToMaps_Button"
+        app:layout_constraintVertical_bias="0.646" />
+
+    <Button
+        android:id="@+id/goToRegisterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="openRegistrerView"
+        android:text="Gå til registrering"
+        app:layout_constraintBottom_toTopOf="@+id/testUIDButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainScreen_goToMaps_Button" />
 </android.support.constraint.ConstraintLayout>

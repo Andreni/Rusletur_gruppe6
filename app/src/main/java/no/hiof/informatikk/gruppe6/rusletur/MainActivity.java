@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity{
             //TODO 1.4 Make horizontal layout (Non priority)
 
         }
+
     }
 
     //Login user from input values:
