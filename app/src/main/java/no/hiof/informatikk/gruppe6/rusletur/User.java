@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
  * its information directly onto the UID branch.
  *
  *      Example:
- *          Anna wanna updated her email. After updating the email,
+ *          Anna want to updated her email. After updating the email,
  *          the app should do:
  *              User anna = new User(FirebaseUser);
  *              anna.updateEmail();
@@ -79,7 +79,7 @@ public class User {
             this.email = user.getEmail();
         }
         catch (NullPointerException e) {
-            Log.e(TAG,"getEmail() returned NULL. Is anyone logged in?");
+            Log.e(TAG,"getEmail() return NULL. Are you logged in?");
         }
     }
 
