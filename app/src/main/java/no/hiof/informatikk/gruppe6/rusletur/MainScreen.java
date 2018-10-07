@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class MainScreen extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+
 
     EditText testText;
     Button testButton;
