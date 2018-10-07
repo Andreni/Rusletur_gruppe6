@@ -32,7 +32,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 /**
  * Sends a method call to see if the application has the needed permissions for
  * optimal function.(LOCATION,STORAGE,CAMERA)
- * If these requirements are not granted, the application will not proceed.
+ * If these requirements are not granted, the user will not be able to log in.
  *
  * If no user is logged in, this is the first activity the user sees.
  * By checking if a user is logged in via firebase,
@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     //Global variable for permission:
+    //TODO Remove global variable?
     private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA = 1;
+
     private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA };
 
@@ -72,26 +74,30 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             //Check if there is an active session with firebase and user is logged in:
             if(mUser!=null){
                 startActivity(new Intent(MainActivity.this,MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
-            }else{
-                //If no user is logged in, show login screen:
-                //Initialize elements:
-                edEmail = findViewById(R.id.mainA_loginEmail_editText);
-                edPass = findViewById(R.id.mainA_loginPass_editText);
-                loginPage = findViewById(R.id.mainA_loginLayout_cLayoutLogin);
-                registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
-                inputEmail = findViewById(R.id.mainA_registrerEmail_editText);
-                inputPassword = findViewById(R.id.mainA_registrerPass_editText);
-                secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
-                registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
-                writeMessageToUser("Du har ikke gitt tilattelser til appen");
-                //TODO 1.4 Make horizontal layout (Non priority)
-
             }
         }else{
-
+            writeMessageToUser("Du har ikke gitt tilattelser til appen");
         }
+
+        //If no user is logged in, show login screen:
+        //Initialize elements:
+        edEmail = findViewById(R.id.mainA_loginEmail_editText);
+        edPass = findViewById(R.id.mainA_loginPass_editText);
+        loginPage = findViewById(R.id.mainA_loginLayout_cLayoutLogin);
+        registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
+        inputEmail = findViewById(R.id.mainA_registrerEmail_editText);
+        inputPassword = findViewById(R.id.mainA_registrerPass_editText);
+        secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
+        registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
+
+        //TODO 1.4 Make horizontal layout (Non priority)
+
     }
 
+    /**Method for prompting the user to give consent on the the required permissions
+     *
+     * @return Gives back a boolean to verify if the user has granted the required permissions
+     */
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 
@@ -187,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         registerPage.setVisibility(View.INVISIBLE);
     }
 
+
     //Check if field values entered are correct:
     //Option 1 checks loginpage for valid input
     //Option 2 checks registerpage for valid input
@@ -217,13 +224,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 writeMessageToUser("Ugyldig input");
                 return false;
             }
-
-
         }
 
         //Input is faulty!
         return false;
     }
+
 
     //Send message to user:
     private void writeMessageToUser(String messageToUser){
@@ -241,9 +247,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             //Display dialog to user
             new AppSettingsDialog.Builder(this).build().show();
-            //Send user the settings page to grant permissions
+            //Send the user to the settings page to grant permissions
         }
     }
+
     //When the user returns from the settings page
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
