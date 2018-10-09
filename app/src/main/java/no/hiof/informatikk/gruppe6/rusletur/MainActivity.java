@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
 
         //TODO 1.4 Make horizontal layout (Non priority)
+        //Fragment?
 
     }
 
