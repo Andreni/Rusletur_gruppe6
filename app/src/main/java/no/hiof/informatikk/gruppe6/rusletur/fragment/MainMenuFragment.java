@@ -32,26 +32,7 @@ public class MainMenuFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-        /*
-        userEmail = getView().findViewById(R.id.mainScreen_emialField_editText);
-        signOut = getView().findViewById(R.id.mainScreen_logout_Button);
-        //TODO Remove Activity and class when done testing
-        mAuth = FirebaseAuth.getInstance();
-        //Get user currently signed in
-        mUser = mAuth.getCurrentUser();
-        //userEmail.setText(mUser.getEmail());
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Log out user from app
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(),MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-        */
+        //Handle view
 
         return inflater.inflate(R.layout.fragment_mainscreen, container, false);
 
