@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
@@ -60,13 +62,19 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
+        if(savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+        }
+
+        /*
         userEmail = findViewById(R.id.mainScreen_emialField_editText);
         signOut = findViewById(R.id.mainScreen_logout_Button);
         //TODO Remove Activity and class when done testing
         mAuth = FirebaseAuth.getInstance();
         //Get user currently signed in
         mUser = mAuth.getCurrentUser();
-        userEmail.setText(mUser.getEmail());
+        //userEmail.setText(mUser.getEmail());
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +85,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(intent);
             }
         });
+        */
     }
 
     @Override
@@ -88,8 +97,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         * xml files follow the material design standard
          */
         switch (menuItem.getItemId()){
-            case R.id.nav_message:
-                Toast.makeText(this, "Message Clicked", Toast.LENGTH_SHORT).show();
+            case R.id.nav_home:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_profile:
                 Toast.makeText(this, "Profile Clicked", Toast.LENGTH_SHORT).show();
