@@ -53,6 +53,9 @@ public class MainScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //Logcat tag GPXLOG
+        GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
     }
 
     public void goToMaps(View view) {
