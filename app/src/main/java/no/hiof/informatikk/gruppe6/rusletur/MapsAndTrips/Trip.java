@@ -1,4 +1,4 @@
-package no.hiof.informatikk.gruppe6.rusletur;
+package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import com.google.android.gms.maps.model.LatLng;
 

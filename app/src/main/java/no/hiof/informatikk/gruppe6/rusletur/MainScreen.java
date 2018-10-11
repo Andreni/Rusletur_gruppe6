@@ -1,6 +1,5 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
-import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -23,6 +22,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GenerateMap;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
+import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
+import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
+
+public class MainScreen extends AppCompatActivity {
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FirebaseAuth mAuth;
