@@ -27,112 +27,111 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
-public class MainScreen extends AppCompatActivity {
-public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
-    private DrawerLayout drawerLayout;
-
-
-    EditText testText;
-    Button testButton;
+        private FirebaseAuth mAuth;
+        private FirebaseUser mUser;
+        private DrawerLayout drawerLayout;
 
 
-    EditText userEmail;
-    Button signOut;
-
-    /*
-    REMOVE ME!!!
-     */
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
+        EditText testText;
+        Button testButton;
 
 
-        //Set toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        EditText userEmail;
+        Button signOut;
 
-        //Initialize drawerlayout
-        drawerLayout = findViewById(R.id.drawerLayout);
+        /*
+        REMOVE ME!!!
+         */
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main_screen);
 
-        //Clickhandling on navigationdrawer
-        NavigationView navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(this);
 
-        //Make a cool spinning animation for the hamburgermeny when navigationdrawer opens
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+            //Set toolbar
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        userEmail = findViewById(R.id.mainScreen_emialField_editText);
-        signOut = findViewById(R.id.mainScreen_logout_Button);
-        //TODO Remove Activity and class when done testing
-        mAuth = FirebaseAuth.getInstance();
-        //Get user currently signed in
-        mUser = mAuth.getCurrentUser();
-        userEmail.setText(mUser.getEmail());
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Log out user from app
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(MainScreen.this,MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+            //Initialize drawerlayout
+            drawerLayout = findViewById(R.id.drawerLayout);
+
+            //Clickhandling on navigationdrawer
+            NavigationView navigationView = findViewById(R.id.navigationView);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            //Make a cool spinning animation for the hamburgermeny when navigationdrawer opens
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            drawerLayout.addDrawerListener(toggle);
+            toggle.syncState();
+
+            userEmail = findViewById(R.id.mainScreen_emialField_editText);
+            signOut = findViewById(R.id.mainScreen_logout_Button);
+            //TODO Remove Activity and class when done testing
+            mAuth = FirebaseAuth.getInstance();
+            //Get user currently signed in
+            mUser = mAuth.getCurrentUser();
+            userEmail.setText(mUser.getEmail());
+            signOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Log out user from app
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(MainScreen.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            });
+
+            //Logcat tag GPXLOG
+            GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
+        }
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+            /*
+             *Handle clicking for each item on navigation drawer. Will change this so each item clicked
+             * opens a new fragment, which will display the relevant pages of the app once the
+             * xml files follow the material design standard
+             */
+            switch (menuItem.getItemId()) {
+                case R.id.nav_home:
+                    Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_profile:
+                    Toast.makeText(this, "Profile Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_settings:
+                    Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_trip:
+                    Toast.makeText(this, "DE E TURAN SOM TÆLLE", Toast.LENGTH_SHORT).show();
+                    break;
             }
-        });
 
-        //Logcat tag GPXLOG
-        GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-        /*
-        *Handle clicking for each item on navigation drawer. Will change this so each item clicked
-        * opens a new fragment, which will display the relevant pages of the app once the
-        * xml files follow the material design standard
-         */
-        switch (menuItem.getItemId()){
-            case R.id.nav_home:
-                Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_profile:
-                Toast.makeText(this, "Profile Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_settings:
-                Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.nav_trip:
-                Toast.makeText(this, "DE E TURAN SOM TÆLLE", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        drawerLayout.closeDrawer(GravityCompat.START);
-
-        return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        /*
-        * When the navigation drawer is open, clicking back will close the navigation drawer before
-        * going to the previous view. Quality of life change, OH YAAAAH
-         */
-
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+
+            return true;
         }
-    }
 
-    public void goToMaps(View view) {
-        startActivity(new Intent(MainScreen.this, MapsActivity.class));
-    }
+        @Override
+        public void onBackPressed() {
+            /*
+             * When the navigation drawer is open, clicking back will close the navigation drawer before
+             * going to the previous view. Quality of life change, OH YAAAAH
+             */
 
-}
+            if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                drawerLayout.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }
+
+        public void goToMaps(View view) {
+            startActivity(new Intent(MainScreen.this, MapsActivity.class));
+        }
+
+    }
