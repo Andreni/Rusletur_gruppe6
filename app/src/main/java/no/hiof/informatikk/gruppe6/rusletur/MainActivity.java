@@ -261,4 +261,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         }
     }
+    public void goToMaps(View view) {
+    }
 }
