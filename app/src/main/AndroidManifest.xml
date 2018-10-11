@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserManagement" />
+        <activity android:name=".UserManagement.UserManagement" />
         <activity android:name=".MainScreen" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -44,10 +44,10 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".MapsAndTrips.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".UserManagmentDebug" />
-        <activity android:name=".UserRegistration"></activity>
+        <activity android:name=".UserManagement.UserManagmentDebug" />
+        <activity android:name=".UserManagement.UserRegistration"></activity>
     </application>
 
 </manifest>
