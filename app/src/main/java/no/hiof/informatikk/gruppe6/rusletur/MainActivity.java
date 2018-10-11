@@ -18,7 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import no.hiof.informatikk.gruppe6.rusletur.ActionBar;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 

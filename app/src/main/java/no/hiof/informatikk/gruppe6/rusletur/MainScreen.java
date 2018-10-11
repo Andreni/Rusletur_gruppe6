@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -64,6 +66,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+
         }
 
 
