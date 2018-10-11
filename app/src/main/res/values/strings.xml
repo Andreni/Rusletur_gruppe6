@@ -9,6 +9,7 @@
     <string name="registrer">Registrer</string>
     <string name="title_activity_maps">Map</string>
     <string name="nav_message">Meldinger</string>
+    <string name="nav_home">Hjem</string>
     <string name="nav_profile">Profil</string>
     <string name="nav_trip">Tur</string>
     <string name="nav_settings">Innstillinger</string>

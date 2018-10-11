@@ -88,6 +88,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         * xml files follow the material design standard
          */
         switch (menuItem.getItemId()){
+            case R.id.nav_home:
+                Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.nav_profile:
                 Toast.makeText(this, "Profile Clicked", Toast.LENGTH_SHORT).show();
                 break;
