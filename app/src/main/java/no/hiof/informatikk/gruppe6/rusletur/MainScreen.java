@@ -109,6 +109,9 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
                 case R.id.nav_trip:
                     Toast.makeText(this, "DE E TURAN SOM TÆLLE", Toast.LENGTH_SHORT).show();
                     break;
+                case R.id.to_debug_page:
+                    startActivity(new Intent(this, UserManagmentDebug.class));
+                    break;
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);
