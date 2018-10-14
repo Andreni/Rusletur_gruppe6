@@ -85,7 +85,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
             });
 
             //Logcat tag GPXLOG
-            GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
+            //GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
         }
 
         @Override
