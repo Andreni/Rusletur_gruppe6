@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
@@ -31,24 +35,36 @@ public class MainMenuFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
 
+    public static final String TAG = "RusleTur";
+    private int LOCATION_PERMISSION_CODE = 1;
+    private ArrayList<String> mItem = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.fragment_mainscreen, container, false);
+
+
+        final View view = inflater.inflate(R.layout.activity_main_recycleview, container, false);
         Log.d("TESTER", "UTENFOR ONCLICK");
 
+
+
+        /*
         view.findViewById(R.id.mainScreen_logout_Button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TESTER", " KLIKK");
-                EditText test = view.findViewById(R.id.mainScreen_emialField_editText);
-                String email = test.getText().toString();
-                Toast.makeText(getActivity(), "hallo " + email, Toast.LENGTH_SHORT).show();
+                //Log out user from app
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(),MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
+        */
 
          /*
         userEmail = getView().findViewById(R.id.mainScreen_emialField_editText);
@@ -61,27 +77,41 @@ public class MainMenuFragment extends Fragment {
         signOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Log out user from app
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(),MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+
             }
         });
         */
 
         //return inflater.inflate(R.layout.fragment_mainscreen, container, false);
+
+        initArraysForRecyclerView();
+
         return view;
 
 
 
     }
 
-    public void getEmailMethod() {
-        EditText et = layout.findViewById(R.id.mainScreen_emialField_editText);
-        userEmail = et.getText().toString();
-        Log.d("TEST", userEmail);
+
+    private void initArraysForRecyclerView(){
+        mItem.add("Kart");
+        mItem.add("Start egen tur");
+        mItem.add("Min posisjon");
+        mItem.add("Innstillinger");
+        mItem.add("4");
+        mItem.add("g");
+        mItem.add("3");
+        mItem.add("q");
+        mItem.add("g");
+        mItem.add("l");
+        mItem.add("v");
+        mItem.add(" ");
+        mItem.add("j");
+
+
+
     }
+
 
 
 

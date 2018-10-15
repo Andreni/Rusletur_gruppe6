@@ -29,7 +29,9 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
-    public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+
+public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
         private FirebaseAuth mAuth;
         private FirebaseUser mUser;
@@ -63,7 +65,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
         }
 
 
-    }
+
             //Clickhandling on navigationdrawer
             NavigationView navigationView = findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
@@ -73,6 +75,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
 
+            /*
             userEmail = findViewById(R.id.mainScreen_emialField_editText);
             signOut = findViewById(R.id.mainScreen_logout_Button);
             //TODO Remove Activity and class when done testing
@@ -90,9 +93,10 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
                     startActivity(intent);
                 }
             });
+            */
 
             //Logcat tag GPXLOG
-            GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
+         //   GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
         }
 
         @Override
