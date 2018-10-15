@@ -61,7 +61,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
             if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecyclerViewFragment()).commit();
 
             }
 

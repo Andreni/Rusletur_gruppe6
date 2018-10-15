@@ -28,47 +28,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tripThreeButton" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-    <Button
-        android:id="@+id/tripTwoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Tur 2"
-        app:layout_constraintBottom_toTopOf="@+id/tripThreeButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tripOneButton" />
-
-    <Button
-        android:id="@+id/tripOneButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Tur 1"
-        app:layout_constraintBottom_toTopOf="@+id/tripTwoButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <Button
-        android:id="@+id/tripThreeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="200dp"
+        android:layout_height="350dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Tur 3"
-        app:layout_constraintBottom_toTopOf="@+id/mainScreen_goToMaps_Button"
+        android:layout_marginBottom="144dp"
+        android:background="#fff"
+        android:elevation="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tripTwoButton" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.753" />
 
 </android.support.constraint.ConstraintLayout>

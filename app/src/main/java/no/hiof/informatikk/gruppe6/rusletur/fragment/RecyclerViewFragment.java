@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,8 @@ public class RecyclerViewFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        Log.d(TAG, "onCreateView: Yee added");
+        
         mItem.add("Kart");
         mItem.add("Start egen tur");
         mItem.add("Min posisjon");
