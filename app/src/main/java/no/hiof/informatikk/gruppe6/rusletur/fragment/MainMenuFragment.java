@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -47,10 +48,8 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-
-        final View view = inflater.inflate(R.layout.activity_main_recycleview, container, false);
+        final View view = inflater.inflate(R.layout.fragment_mainscreen, container, false);
         Log.d("TESTER", "UTENFOR ONCLICK");
-
 
 
         /*
@@ -84,34 +83,10 @@ public class MainMenuFragment extends Fragment {
 
         //return inflater.inflate(R.layout.fragment_mainscreen, container, false);
 
-        initArraysForRecyclerView();
 
         return view;
 
-
-
     }
-
-
-    private void initArraysForRecyclerView(){
-        mItem.add("Kart");
-        mItem.add("Start egen tur");
-        mItem.add("Min posisjon");
-        mItem.add("Innstillinger");
-        mItem.add("4");
-        mItem.add("g");
-        mItem.add("3");
-        mItem.add("q");
-        mItem.add("g");
-        mItem.add("l");
-        mItem.add("v");
-        mItem.add(" ");
-        mItem.add("j");
-
-
-
-    }
-
 
 
 

@@ -30,6 +30,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.RecyclerViewFragment;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -109,10 +110,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
              */
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
-                    Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                     break;
                 case R.id.nav_profile:
-                    Toast.makeText(this, "Profile Clicked", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecyclerViewFragment()).commit();
                     break;
                 case R.id.nav_settings:
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
