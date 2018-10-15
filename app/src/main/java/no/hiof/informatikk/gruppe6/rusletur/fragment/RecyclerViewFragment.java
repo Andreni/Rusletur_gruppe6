@@ -36,13 +36,10 @@ public class RecyclerViewFragment extends Fragment {
 
         final View view = inflater.inflate(R.layout.activity_main_recycleview, container, false);
 
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        initArraysForRecyclerView();
-        return view;
-    }
-
-    private void initArraysForRecyclerView(){
         mItem.add("Kart");
         mItem.add("Start egen tur");
         mItem.add("Min posisjon");
@@ -57,19 +54,13 @@ public class RecyclerViewFragment extends Fragment {
         mItem.add(" ");
         mItem.add("j");
 
-        initRecyclerView();
 
+        RecycleViewAdapter rAdapter = new RecycleViewAdapter(mItem);
+
+        recyclerView.setAdapter(rAdapter);
+
+        return view;
     }
-
-    private void initRecyclerView() {
-        RecyclerView recyclerView = getView().findViewById(R.id.recyclerView);
-        RecycleViewAdapter adapter = new RecycleViewAdapter(mItem, getContext());
-
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-
 
 
 }

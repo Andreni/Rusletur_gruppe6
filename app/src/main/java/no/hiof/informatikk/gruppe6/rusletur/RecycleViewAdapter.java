@@ -15,12 +15,10 @@ import java.util.ArrayList;
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.Viewholder>{
 
     private ArrayList<String> mItem = new ArrayList<>();
-    Context mContext;
 
 
-    public RecycleViewAdapter (ArrayList<String> mItem, Context mContext) {
+    public RecycleViewAdapter (ArrayList<String> mItem) {
         this.mItem = mItem;
-        this.mContext = mContext;
     }
 
 
@@ -40,7 +38,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         viewholder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, mItem.get(i), Toast.LENGTH_SHORT).show();
+                
             }
         });
     }

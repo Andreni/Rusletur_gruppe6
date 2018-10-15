@@ -59,11 +59,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //Initialize drawerlayout
             drawerLayout = findViewById(R.id.drawerLayout);
 
-        //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
-        if(savedInstanceState == null) {
+            //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
+            if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
 
-        }
+            }
 
 
 
