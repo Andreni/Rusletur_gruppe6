@@ -83,13 +83,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void parseGpx(String urlToGpx){
         //Standard GPX parser....
-
         final GPXParser mParser = new GPXParser();
         final LatLng halden = null;
         final PolylineOptions options = new PolylineOptions();
-
-
         final ArrayList<LatLng> listOfLatLng = null;
+
         mParser.parse(urlToGpx, new GpxFetchedAndParsed() {
             @Override
             public void onGpxFetchedAndParsed(Gpx gpx) {
