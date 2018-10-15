@@ -41,9 +41,6 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
         EditText userEmail;
         Button signOut;
 
-        /*
-        REMOVE ME!!!
-         */
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
