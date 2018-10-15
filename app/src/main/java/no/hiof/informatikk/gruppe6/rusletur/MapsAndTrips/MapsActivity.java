@@ -94,41 +94,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mParser.parse(urlToGpx, new GpxFetchedAndParsed() {
             @Override
             public void onGpxFetchedAndParsed(Gpx gpx) {
-                boolean firstPolyLineAdd = true;
                 LatLng tripStartLocation = null;
                 String tripTitleName = null;
                 if (gpx == null) {
                     // error parsing track
-                } else {
+                }
+                else {
                     if (mParser != null) {
-                        // log stuff
-                        List<Track> tracks = gpx.getTracks();
-                        for (int i = 0; i < tracks.size(); i++) {
-                            Track track = tracks.get(i);
-                            tripTitleName = track.getTrackName();
-                            Log.d(GPXLOG, "track " + i + ":");
-                            List<TrackSegment> segments = track.getTrackSegments();
 
-                            for (int j = 0; j < segments.size(); j++) {
-                                TrackSegment segment = segments.get(j);
-                                Log.d(GPXLOG, "  segment " + j + ":");
+                        Track track = gpx.getTracks().get(0);
+                        tripTitleName = track.getTrackName();
+                        List<TrackSegment> segments = track.getTrackSegments();
+                        for (int j = 0; j < segments.size(); j++) {
+                            TrackSegment segment = segments.get(j);
+                            //Log.d(GPXLOG, "  segment " + j + ":");
 
-                                for (TrackPoint trackPoint : segment.getTrackPoints()) {
-                                    Log.d(GPXLOG, "    point: lat " + trackPoint.getLatitude() + ", lon " + trackPoint.getLongitude());
-                                    //Insert all latLng objects into "options" variable
-                                    options.add(new LatLng(trackPoint.getLatitude(), trackPoint.getLongitude()));
+                            //Registers the first polylines at the start of the trip, this will be used in the addMarker.
+                            tripStartLocation = new LatLng(segment.getTrackPoints().get(0).getLatitude(), segment.getTrackPoints().get(0).getLongitude());
+                            for (TrackPoint trackPoint : segment.getTrackPoints()) {
+                                //Log.d(GPXLOG, "    point: lat " + trackPoint.getLatitude() + ", lon " + trackPoint.getLongitude());
+                                //Insert all latLng objects into "options" variable
+                                options.add(new LatLng(trackPoint.getLatitude(), trackPoint.getLongitude()));
 
-                                    //Registers the first polylines at the start of the trip, this will be used in the addMarker.
-                                    if(firstPolyLineAdd) {
-                                        tripStartLocation = new LatLng(trackPoint.getLatitude(),trackPoint.getLongitude());
-                                        firstPolyLineAdd = false;
-                                    }
-                                    //assert listOfLatLng != null;
-                                    //listOfLatLng.add(halden);
-                                }
                             }
                         }
-                        firstPolyLineAdd = true;
                         //Place a marker on the map
                         mMap.addMarker(new MarkerOptions().position(tripStartLocation).title(tripTitleName));
                         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartLocation, 15, 0, 0)));
@@ -137,7 +126,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         //Polylines options
                         options.color(Color.GREEN);
                         options.width(10);
-                        //options.addAll(listOfLatLng);
                         mMap.addPolyline(options);
 
                     } else {
