@@ -9,6 +9,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -81,16 +83,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
     public void parseGpx(String urlToGpx){
         //Standard GPX parser....
         final GPXParser mParser = new GPXParser();
-        final LatLng halden = null;
         final PolylineOptions options = new PolylineOptions();
         final ArrayList<LatLng> listOfLatLng = null;
+
 
         mParser.parse(urlToGpx, new GpxFetchedAndParsed() {
             @Override
             public void onGpxFetchedAndParsed(Gpx gpx) {
+                boolean firstPolyLineAdd = true;
+                LatLng tripStartLocation = null;
+                String tripTitleName = null;
                 if (gpx == null) {
                     // error parsing track
                 } else {
@@ -99,29 +105,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         List<Track> tracks = gpx.getTracks();
                         for (int i = 0; i < tracks.size(); i++) {
                             Track track = tracks.get(i);
+                            tripTitleName = track.getTrackName();
                             Log.d(GPXLOG, "track " + i + ":");
                             List<TrackSegment> segments = track.getTrackSegments();
+
                             for (int j = 0; j < segments.size(); j++) {
                                 TrackSegment segment = segments.get(j);
                                 Log.d(GPXLOG, "  segment " + j + ":");
+
                                 for (TrackPoint trackPoint : segment.getTrackPoints()) {
                                     Log.d(GPXLOG, "    point: lat " + trackPoint.getLatitude() + ", lon " + trackPoint.getLongitude());
                                     //Insert all latLng objects into "options" variable
                                     options.add(new LatLng(trackPoint.getLatitude(), trackPoint.getLongitude()));
+
+                                    //Registers the first polylines at the start of the trip, this will be used in the addMarker.
+                                    if(firstPolyLineAdd) {
+                                        tripStartLocation = new LatLng(trackPoint.getLatitude(),trackPoint.getLongitude());
+                                        firstPolyLineAdd = false;
+                                    }
                                     //assert listOfLatLng != null;
                                     //listOfLatLng.add(halden);
-
-
                                 }
-
-
                             }
-
                         }
+                        firstPolyLineAdd = true;
                         //Place a marker on the map
-                        LatLng halden1 = new LatLng(59.119411, 11.389484);
-                        mMap.addMarker(new MarkerOptions().position(halden1).title("Halden"));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLng(halden1));
+                        mMap.addMarker(new MarkerOptions().position(tripStartLocation).title(tripTitleName));
+                        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartLocation, 15, 0, 0)));
+
 
                         //Polylines options
                         options.color(Color.GREEN);
