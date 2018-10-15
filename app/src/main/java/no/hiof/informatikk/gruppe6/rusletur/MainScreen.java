@@ -113,13 +113,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                     break;
                 case R.id.nav_profile:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecyclerViewFragment()).commit();
+                    Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_settings:
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_trip:
-                    Toast.makeText(this, "DE E TURAN SOM TÆLLE", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecyclerViewFragment()).commit();
                     break;
                 case R.id.to_debug_page:
                     startActivity(new Intent(this, UserManagmentDebug.class));
