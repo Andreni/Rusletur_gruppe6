@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,8 +30,11 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
-    public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-        private final String TAG = "MainScreen";
+import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.RecyclerViewFragment;
+
+public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
         private FirebaseAuth mAuth;
         private FirebaseUser mUser;
         private DrawerLayout drawerLayout;
@@ -42,9 +47,6 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
         EditText userEmail;
         Button signOut;
 
-        /*
-        REMOVE ME!!!
-         */
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -58,6 +60,13 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
             //Initialize drawerlayout
             drawerLayout = findViewById(R.id.drawerLayout);
 
+            //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
+            if(savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecyclerViewFragment()).commit();
+
+            }
+
+
             //Clickhandling on navigationdrawer
             NavigationView navigationView = findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
@@ -67,6 +76,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
 
+            /*
             userEmail = findViewById(R.id.mainScreen_emialField_editText);
             signOut = findViewById(R.id.mainScreen_logout_Button);
             //TODO Remove Activity and class when done testing
@@ -84,9 +94,10 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
                     startActivity(intent);
                 }
             });
+            */
 
             //Logcat tag GPXLOG
-            //GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
+         //   GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
         }
 
         @Override
@@ -99,16 +110,16 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
              */
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
-                    Toast.makeText(this, "Home Clicked", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                     break;
                 case R.id.nav_profile:
-                    Toast.makeText(this, "Profile Clicked", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_settings:
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_trip:
-                    Toast.makeText(this, "DE E TURAN SOM TÆLLE", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecyclerViewFragment()).commit();
                     break;
                 case R.id.to_debug_page:
                     startActivity(new Intent(this, UserManagmentDebug.class));
