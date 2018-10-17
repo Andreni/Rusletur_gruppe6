@@ -38,6 +38,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private FirebaseAuth mAuth;
         private FirebaseUser mUser;
         private DrawerLayout drawerLayout;
+        private final String TAG = "MainScreen";
 
 
         EditText testText;
