@@ -28,6 +28,7 @@ public class RecyclerViewFragment extends Fragment {
     public static final String TAG = "RusleTur";
     private int LOCATION_PERMISSION_CODE = 1;
     private ArrayList<String> mItem = new ArrayList<>();
+    private ArrayList<String> mUrl = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -49,8 +50,12 @@ public class RecyclerViewFragment extends Fragment {
         mItem.add("Demo Tur 2");
         mItem.add("Demo Tur 3");
 
+        mUrl.add("https://www.ut.no/tur/2.15173/gpx");
+        mUrl.add("https://www.ut.no/tur/2.6916/gpx");
+        mUrl.add("https://www.ut.no/tur/2.9239/gpx");
 
-        RecycleViewAdapter rAdapter = new RecycleViewAdapter(mItem, getActivity());
+
+        RecycleViewAdapter rAdapter = new RecycleViewAdapter(mItem, mUrl, getActivity());
 
         recyclerView.setAdapter(rAdapter);
 

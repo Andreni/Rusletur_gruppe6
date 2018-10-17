@@ -51,38 +51,9 @@ public class MainMenuFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_mainscreen, container, false);
         Log.d("TESTER", "UTENFOR ONCLICK");
 
-
         /*
-        view.findViewById(R.id.mainScreen_logout_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Log out user from app
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(getActivity(),MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-        */
-
-         /*
-        userEmail = getView().findViewById(R.id.mainScreen_emialField_editText);
-        signOut = getView().findViewById(R.id.mainScreen_logout_Button);
-        //TODO Remove Activity and class when done testing
-        mAuth = FirebaseAuth.getInstance();
-        //Get user currently signed in
-        mUser = mAuth.getCurrentUser();
-        //userEmail.setText(mUser.getEmail());
-        signOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        */
-
-        //return inflater.inflate(R.layout.fragment_mainscreen, container, false);
-
+        Insert handling for main menu
+         */
 
         return view;
 
