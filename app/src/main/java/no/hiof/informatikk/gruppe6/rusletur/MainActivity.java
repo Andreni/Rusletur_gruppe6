@@ -74,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             if(mUser!=null){
                 startActivity(new Intent(MainActivity.this,MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
-        }else{
-            writeMessageToUser("Du har ikke gitt tilattelser til appen");
         }
 
         //If no user is logged in, show login screen:

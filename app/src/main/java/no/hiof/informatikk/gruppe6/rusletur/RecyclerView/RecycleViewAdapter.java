@@ -55,7 +55,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         viewholder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Button pressed " + mItem.get(i), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Button pressed " + mItem.get(i), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(v.getContext(), MapsActivity.class);
                 //Recieves the URL from the pressed button tag-data.
                 String urlLink = v.getTag().toString();

@@ -46,9 +46,9 @@ public class RecyclerViewFragment extends Fragment {
 
 
 
-        mItem.add("Demo Tur 1");
-        mItem.add("Demo Tur 2");
-        mItem.add("Demo Tur 3");
+        mItem.add("Øyer");
+        mItem.add("Halden Byvandring");
+        mItem.add("GAPAHUKENE");
 
         mUrl.add("https://www.ut.no/tur/2.15173/gpx");
         mUrl.add("https://www.ut.no/tur/2.6916/gpx");
