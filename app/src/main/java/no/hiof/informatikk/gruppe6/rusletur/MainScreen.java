@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
     public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+        private final String TAG = "MainScreen";
         private FirebaseAuth mAuth;
         private FirebaseUser mUser;
         private DrawerLayout drawerLayout;
@@ -131,7 +132,12 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
         }
 
         public void goToMaps(View view) {
-            startActivity(new Intent(MainScreen.this, MapsActivity.class));
+            Intent intent = new Intent(MainScreen.this, MapsActivity.class);
+            String urlLink = view.getTag().toString();
+            Log.d(TAG,"URL LINK Recieved:" + view.getTag().toString());
+            intent.putExtra("url", urlLink);
+            startActivity(intent);
+
         }
 
     }

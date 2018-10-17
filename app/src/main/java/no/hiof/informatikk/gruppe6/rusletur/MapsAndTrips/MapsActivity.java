@@ -26,12 +26,12 @@ import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import io.ticofab.androidgpxparser.parser.task.GpxFetchedAndParsed;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
-import static android.support.constraint.Constraints.TAG;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     static final String GPXLOG = "GPXLOG";
+    static final String TAG = "MapsActivity";
 
 
     GPXParser mParser = new GPXParser(); // consider injection
@@ -58,6 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.i(TAG, "Method onMapReady() started.");
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
@@ -66,7 +67,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
         //Display trip
-        parseGpx("https://www.ut.no/tur/2.17045/gpx/");
+        String url = getIntent().getStringExtra("url");
+        Log.d(TAG, url);
+        parseGpx(url);
     }
 
     public void retrivedTrip(){
@@ -85,6 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public void parseGpx(String urlToGpx){
+        Log.i(TAG, "Method urlToGpx() started.");
         //Standard GPX parser....
         final GPXParser mParser = new GPXParser();
         final PolylineOptions options = new PolylineOptions();
@@ -94,6 +98,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mParser.parse(urlToGpx, new GpxFetchedAndParsed() {
             @Override
             public void onGpxFetchedAndParsed(Gpx gpx) {
+                Log.i(TAG, "Method onGpxGetchedAndParsed started.");
                 LatLng tripStartLocation = null;
                 String tripTitleName = null;
                 if (gpx == null) {
