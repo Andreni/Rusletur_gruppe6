@@ -1,4 +1,4 @@
-package no.hiof.informatikk.gruppe6.rusletur;
+package no.hiof.informatikk.gruppe6.rusletur.RecyclerView;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import no.hiof.informatikk.gruppe6.rusletur.R;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.Viewholder>{
 

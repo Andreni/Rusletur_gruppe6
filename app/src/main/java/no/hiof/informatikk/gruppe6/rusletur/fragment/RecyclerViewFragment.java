@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.RecycleViewAdapter;
+import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.RecycleViewAdapter;
 
 public class RecyclerViewFragment extends Fragment {
 
