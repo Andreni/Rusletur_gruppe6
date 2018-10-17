@@ -41,13 +41,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private final String TAG = "MainScreen";
 
 
-        EditText testText;
-        Button testButton;
-
-
-        EditText userEmail;
-        Button signOut;
-
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -67,7 +60,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             }
 
-
             //Clickhandling on navigationdrawer
             NavigationView navigationView = findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
@@ -77,28 +69,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
 
-            /*
-            userEmail = findViewById(R.id.mainScreen_emialField_editText);
-            signOut = findViewById(R.id.mainScreen_logout_Button);
-            //TODO Remove Activity and class when done testing
-            mAuth = FirebaseAuth.getInstance();
-            //Get user currently signed in
-            mUser = mAuth.getCurrentUser();
-            userEmail.setText(mUser.getEmail());
-            signOut.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Log out user from app
-                    FirebaseAuth.getInstance().signOut();
-                    Intent intent = new Intent(MainScreen.this, MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
-            });
-            */
-
-            //Logcat tag GPXLOG
-         //   GenerateMap.parseGpx("https://www.ut.no/tur/2.17045/gpx/");
         }
 
         @Override
@@ -125,6 +95,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 case R.id.to_debug_page:
                     startActivity(new Intent(this, UserManagmentDebug.class));
                     break;
+                case R.id.nav_logout:
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(MainScreen.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    break;
+
             }
 
             drawerLayout.closeDrawer(GravityCompat.START);
