@@ -60,7 +60,9 @@ public class GenerateMap {
                                 for (TrackPoint trackPoint : segment.getTrackPoints()) {
                                     Log.d(GPXLOG, "    point: lat " + trackPoint.getLatitude() + ", lon " + trackPoint.getLongitude());
                                 }
+
                             }
+
                         }
                     } else {
                         Log.e(TAG, "Error parsing gpx track!");
