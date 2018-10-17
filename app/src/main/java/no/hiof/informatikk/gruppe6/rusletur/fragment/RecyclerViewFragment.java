@@ -42,23 +42,15 @@ public class RecyclerViewFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Log.d(TAG, "onCreateView: Yee added");
-        
-        mItem.add("Kart");
-        mItem.add("Start egen tur");
-        mItem.add("Min posisjon");
-        mItem.add("Innstillinger");
-        mItem.add("4");
-        mItem.add("g");
-        mItem.add("3");
-        mItem.add("q");
-        mItem.add("g");
-        mItem.add("l");
-        mItem.add("v");
-        mItem.add(" ");
-        mItem.add("j");
 
 
-        RecycleViewAdapter rAdapter = new RecycleViewAdapter(mItem);
+
+        mItem.add("Demo Tur 1");
+        mItem.add("Demo Tur 2");
+        mItem.add("Demo Tur 3");
+
+
+        RecycleViewAdapter rAdapter = new RecycleViewAdapter(mItem, getActivity());
 
         recyclerView.setAdapter(rAdapter);
 

@@ -66,7 +66,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             }
 
 
-
             //Clickhandling on navigationdrawer
             NavigationView navigationView = findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
