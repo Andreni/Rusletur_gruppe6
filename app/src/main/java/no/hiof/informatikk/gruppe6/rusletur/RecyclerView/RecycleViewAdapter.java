@@ -65,14 +65,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             }
         });
 
-        //Click method on the actual view, not the buttons.
-        viewholder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "View pressed " + mItem.get(i), Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 
 

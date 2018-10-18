@@ -47,43 +47,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "Method onMapReady() started.");
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        //LatLng sydney = new LatLng(-34, 151);
-        //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
         //Display trip
         String url = getIntent().getStringExtra("url");
         Log.d(TAG, url);
         parseGpx(url);
-    }
-
-    public void retrivedTrip(){
-        //Logcat tag GPXLOG
-
-        //Read through coordinates
-
-        //Make points on map
-
-
-        //Draw lines between points
-
-        //Display name of map.
-
     }
 
 
@@ -103,6 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String tripTitleName = null;
                 if (gpx == null) {
                     // error parsing track
+                    Log.d(TAG, "onGpxFetchedAndParsed: Error parsing GPX");
                 }
                 else {
                     if (mParser != null) {
@@ -112,13 +85,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         List<TrackSegment> segments = track.getTrackSegments();
                         for (int j = 0; j < segments.size(); j++) {
                             TrackSegment segment = segments.get(j);
-                            //Log.d(GPXLOG, "  segment " + j + ":");
 
                             //Registers the first polylines at the start of the trip, this will be used in the addMarker.
                             tripStartLocation = new LatLng(segment.getTrackPoints().get(0).getLatitude(), segment.getTrackPoints().get(0).getLongitude());
                             for (TrackPoint trackPoint : segment.getTrackPoints()) {
-                                //Log.d(GPXLOG, "    point: lat " + trackPoint.getLatitude() + ", lon " + trackPoint.getLongitude());
-                                //Insert all latLng objects into "options" variable
                                 options.add(new LatLng(trackPoint.getLatitude(), trackPoint.getLongitude()));
 
                             }

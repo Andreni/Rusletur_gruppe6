@@ -4,7 +4,15 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
+
+/**
+ * Class for trip objects in our format
+ * Will be used later
+ * UNDER CONSTRUCTION
+ */
+
 public class Trip {
+
 
     private String name, description, author;
     private ArrayList<LatLng> coordinates;

@@ -49,23 +49,6 @@ public class UserManagement extends AppCompatActivity {
         registrerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Få detta te å fungere. AuthStateChanged æ tydlevis homofilt.
-
-                mAuthListener = new FirebaseAuth.AuthStateListener() {
-                    @Override
-                    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
-                        if(user!=null){
-                            UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                    //userNameInput.getText().toString()) <-- burde værra denna
-                                    .setDisplayName("Test").build();
-                            user.updateProfile(profileUpdates);
-
-                        }
-                    }
-                };
-                */
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -83,14 +66,6 @@ public class UserManagement extends AppCompatActivity {
                             }
                         });
 
-
-                /*
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                String name = user.getDisplayName();
-
-                Toast.makeText(UserManagement.this,name,Toast.LENGTH_SHORT).show();
-                */
             }
         });
 

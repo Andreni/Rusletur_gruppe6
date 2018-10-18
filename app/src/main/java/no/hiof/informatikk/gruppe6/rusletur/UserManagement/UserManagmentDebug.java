@@ -36,18 +36,11 @@ public class UserManagmentDebug extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_managment_debug);
-        /*+++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
     }
 
     public void myDebugButton(View view) {
-        Log.e(TAG,"---------------------------------------------------------");
-        EditText debugInput = (EditText)findViewById(R.id.debugInputToSendInToDatabase);
-        String password = debugInput.getText().toString();
 
-        User user = new User(mUser);
-        user.setEmail("alpha3@hotmail.com", password);
-        Log.e(TAG,"---------------------------------------------------------");
 
     }
 

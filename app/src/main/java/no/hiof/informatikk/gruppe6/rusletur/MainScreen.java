@@ -122,15 +122,4 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 super.onBackPressed();
             }
         }
-
-        public void goToMaps(View view) {
-            Intent intent = new Intent(MainScreen.this, MapsActivity.class);
-            //Recieves the URL from the pressed button tag-data.
-            String urlLink = view.getTag().toString();
-            Log.d(TAG,"URL LINK Recieved:" + view.getTag().toString());
-            intent.putExtra("url", urlLink);
-            startActivity(intent);
-
-        }
-
     }
