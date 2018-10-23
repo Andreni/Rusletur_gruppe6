@@ -1,9 +1,14 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +29,7 @@ import io.ticofab.androidgpxparser.parser.domain.Track;
 import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import io.ticofab.androidgpxparser.parser.task.GpxFetchedAndParsed;
+import no.hiof.informatikk.gruppe6.rusletur.Manifest;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
 
@@ -40,11 +46,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+
+        //SJEKK OM GPS STÅR PÅ
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            Toast.makeText(this, "plz turn on", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+
+        //SJEKK OM ACCESS FINE LOCATION STÅR PÅ, HVIS PÅ KJØR STARTTRACKING
+        int trackingGranted = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
+        if (trackingGranted == PackageManager.PERMISSION_GRANTED){
+            startTracking();
+        }
+        else{
+            Toast.makeText(this, "plz gimme access", Toast.LENGTH_SHORT).show();
+        }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
+
+
+    private void startTracking(){
+        startService(new Intent(this, TripTracker.class));
+        finish();
+    }
+
+
 
 
     @Override
@@ -57,6 +89,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, url);
         parseGpx(url);
     }
+
+
 
 
     public void parseGpx(String urlToGpx){
