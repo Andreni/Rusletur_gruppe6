@@ -15,7 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ApiNasjonalturbase extends AppCompatActivity{
+public class ApiNasjonalturbase{
     public static String TAG = "APICall";
 
     public static void jsonFetchTripList(Context k) {
@@ -24,12 +24,9 @@ public class ApiNasjonalturbase extends AppCompatActivity{
 
         String url = "http://dev.nasjonalturbase.no/turer?limit=1000";
 
-        Log.d(TAG, "jsonFetchTripList: KALLL2 tester");
-
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, "onResponse: KALLL2 uttafor");
                 try {
                     JSONArray jsonArray = response.getJSONArray("documents");
 
@@ -40,7 +37,6 @@ public class ApiNasjonalturbase extends AppCompatActivity{
                         String status = turer.getString("status");
                         String endret = turer.getString("endret");
                         String tilbyder = turer.getString("tilbyder");
-                        JSONObject tags  = turer.getJSONObject("tags");
                         String lisens = turer.getString("lisens");
                         String navn = turer.getString("navn");
 
@@ -49,7 +45,6 @@ public class ApiNasjonalturbase extends AppCompatActivity{
                     }
 
                 } catch (JSONException e) {
-                    Log.d(TAG, "onResponse: KALLL FAIL ");
                     e.printStackTrace();
                 }
             }
