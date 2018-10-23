@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GenerateMap;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
@@ -45,7 +46,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_screen);
-
+            ApiNasjonalturbase.jsonFetchTripList(this);
 
             //Set toolbar
             Toolbar toolbar = findViewById(R.id.toolbar);
@@ -68,6 +69,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
+
+
 
         }
 
@@ -122,4 +125,5 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 super.onBackPressed();
             }
         }
+
     }
