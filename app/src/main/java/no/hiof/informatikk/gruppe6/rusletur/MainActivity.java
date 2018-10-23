@@ -41,6 +41,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
 
     //TEST COMMENT
+    //TEST COMMENT
 
     EditText edPass;
     EditText edEmail;
