@@ -39,7 +39,7 @@ dependencies {
     api 'io.ticofab.androidgpxparser:parser:1.2.0'
     implementation 'net.danlew:android.joda:2.9.9.4'
     //Volley
-    implementation 'com.android.volley:volley:1.0.0'
+    implementation 'com.android.volley:volley:1.1.0'
 
 }
 
