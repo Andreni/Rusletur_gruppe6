@@ -36,7 +36,7 @@ public class TripsRecyclerViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.activity_main_recycleview, container, false);
+        final View view = inflater.inflate(R.layout.fragment_mainscreen_tripsview, container, false);
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
 
