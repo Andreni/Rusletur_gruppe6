@@ -10,15 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.Viewholder>{
+public class TripsRecycleViewAdapter extends RecyclerView.Adapter<TripsRecycleViewAdapter.Viewholder>{
 
     private ArrayList<String> mItem = new ArrayList<>();
     private ArrayList<String> mUrl = new ArrayList<>();
@@ -27,7 +25,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     private String selectedIndex;
 
 
-    public RecycleViewAdapter (ArrayList<String> mItem, ArrayList<String> mUrl, Context context) {
+    public TripsRecycleViewAdapter(ArrayList<String> mItem, ArrayList<String> mUrl, Context context) {
         this.context = context;
         this.mItem = mItem;
         this.mUrl = mUrl;

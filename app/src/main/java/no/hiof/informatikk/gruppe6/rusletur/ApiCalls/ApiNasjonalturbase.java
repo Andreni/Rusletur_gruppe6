@@ -22,7 +22,7 @@ public class ApiNasjonalturbase{
 
         RequestQueue mQueue = Volley.newRequestQueue(k);
 
-        String url = "http://dev.nasjonalturbase.no/turer?limit=1000";
+        String url = "http://dev.nasjonalturbase.no/turer?limit=5000";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

@@ -17,9 +17,9 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.RecycleViewAdapter;
+import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.TripsRecycleViewAdapter;
 
-public class RecyclerViewFragment extends Fragment {
+public class TripsRecyclerViewFragment extends Fragment {
 
 
     private FirebaseAuth mAuth;
@@ -55,7 +55,7 @@ public class RecyclerViewFragment extends Fragment {
         mUrl.add("https://www.ut.no/tur/2.9239/gpx");
 
 
-        RecycleViewAdapter rAdapter = new RecycleViewAdapter(mItem, mUrl, getActivity());
+        TripsRecycleViewAdapter rAdapter = new TripsRecycleViewAdapter(mItem, mUrl, getActivity());
 
         recyclerView.setAdapter(rAdapter);
 
