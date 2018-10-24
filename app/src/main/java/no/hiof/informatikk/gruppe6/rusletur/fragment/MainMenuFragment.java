@@ -47,16 +47,35 @@ public class MainMenuFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
+        //Inflate view. Basically "set" view.
         final View view = inflater.inflate(R.layout.fragment_mainscreen, container, false);
         Log.d("TESTER", "UTENFOR ONCLICK");
 
+
+
+        //Showcase Method: How to find items in fragment XML.
+        view.findViewById(R.id.mainScreen_logout_Button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         /*
-        Insert handling for main menu
+        * This is how you call methods from fragment to activity. In most cases it's easier to create the relevant methods here,
+        * except in cases where you want to create a method which more than one fragment needs.
          */
+        // ((MainScreen)getActivity()).showcaseMethod();
+
+
+
 
         return view;
 
+    }
+
+    public void showcaseMethodTwo(){
+        Log.d("MainMenuFragment", "Called method OK");
     }
 
 

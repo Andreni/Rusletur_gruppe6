@@ -36,27 +36,29 @@ public class TripsRecyclerViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //Inflate view to container
         final View view = inflater.inflate(R.layout.fragment_mainscreen_tripsview, container, false);
 
+        //Recyclerview needs to be set in a layoutmanager.
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Log.d(TAG, "onCreateView: Yee added");
 
 
-
+        //Added a few demo items for alpha.
         mItem.add("Øyer");
         mItem.add("Halden Byvandring");
         mItem.add("GAPAHUKENE");
 
+        //Adds URL to the demo items.
         mUrl.add("https://www.ut.no/tur/2.15173/gpx");
         mUrl.add("https://www.ut.no/tur/2.6916/gpx");
         mUrl.add("https://www.ut.no/tur/2.9239/gpx");
 
 
+        //Set adapter. The adapter takes three parameters (two arrays and context)
         TripsRecycleViewAdapter rAdapter = new TripsRecycleViewAdapter(mItem, mUrl, getActivity());
-
         recyclerView.setAdapter(rAdapter);
 
         return view;

@@ -35,7 +35,7 @@ public class TripsRecycleViewAdapter extends RecyclerView.Adapter<TripsRecycleVi
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem_mainscreen, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem_tripsforalpha, viewGroup, false);
         Viewholder viewholder = new Viewholder(view);
 
         return viewholder;
@@ -43,10 +43,11 @@ public class TripsRecycleViewAdapter extends RecyclerView.Adapter<TripsRecycleVi
 
     @Override
     public void onBindViewHolder(@NonNull Viewholder viewholder, final int i) {
+
+        //Set text and tag for i in both arrays.
         viewholder.item.setText(mItem.get(i));
         viewholder.item.setTag(mUrl.get(i));
         Log.d("CLICKTEST", "BINDVIEWHOLDER");
-
 
 
         //Click method for the buttons..
