@@ -44,10 +44,12 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Viewholder viewholder, final int i) {
+    public void onBindViewHolder(@NonNull final Viewholder viewholder, final int i) {
         viewholder.item.setText(mItem.get(i));
         viewholder.item.setTag(mUrl.get(i));
         Log.d("CLICKTEST", "BINDVIEWHOLDER");
+
+
 
 
 

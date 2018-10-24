@@ -48,11 +48,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
 
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+
         //SJEKK OM GPS STÅR PÅ
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             Toast.makeText(this, "plz turn on", Toast.LENGTH_SHORT).show();
-            finish();
         }
 
         //SJEKK OM ACCESS FINE LOCATION STÅR PÅ, HVIS PÅ KJØR STARTTRACKING
@@ -64,16 +69,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this, "plz gimme access", Toast.LENGTH_SHORT).show();
         }
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
 
 
     private void startTracking(){
         startService(new Intent(this, TripTracker.class));
-        finish();
+        Log.i(TAG, "startTracking is called");
     }
 
 

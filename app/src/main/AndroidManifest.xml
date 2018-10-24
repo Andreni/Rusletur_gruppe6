@@ -52,6 +52,8 @@
             android:name=".MapsAndTrips.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".UserManagement.UserManagmentDebug" />
+        <service android:name=".MapsAndTrips.TripTracker"
+            android:enabled="true"></service>
         <activity android:name=".UserManagement.UserRegistration"></activity>
     </application>
 

@@ -62,5 +62,9 @@ public class RecyclerViewFragment extends Fragment {
         return view;
     }
 
+    public void fillArrayWithTrips(){
+
+    }
+
 
 }
