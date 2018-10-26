@@ -35,7 +35,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_screen);
-            ApiNasjonalturbase.jsonFetchTripList(this);
+
+            //Retrieving trips from nasjonalturbase.no
+            ApiNasjonalturbase.jsonFetchTripList(this, 20);
 
             //Set toolbar
             Toolbar toolbar = findViewById(R.id.toolbar);

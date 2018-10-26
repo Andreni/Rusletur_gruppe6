@@ -17,24 +17,49 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ *                  ApiNasjonalturbase.java
+ */
+ /**
+ *            jsonFetchTripList(Context k, int antallSkips)
+ *
+ * Takes context and amount of skips when sending the call to get trips.
+ * Gets the 100*antallSkips amount of trips from nasjonalturbase.no
+ * Sends them to jsonFetchIdInfo(Context k, String id) to get the rest of the info needed.
+ * When finished, it writes the id, county and municipality to a file that is sorted in folders for counties.
+ * @return Returns a list of id's from nasjonalturbase.no with their county and municipality.
+ */
+ /**
+ *              jsonFetchIdInfo(Context k, String id)
+ *
+ * Takes the context and an id for a trip as argument.
+ * Reutrn the infomation needed from a trip. That info beeing:
+ * ID, navn, tidsbruk, tilbyder, kommuner, fylker, passer_for, lisens, coordinates, beskrivelse
+ * After retrieving the information, it can be dispalyed on the map or in a detailed list form.
+ * @return Returns the info of a trip with the id provided.
+ *
+ */
+
+
 public class ApiNasjonalturbase{
     public static String TAG = "APICall";
 
     public static RequestQueue mQueue;
     public static int antall = 0;
 
-    public static void jsonFetchTripList(Context k) {
+    public static void jsonFetchTripList(Context k, int antallSkip) {
 
         final Context kont = k;
         mQueue = Volley.newRequestQueue(k);
-
+        ApiNasjonalturbase.antall = 0;
         String url = "http://dev.nasjonalturbase.no/turer?limit=100&skip=";
 
         Log.d(TAG, "jsonFetchTripList: DOOOONE Start of jsonFetchTripList");
-        /*Får ut flere turer enn kun 100.
-          Kjører alle api kallene i en for løkke for å inkrementere j (skip parameteren)
+        /*Get more than a 100 trips.
+          Making tha API calls in a for loop where j is beeing incremented.
+          That increments the "skip" parameter in the url
          */
-        for (int j = 0; j < 20; j += 1) {
+        for (int j = 0; j < antallSkip; j += 1) {
             url = url + (j*100);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
@@ -45,15 +70,10 @@ public class ApiNasjonalturbase{
                             JSONObject turer = jsonArray.getJSONObject(i);
 
                             String id = turer.getString("_id");
-                        /*String status = turer.getString("status");
-                        String endret = turer.getString("endret");
-                        String tilbyder = turer.getString("tilbyder");
-                        String lisens = turer.getString("lisens");
-                        String navn = turer.getString("navn");*/
                             ApiNasjonalturbase.antall += 1;
                             Log.d(TAG, "onResponse: DOOOONE id: " + id);
-                            //ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
                             Log.d(TAG, "onResponse: DOOOONE DOOOONE3 Antall: " + ApiNasjonalturbase.antall);
+                            //ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
 
 
                         }
