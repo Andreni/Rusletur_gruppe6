@@ -21,53 +21,57 @@ public class ApiNasjonalturbase{
     public static String TAG = "APICall";
 
     public static RequestQueue mQueue;
+    public static int antall = 0;
 
     public static void jsonFetchTripList(Context k) {
 
         final Context kont = k;
         mQueue = Volley.newRequestQueue(k);
 
-        String url = "http://dev.nasjonalturbase.no/turer?limit%5000&api_key%{cb93d09a566a0ea1e6499a2be18beed87d7e2bb2&fbclid}";
+        String url = "http://dev.nasjonalturbase.no/turer?limit=100&skip=";
 
         Log.d(TAG, "jsonFetchTripList: DOOOONE Start of jsonFetchTripList");
-        
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray jsonArray = response.getJSONArray("documents");
-                    Log.d(TAG, "onResponse: DOOOONE In respons");
-                    int antall = 0;
-                    for(int i = 0; i < jsonArray.length(); i++){
-                        JSONObject turer = jsonArray.getJSONObject(i);
+        /*Får ut flere turer enn kun 100.
+          Kjører alle api kallene i en for løkke for å inkrementere j (skip parameteren)
+         */
+        for (int j = 0; j < 20; j += 1) {
+            url = url + (j*100);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray jsonArray = response.getJSONArray("documents");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject turer = jsonArray.getJSONObject(i);
 
-                        Log.d(TAG, "onResponse: DOOOONE inside for");
-                        
-                        String id = turer.getString("_id");
+                            String id = turer.getString("_id");
                         /*String status = turer.getString("status");
                         String endret = turer.getString("endret");
                         String tilbyder = turer.getString("tilbyder");
                         String lisens = turer.getString("lisens");
                         String navn = turer.getString("navn");*/
-                        antall++;
-                        Log.d(TAG, "onResponse: DOOOONE id: " + id);
-                        //ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
+                            ApiNasjonalturbase.antall += 1;
+                            Log.d(TAG, "onResponse: DOOOONE id: " + id);
+                            //ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
+                            Log.d(TAG, "onResponse: DOOOONE DOOOONE3 Antall: " + ApiNasjonalturbase.antall);
 
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    Log.d(TAG, "onResponse: DOOOONE Antall: " + antall);
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
 
-        mQueue.add(request);
+            mQueue.add(request);
 
+        }
     }
 
     public static void jsonFetchIdInfo(Context k, String id){
