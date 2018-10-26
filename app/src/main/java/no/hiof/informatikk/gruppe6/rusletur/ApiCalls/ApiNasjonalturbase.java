@@ -27,7 +27,7 @@ public class ApiNasjonalturbase{
         final Context kont = k;
         mQueue = Volley.newRequestQueue(k);
 
-        String url = "http://dev.nasjonalturbase.no/turer?limit=1";
+        String url = "http://dev.nasjonalturbase.no/turer?limit%5000&api_key%{cb93d09a566a0ea1e6499a2be18beed87d7e2bb2&fbclid}";
 
         Log.d(TAG, "jsonFetchTripList: DOOOONE Start of jsonFetchTripList");
         
@@ -37,7 +37,7 @@ public class ApiNasjonalturbase{
                 try {
                     JSONArray jsonArray = response.getJSONArray("documents");
                     Log.d(TAG, "onResponse: DOOOONE In respons");
-
+                    int antall = 0;
                     for(int i = 0; i < jsonArray.length(); i++){
                         JSONObject turer = jsonArray.getJSONObject(i);
 
@@ -49,43 +49,12 @@ public class ApiNasjonalturbase{
                         String tilbyder = turer.getString("tilbyder");
                         String lisens = turer.getString("lisens");
                         String navn = turer.getString("navn");*/
-
+                        antall++;
                         Log.d(TAG, "onResponse: DOOOONE id: " + id);
-                        ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
-                        //ApiNasjonalturbase.jsonFetchIdInfo(kont, "http://dev.nasjonalturbase.no/turer/" + id);
-
-                        /*new JsonArrayRequest(Request.Method.GET, "dev.nasjonalturbase.no/turer/"+id, null, new Response.Listener<JSONArray>() {
-                            @Override
-                            public void onResponse(JSONArray response) {
-
-                                for(int j = 0; j < response.length(); j++){
-                                    try {
-                                        JSONObject tur = response.getJSONObject(j);
-
-                                        String id = tur.getString("_id");
-                                        String beskrivelse = tur.getString("beskrivelse");
-
-                                        Log.d(TAG, "onResponse: DOOOONE: " + id);
-                                        Log.d(TAG, "onResponse: DOOOONE: " + beskrivelse);
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                }
-
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.d(TAG, "onErrorResponse: Error when retrieving id info");
-                                error.printStackTrace();
-                            }
-                        });*/
-
+                        //ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
 
                     }
-
+                    Log.d(TAG, "onResponse: DOOOONE Antall: " + antall);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -100,7 +69,7 @@ public class ApiNasjonalturbase{
         mQueue.add(request);
 
     }
-//Kommentar!!
+
     public static void jsonFetchIdInfo(Context k, String id){
         RequestQueue idQueue = Volley.newRequestQueue(k);
 
