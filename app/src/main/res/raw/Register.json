@@ -1,0 +1,11 @@
+{
+	"fylker": [{
+		"fylkenavn": "Rogaland",
+		"kommuner": [{
+			"kommunenavn": "Gjesdal",
+			"turer": [{
+				"id": "524081f9b8cb77df15000fd3"
+			}]
+		}]
+	}]
+}

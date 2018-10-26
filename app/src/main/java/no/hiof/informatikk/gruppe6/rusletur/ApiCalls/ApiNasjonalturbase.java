@@ -12,10 +12,14 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.api.Api;
+import com.google.gson.JsonParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 
 /**
  *                  ApiNasjonalturbase.java
@@ -74,7 +78,11 @@ public class ApiNasjonalturbase{
                             Log.d(TAG, "onResponse: DOOOONE id: " + id);
                             Log.d(TAG, "onResponse: DOOOONE DOOOONE3 Antall: " + ApiNasjonalturbase.antall);
                             //ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
-
+                            try {
+                                ApiNasjonalturbase.readJsonSimpleDemo("raw/Register.json");
+                            }catch (FileNotFoundException e){
+                                e.printStackTrace();
+                            }
 
                         }
 
@@ -115,6 +123,10 @@ public class ApiNasjonalturbase{
                     String id  = array.getString(0);
                     String beskrivelse = array.getString(1);
                     Log.d(TAG, "onResponse: DOOOONE DOOOONE2 Id: " + id + ". Beksirvelse: " + beskrivelse);
+
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -131,5 +143,14 @@ public class ApiNasjonalturbase{
 
         mQueue.add(request);
     }
+
+
+     public static Object readJsonSimpleDemo(String filename) throws FileNotFoundException{
+         FileReader reader = new FileReader(filename);
+         JsonParser jsonParser = new JsonParser();
+         return jsonParser.parse(reader);
+     }
+
+
 
 }
