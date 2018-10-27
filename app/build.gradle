@@ -36,6 +36,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     //Permissions
     implementation 'pub.devrel:easypermissions:1.0.1'
+    //GPX Parser
     api 'io.ticofab.androidgpxparser:parser:1.2.0'
     implementation 'net.danlew:android.joda:2.9.9.4'
     //Volley

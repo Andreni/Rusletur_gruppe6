@@ -79,7 +79,7 @@ public class ApiNasjonalturbase{
                             Log.d(TAG, "onResponse: DOOOONE DOOOONE3 Antall: " + ApiNasjonalturbase.antall);
                             //ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
                             try {
-                                ApiNasjonalturbase.readJsonSimpleDemo("raw/Register.json");
+                                ApiNasjonalturbase.readJsonSimpleDemo("raw/register.json");
                             }catch (FileNotFoundException e){
                                 e.printStackTrace();
                             }
