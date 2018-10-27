@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -73,6 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private void startTracking(){
+        //Context.startService(new Intent(this, TripTracker.class))
         startService(new Intent(this, TripTracker.class));
         Log.i(TAG, "startTracking is called");
     }
