@@ -61,6 +61,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 Intent intent = new Intent(v.getContext(), MapsActivity.class);
                 //Recieves the URL from the pressed button tag-data.
                 String urlLink = v.getTag().toString();
+                boolean a = true;
                 intent.putExtra("url", urlLink);
                 v.getContext().startActivity(intent);
 

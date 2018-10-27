@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
@@ -96,6 +99,25 @@ public class User {
             }
         });
     }
+    /*
+        Saves the trip like this:
+        user
+           |-Trip
+               |-Tripname
+                    |-LatLng1
+                    |-LatLng2
+                    |-LatLng3
 
+     */
+    public void addTrip(ArrayList<LatLng> trip, String tripName) {
+        for(LatLng coords : trip) {
+            uidRef.child("trip").child(tripName).setValue(coords);
+        }
+    }
+    //TODO
+    // 1. Change return value to array<LatLng>. Get tab length.
+    public String getTrip(String tripName) {
+        return uidRef.child("trip").child(tripName).getKey();
+    }
 
 }
