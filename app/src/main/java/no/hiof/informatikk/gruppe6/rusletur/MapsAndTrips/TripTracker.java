@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.app.IntentService;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -25,16 +27,30 @@ import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import static java.lang.Double.valueOf;
 
 
-public class TripTracker extends Service {
+public class TripTracker extends IntentService {
 
     private LocationRequest locationRequest;
     public static ArrayList<LatLng> tempLocationArray;
     private LocationCallback locationCallback;
     public ArrayList<LatLng> locationArray;
 
+    /**
+     * Creates an IntentService.  Invoked by your subclass's constructor.
+     *
+     * @param name Used to name the worker thread, important only for debugging.
+     */
+    public TripTracker(String name) {
+        super(name);
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+
     }
 
     @Override
