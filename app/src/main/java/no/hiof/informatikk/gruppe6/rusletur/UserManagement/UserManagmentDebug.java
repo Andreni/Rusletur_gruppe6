@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur.UserManagement;
 
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
@@ -40,7 +42,11 @@ public class UserManagmentDebug extends AppCompatActivity {
     }
 
     public void myDebugButton(View view) {
-
+        LocationHandler.forceUpdateOfCurrentLocation(this);
+        Location currentLocation = LocationHandler.getCurrentLocation();
+        if(currentLocation != null) {
+            Log.d(TAG, "Lat: " + currentLocation.getLatitude() + " Lon; " + currentLocation.getLongitude());
+        }
 
     }
 

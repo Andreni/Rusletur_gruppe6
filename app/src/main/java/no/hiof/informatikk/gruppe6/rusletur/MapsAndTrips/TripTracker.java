@@ -1,9 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import android.app.IntentService;
-import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -33,6 +30,11 @@ public class TripTracker extends IntentService {
     public static ArrayList<LatLng> tempLocationArray;
     private LocationCallback locationCallback;
     public ArrayList<LatLng> locationArray;
+
+    public TripTracker(String name, LocationRequest locationRequest) {
+        super(name);
+        this.locationRequest = locationRequest;
+    }
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
