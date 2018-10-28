@@ -96,12 +96,14 @@ public class Trips extends AppCompatActivity  {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String fylkeSelected;
-
+                    //If the position is 0, nothing is selected
                     if (position==0){
                         spinnerKommune.setVisibility(View.INVISIBLE);
 
                     }
                     else if(kommuneListLoaded){
+                        //If there already is loaded a kommunelist, set the kommunespinner
+                        //selection to zero
                         spinnerKommune.setVisibility(View.VISIBLE);
                         spinnerKommune.setSelection(0);
                         setupKommuneSpinner(position);
@@ -109,6 +111,8 @@ public class Trips extends AppCompatActivity  {
                     }
 
                     else{
+                        //When a valid selection is made, pass the positon for the method,
+                        //so the proper kommunelist can be loaded from the fylke.
                         spinnerKommune.setVisibility(View.VISIBLE);
                         setupKommuneSpinner(position);
                         fylkeListLoaded = true;
@@ -116,7 +120,7 @@ public class Trips extends AppCompatActivity  {
                     }
 
             }
-
+            //Not in use
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -127,10 +131,15 @@ public class Trips extends AppCompatActivity  {
     }
 
 
-
+    //Load the kommunespinner
     public void setupKommuneSpinner(Integer positonFylke){
         //Load Kommuner from array
-        ArrayAdapter<Kommune> arrayAdapterKommune = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,FylkeList.getRegisterForFylke().get(positonFylke).getKommuneArrayList());
+        //Setup adapter for loading Kommune objects
+        ArrayAdapter<Kommune> arrayAdapterKommune =
+                new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,
+                FylkeList.getRegisterForFylke()
+                        .get(positonFylke)
+                        .getKommuneArrayList());
         arrayAdapterKommune.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinnerKommune.setAdapter(arrayAdapterKommune);
 
@@ -145,6 +154,7 @@ public class Trips extends AppCompatActivity  {
 
                     }else{
                         kommuneListLoaded = true;
+                        //Send the position so we can start a search based on all the valid ids
                         fetchIds(position);
                     }
             }
@@ -158,7 +168,7 @@ public class Trips extends AppCompatActivity  {
     }
 
 
-
+    
     public void fetchIds(Integer kommunePosition){
         Toast.makeText(this,"Search started" + kommunePosition,Toast.LENGTH_SHORT).show();
 
