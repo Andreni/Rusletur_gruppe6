@@ -11,60 +11,80 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
+import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
+import no.hiof.informatikk.gruppe6.rusletur.Model.IdForTur;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 
-public class Trips extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    ArrayList<String> mySpinnerArray = new ArrayList<>();
+/**
+ * Class for selection of available trips for the user
+ * Sends a call to start downloading register.json
+ * Takes backs generated objects and populates the spinners with them
+ */
+public class Trips extends AppCompatActivity  {
     Spinner spinnerKommune;
     Spinner spinnerFylke;
     ArrayList<String> mySpinnerArrayk = new ArrayList<>();
     Boolean kommuneListLoaded = false;
     Boolean fylkeListLoaded = false;
+    String TAG = "TRIPS";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
-        mySpinnerArray.add("Valg:");
-        mySpinnerArray.add("Ostfold");
-        mySpinnerArray.add("Rogaland");
         mySpinnerArrayk.add("Valg:");
         mySpinnerArrayk.add("Ostfold");
         mySpinnerArrayk.add("Rogaland");
 
-        /*//Find avalible *Fylke* from JSON file
-        //Send call to downloader.
-        //Populate fylke oversikt.
 
-        LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(this);
-        lookUpRegisterNasjonalTurbase.execute("Go");
 
-        //Populate spinner that contains the "FylkeOversikt"
-        for(int i=0;i<lookUpRegisterNasjonalTurbase.getFylkeOversikt().size();i++){
+        /* How to:
+        //Make new register:
+        //Top register name aka FylkeListe
+        FylkeList aFylkeList = new FylkeList("Listen");
+        //Add a new Fylke to the list
+        aFylkeList.addFylkeToList(new Fylke("Rogland"));
+        //To the excisting fylke, add a "Kommune"
+        aFylkeList.getRegisterForFylke().get(0).addKommuneForFylke(new Kommune("Strand"));
+        aFylkeList.getRegisterForFylke().get(0).getKommuneArrayList().get(0).addIdForKommune(new IdForTur("sda"));
+        */
 
-            //Cycle through all Fylker
-            lookUpRegisterNasjonalTurbase.getFylkeOversikt().get(i);
-            //Add to spinner list item
+        setUpDummyData();
 
-        }
 
-        //onselect listner for fylke spinner.
+    }
 
-        String selectedFylke = "";
-        lookUpRegisterNasjonalTurbase.execute(selectedFylke);
-        //Send new call
-        //When selection is made, enable kommune spinner. */
+    public void setUpDummyData(){
+        //Make 2 Fylker
+        FylkeList aList = new FylkeList("Register");
+        aList.addFylkeToList(new Fylke("Valg:"));
+        aList.addFylkeToList(new Fylke("Østfold"));
+        aList.addFylkeToList(new Fylke("Rogaland"));
 
-        setUpFylkeSpinner();
+        //Østfold
+        aList.getRegisterForFylke().get(1).addKommuneForFylke(new Kommune("Valg:"));
+        aList.getRegisterForFylke().get(1).addKommuneForFylke(new Kommune("Halden"));
+        aList.getRegisterForFylke().get(1).addKommuneForFylke(new Kommune("Moss"));
+        aList.getRegisterForFylke().get(1).getKommuneArrayList().get(0).addIdForKommune(new IdForTur("Hiof"));
+        aList.getRegisterForFylke().get(1).getKommuneArrayList().get(1).addIdForKommune(new IdForTur("Mosseporten"));
+
+        //Rogaland
+        aList.getRegisterForFylke().get(2).addKommuneForFylke(new Kommune("Valg:"));
+        aList.getRegisterForFylke().get(2).addKommuneForFylke(new Kommune("Stavanger"));
+        aList.getRegisterForFylke().get(2).addKommuneForFylke(new Kommune("Sandnes"));
+        aList.getRegisterForFylke().get(2).getKommuneArrayList().get(1).addIdForKommune(new IdForTur("Harfsfjord"));
+
+        setUpFylkeSpinner(aList);
 
     }
 
     //Initalize the fylke dropdown menu
-    public void setUpFylkeSpinner(){
+    public void setUpFylkeSpinner(FylkeList alist){
         spinnerFylke = findViewById(R.id.tripsA_SelectFylke_spinner);
         //Load fylker from array
-        ArrayAdapter<String> arrayAdapterFylke = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,mySpinnerArray);
+        ArrayAdapter<Fylke> arrayAdapterFylke = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,alist.getRegisterForFylke());
         arrayAdapterFylke.setDropDownViewResource(android.R.layout.simple_list_item_1);
 
         spinnerFylke.setAdapter(arrayAdapterFylke);
@@ -82,13 +102,15 @@ public class Trips extends AppCompatActivity implements AdapterView.OnItemSelect
 
                     }
                     else if(kommuneListLoaded){
-                        //fylkeSelected = getSelectedFylke
+                        spinnerKommune.setVisibility(View.VISIBLE);
+                        spinnerKommune.setSelection(0);
+                        setupKommuneSpinner(position);
 
                     }
 
                     else{
                         spinnerKommune.setVisibility(View.VISIBLE);
-                        setupKommuneSpinner(parent.getItemAtPosition(position).toString());
+                        setupKommuneSpinner(position);
                         fylkeListLoaded = true;
 
                     }
@@ -104,23 +126,18 @@ public class Trips extends AppCompatActivity implements AdapterView.OnItemSelect
 
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        //Selection statement for Fylke spinner
 
 
-
-    }
-
-    public void setupKommuneSpinner(String fylke){
+    public void setupKommuneSpinner(Integer positonFylke){
         //Load Kommuner from array
-        ArrayAdapter<String> arrayAdapterKommune = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,mySpinnerArrayk);
+        ArrayAdapter<Kommune> arrayAdapterKommune = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,FylkeList.getRegisterForFylke().get(positonFylke).getKommuneArrayList());
         arrayAdapterKommune.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinnerKommune.setAdapter(arrayAdapterKommune);
+
         spinnerKommune.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //Selection statement for Kommune spinner
+                //Selection statement for K spinner
 
                 int lastPosition = position;
 
@@ -128,7 +145,7 @@ public class Trips extends AppCompatActivity implements AdapterView.OnItemSelect
 
                     }else{
                         kommuneListLoaded = true;
-                        fetchIds();
+                        fetchIds(position);
                     }
             }
 
@@ -140,13 +157,10 @@ public class Trips extends AppCompatActivity implements AdapterView.OnItemSelect
         });
     }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
 
-    }
 
-    public void fetchIds(){
-        Toast.makeText(this,"Search started",Toast.LENGTH_SHORT).show();
+    public void fetchIds(Integer kommunePosition){
+        Toast.makeText(this,"Search started" + kommunePosition,Toast.LENGTH_SHORT).show();
 
     }
 }
