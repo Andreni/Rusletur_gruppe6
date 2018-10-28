@@ -31,7 +31,6 @@ import no.hiof.informatikk.gruppe6.rusletur.Trips;
  * Should be called upon on a separate thread
  */
 public class LookUpRegisterNasjonalTurbase {
-    private String urlForRegister = "";
 
     private ArrayList<String> fylkeOversikt = new ArrayList<>();
     private ArrayList<String> kommuneOversikt = new ArrayList<>();
@@ -54,7 +53,7 @@ public class LookUpRegisterNasjonalTurbase {
         FylkeList aRegister = new FylkeList("ListForId");
         //add dummy element to list
         aRegister.addFylkeToList(new Fylke("Valg:"));
-        FylkeList.getRegisterForFylke().get(0).addKommuneForFylke(new Kommune("Valg:"));
+
         Log.d(TAG,"Startingdownload");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlForRegister,
                 null, new com.android.volley.Response.Listener<JSONObject>() {
@@ -72,7 +71,7 @@ public class LookUpRegisterNasjonalTurbase {
                         Log.d(TAG,aFylkeName);
                         //Create all "Fylke" objects
                         FylkeList.getFylkeListArrayList().get(0).addFylkeToList(new Fylke(aFylkeName));
-
+                        FylkeList.getRegisterForFylke().get(i+1).addKommuneForFylke(new Kommune("Valg:"));
                         //Once the "Fylke object is created add "Kommune"
                         //Get all kommune objects appended to the choosen "Fylke"
                         JSONArray jsonArrayKommune = response.getJSONArray("fylker")
@@ -93,7 +92,7 @@ public class LookUpRegisterNasjonalTurbase {
                             //Once the "Kommune" object is created add relevant ids
                             //Get all ids objects appended to the choosen "Kommune"
                             JSONArray jsonArrayIds = response.getJSONArray("fylker")
-                                    .getJSONObject(i+1)
+                                    .getJSONObject(i)
                                     .getJSONArray("kommuner").getJSONObject(j)
                                     .getJSONArray("turer");
 
