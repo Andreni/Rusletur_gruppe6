@@ -50,7 +50,7 @@ public class ApiNasjonalturbase{
 
     public static RequestQueue mQueue;
     public static int antall = 0;
-
+    /*
     public static void jsonFetchTripList(Context k, int antallSkip) {
 
         final Context kont = k;
@@ -62,7 +62,7 @@ public class ApiNasjonalturbase{
         /*Get more than a 100 trips.
           Making tha API calls in a for loop where j is beeing incremented.
           That increments the "skip" parameter in the url
-         */
+         */ /*
         for (int j = 0; j < antallSkip; j += 1) {
             url = url + (j*100);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -152,5 +152,5 @@ public class ApiNasjonalturbase{
      }
 
 
-
+*/
 }

@@ -10,9 +10,12 @@ import java.util.ArrayList;
 public class FylkeList {
     String nameForRegister;
     static ArrayList<Fylke> registerForFylke = new ArrayList<>();
+    static ArrayList<FylkeList> fylkeListArrayList = new ArrayList<>();
 
     public FylkeList(String nameForRegister) {
         this.nameForRegister = nameForRegister;
+
+        fylkeListArrayList.add(this);
     }
 
     public void addFylkeToList(Fylke aFylke){
@@ -27,5 +30,7 @@ public class FylkeList {
         return registerForFylke;
     }
 
-
+    public static ArrayList<FylkeList> getFylkeListArrayList() {
+        return fylkeListArrayList;
+    }
 }

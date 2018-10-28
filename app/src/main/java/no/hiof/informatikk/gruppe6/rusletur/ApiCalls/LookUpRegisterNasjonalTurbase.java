@@ -33,7 +33,8 @@ import no.hiof.informatikk.gruppe6.rusletur.Trips;
 public class LookUpRegisterNasjonalTurbase {
     private RequestQueue mQueue;
     private Context currentContext;
-    private String urlForRegister = "";
+    private String urlForRegister = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3_2Tq7QAEoM5ugLuRP37chMdF13Eks5b3xfuwA%3D%3D";
+    String TAG = "JSON";
 
 
     //Constructor for creating downloader
@@ -45,25 +46,28 @@ public class LookUpRegisterNasjonalTurbase {
 
      */
     public void createObjectsFromRegister() {
-        final FylkeList aRegister = new FylkeList("ListForId");
+        mQueue = Volley.newRequestQueue(currentContext);
+        FylkeList aRegister = new FylkeList("ListForId");
         //add dummy element to list
         aRegister.addFylkeToList(new Fylke("Valg:"));
-
+        FylkeList.getRegisterForFylke().get(0).addKommuneForFylke(new Kommune("Valg:"));
+        Log.d(TAG,"Startingdownload");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlForRegister,
                 null, new com.android.volley.Response.Listener<JSONObject>() {
         //Build register File
 
             @Override
             public void onResponse(JSONObject response) {
+                Log.d(TAG,"Response");
                 try {
                     JSONArray jsonArrayFylke = response.getJSONArray("fylker");
                     for (int i = 0; i < jsonArrayFylke.length(); i++) {
                         JSONObject fylkename = jsonArrayFylke.getJSONObject(i);
 
                         String aFylkeName = fylkename.getString("fylkenavn");
-
+                        Log.d(TAG,aFylkeName);
                         //Create all "Fylke" objects
-                        aRegister.addFylkeToList(new Fylke(aFylkeName));
+                        FylkeList.getFylkeListArrayList().get(0).addFylkeToList(new Fylke(aFylkeName));
 
                         //Once the "Fylke object is created add "Kommune"
                         //Get all kommune objects appended to the choosen "Fylke"
@@ -76,6 +80,7 @@ public class LookUpRegisterNasjonalTurbase {
 
                             //String to hold the current "Kommune"
                             String aKommuneName = kommuneName.getString("kommunenavn");
+                            Log.d(TAG,aKommuneName);
                             //Create the "Kommune" object in the corresponding "Fylke"
                             //Add +1 to the increment loop to account for the dummy object
                             FylkeList.getRegisterForFylke().get(i+1)
@@ -84,13 +89,14 @@ public class LookUpRegisterNasjonalTurbase {
                             //Once the "Kommune" object is created add relevant ids
                             //Get all ids objects appended to the choosen "Kommune"
                             JSONArray jsonArrayIds = response.getJSONArray("fylker")
-                                    .getJSONObject(i)
+                                    .getJSONObject(i+1)
                                     .getJSONArray("kommuner").getJSONObject(j)
                                     .getJSONArray("turer");
 
-                            for (int k = 0; j < jsonArrayIds.length(); k++){
-                                JSONObject idName = jsonArrayKommune.getJSONObject(k);
+                            for (int k = 0; k < jsonArrayIds.length(); k++){
+                                JSONObject idName = jsonArrayIds.getJSONObject(k);
                                 String aIdName = idName.getString("id");
+                                Log.d(TAG,aIdName);
                                 FylkeList.getRegisterForFylke().get(i+1)
                                         .getKommuneArrayList()
                                         .get(j).addIdForKommune(new IdForTur(aIdName));
@@ -114,7 +120,8 @@ public class LookUpRegisterNasjonalTurbase {
             }
         });
 
-        mQueue.add(request);
 
+        mQueue.add(request);
     }
+
 }

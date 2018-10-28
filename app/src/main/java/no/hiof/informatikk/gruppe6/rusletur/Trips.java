@@ -24,7 +24,6 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 public class Trips extends AppCompatActivity  {
     Spinner spinnerKommune;
     Spinner spinnerFylke;
-    ArrayList<String> mySpinnerArrayk = new ArrayList<>();
     Boolean kommuneListLoaded = false;
     Boolean fylkeListLoaded = false;
     String TAG = "TRIPS";
@@ -35,9 +34,19 @@ public class Trips extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
 
-        setUpDummyData();
+        //setUpDummyData();
         //Start downloading of registor.json
         //Make objects on seperate thread
+
+        loadLists();
+    }
+
+    public void loadLists(){
+        LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(this);
+        lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
+
+        setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
+
     }
 
 
@@ -156,7 +165,7 @@ public class Trips extends AppCompatActivity  {
         aList.getRegisterForFylke().get(2).addKommuneForFylke(new Kommune("Sandnes"));
         aList.getRegisterForFylke().get(2).getKommuneArrayList().get(1).addIdForKommune(new IdForTur("Harfsfjord"));
 
-        setUpFylkeSpinner(aList);
+        //setUpFylkeSpinner(aList);
 
     }
 }
