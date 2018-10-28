@@ -34,26 +34,10 @@ public class Trips extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
-        mySpinnerArrayk.add("Valg:");
-        mySpinnerArrayk.add("Ostfold");
-        mySpinnerArrayk.add("Rogaland");
-
-
-
-        /* How to:
-        //Make new register:
-        //Top register name aka FylkeListe
-        FylkeList aFylkeList = new FylkeList("Listen");
-        //Add a new Fylke to the list
-        aFylkeList.addFylkeToList(new Fylke("Rogland"));
-        //To the excisting fylke, add a "Kommune"
-        aFylkeList.getRegisterForFylke().get(0).addKommuneForFylke(new Kommune("Strand"));
-        aFylkeList.getRegisterForFylke().get(0).getKommuneArrayList().get(0).addIdForKommune(new IdForTur("sda"));
-        */
 
         setUpDummyData();
-
-
+        //Start downloading of registor.json
+        //Make objects on seperate thread
     }
 
     public void setUpDummyData(){
@@ -168,7 +152,7 @@ public class Trips extends AppCompatActivity  {
     }
 
 
-    
+
     public void fetchIds(Integer kommunePosition){
         Toast.makeText(this,"Search started" + kommunePosition,Toast.LENGTH_SHORT).show();
 
