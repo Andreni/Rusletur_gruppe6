@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
+import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ReadFromFileFromUrl;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
@@ -36,7 +37,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_screen);
 
+            //Retrieving trips from nasjonalturbase.no
+            //ApiNasjonalturbase.jsonFetchTripList(this, 20);
 
+            ReadFromFileFromUrl.getFile(this);
 
             //Set toolbar
             Toolbar toolbar = findViewById(R.id.toolbar);

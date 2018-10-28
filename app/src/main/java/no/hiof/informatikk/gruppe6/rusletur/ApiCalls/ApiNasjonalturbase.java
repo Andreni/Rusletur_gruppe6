@@ -103,7 +103,6 @@ public class ApiNasjonalturbase{
     }
 
     public static void jsonFetchIdInfo(Context k, String id){
-        RequestQueue idQueue = Volley.newRequestQueue(k);
 
         String url = "http://dev.nasjonalturbase.no/turer/" + id;
 

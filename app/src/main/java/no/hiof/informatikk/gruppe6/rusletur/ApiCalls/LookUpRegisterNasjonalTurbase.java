@@ -31,11 +31,15 @@ import no.hiof.informatikk.gruppe6.rusletur.Trips;
  * Should be called upon on a separate thread
  */
 public class LookUpRegisterNasjonalTurbase {
+    private String urlForRegister = "";
+
+    private ArrayList<String> fylkeOversikt = new ArrayList<>();
+    private ArrayList<String> kommuneOversikt = new ArrayList<>();
+    private ArrayList<String> idsOversikt = new ArrayList<>();
     private RequestQueue mQueue;
     private Context currentContext;
     private String urlForRegister = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3_2Tq7QAEoM5ugLuRP37chMdF13Eks5b3xfuwA%3D%3D";
     String TAG = "JSON";
-
 
     //Constructor for creating downloader
     public LookUpRegisterNasjonalTurbase(Context currentContext) {
