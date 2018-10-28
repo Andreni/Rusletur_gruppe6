@@ -53,8 +53,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     static final String GPXLOG = "GPXLOG";
     static final String TAG = "MapsActivity";
-    private LatLng tripStartLocation = null;
+    private LatLng currentPosition = new LatLng(0,0);
+    protected static LatLng tripStartLocation = null;
     private ArrayList<LatLng> markerpoints;
+    //Checking if current trip is a new trip.
+    private boolean isNewTrip = true;
 
 
     GPXParser mParser = new GPXParser(); // consider injection
@@ -86,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(this, "plz gimme access", Toast.LENGTH_SHORT).show();
         }
         //Log.d(TAG,"BEFORE showPathToTripFromCurrentPosition, startLocation: " +  tripStartLocation.latitude);
-        showPathToTripFromCurrentPosition();
+
 
     }
 
@@ -103,10 +106,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if(LocationHandler.CURRENT_LOCATION_IS_SET) {
             Log.d(TAG," [0] Current location is set");
-            //LatLng currentPosition = new LatLng(LocationHandler.getCurrentLocation().getLatitude(), LocationHandler.getCurrentLocation().getLongitude());
-            LatLng currentPosition = new LatLng(61.28001, 10.361595);
-            tripStartLocation = new LatLng(59.123771, 11.3871454);
-            Log.d(TAG,"Lon: " + tripStartLocation.longitude);
+            currentPosition = new LatLng(LocationHandler.getCurrentLocation().getLatitude(), LocationHandler.getCurrentLocation().getLongitude());
             try {
                 String url = getDirectionsUrl(currentPosition, tripStartLocation);
                 DownloadTask downloadTask = new DownloadTask();
@@ -143,7 +143,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Display trip
         String url = getIntent().getStringExtra("url");
         Log.d(TAG, url);
-        //parseGpx(url);
+        parseGpx(url);
     }
 
 
@@ -164,11 +164,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 String tripTitleName = null;
                 if (gpx == null) {
                     // error parsing track
-                    Log.d(TAG, "onGpxFetchedAndParsed: Error parsing GPX");
+                    Log.e(TAG, "onGpxFetchedAndParsed: Error parsing GPX");
                 }
                 else {
                     if (mParser != null) {
-
+                        Log.d(TAG, "mParser is not null, parsing instantiated ");
                         Track track = gpx.getTracks().get(0);
                         tripTitleName = track.getTrackName();
                         List<TrackSegment> segments = track.getTrackSegments();
@@ -176,7 +176,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             TrackSegment segment = segments.get(j);
 
                             //Registers the first polylines at the start of the trip, this will be used in the addMarker.
-                            tripStartLocation = new LatLng(segment.getTrackPoints().get(0).getLatitude(), segment.getTrackPoints().get(0).getLongitude());
+                            if(j == 0) {
+                                setTripStartLocation( new LatLng(segments.get(j).getTrackPoints().get(0).getLatitude(), segments.get(j).getTrackPoints().get(0).getLongitude()));
+                            }
                             for (TrackPoint trackPoint : segment.getTrackPoints()) {
                                 options.add(new LatLng(trackPoint.getLatitude(), trackPoint.getLongitude()));
 
@@ -185,7 +187,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         //Place a marker on the map
                         mMap.addMarker(new MarkerOptions().position(tripStartLocation).title(tripTitleName));
                         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartLocation, 15, 0, 0)));
-                        Log.e(TAG,"Lat: " + tripStartLocation.latitude + " Lon: " + tripStartLocation.longitude);
+                        Log.d(TAG, "Start location is set to: " + tripStartLocation.toString());
+                        Log.d(TAG,"Lat: " + tripStartLocation.latitude + " Lon: " + tripStartLocation.longitude);
 
                         //Polylines options
                         options.color(Color.GREEN);
@@ -199,6 +202,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         });
+        try {
+            Log.d(TAG, "LatLng: " + tripStartLocation.toString());
+        } catch (NullPointerException e) {
+            Log.e(TAG,"tripStartLocation is NULL \n" + e.toString());
+        }
+        showPathToTripFromCurrentPosition();
+    }
+    public void setTripStartLocation(LatLng pos) {
+        tripStartLocation = pos;
     }
 
     //To download the JSON file
@@ -348,7 +360,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Adding all the points in the route to LineOptions
                 lineOptions.addAll(points);
                 lineOptions.width(2);
-                lineOptions.color(Color.RED);
+                lineOptions.color(Color.BLUE);
             }
 
 

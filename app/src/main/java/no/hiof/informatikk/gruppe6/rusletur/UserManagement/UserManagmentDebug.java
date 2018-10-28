@@ -17,8 +17,11 @@ import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.R;
@@ -42,11 +45,21 @@ public class UserManagmentDebug extends AppCompatActivity {
     }
 
     public void myDebugButton(View view) {
-        LocationHandler.forceUpdateOfCurrentLocation(this);
-        Location currentLocation = LocationHandler.getCurrentLocation();
-        if(currentLocation != null) {
-            Log.d(TAG, "Lat: " + currentLocation.getLatitude() + " Lon; " + currentLocation.getLongitude());
-        }
+        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("user");
+        Log.d(TAG, "Ref: \n" + zonesRef.toString());
+        zonesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
+                    Log.d(TAG, "Email: " + (String)zoneSnapshot.child("email").getValue());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
