@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,7 +24,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
@@ -41,25 +46,17 @@ public class UserManagmentDebug extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_managment_debug);
+        LatLng test = FirebaseHandler.getStartLocationOfTrip("Strandpromenaden langs Lågen i Øyer");
 
     }
 
     public void myDebugButton(View view) {
-        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("user");
-        Log.d(TAG, "Ref: \n" + zonesRef.toString());
-        zonesRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
-                    Log.d(TAG, "Email: " + (String)zoneSnapshot.child("email").getValue());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        LatLng test = FirebaseHandler.getStartLocationOfTrip("Strandpromenaden langs Lågen i Øyer");
+        try {
+            Log.d(TAG, "Returned with: " + test.toString());
+        } catch (NullPointerException e) {
+            Log.e(TAG, "Returend null..\n" + e.toString());
+        }
 
     }
 
