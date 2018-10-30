@@ -41,6 +41,7 @@ public class ApiNasjonalturbase {
      //public static RequestQueue mQueue;
      public static int antall = 0;
      static RequestQueue mQueue;
+     static Trip trip;
 
      //public static ArrayList<Trip> getTrips(String fylke, final String kommune, Context context) {
 
@@ -91,9 +92,8 @@ public class ApiNasjonalturbase {
 
     }*/
 
+         public static Trip getTripInfo(String idForTrip, Context context){
 
-         public static ArrayList<Trip> getTripInfo(String idForTrip,Context context){
-             final ArrayList<Trip> tripsList = new ArrayList<>();
              mQueue = Volley.newRequestQueue(context);
 
              //for (int i = 0; i < ID.size(); i++){
@@ -133,7 +133,7 @@ public class ApiNasjonalturbase {
                              }
                          }
 
-                         tripsList.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng));
+                         trip = new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng);
 
                      } catch (JSONException e) {
                          e.printStackTrace();
@@ -149,7 +149,7 @@ public class ApiNasjonalturbase {
              //}
 
 
-             return tripsList;
+             return trip;
          }
 
      }

@@ -34,6 +34,7 @@ public class Trips extends AppCompatActivity  {
     String TAG = "TRIPS";
     int selectionFylke = 0;
     int selectionKommune = 0;
+    ArrayList<Trip> turer = new ArrayList<>();
 
 
     @Override
@@ -174,7 +175,7 @@ public class Trips extends AppCompatActivity  {
                             .get(selectionKommune)
                             .getIdForTurArrayList().get(i).getIdForTur();
                     //Pass the id to the API class to build a trip object from it
-                    ApiNasjonalturbase.getTripInfo(selection,Trips.this);
+                    turer.add(ApiNasjonalturbase.getTripInfo(selection,Trips.this));
             }
             }
 
