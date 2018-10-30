@@ -38,8 +38,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position, @NonNull List<Object> payloads) {
-        super.onBindViewHolder(holder, position, payloads);
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         holder.itemNavn.setText(mItem.get(position).getNavn());
         holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
@@ -56,7 +55,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mItem.size();
     }
 
 
