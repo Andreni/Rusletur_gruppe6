@@ -10,7 +10,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
  */
 public class DisplayAtrip extends AppCompatActivity {
 
-    private Trip aTrip
+    private Trip aTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -24,9 +24,9 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
     final String TAG = "RecyclerViewAdapterLogT";
 
     public MainTripRecyclerViewAdapter(Context kont, ArrayList<Trip> turer){
-        Log.d(TAG, "MainTripRecyclerViewAdapter: " + turer.size());
         this.mItem = turer;
         this.mContext = kont;
+        Log.d(TAG, "MainTripRecyclerViewAdapter: top " + turer.size());
     }
 
 
@@ -45,9 +45,12 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         Log.d(TAG, "onBindViewHolder: created");
-        holder.itemNavn.setText(mItem.get(position).getNavn());
-        holder.itemTidsbruk.setText("TEST");
-        holder.itemGradering.setText("TEST");
+        if(mItem.get(0) != null){
+            holder.itemNavn.setText(mItem.get(position).getNavn());
+            holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
+            holder.itemGradering.setText(mItem.get(position).getGradering());
+        }
+
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override

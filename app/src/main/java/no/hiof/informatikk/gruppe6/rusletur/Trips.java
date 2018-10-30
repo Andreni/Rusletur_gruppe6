@@ -38,7 +38,7 @@ public class Trips extends AppCompatActivity  {
     String TAG = "TRIPS";
     int selectionFylke = 0;
     int selectionKommune = 0;
-    ArrayList<Trip> turer;
+    private ArrayList<Trip> turer = new ArrayList<>();
 
 
     @Override
@@ -46,7 +46,6 @@ public class Trips extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
 
-        turer = new ArrayList<>();
         loadLists();
     }
 
@@ -59,9 +58,6 @@ public class Trips extends AppCompatActivity  {
                 setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
             }
         }).run();
-
-
-
 
     }
 
@@ -147,8 +143,8 @@ public class Trips extends AppCompatActivity  {
                         //Send the position so we can start a search based on all the valid ids
                         fetchIds();
                     }
-                Log.d(TAG, "onItemSelected: " + turer.size());
-                initRecyclerView();
+                Log.d(TAG, "onItemSelected: " + turer.toString());
+
             }
 
 
@@ -165,29 +161,26 @@ public class Trips extends AppCompatActivity  {
      * When a valid id (Not 0 and 0) are chosen for Fylke and kommune. Fetch the valid ids
      * stored on the kommune object, and pass them to the recycler view
      */
-    public void fetchIds(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //Loop to cycle to all ids stored on Kommune object chosen
-                for(int i=0;i<FylkeList.getRegisterForFylke()
-                        .get(selectionFylke)
-                        .getKommuneArrayList()
-                        .get(selectionKommune)
-                        .getIdForTurArrayList().size();i++){
-                    //Fetch the id that is to be made an object from.
-                    String selection = FylkeList.getRegisterForFylke()
-                            .get(selectionFylke)
-                            .getKommuneArrayList()
-                            .get(selectionKommune)
-                            .getIdForTurArrayList().get(i).getIdForTur();
-                    //Pass the id to the API class to build a trip object from it
-                    turer.add(ApiNasjonalturbase.getTripInfo(selection,Trips.this));
-            }
-            }
+    public void fetchIds() {
+        //Loop to cycle to all ids stored on Kommune object chosen
+        for(int i = 0; i < FylkeList.getRegisterForFylke()
+                .get(selectionFylke)
+                .getKommuneArrayList()
+                .get(selectionKommune)
+                .getIdForTurArrayList().size(); i++) {
+            //Fetch the id that is to be made an object from.
+            String selection = FylkeList.getRegisterForFylke()
+                    .get(selectionFylke)
+                    .getKommuneArrayList()
+                    .get(selectionKommune)
+                    .getIdForTurArrayList().get(i).getIdForTur();
+            //Pass the id to the API class to build a trip object from it
+            Log.d(TAG, "fetchIds: Addede to turer");
+            turer.add(ApiNasjonalturbase.getTripInfo(selection, this));
 
+        }
 
-        }).run();
+        initRecyclerView();
 
         //TODO Pass object to recycler class
     }
@@ -211,7 +204,7 @@ public class Trips extends AppCompatActivity  {
 
         if(turer.size() != 0){
             Log.d(TAG, "initRecyclerView: Størrelsen er større enn 0");
-            Log.d(TAG, "initRecyclerView: " + turer.size());
+            Log.d(TAG, "initRecyclerView: " + turer.toString());
             RecyclerView recyclerView = findViewById(R.id.tripsRecyclerView);
             MainTripRecyclerViewAdapter adapter = new MainTripRecyclerViewAdapter(this, turer);
 

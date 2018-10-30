@@ -150,8 +150,8 @@ public class ApiNasjonalturbase {
                      error.printStackTrace();
                  }
              });
-             //}
 
+             mQueue.add(request);
 
              return trip;
          }
