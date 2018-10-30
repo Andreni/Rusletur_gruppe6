@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONObject;
 
@@ -46,6 +47,7 @@ import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import io.ticofab.androidgpxparser.parser.task.GpxFetchedAndParsed;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -57,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected static LatLng tripStartLocation = null;
     private ArrayList<LatLng> markerpoints;
     //Checking if current trip is a new trip.
-    private boolean isNewTrip = true;
+    private boolean AddTrip = false;
 
 
     GPXParser mParser = new GPXParser(); // consider injection
@@ -173,18 +175,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.d(TAG, "mParser is not null, parsing instantiated ");
                         Track track = gpx.getTracks().get(0);
                         tripTitleName = track.getTrackName();
+                        ArrayList<LatLng> saveList = new ArrayList<>();
                         List<TrackSegment> segments = track.getTrackSegments();
                         for (int j = 0; j < segments.size(); j++) {
                             TrackSegment segment = segments.get(j);
-
                             //Registers the first polylines at the start of the trip, this will be used in the addMarker.
                             if(j == 0) {
                                 setTripStartLocation( new LatLng(segments.get(j).getTrackPoints().get(0).getLatitude(), segments.get(j).getTrackPoints().get(0).getLongitude()));
                             }
                             for (TrackPoint trackPoint : segment.getTrackPoints()) {
                                 options.add(new LatLng(trackPoint.getLatitude(), trackPoint.getLongitude()));
+                                if(!FirebaseHandler.isTripInFirebaseDatabase(tripTitleName)) {
+                                    saveList.add(new LatLng(trackPoint.getLatitude(), trackPoint.getLongitude()));
+                                }
 
                             }
+                        }
+                        if(!FirebaseHandler.isTripInFirebaseDatabase(tripTitleName)) {
+                            Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser());
+                            Log.i(TAG,"Trip created!");
                         }
                         //Place a marker on the map
                         mMap.addMarker(new MarkerOptions().position(tripStartLocation).title(tripTitleName));
