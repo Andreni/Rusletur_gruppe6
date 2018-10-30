@@ -1,11 +1,15 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -52,6 +56,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_screen);
 
+            //Broadcast Receiver
+            LocalBroadcastManager.getInstance(this).registerReceiver(arrayReceiever, new IntentFilter("SendArrayList"));
+
             //Calls location
             LocationHandler.forceUpdateOfCurrentLocation(this);
             Location currentLocation = LocationHandler.getCurrentLocation();
@@ -70,7 +77,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
             if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecyclerViewFragment()).commit();
-
             }
 
             //Clickhandling on navigationdrawer
@@ -84,21 +90,35 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
         }
 
+        private BroadcastReceiver arrayReceiever = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //intent.getBundleExtra("bundle");
+                ArrayList<LatLng> receivedList = intent.getParcelableArrayListExtra("LatLngArray");
+                Log.i(MapsActivity.TAG, "BroadcastReceiver got the Array! Size of Array: " + String.valueOf(receivedList.size()));
+            }
+        };
+
+
+
         public void handleStorageOfTrips(){
 
             /*
             * -Ongoing.
             *
-             */
+            */
+
+
+            Log.i(MapsActivity.TAG, "handleStorageOfTrips called");
 
             Intent getArrayList = getIntent();
-            Log.i("Fragment Receive", getArrayList.toString());
+            Log.i(MapsActivity.TAG, "MemoryAllocation te arraylist" + getArrayList.toString());
 
-            Bundle arrayListBundle = getArrayList.getBundleExtra("TestArray");
-            Log.i("Fragment Receive", arrayListBundle.toString());
-;
+            //ArrayList<LatLng> receivedList = getIntent().getParcelableArrayListExtra("TestArray");
+            //Log.i(MapsActivity.TAG, "Size of receivedList is: " + String.valueOf(receivedList.size()));
 
-
+            //Bundle arrayListBundle = getArrayList.getBundleExtra("coordArrayList");
+            //Log.i(MapsActivity.TAG, "MemoryAllocation te ArrayListBundle: " + arrayListBundle.toString());
 
         }
 

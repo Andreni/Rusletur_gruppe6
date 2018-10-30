@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,9 +29,9 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 
 import static java.lang.Double.valueOf;
-
 
 
     /*
@@ -43,12 +44,12 @@ import static java.lang.Double.valueOf;
      */
 
 
-
 public class TripTracker extends Service {
 
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     public final ArrayList<LatLng> test = new ArrayList<>();
+
 
 
     @Override
@@ -106,6 +107,7 @@ public class TripTracker extends Service {
 
     }
 
+
     @Override
     public void onDestroy() {
         Log.i(MapsActivity.TAG, "onDestroy called");
@@ -114,10 +116,24 @@ public class TripTracker extends Service {
         /*
         * Array with coordinates will be sent through Intent as shown below. LatLng Arrays already
         * implements Parcelable, which means it can be sent through a bundle.
+        * EDIT: Fuck bundles. Send it through LocalBroadcastManager.
          */
 
-        //Intent sendArrayIntent = new Intent();
-        //sendArrayIntent.putExtra("TestArray", test);
+        Intent sendArrayIntent = new Intent("SendArrayList").putExtra("LatLngArray", test);
+        LocalBroadcastManager.getInstance(TripTracker.this).sendBroadcast(sendArrayIntent);
+
+        //Intent sendArrayIntent = new Intent("SendArrayList").putExtra("LatLngArray", test);
+        //LocalBroadcastManager.getInstance(TripTracker.this).sendBroadcast(sendArrayIntent);
+
+        //Intent in = new Intent(TripTracker.this, MainScreen.class);
+        //Bundle b = new Bundle();
+        //b.putSerializable("Array", test);
+        //in.putExtra("bundle", b);
+
+        //Bundle b = new Bundle();
+        //b.putParcelableArrayList("coordArrayList", test);
+        //sendArrayIntent.putExtra("TestArray", b);
+
 
         //stopSelf for terminating service (despite stopService being called, wtf)
         //removeLocationUpdates to cancel location updates.
