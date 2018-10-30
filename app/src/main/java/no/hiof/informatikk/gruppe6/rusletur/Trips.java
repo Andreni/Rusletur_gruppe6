@@ -66,11 +66,13 @@ public class Trips extends AppCompatActivity  {
     public void setUpFylkeSpinner(FylkeList alist){
         spinnerFylke = findViewById(R.id.tripsA_SelectFylke_spinner);
         //Load fylker from array
-        ArrayAdapter<Fylke> arrayAdapterFylke = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,alist.getRegisterForFylke());
+        ArrayAdapter<Fylke> arrayAdapterFylke =
+                new ArrayAdapter<>(this,android.R.layout.simple_list_item_1
+                        ,alist.getRegisterForFylke());
         arrayAdapterFylke.setDropDownViewResource(android.R.layout.simple_list_item_1);
-
         spinnerFylke.setAdapter(arrayAdapterFylke);
 
+        //When only FylkeSpinner is in use and there is no valid selection, do not show kommuneSpinner
         spinnerKommune = findViewById(R.id.tripsA_SelectKommune_spinner2);
         spinnerKommune.setVisibility(View.INVISIBLE);
 
@@ -151,19 +153,34 @@ public class Trips extends AppCompatActivity  {
     }
 
 
-
+    /**
+     *When a valid id (Not 0 and 0) are chosen for Fylke and kommune. Fetch the valid ids
+     * stored on the kommune object, and pass them to the recycler view
+     */
     public void fetchIds(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //Loop to cycle to all ids stored on Kommune object chosen
+                for(int i=0;i<FylkeList.getRegisterForFylke()
+                        .get(selectionFylke)
+                        .getKommuneArrayList()
+                        .get(selectionKommune)
+                        .getIdForTurArrayList().size();i++){
+                    //Fetch the id that is to be made an object from.
+                    String selection = FylkeList.getRegisterForFylke()
+                            .get(selectionFylke)
+                            .getKommuneArrayList()
+                            .get(selectionKommune)
+                            .getIdForTurArrayList().get(i).getIdForTur();
+                    //Pass the id to the API class to build a trip object from it
+                    ApiNasjonalturbase.getTripInfo(selection,Trips.this);
+            }
+            }
 
-        String ids = FylkeList.getRegisterForFylke().get(selectionFylke).getKommuneArrayList().get(selectionKommune).getIdForTurArrayList().get(0).getIdForTur();
 
-        String selection = FylkeList.getRegisterForFylke().get(selectionFylke).getKommuneArrayList().get(selectionKommune).getIdForTurArrayList().get(0).getIdForTur();
-        Toast.makeText(this," ewrw",Toast.LENGTH_SHORT).show();
+        }).run();
 
-        ApiNasjonalturbase.getTripInfo(selection,this);
-
-
-
-
-
+        //TODO Pass object to recycler class
     }
 }
