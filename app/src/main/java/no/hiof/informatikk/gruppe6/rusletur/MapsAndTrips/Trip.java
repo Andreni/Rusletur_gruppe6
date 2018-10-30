@@ -31,7 +31,7 @@ public class Trip {
 
         trips.add(this);
     }
-    public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user) {
+    public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user, String difficulty, String fylke, String kommune, String beskrivelse) {
         if(user != null) {
             User.addTrip(tripname);
             myRef.child("trip").child(tripname).child("Created by").setValue(user.getEmail());
@@ -40,6 +40,10 @@ public class Trip {
         for(LatLng i : coords) {
             myRef.child("trip").child(tripname).child("LatLng").child("Lat").child(String.valueOf(count)).setValue(i.latitude);
             myRef.child("trip").child(tripname).child("LatLng").child("Lon").child(String.valueOf(count)).setValue(i.longitude);
+            myRef.child("trip").child(tripname).child("Grad").setValue(difficulty);
+            myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
+            myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
+            myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
             count++;
         }
 

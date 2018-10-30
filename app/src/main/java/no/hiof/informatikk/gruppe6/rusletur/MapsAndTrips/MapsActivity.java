@@ -192,7 +192,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
                         }
                         if(!FirebaseHandler.isTripInFirebaseDatabase(tripTitleName)) {
-                            Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser());
+                            Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser(), "Normal", "", "", "Dette er en test tur");
                             Log.i(TAG,"Trip created!");
                         }
                         //Place a marker on the map
