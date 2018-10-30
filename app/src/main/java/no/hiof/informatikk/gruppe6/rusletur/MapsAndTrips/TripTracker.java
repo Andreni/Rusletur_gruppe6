@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 import static java.lang.Double.valueOf;
 
@@ -57,6 +58,7 @@ public class TripTracker extends Service {
         return null;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -67,6 +69,7 @@ public class TripTracker extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(MapsActivity.TAG, "Tracker - onStartCommmand called");
         testMethod();
+
 
         return START_STICKY;
     }
@@ -117,10 +120,13 @@ public class TripTracker extends Service {
         * Array with coordinates will be sent through Intent as shown below. LatLng Arrays already
         * implements Parcelable, which means it can be sent through a bundle.
         * EDIT: Fuck bundles. Send it through LocalBroadcastManager.
+        * EDIT2: Cheesy method is cheesy.
          */
 
-        Intent sendArrayIntent = new Intent("SendArrayList").putExtra("LatLngArray", test);
-        LocalBroadcastManager.getInstance(TripTracker.this).sendBroadcast(sendArrayIntent);
+        if(MainMenuFragment.saveWasClicked == true) {
+            Intent sendArrayIntent = new Intent("SendArrayList").putExtra("LatLngArray", test);
+            LocalBroadcastManager.getInstance(TripTracker.this).sendBroadcast(sendArrayIntent);
+        }
 
         //Intent sendArrayIntent = new Intent("SendArrayList").putExtra("LatLngArray", test);
         //LocalBroadcastManager.getInstance(TripTracker.this).sendBroadcast(sendArrayIntent);

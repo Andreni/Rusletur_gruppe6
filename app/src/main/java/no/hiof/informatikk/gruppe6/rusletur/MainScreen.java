@@ -42,6 +42,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.RecyclerViewFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -49,7 +50,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private FirebaseUser mUser;
         private DrawerLayout drawerLayout;
         private final String TAG = "MainScreen";
-
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             if(currentLocation != null) {
                 Log.d(TAG, "Lat: " + currentLocation.getLatitude() + " Lon; " + currentLocation.getLongitude());
             }
-
 
             //Set toolbar
             Toolbar toolbar = findViewById(R.id.toolbar);
@@ -96,18 +95,22 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 //intent.getBundleExtra("bundle");
                 ArrayList<LatLng> receivedList = intent.getParcelableArrayListExtra("LatLngArray");
                 Log.i(MapsActivity.TAG, "BroadcastReceiver got the Array! Size of Array: " + String.valueOf(receivedList.size()));
+                handleStorageOfTrips(receivedList);
             }
         };
 
 
 
-        public void handleStorageOfTrips(){
+        public void handleStorageOfTrips(ArrayList<LatLng> gottaCatchThemAll){
 
             /*
             * -Ongoing.
             *
             */
 
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SaveTripFragment()).commit();
+
+            Log.i(MapsActivity.TAG, "HandleStorage sin received list: " + String.valueOf(gottaCatchThemAll.size()));
 
             Log.i(MapsActivity.TAG, "handleStorageOfTrips called");
 
