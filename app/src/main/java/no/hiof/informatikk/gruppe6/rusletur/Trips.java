@@ -34,7 +34,7 @@ public class Trips extends AppCompatActivity  {
     String TAG = "TRIPS";
     int selectionFylke = 0;
     int selectionKommune = 0;
-    ArrayList<Trip> turer = new ArrayList<>();
+    ArrayList<Trip> turer;
 
 
     @Override
@@ -42,7 +42,7 @@ public class Trips extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
 
-
+        turer = new ArrayList<>();
         loadLists();
     }
 

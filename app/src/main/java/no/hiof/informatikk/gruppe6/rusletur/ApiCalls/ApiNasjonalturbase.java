@@ -41,7 +41,7 @@ public class ApiNasjonalturbase {
      //public static RequestQueue mQueue;
      public static int antall = 0;
      static RequestQueue mQueue;
-     static Trip trip;
+     private static Trip trip;
 
      //public static ArrayList<Trip> getTrips(String fylke, final String kommune, Context context) {
 
