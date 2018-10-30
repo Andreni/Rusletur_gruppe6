@@ -32,6 +32,18 @@ import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import static java.lang.Double.valueOf;
 
 
+
+    /*
+    * In it's current state, this tracker is mainly for saving and storing trips.
+    * All coordinates are sent to <LatLng> array where they will stay until the
+    * service is terminated.
+    *
+    * Todo:
+    *
+     */
+
+
+
 public class TripTracker extends Service {
 
     private LocationRequest locationRequest;
@@ -54,6 +66,7 @@ public class TripTracker extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(MapsActivity.TAG, "Tracker - onStartCommmand called");
         testMethod();
+
         return START_STICKY;
     }
 
@@ -97,21 +110,35 @@ public class TripTracker extends Service {
     public void onDestroy() {
         Log.i(MapsActivity.TAG, "onDestroy called");
 
+
+        /*
+        * Array with coordinates will be sent through Intent as shown below. LatLng Arrays already
+        * implements Parcelable, which means it can be sent through a bundle.
+         */
+
         //Intent sendArrayIntent = new Intent();
         //sendArrayIntent.putExtra("TestArray", test);
 
-
+        //stopSelf for terminating service (despite stopService being called, wtf)
+        //removeLocationUpdates to cancel location updates.
         this.stopSelf();
         LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
         super.onDestroy();
     }
 
 
-
-    private void receiveAndConvert() {
-
-    }
 }
+
+    /*
+    * * * * * * * * *
+    *   Graveyard   *
+    *               *
+    * * * * * * * * *
+            *
+            *
+            *
+       * * * * * **/
+
 
     /*
     private class TestThread extends Thread{

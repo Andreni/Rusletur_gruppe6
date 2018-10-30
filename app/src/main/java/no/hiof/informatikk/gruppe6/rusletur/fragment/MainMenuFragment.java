@@ -76,6 +76,9 @@ public class MainMenuFragment extends Fragment {
 
                 getActivity().stopService(new Intent(getActivity(), TripTracker.class));
 
+                /*
+                * WIP
+                 */
                 //new AlertDialog.Builder(getActivity())
 
 

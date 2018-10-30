@@ -85,7 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //SJEKK OM ACCESS FINE LOCATION STÅR PÅ, HVIS PÅ KJØR STARTTRACKING
         int trackingGranted = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         if (trackingGranted == PackageManager.PERMISSION_GRANTED){
-            startTracking();
+            //startTracking();
         }
         else{
             Toast.makeText(this, "plz gimme access", Toast.LENGTH_SHORT).show();
