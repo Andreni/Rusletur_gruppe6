@@ -4,46 +4,59 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
-
-/**
- * Class for trip objects in our format
- * Will be used later
- * UNDER CONSTRUCTION
- */
-
 public class Trip {
 
 
-    private String name, description, author;
+    private String id, tag, gradering, tilbyder, fylke, kommune, beskrivelse, navn, lisens, url;
     private ArrayList<LatLng> coordinates;
-    public static ArrayList<Trip> trips;
 
-    public Trip(String name, String author, ArrayList<LatLng> coordinates) {
-        this.name = name;
-        this.author = author;
+
+    //_id, tag, gradering, tidsbruk, tilbyder, fylke, kommune, coordinates, beskrivelse, navn, lisens, url(ut.no)
+
+    public Trip(String id, String navn, String tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates) {
+        this.id = id;
+        this.navn = navn;
+        this.tag = tag;
+        this.gradering = gradering;
+        this.tilbyder = tilbyder;
+        this.fylke = fylke;
+        this.kommune = kommune;
+        this.beskrivelse = beskrivelse;
+        this.lisens = lisens;
+        this.url = url;
         this.coordinates = coordinates;
-
-        trips.add(this);
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public void setAuthor(String author) {
-        this.author = author;
-    }
 
-    public String getName() {
-        return name;
+    public String getId() {
+        return id;
     }
-    public String getDescription() {
-        return description;
+    public String getTag() {
+        return tag;
     }
-    public String getAuthor() {
-        return author;
+    public String getGradering() {
+        return gradering;
+    }
+    public String getTilbyder() {
+        return tilbyder;
+    }
+    public String getFylke() {
+        return fylke;
+    }
+    public String getKommune() {
+        return kommune;
+    }
+    public String getBeskrivelse() {
+        return beskrivelse;
+    }
+    public String getNavn() {
+        return navn;
+    }
+    public String getLisens() {
+        return lisens;
+    }
+    public String getUrl() {
+        return url;
     }
     public ArrayList<LatLng> getCoordinates() {
         return coordinates;

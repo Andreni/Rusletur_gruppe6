@@ -37,6 +37,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_screen);
 
+
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
 
