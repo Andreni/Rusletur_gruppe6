@@ -21,5 +21,4 @@ public class IdForTur {
         return idForTur;
     }
 
-
 }

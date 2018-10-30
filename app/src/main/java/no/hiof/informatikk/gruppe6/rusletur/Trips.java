@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
@@ -27,6 +28,8 @@ public class Trips extends AppCompatActivity  {
     Boolean kommuneListLoaded = false;
     Boolean fylkeListLoaded = false;
     String TAG = "TRIPS";
+    int selectionFylke = 0;
+    int selectionKommune = 0;
 
 
     @Override
@@ -34,9 +37,6 @@ public class Trips extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
 
-        //setUpDummyData();
-        //Start downloading of registor.json
-        //Make objects on seperate thread
 
         loadLists();
     }
@@ -94,7 +94,7 @@ public class Trips extends AppCompatActivity  {
                         spinnerKommune.setVisibility(View.VISIBLE);
                         setupKommuneSpinner(position);
                         fylkeListLoaded = true;
-
+                        selectionFylke = position;
                     }
 
             }
@@ -132,6 +132,7 @@ public class Trips extends AppCompatActivity  {
 
                     }else{
                         kommuneListLoaded = true;
+                        selectionKommune = position;
                         //Send the position so we can start a search based on all the valid ids
                         fetchIds(position);
                     }
@@ -148,7 +149,11 @@ public class Trips extends AppCompatActivity  {
 
 
     public void fetchIds(Integer kommunePosition){
-        Toast.makeText(this,"Search started" + kommunePosition,Toast.LENGTH_SHORT).show();
+
+        String ids = FylkeList.getRegisterForFylke().get(selectionFylke).getKommuneArrayList().get(selectionKommune).getIdForTurArrayList().get(0).getIdForTur();
+        Toast.makeText(this,ids + kommunePosition,Toast.LENGTH_SHORT).show();
+        ApiNasjonalturbase aCall = new ApiNasjonalturbase(ids);
+        aCall.jsonFetchTripList(this);
 
     }
 

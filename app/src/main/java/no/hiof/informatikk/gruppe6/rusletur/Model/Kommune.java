@@ -26,4 +26,8 @@ public class Kommune {
     public String toString(){
         return kommuneNavn;
     }
+
+    public ArrayList<IdForTur> getIdForTurArrayList() {
+        return idForTurArrayList;
+    }
 }

@@ -46,41 +46,43 @@ import java.io.FileReader;
 
 
 public class ApiNasjonalturbase{
-   /* public static String TAG = "APICall";
-     String urlBase = "http://api.nasjonalturbase.no/";
 
-    public static RequestQueue mQueue;
-    public static int antall = 0;
+   private Context myContext;
+   private String idTrip;
+   private String urlBase = "http://api.nasjonalturbase.no/";
+   public static String TAG = "APICall";
+   private RequestQueue mQueue;
 
-    public static void jsonFetchTripList(Context k, int antallSkip) {
+
+     public String getIdTrip() {
+         return idTrip;
+     }
+
+     public ApiNasjonalturbase(String idTrip) {
+         this.idTrip = idTrip;
+     }
+
+     public void jsonFetchTripList(Context k) {
 
         final Context kont = k;
         mQueue = Volley.newRequestQueue(k);
-        ApiNasjonalturbase.antall = 0;
-        String urlBase = "http://dev.nasjonalturbase.no/turer?limit=100&skip=";
 
-
-
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlBase +getIdTrip(), null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    Log.d(TAG, "onResponse: DOOOONE DOOOONE2 Inside onResponse");
                     try {
-                        JSONArray jsonArray = response.getJSONArray("documents");
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject turer = jsonArray.getJSONObject(i);
 
-                            String id = turer.getString("_id");
-                            ApiNasjonalturbase.antall += 1;
-                            Log.d(TAG, "onResponse: DOOOONE id: " + id);
-                            Log.d(TAG, "onResponse: DOOOONE DOOOONE3 Antall: " + ApiNasjonalturbase.antall);
-                            //ApiNasjonalturbase.jsonFetchIdInfo(kont, id);
-                            try {
-                                ApiNasjonalturbase.readJsonSimpleDemo("raw/register.json");
-                            }catch (FileNotFoundException e){
-                                e.printStackTrace();
-                            }
+                        //JSONArray array = new JSONArray();
 
-                        }
+                        //array.put(response.getString("_id"));
+                        //array.put(response.getString("beskrivelse"));
+
+                        String id  = response.getJSONObject("_id").toString();
+
+                        //String beskrivelse = array.getString(1);
+                        Log.d(TAG, "onResponse: DOOOONE DOOOONE2 Id: " + id + ". Beksirvelse: " );
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -95,10 +97,11 @@ public class ApiNasjonalturbase{
 
             mQueue.add(request);
 
-        }
     }
+}
 
-    public static void jsonFetchIdInfo(Context k, String id){
+
+    /*public static void jsonFetchIdInfo(Context k, String id){
 
         String url = "http://dev.nasjonalturbase.no/turer/" + id;
 
@@ -133,10 +136,9 @@ public class ApiNasjonalturbase{
                 Log.d(TAG,  Error when retrieving id info");
                 error.printStackTrace();
             }
-        });
+        }); */
 
 
-        mQueue.add(request);
-    }
-*/
-}
+
+
+
