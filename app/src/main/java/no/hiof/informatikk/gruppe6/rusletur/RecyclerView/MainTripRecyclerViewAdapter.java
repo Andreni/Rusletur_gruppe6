@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         super.onBindViewHolder(holder, position, payloads);
 
         for(Trip trip : mItem){
-            
+
         }
 
     }
@@ -53,10 +54,15 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout parentLayout;
-
+        TextView itemNavn;
+        TextView itemTidsbruk;
+        TextView itemGradering;
         public ViewHolder(View itemView){
             super(itemView);
 
+            itemNavn = itemView.findViewById(R.id.itemNavn);
+            itemTidsbruk = itemView.findViewById(R.id.itemTidsbruk);
+            itemGradering = itemView.findViewById(R.id.itemGradering);
             parentLayout = itemView.findViewById(R.id.parentLayoutForListItem);
         }
 
