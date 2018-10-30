@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.IdForTur;
@@ -137,7 +138,7 @@ public class Trips extends AppCompatActivity  {
                         kommuneListLoaded = true;
                         selectionKommune = position;
                         //Send the position so we can start a search based on all the valid ids
-                        fetchIds(position);
+                        fetchIds();
                     }
             }
 
@@ -151,12 +152,18 @@ public class Trips extends AppCompatActivity  {
 
 
 
-    public void fetchIds(Integer kommunePosition){
+    public void fetchIds(){
 
         String ids = FylkeList.getRegisterForFylke().get(selectionFylke).getKommuneArrayList().get(selectionKommune).getIdForTurArrayList().get(0).getIdForTur();
-        Toast.makeText(this,ids + kommunePosition,Toast.LENGTH_SHORT).show();
-        ApiNasjonalturbase aCall = new ApiNasjonalturbase(ids);
-        aCall.jsonFetchTripList(this);
+
+        String selection = FylkeList.getRegisterForFylke().get(selectionFylke).getKommuneArrayList().get(selectionKommune).getIdForTurArrayList().get(0).getIdForTur();
+        Toast.makeText(this," ewrw",Toast.LENGTH_SHORT).show();
+
+        ApiNasjonalturbase.getTripInfo(selection,this);
+
+
+
+
 
     }
 }

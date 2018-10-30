@@ -61,4 +61,10 @@ public class Trip {
     public ArrayList<LatLng> getCoordinates() {
         return coordinates;
     }
+
+    @Override
+    public String toString(){
+        return beskrivelse;
+    }
+
 }
