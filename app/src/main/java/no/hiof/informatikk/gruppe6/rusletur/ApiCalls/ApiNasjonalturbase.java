@@ -1,129 +1,79 @@
 package no.hiof.informatikk.gruppe6.rusletur.ApiCalls;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.api.Api;
-import com.google.gson.JsonParser;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.util.ArrayList;
+
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 
 /**
  *                  ApiNasjonalturbase.java
  */
  /**
- *            jsonFetchTripList(Context k, int antallSkips)
+ *      getTrips(String fylke, final String kommune, Context context)
  *
- * Takes context and amount of skips when sending the call to get trips.
- * Gets the 100*antallSkips amount of trips from nasjonalturbase.no
- * Sends them to jsonFetchIdInfo(Context k, String id) to get the rest of the info needed.
- * When finished, it writes the id, county and municipality to a file that is sorted in folders for counties.
- * @return Returns a list of id's from nasjonalturbase.no with their county and municipality.
+ * @return Returns a ArrayList with Trip objects that the user would see.
  */
  /**
- *              jsonFetchIdInfo(Context k, String id)
+ *              getTripInfo(ArrayList<String> id)
  *
- * Takes the context and an id for a trip as argument.
- * Reutrn the infomation needed from a trip. That info beeing:
- * ID, navn, tidsbruk, tilbyder, kommuner, fylker, passer_for, lisens, coordinates, beskrivelse
- * After retrieving the information, it can be dispalyed on the map or in a detailed list form.
- * @return Returns the info of a trip with the id provided.
+ * Takes a ArrayList of id's as argument
+ * Creating Trip objects and adding them to an ArrayList.
+ * @return Returns ArrayList with trips
  *
  */
 
 
 public class ApiNasjonalturbase{
 
-   private Context myContext;
-   private String idTrip;
-   private String urlBase = "http://api.nasjonalturbase.no/";
-   public static String TAG = "APICall";
-   private RequestQueue mQueue;
+    //public static RequestQueue mQueue;
+    public static int antall = 0;
+     static RequestQueue mQueue;
 
+    public static ArrayList<Trip> getTrips(String fylke, final String kommune, Context context){
 
-     public String getIdTrip() {
-         return idTrip;
-     }
+        final String f = fylke;
+        final String k = kommune;
+        final Context kont = context;
+        mQueue = Volley.newRequestQueue(kont);
+        String url = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3xPSJyoUwQKbpO2uoHA78Lx6MRqzks5b4XrbwA%3D%3D";
+        final ArrayList<String> id = new ArrayList<>();
 
-     public ApiNasjonalturbase(String idTrip) {
-         this.idTrip = idTrip;
-     }
-
-     public void jsonFetchTripList(Context k) {
-
-        final Context kont = k;
-        mQueue = Volley.newRequestQueue(k);
-
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlBase +getIdTrip(), null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    Log.d(TAG, "onResponse: DOOOONE DOOOONE2 Inside onResponse");
-                    try {
-
-                        //JSONArray array = new JSONArray();
-
-                        //array.put(response.getString("_id"));
-                        //array.put(response.getString("beskrivelse"));
-
-                        String id  = response.getJSONObject("_id").toString();
-
-                        //String beskrivelse = array.getString(1);
-                        Log.d(TAG, "onResponse: DOOOONE DOOOONE2 Id: " + id + ". Beksirvelse: " );
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            });
-
-            mQueue.add(request);
-
-    }
-}
-
-
-    /*public static void jsonFetchIdInfo(Context k, String id){
-
-        String url = "http://dev.nasjonalturbase.no/turer/" + id;
-
-        Log.d(TAG, "jsonFetchIdInfo: DOOOONE DOOOONE2 Inside fetchIdInfo");
-        
+        //Get id's from github file
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, "onResponse: DOOOONE DOOOONE2 Inside onResponse");
                 try {
+                    JSONArray fylker = (JSONArray) response.get("fylker");
 
-                    JSONArray array = new JSONArray();
-
-                    array.put(response.getString("_id"));
-                    array.put(response.getString("beskrivelse"));
-
-                    String id  = array.getString(0);
-                    String beskrivelse = array.getString(1);
-                    Log.d(TAG, "onResponse: DOOOONE DOOOONE2 Id: " + id + ". Beksirvelse: " + beskrivelse);
-
-
-
+                    for(int i = 0; i < fylker.length(); i++){
+                        JSONObject tmpFylke = (JSONObject) fylker.get(i);
+                        if(tmpFylke.get("fylkenavn").toString().equals(f)){
+                            JSONArray kommuner = (JSONArray) tmpFylke.get("kommuner");
+                            for(int j = 0; j < kommuner.length(); j++){
+                                JSONObject tmpKommune = (JSONObject) kommuner.get(j);
+                                if(tmpKommune.get("kommunenavn").toString().equals(k)){
+                                    JSONArray turer = (JSONArray) tmpKommune.get("turer");
+                                    for(int k = 0; k < turer.length(); k++){
+                                        JSONObject tmpTur = (JSONObject) turer.get(k);
+                                        id.add(tmpTur.get("id").toString());
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -133,12 +83,73 @@ public class ApiNasjonalturbase{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG,  Error when retrieving id info");
-                error.printStackTrace();
-            }
-        }); */
+                error.printStackTrace();            }
+        });
+        mQueue.add(request);
+
+        return getTripInfo(id);
+
+    }
+}
+
+    private static ArrayList<Trip> getTripInfo(ArrayList<String> id){
+        final ArrayList<Trip> tripsList = new ArrayList<>();
+        ArrayList<String> ID = id;
+
+        for (int i = 0; i < ID.size(); i++){
+            String url = "http://http://dev.nasjonalturbase.no/turer/" + ID.get(i) + "?api_key%{cb93d09a566a0ea1e6499a2be18beed87d7e2bb2}";
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+
+                    try {
+                        String id = response.get("_id").toString();
+                        String navn = response.get("navn").toString();
+
+                        JSONArray tags = (JSONArray) response.get("tags");
+                        String tag = tags.get(0).toString();
+
+                        String gradering = response.get("gradering").toString();
+                        String tilbyder = response.get("tilbyder").toString();
+
+                        JSONArray fylker = (JSONArray) response.get("fylker");
+                        String fylke = fylker.get(0).toString();
+
+                        JSONArray kommuner = (JSONArray) response.get("kommuner");
+                        String kommume = kommuner.get(0).toString();
+
+                        String beskrivelse = response.get("beskrivelse").toString();
+                        String lisens = response.get("lisens").toString();
+                        String urlFraUrl = response.get("url").toString();
+
+                        ArrayList<LatLng> latlng = new ArrayList<>();
+
+                        JSONObject geojson = (JSONObject) response.get("geojson");
+                        JSONArray coords = (JSONArray) geojson.get("coordinates");
+                        for(int j = 0; j < coords.length(); j++){
+                            JSONArray coord = (JSONArray) coords.get(j);
+                            for(int k = 0; k < coord.length(); k++){
+                                latlng.add(new LatLng(coord.getDouble(0), coord.getDouble(1)));
+                            }
+                        }
+
+                        tripsList.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng));
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                }
+            });
+        }
 
 
+        return  tripsList;
+    }
 
-
-
+}
