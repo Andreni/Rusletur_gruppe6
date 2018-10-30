@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +23,7 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.IdForTur;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
+import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
 
 /**
  * Class for selection of available trips for the user
@@ -36,6 +39,7 @@ public class Trips extends AppCompatActivity  {
     int selectionFylke = 0;
     int selectionKommune = 0;
     ArrayList<Trip> turer;
+    RecyclerView recyclerView;
 
 
     @Override
@@ -78,6 +82,9 @@ public class Trips extends AppCompatActivity  {
         spinnerKommune = findViewById(R.id.tripsA_SelectKommune_spinner2);
         spinnerKommune.setVisibility(View.INVISIBLE);
 
+        recyclerView = findViewById(R.id.tripsRecyclerView);
+        recyclerView.setVisibility(View.INVISIBLE);
+
         spinnerFylke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -112,8 +119,7 @@ public class Trips extends AppCompatActivity  {
 
             }
         });
-
-
+        initRecyclerView();
     }
 
 
@@ -152,6 +158,7 @@ public class Trips extends AppCompatActivity  {
 
             }
         });
+
     }
 
 
@@ -199,5 +206,18 @@ public class Trips extends AppCompatActivity  {
         // using putExtra(String key, Parcelable value) method
         intent.putExtra("object", aTrip);
         startActivity(intent);
+    }
+
+    public void initRecyclerView(){
+
+        if(turer.size() == 0){
+            recyclerView.setVisibility(View.VISIBLE);
+            RecyclerView recyclerView = findViewById(R.id.tripsRecyclerView);
+            MainTripRecyclerViewAdapter adapter = new MainTripRecyclerViewAdapter(this, turer);
+
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
+
     }
 }
