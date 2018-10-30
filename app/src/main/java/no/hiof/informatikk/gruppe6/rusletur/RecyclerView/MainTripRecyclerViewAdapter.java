@@ -3,6 +3,7 @@ package no.hiof.informatikk.gruppe6.rusletur.RecyclerView;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
@@ -21,7 +21,10 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
     private ArrayList<Trip> mItem;
     Context mContext;
 
+    final String TAG = "RecyclerViewAdapterLogT";
+
     public MainTripRecyclerViewAdapter(Context kont, ArrayList<Trip> turer){
+        Log.d(TAG, "MainTripRecyclerViewAdapter: " + turer.size());
         this.mItem = turer;
         this.mContext = kont;
     }
@@ -30,6 +33,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
+        Log.d(TAG, "onCreateViewHolder:");
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem_tripsview, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
 
@@ -40,9 +44,10 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
+        Log.d(TAG, "onBindViewHolder: created");
         holder.itemNavn.setText(mItem.get(position).getNavn());
-        holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
-        holder.itemGradering.setText(mItem.get(position).getGradering());
+        holder.itemTidsbruk.setText("TEST");
+        holder.itemGradering.setText("TEST");
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +60,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount: " + mItem.size());
         return mItem.size();
     }
 

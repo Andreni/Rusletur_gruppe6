@@ -39,7 +39,6 @@ public class Trips extends AppCompatActivity  {
     int selectionFylke = 0;
     int selectionKommune = 0;
     ArrayList<Trip> turer;
-    RecyclerView recyclerView;
 
 
     @Override
@@ -82,8 +81,6 @@ public class Trips extends AppCompatActivity  {
         spinnerKommune = findViewById(R.id.tripsA_SelectKommune_spinner2);
         spinnerKommune.setVisibility(View.INVISIBLE);
 
-        recyclerView = findViewById(R.id.tripsRecyclerView);
-        recyclerView.setVisibility(View.INVISIBLE);
 
         spinnerFylke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -119,7 +116,7 @@ public class Trips extends AppCompatActivity  {
 
             }
         });
-        initRecyclerView();
+
     }
 
 
@@ -150,6 +147,8 @@ public class Trips extends AppCompatActivity  {
                         //Send the position so we can start a search based on all the valid ids
                         fetchIds();
                     }
+                Log.d(TAG, "onItemSelected: " + turer.size());
+                initRecyclerView();
             }
 
 
@@ -163,7 +162,7 @@ public class Trips extends AppCompatActivity  {
 
 
     /**
-     *When a valid id (Not 0 and 0) are chosen for Fylke and kommune. Fetch the valid ids
+     * When a valid id (Not 0 and 0) are chosen for Fylke and kommune. Fetch the valid ids
      * stored on the kommune object, and pass them to the recycler view
      */
     public void fetchIds(){
@@ -210,8 +209,9 @@ public class Trips extends AppCompatActivity  {
 
     public void initRecyclerView(){
 
-        if(turer.size() == 0){
-            recyclerView.setVisibility(View.VISIBLE);
+        if(turer.size() != 0){
+            Log.d(TAG, "initRecyclerView: Størrelsen er større enn 0");
+            Log.d(TAG, "initRecyclerView: " + turer.size());
             RecyclerView recyclerView = findViewById(R.id.tripsRecyclerView);
             MainTripRecyclerViewAdapter adapter = new MainTripRecyclerViewAdapter(this, turer);
 
