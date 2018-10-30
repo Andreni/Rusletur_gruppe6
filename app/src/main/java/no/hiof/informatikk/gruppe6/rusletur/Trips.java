@@ -42,10 +42,17 @@ public class Trips extends AppCompatActivity  {
     }
 
     public void loadLists(){
-        LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(this);
-        lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(Trips.this);
+                lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
+                setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
+            }
+        }).run();
 
-        setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
+
+
 
     }
 

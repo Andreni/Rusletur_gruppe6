@@ -14,7 +14,7 @@ public class FylkeList {
 
     public FylkeList(String nameForRegister) {
         this.nameForRegister = nameForRegister;
-
+        registerForFylke.clear();
         fylkeListArrayList.clear();
         fylkeListArrayList.add(this);
     }

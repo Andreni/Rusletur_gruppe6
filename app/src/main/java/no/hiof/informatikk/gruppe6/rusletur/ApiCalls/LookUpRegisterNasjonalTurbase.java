@@ -32,9 +32,6 @@ import no.hiof.informatikk.gruppe6.rusletur.Trips;
  */
 public class LookUpRegisterNasjonalTurbase {
 
-    private ArrayList<String> fylkeOversikt = new ArrayList<>();
-    private ArrayList<String> kommuneOversikt = new ArrayList<>();
-    private ArrayList<String> idsOversikt = new ArrayList<>();
     private RequestQueue mQueue;
     private Context currentContext;
     private String urlForRegister = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3_2Tq7QAEoM5ugLuRP37chMdF13Eks5b3xfuwA%3D%3D";
@@ -50,11 +47,11 @@ public class LookUpRegisterNasjonalTurbase {
      */
     public void createObjectsFromRegister() {
         mQueue = Volley.newRequestQueue(currentContext);
-        FylkeList aRegister = new FylkeList("ListForId");
+        FylkeList.getFylkeListArrayList().add(new FylkeList("ListForId"));
 
 
         //add dummy element to list
-        aRegister.addFylkeToList(new Fylke("Valg:"));
+        FylkeList.getFylkeListArrayList().get(0).addFylkeToList(new Fylke("Valg:"));
 
         Log.d(TAG,"Startingdownload");
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlForRegister,
