@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     //Global variable for permission:
-    //TODO Remove global variable?
+
     private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA = 1;
 
     private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             isPermissionsGranted = true;
         }else{
             EasyPermissions.requestPermissions(this, "Appen trenger tilattelser til å bruke \n" +
-                    "GPS, Kamera og Lagring",123,neededPermissions);
+                    "GPS, Kamera og Lagring",MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA,neededPermissions);
 
             }
 

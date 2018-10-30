@@ -51,6 +51,8 @@ public class LookUpRegisterNasjonalTurbase {
     public void createObjectsFromRegister() {
         mQueue = Volley.newRequestQueue(currentContext);
         FylkeList aRegister = new FylkeList("ListForId");
+
+
         //add dummy element to list
         aRegister.addFylkeToList(new Fylke("Valg:"));
 

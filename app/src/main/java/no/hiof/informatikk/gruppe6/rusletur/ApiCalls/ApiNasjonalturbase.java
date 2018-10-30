@@ -46,25 +46,21 @@ import java.io.FileReader;
 
 
 public class ApiNasjonalturbase{
-    public static String TAG = "APICall";
+   /* public static String TAG = "APICall";
+     String urlBase = "http://api.nasjonalturbase.no/";
 
     public static RequestQueue mQueue;
     public static int antall = 0;
-    /*
+
     public static void jsonFetchTripList(Context k, int antallSkip) {
 
         final Context kont = k;
         mQueue = Volley.newRequestQueue(k);
         ApiNasjonalturbase.antall = 0;
-        String url = "http://dev.nasjonalturbase.no/turer?limit=100&skip=";
+        String urlBase = "http://dev.nasjonalturbase.no/turer?limit=100&skip=";
 
-        Log.d(TAG, "jsonFetchTripList: DOOOONE Start of jsonFetchTripList");
-        /*Get more than a 100 trips.
-          Making tha API calls in a for loop where j is beeing incremented.
-          That increments the "skip" parameter in the url
-         */ /*
-        for (int j = 0; j < antallSkip; j += 1) {
-            url = url + (j*100);
+
+
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -134,7 +130,7 @@ public class ApiNasjonalturbase{
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse DOOOONE DOOOONE2: Error when retrieving id info");
+                Log.d(TAG,  Error when retrieving id info");
                 error.printStackTrace();
             }
         });
@@ -142,14 +138,5 @@ public class ApiNasjonalturbase{
 
         mQueue.add(request);
     }
-
-
-     public static Object readJsonSimpleDemo(String filename) throws FileNotFoundException{
-         FileReader reader = new FileReader(filename);
-         JsonParser jsonParser = new JsonParser();
-         return jsonParser.parse(reader);
-     }
-
-
 */
 }

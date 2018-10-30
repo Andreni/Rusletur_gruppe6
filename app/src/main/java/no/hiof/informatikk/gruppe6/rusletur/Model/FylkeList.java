@@ -15,6 +15,7 @@ public class FylkeList {
     public FylkeList(String nameForRegister) {
         this.nameForRegister = nameForRegister;
 
+        fylkeListArrayList.clear();
         fylkeListArrayList.add(this);
     }
 

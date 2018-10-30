@@ -145,27 +145,5 @@ public class Trips extends AppCompatActivity  {
 
     }
 
-    public void setUpDummyData(){
-        //Make 2 Fylker
-        FylkeList aList = new FylkeList("Register");
-        aList.addFylkeToList(new Fylke("Valg:"));
-        aList.addFylkeToList(new Fylke("Østfold"));
-        aList.addFylkeToList(new Fylke("Rogaland"));
 
-        //Østfold
-        aList.getRegisterForFylke().get(1).addKommuneForFylke(new Kommune("Valg:"));
-        aList.getRegisterForFylke().get(1).addKommuneForFylke(new Kommune("Halden"));
-        aList.getRegisterForFylke().get(1).addKommuneForFylke(new Kommune("Moss"));
-        aList.getRegisterForFylke().get(1).getKommuneArrayList().get(0).addIdForKommune(new IdForTur("Hiof"));
-        aList.getRegisterForFylke().get(1).getKommuneArrayList().get(1).addIdForKommune(new IdForTur("Mosseporten"));
-
-        //Rogaland
-        aList.getRegisterForFylke().get(2).addKommuneForFylke(new Kommune("Valg:"));
-        aList.getRegisterForFylke().get(2).addKommuneForFylke(new Kommune("Stavanger"));
-        aList.getRegisterForFylke().get(2).addKommuneForFylke(new Kommune("Sandnes"));
-        aList.getRegisterForFylke().get(2).getKommuneArrayList().get(1).addIdForKommune(new IdForTur("Harfsfjord"));
-
-        //setUpFylkeSpinner(aList);
-
-    }
 }
