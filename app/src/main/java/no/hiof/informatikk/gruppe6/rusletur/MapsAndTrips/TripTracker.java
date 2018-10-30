@@ -1,14 +1,22 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import android.app.IntentService;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -24,35 +32,16 @@ import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import static java.lang.Double.valueOf;
 
 
-public class TripTracker extends IntentService {
+public class TripTracker extends Service {
 
     private LocationRequest locationRequest;
-    public static ArrayList<LatLng> tempLocationArray;
     private LocationCallback locationCallback;
-    public ArrayList<LatLng> locationArray;
+    public final ArrayList<LatLng> test = new ArrayList<>();
 
-    public TripTracker(String name, LocationRequest locationRequest) {
-        super(name);
-        this.locationRequest = locationRequest;
-    }
-
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public TripTracker(String name) {
-        super(name);
-    }
 
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-
     }
 
     @Override
@@ -65,12 +54,10 @@ public class TripTracker extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(MapsActivity.TAG, "Tracker - onStartCommmand called");
         testMethod();
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 
-    //Sett opp metode for å sjekke permissions
-
-    private void testMethod(){
+    private void testMethod() {
         Log.i(MapsActivity.TAG, "Tracker - testMethod called");
 
         locationRequest = new LocationRequest();
@@ -78,23 +65,96 @@ public class TripTracker extends IntentService {
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
+
         int trackingGranted = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         if (trackingGranted == PackageManager.PERMISSION_GRANTED) {
             FusedLocationProviderClient fClient = LocationServices.getFusedLocationProviderClient(this);
-            fClient.requestLocationUpdates(locationRequest, new LocationCallback() {
+            locationCallback = new LocationCallback() {
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
+
                     locationResult.getLocations();
                     Log.i(MapsActivity.TAG, "Tracker - onLocationResult resolved");
                     Log.i(MapsActivity.TAG, locationResult.getLocations().toString());
                     Log.i(MapsActivity.TAG, "Size of getLocations" + Integer.toString(locationResult.getLocations().size()));
                     LatLng previousLocation = new LatLng(valueOf(locationResult.getLastLocation().getLongitude()), valueOf(locationResult.getLastLocation().getLatitude()));
                     Log.i(MapsActivity.TAG, previousLocation.toString());
-                    //receiveAndConvert(previousLocation);
+                    test.add(previousLocation);
+                    Log.i(MapsActivity.TAG, Integer.toString(test.size()));
+
+
+                    super.onLocationResult(locationResult);
                 }
-            }, null);
+
+
+            };
+            fClient.requestLocationUpdates(locationRequest, locationCallback, null);
         }
+
     }
+
+    @Override
+    public void onDestroy() {
+        Log.i(MapsActivity.TAG, "onDestroy called");
+
+        //Intent sendArrayIntent = new Intent();
+        //sendArrayIntent.putExtra("TestArray", test);
+
+
+        this.stopSelf();
+        LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
+        super.onDestroy();
+    }
+
+
+
+    private void receiveAndConvert() {
+
+    }
+}
+
+    /*
+    private class TestThread extends Thread{
+        @Override
+        public void run() {
+            locationRequest = new LocationRequest();
+            locationRequest.setInterval(10000);
+            locationRequest.setFastestInterval(5000);
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+            int trackingGranted = ContextCompat.checkSelfPermission(getBaseContext(), android.Manifest.permission.ACCESS_FINE_LOCATION);
+            if (trackingGranted == PackageManager.PERMISSION_GRANTED) {
+                FusedLocationProviderClient fClient = LocationServices.getFusedLocationProviderClient(getBaseContext());
+                fClient.requestLocationUpdates(locationRequest, new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult locationResult) {
+                        locationResult.getLocations();
+                        Log.i(MapsActivity.TAG, "Tracker - onLocationResult resolved");
+                        Log.i(MapsActivity.TAG, locationResult.getLocations().toString());
+                        Log.i(MapsActivity.TAG, "Size of getLocations" + Integer.toString(locationResult.getLocations().size()));
+                        LatLng previousLocation = new LatLng(valueOf(locationResult.getLastLocation().getLongitude()), valueOf(locationResult.getLastLocation().getLatitude()));
+                        Log.i(MapsActivity.TAG, previousLocation.toString());
+                        //locationArray.add(previousLocation);
+                        //Log.i(MapsActivity.TAG, Integer.toString(locationArray.size()));
+                        //receiveAndConvert(previousLocation);
+                    }
+                }, null);
+            }
+
+            super.run();
+        }
+
+
+
+    }
+
+
+*/
+
+
+    /*
+
+
 
     private void receiveAndConvert(LatLng latLng){
         locationArray.add(latLng);
@@ -118,6 +178,7 @@ public class TripTracker extends IntentService {
         LocationSettingsRequest locationSettingsRequest = lBuider.build();
         */
 
+    /*
         int trackingGranted = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         if (trackingGranted == PackageManager.PERMISSION_GRANTED) {
             FusedLocationProviderClient fClient = LocationServices.getFusedLocationProviderClient(this);
@@ -139,6 +200,30 @@ public class TripTracker extends IntentService {
     public void storeLocation(Location location){
         tempLocationArray.add(new LatLng(location.getLatitude(), location.getLongitude()));
     }
+*/
+    /*
+    new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int trackingGranted = ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION);
+                if (trackingGranted == PackageManager.PERMISSION_GRANTED) {
+                    FusedLocationProviderClient fClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+                    fClient.requestLocationUpdates(locationRequest, new LocationCallback() {
+                        @Override
+                        public void onLocationResult(LocationResult locationResult) {
+                            locationResult.getLocations();
+                            Log.i(MapsActivity.TAG, "Tracker - onLocationResult resolved");
+                            Log.i(MapsActivity.TAG, locationResult.getLocations().toString());
+                            Log.i(MapsActivity.TAG, "Size of getLocations" + Integer.toString(locationResult.getLocations().size()));
+                            LatLng previousLocation = new LatLng(valueOf(locationResult.getLastLocation().getLongitude()), valueOf(locationResult.getLastLocation().getLatitude()));
+                            Log.i(MapsActivity.TAG, previousLocation.toString());
 
+                            //locationArray.add(previousLocation);
+                            //Log.i(MapsActivity.TAG, Integer.toString(locationArray.size()));
+                            //receiveAndConvert(previousLocation);
+                        }
+                    }, null);
+                }
+            }
+        }).start();*/
 
-}

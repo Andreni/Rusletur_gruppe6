@@ -20,15 +20,19 @@ import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import java.util.ArrayList;
+
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GenerateMap;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
@@ -79,6 +83,26 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             toggle.syncState();
 
         }
+
+        public void handleStorageOfTrips(){
+
+            /*
+            * -Ongoing.
+            *
+             */
+
+            Intent getArrayList = getIntent();
+            Log.i("Fragment Receive", getArrayList.toString());
+
+            Bundle arrayListBundle = getArrayList.getBundleExtra("TestArray");
+            Log.i("Fragment Receive", arrayListBundle.toString());
+;
+
+
+
+        }
+
+
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
