@@ -133,7 +133,11 @@ public class ApiNasjonalturbase {
                              }
                          }
 
-                         trip = new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng);
+                         JSONObject tidsbrukObj = (JSONObject) response.get("tidsbruk");
+                         JSONObject normal = (JSONObject) tidsbrukObj.get("normal");
+                         String tidsbruk = normal.get("timer").toString() + " timer, " + normal.get("minutter").toString() + " minutter";
+
+                         trip = new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk);
 
                      } catch (JSONException e) {
                          e.printStackTrace();

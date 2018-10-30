@@ -37,13 +37,13 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainTripRecyclerViewAdapter.ViewHolder holder, int position, @NonNull List<Object> payloads) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull List<Object> payloads) {
         super.onBindViewHolder(holder, position, payloads);
 
-        for(Trip trip : mItem){
-
-        }
-
+        holder.itemNavn.setText(mItem.get(position).getNavn());
+        holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
+        holder.itemGradering.setText(mItem.get(position).getGradering());
+        
     }
 
     @Override

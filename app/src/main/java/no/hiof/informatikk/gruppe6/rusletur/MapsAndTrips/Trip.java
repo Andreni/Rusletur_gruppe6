@@ -7,13 +7,11 @@ import java.util.ArrayList;
 public class Trip {
 
 
-    private String id, tag, gradering, tilbyder, fylke, kommune, beskrivelse, navn, lisens, url;
+    private String id, tag, gradering, tilbyder, fylke, kommune, beskrivelse, navn, lisens, url, tidsbruk;
     private ArrayList<LatLng> coordinates;
 
 
-    //_id, tag, gradering, tidsbruk, tilbyder, fylke, kommune, coordinates, beskrivelse, navn, lisens, url(ut.no)
-
-    public Trip(String id, String navn, String tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates) {
+    public Trip(String id, String navn, String tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates, String tidsbruk) {
         this.id = id;
         this.navn = navn;
         this.tag = tag;
@@ -25,6 +23,7 @@ public class Trip {
         this.lisens = lisens;
         this.url = url;
         this.coordinates = coordinates;
+        this.tidsbruk = tidsbruk;
     }
 
 
@@ -60,6 +59,9 @@ public class Trip {
     }
     public ArrayList<LatLng> getCoordinates() {
         return coordinates;
+    }
+    public String getTidsbruk(){
+        return tidsbruk;
     }
 
     @Override
