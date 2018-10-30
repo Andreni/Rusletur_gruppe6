@@ -1,13 +1,26 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
-public class Trip {
+public class Trip implements Parcelable {
 
 
-    private String id, tag, gradering, tilbyder, fylke, kommune, beskrivelse, navn, lisens, url, tidsbruk;
+    private String id;
+    private String navn;
+    private String tag;
+    private String gradering;
+    private String tilbyder;
+    private String fylke;
+    private String kommune;
+    private String beskrivelse;
+    private String lisens;
+    private String url;
+    private String tidsbruk;
     private ArrayList<LatLng> coordinates;
 
 
@@ -69,4 +82,64 @@ public class Trip {
         return beskrivelse;
     }
 
+
+
+    protected Trip(Parcel in) {
+        id = in.readString();
+        navn = in.readString();
+        tag = in.readString();
+        gradering = in.readString();
+        tilbyder = in.readString();
+        fylke = in.readString();
+        kommune = in.readString();
+        beskrivelse = in.readString();
+        lisens = in.readString();
+        url = in.readString();
+        tidsbruk = in.readString();
+        if (in.readByte() == 0x01) {
+            coordinates = new ArrayList<LatLng>();
+            in.readList(coordinates, LatLng.class.getClassLoader());
+        } else {
+            coordinates = null;
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(navn);
+        dest.writeString(tag);
+        dest.writeString(gradering);
+        dest.writeString(tilbyder);
+        dest.writeString(fylke);
+        dest.writeString(kommune);
+        dest.writeString(beskrivelse);
+        dest.writeString(lisens);
+        dest.writeString(url);
+        dest.writeString(tidsbruk);
+        if (coordinates == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(coordinates);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Trip> CREATOR = new Parcelable.Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
 }

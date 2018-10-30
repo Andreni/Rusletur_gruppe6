@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -183,5 +184,20 @@ public class Trips extends AppCompatActivity  {
         }).run();
 
         //TODO Pass object to recycler class
+    }
+
+
+    /**
+     * Method for passing the selected trip, so it can be passed
+     * to the DisplayAtrip Activity
+     * @param aTrip the trip selected from the recycler view
+     */
+    public void passSelectedTrip(Trip aTrip){
+
+        // using context and next component class to create intent
+        Intent intent = new Intent(this, DisplayAtrip.class);
+        // using putExtra(String key, Parcelable value) method
+        intent.putExtra("object", aTrip);
+        startActivity(intent);
     }
 }
