@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -38,7 +40,9 @@ public class Trips extends AppCompatActivity  {
     String TAG = "TRIPS";
     int selectionFylke = 0;
     int selectionKommune = 0;
-    private ArrayList<Trip> turer = new ArrayList<>();
+    public static ArrayList<Trip> turer = new ArrayList<>();
+    public static View view;
+
 
 
     @Override
@@ -82,6 +86,7 @@ public class Trips extends AppCompatActivity  {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     String fylkeSelected;
+
                     //If the position is 0, nothing is selected
                     if (position==0){
                         spinnerKommune.setVisibility(View.INVISIBLE);
@@ -176,12 +181,12 @@ public class Trips extends AppCompatActivity  {
                     .getIdForTurArrayList().get(i).getIdForTur();
             //Pass the id to the API class to build a trip object from it
             Log.d(TAG, "fetchIds: Addede to turer");
-            turer.add(ApiNasjonalturbase.getTripInfo(selection, this));
+            ApiNasjonalturbase.getTripInfo(selection, this);
         }
 
-        initRecyclerView();
+        Log.d(TAG, "onResponse: Init?");
 
-        //TODO Pass object to recycler class
+
     }
 
 
@@ -199,17 +204,18 @@ public class Trips extends AppCompatActivity  {
         startActivity(intent);
     }
 
-    public void initRecyclerView(){
+
+    public static void initRecyclerView(Context kont){
 
         if(turer.size() != 0){
-            Log.d(TAG, "initRecyclerView: Størrelsen er større enn 0");
-            Log.d(TAG, "initRecyclerView: " + turer.toString());
-            RecyclerView recyclerView = findViewById(R.id.tripsRecyclerView);
-            MainTripRecyclerViewAdapter adapter = new MainTripRecyclerViewAdapter(this, turer);
+
+            RecyclerView recyclerView = view.findViewById(R.id.tripsRecyclerView);
+            MainTripRecyclerViewAdapter adapter = new MainTripRecyclerViewAdapter(kont, turer);
 
             recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setLayoutManager(new LinearLayoutManager(kont));
         }
 
     }
+
 }

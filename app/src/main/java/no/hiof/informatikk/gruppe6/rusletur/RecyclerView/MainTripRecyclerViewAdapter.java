@@ -15,11 +15,13 @@ import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.Trips;
 
 public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRecyclerViewAdapter.ViewHolder>{
 
     private ArrayList<Trip> mItem;
     Context mContext;
+
 
     final String TAG = "RecyclerViewAdapterLogT";
 
@@ -36,7 +38,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         Log.d(TAG, "onCreateViewHolder:");
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem_tripsview, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
-
+        Trips.view = view;
 
         return holder;
     }

@@ -1,7 +1,9 @@
 package no.hiof.informatikk.gruppe6.rusletur.ApiCalls;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,6 +20,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
+import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
+import no.hiof.informatikk.gruppe6.rusletur.Trips;
 
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
@@ -45,11 +50,13 @@ public class ApiNasjonalturbase {
      public static int antall = 0;
      static RequestQueue mQueue;
      private static Trip trip;
+     private static Context kont;
 
          String url = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3xPSJyoUwQKbpO2uoHA78Lx6MRqzks5b4XrbwA%3D%3D";
 
-         public static Trip getTripInfo(String idForTrip, Context context) throws InterruptedException {
+         public static void getTripInfo(String idForTrip, final Context context) {
 
+             kont = context;
              mQueue = Volley.newRequestQueue(context);
 
              String url = "http://dev.nasjonalturbase.no/turer/" + idForTrip + "?api_key%{cb93d09a566a0ea1e6499a2be18beed87d7e2bb2}";
@@ -92,7 +99,11 @@ public class ApiNasjonalturbase {
                          JSONObject normal = (JSONObject) tidsbrukObj.get("normal");
                          String tidsbruk = normal.get("timer").toString() + " timer, " + normal.get("minutter").toString() + " minutter";
 
-                         trip = new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk);
+                         Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk));
+
+                         Log.d(TAG, "onResponse: " + Trips.turer);
+
+                         Trips.initRecyclerView(kont);
 
                      } catch (JSONException e) {
                          e.printStackTrace();
@@ -106,15 +117,12 @@ public class ApiNasjonalturbase {
                  }
              });
 
+
+
              mQueue.add(request);
              Log.d(TAG, "getTripInfo: " + trip);
 
-             while(trip == null){
-                 Thread.sleep(1000);
-                 Log.d(TAG, "getTripInfo: Still waiting");
-             }
-
-             return trip;
          }
+
 
      }
