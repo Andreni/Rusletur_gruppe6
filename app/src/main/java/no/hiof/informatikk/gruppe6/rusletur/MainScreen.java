@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -31,7 +33,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GenerateMap;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
@@ -51,6 +56,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private DrawerLayout drawerLayout;
         private final String TAG = "MainScreen";
         private ArrayList<LatLng> savedTripCoordinateList;
+        private Geocoder geocoder;
+        private String location;
+        private String brocation;
+        private Location currentLocation;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +119,27 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             *
             */
 
+
+            //Geocoder for locations
+            geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+            LocationHandler.forceUpdateOfCurrentLocation(this);
+            currentLocation = LocationHandler.getCurrentLocation();
+            try {
+                Log.i(MapsActivity.TAG, "try-catch method called");
+                List<Address> listAdresses = geocoder.getFromLocation(currentLocation.getLatitude(),currentLocation.getLongitude(), 1);
+                if(listAdresses != null && listAdresses.size()>0){
+                    Log.i(MapsActivity.TAG, "Listadresses contains items.");
+                    location = listAdresses.get(0).getLocality();
+                    brocation = listAdresses.get(0).getSubLocality();
+                }
+                else {
+                    Log.i(MapsActivity.TAG, "Listadresses ga null eller va mindre enn 0");
+                }
+            } catch (IOException io){
+                io.printStackTrace();
+            }
+
+            Log.i(MapsActivity.TAG, "Geocoder gives: " + location + " and " + brocation);
 
             Log.i(MapsActivity.TAG, "handleStorageofTrips mottar: param1: " + test + " param2: " + test2 + " param3: " + test3);
             Log.i(MapsActivity.TAG, "Innhold av arrayet: " + String.valueOf(savedTripCoordinateList.size()));
