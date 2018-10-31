@@ -57,9 +57,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private final String TAG = "MainScreen";
         private ArrayList<LatLng> savedTripCoordinateList;
         private Geocoder geocoder;
-        private String location;
-        private String brocation;
+        private String fylke;
+        private String kommune;
         private Location currentLocation;
+        private Context context;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -121,16 +122,19 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
             //Geocoder for locations
+
             geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             LocationHandler.forceUpdateOfCurrentLocation(this);
             currentLocation = LocationHandler.getCurrentLocation();
+            double lat = currentLocation.getLatitude();
+            double lon = currentLocation.getLongitude();
             try {
                 Log.i(MapsActivity.TAG, "try-catch method called");
-                List<Address> listAdresses = geocoder.getFromLocation(currentLocation.getLatitude(),currentLocation.getLongitude(), 1);
+                List<Address> listAdresses = geocoder.getFromLocation(lat, lon, 1);
                 if(listAdresses != null && listAdresses.size()>0){
                     Log.i(MapsActivity.TAG, "Listadresses contains items.");
-                    location = listAdresses.get(0).getLocality();
-                    brocation = listAdresses.get(0).getSubLocality();
+                    kommune = listAdresses.get(0).getLocality();
+                    fylke = listAdresses.get(0).getAdminArea();
                 }
                 else {
                     Log.i(MapsActivity.TAG, "Listadresses ga null eller va mindre enn 0");
@@ -139,7 +143,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 io.printStackTrace();
             }
 
-            Log.i(MapsActivity.TAG, "Geocoder gives: " + location + " and " + brocation);
+            Toast.makeText(this, "SUCCESS: " + kommune + " ligg i " + fylke, Toast.LENGTH_SHORT).show();
+
+            Log.i(MapsActivity.TAG, "Geocoder gives: " + kommune + " and " + fylke);
 
             Log.i(MapsActivity.TAG, "handleStorageofTrips mottar: param1: " + test + " param2: " + test2 + " param3: " + test3);
             Log.i(MapsActivity.TAG, "Innhold av arrayet: " + String.valueOf(savedTripCoordinateList.size()));

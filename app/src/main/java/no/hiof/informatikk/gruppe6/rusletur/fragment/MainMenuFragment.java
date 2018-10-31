@@ -63,8 +63,6 @@ public class MainMenuFragment extends Fragment {
 
 
 
-
-
         view.findViewById(R.id.recordTripButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
