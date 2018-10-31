@@ -177,7 +177,6 @@ public class Trips extends AppCompatActivity  {
             //Pass the id to the API class to build a trip object from it
             Log.d(TAG, "fetchIds: Addede to turer");
             turer.add(ApiNasjonalturbase.getTripInfo(selection, this));
-
         }
 
         initRecyclerView();

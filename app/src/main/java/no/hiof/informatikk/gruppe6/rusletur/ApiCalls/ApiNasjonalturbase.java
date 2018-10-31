@@ -1,6 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur.ApiCalls;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,6 +18,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
+
+import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
 /**
  *                  ApiNasjonalturbase.java
@@ -43,60 +46,12 @@ public class ApiNasjonalturbase {
      static RequestQueue mQueue;
      private static Trip trip;
 
-     //public static ArrayList<Trip> getTrips(String fylke, final String kommune, Context context) {
-
-        // String f = fylke;
-         //String k = kommune;
-         //Context kont = context;
-
          String url = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3xPSJyoUwQKbpO2uoHA78Lx6MRqzks5b4XrbwA%3D%3D";
-         //final ArrayList<String> id = new ArrayList<>();
 
-         //Get id's from github file
-        /*JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray fylker = (JSONArray) response.get("fylker");
-
-                    for(int i = 0; i < fylker.length(); i++){
-                        JSONObject tmpFylke = (JSONObject) fylker.get(i);
-                        if(tmpFylke.get("fylkenavn").toString().equals(f)){
-                            JSONArray kommuner = (JSONArray) tmpFylke.get("kommuner");
-                            for(int j = 0; j < kommuner.length(); j++){
-                                JSONObject tmpKommune = (JSONObject) kommuner.get(j);
-                                if(tmpKommune.get("kommunenavn").toString().equals(k)){
-                                    JSONArray turer = (JSONArray) tmpKommune.get("turer");
-                                    for(int k = 0; k < turer.length(); k++){
-                                        JSONObject tmpTur = (JSONObject) turer.get(k);
-                                        id.add(tmpTur.get("id").toString());
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();            }
-        });
-        mQueue.add(request);
-
-        return getTripInfo(id);
-
-    }*/
-
-         public static Trip getTripInfo(String idForTrip, Context context){
+         public static Trip getTripInfo(String idForTrip, Context context) throws InterruptedException {
 
              mQueue = Volley.newRequestQueue(context);
 
-             //for (int i = 0; i < ID.size(); i++){
              String url = "http://dev.nasjonalturbase.no/turer/" + idForTrip + "?api_key%{cb93d09a566a0ea1e6499a2be18beed87d7e2bb2}";
              JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                  @Override
@@ -152,6 +107,12 @@ public class ApiNasjonalturbase {
              });
 
              mQueue.add(request);
+             Log.d(TAG, "getTripInfo: " + trip);
+
+             while(trip == null){
+                 Thread.sleep(1000);
+                 Log.d(TAG, "getTripInfo: Still waiting");
+             }
 
              return trip;
          }
