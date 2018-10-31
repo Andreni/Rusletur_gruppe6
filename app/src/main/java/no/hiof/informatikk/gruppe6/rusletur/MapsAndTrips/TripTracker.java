@@ -119,7 +119,7 @@ public class TripTracker extends Service {
         /*
         * Array with coordinates will be sent through Intent as shown below. LatLng Arrays already
         * implements Parcelable, which means it can be sent through a bundle.
-        * EDIT: Fuck bundles. Send it through LocalBroadcastManager.
+        * EDIT: Nvm bundles. Send it through LocalBroadcastManager.
         * EDIT2: Cheesy method is cheesy.
          */
 

@@ -50,6 +50,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private FirebaseUser mUser;
         private DrawerLayout drawerLayout;
         private final String TAG = "MainScreen";
+        private ArrayList<LatLng> savedTripCoordinateList;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -95,27 +96,42 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 //intent.getBundleExtra("bundle");
                 ArrayList<LatLng> receivedList = intent.getParcelableArrayListExtra("LatLngArray");
                 Log.i(MapsActivity.TAG, "BroadcastReceiver got the Array! Size of Array: " + String.valueOf(receivedList.size()));
-                handleStorageOfTrips(receivedList);
+                savedTripCoordinateList = receivedList;
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SaveTripFragment()).commit();
             }
         };
 
 
 
-        public void handleStorageOfTrips(ArrayList<LatLng> gottaCatchThemAll){
+        public void handleStorageOfTrips(String test, String test2, int test3){
 
             /*
             * -Ongoing.
             *
             */
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SaveTripFragment()).commit();
 
-            Log.i(MapsActivity.TAG, "HandleStorage sin received list: " + String.valueOf(gottaCatchThemAll.size()));
+            Log.i(MapsActivity.TAG, "handleStorageofTrips mottar: param1: " + test + " param2: " + test2 + " param3: " + test3);
+            Log.i(MapsActivity.TAG, "Innhold av arrayet: " + String.valueOf(savedTripCoordinateList.size()));
 
-            Log.i(MapsActivity.TAG, "handleStorageOfTrips called");
 
-            Intent getArrayList = getIntent();
-            Log.i(MapsActivity.TAG, "MemoryAllocation te arraylist" + getArrayList.toString());
+            //After add trip
+            savedTripCoordinateList.clear();
+
+            Log.i(MapsActivity.TAG, "Slettet arrayet: " + String.valueOf(savedTripCoordinateList.size()));
+
+
+
+            //get data from savetrip.
+
+            //onclick for lagring -> addTrip(param)
+
+
+
+            //Log.i(MapsActivity.TAG, "handleStorageOfTrips called");
+
+            //Intent getArrayList = getIntent();
+            //Log.i(MapsActivity.TAG, "MemoryAllocation te arraylist" + getArrayList.toString());
 
             //ArrayList<LatLng> receivedList = getIntent().getParcelableArrayListExtra("TestArray");
             //Log.i(MapsActivity.TAG, "Size of receivedList is: " + String.valueOf(receivedList.size()));
