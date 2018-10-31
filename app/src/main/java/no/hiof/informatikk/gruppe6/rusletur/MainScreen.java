@@ -41,6 +41,7 @@ import java.util.Locale;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GenerateMap;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
@@ -113,7 +114,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
 
-        public void handleStorageOfTrips(String test, String test2, int test3){
+        public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty){
 
             /*
             * -Ongoing.
@@ -147,9 +148,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             Log.i(MapsActivity.TAG, "Geocoder gives: " + kommune + " and " + fylke);
 
-            Log.i(MapsActivity.TAG, "handleStorageofTrips mottar: param1: " + test + " param2: " + test2 + " param3: " + test3);
+            Log.i(MapsActivity.TAG, "handleStorageofTrips mottar: param1: " + tripName + " param2: " + tripDescription + " param3: " + tripDifficulty);
             Log.i(MapsActivity.TAG, "Innhold av arrayet: " + String.valueOf(savedTripCoordinateList.size()));
 
+            //Test the realshitz
+            Trip.addTrip(tripName, savedTripCoordinateList, FirebaseAuth.getInstance().getCurrentUser(), tripDifficulty, fylke, kommune, tripDescription);
 
             //After add trip
             savedTripCoordinateList.clear();

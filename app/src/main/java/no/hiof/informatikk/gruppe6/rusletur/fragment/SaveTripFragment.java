@@ -17,7 +17,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
 public class SaveTripFragment extends Fragment{
-    private int selectedDifficulty = 0;
+    private String selectedDifficulty;
     private EditText nameInput;
     private EditText descInput;
     private RadioGroup difficultyRadioGroup;
@@ -40,13 +40,13 @@ public class SaveTripFragment extends Fragment{
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
                     case R.id.savetrip_easySelected:
-                        selectedDifficulty = 1;
+                        selectedDifficulty = "Lett";
                         break;
                     case R.id.savetrip_mediumSelected:
-                        selectedDifficulty = 2;
+                        selectedDifficulty = "Middels";
                         break;
                     case R.id.savetrip_hardSelected:
-                        selectedDifficulty = 3;
+                        selectedDifficulty = "Vanskelig";
                         break;
                 }
             }
@@ -57,7 +57,7 @@ public class SaveTripFragment extends Fragment{
         saveTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nameInput != null && descInput != null && selectedDifficulty > 0) {
+                if (nameInput != null && descInput != null && selectedDifficulty != null) {
 
                     String nameinput = nameInput.getText().toString();
                     String description = descInput.getText().toString();
