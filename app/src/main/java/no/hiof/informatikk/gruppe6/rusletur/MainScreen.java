@@ -104,7 +104,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private BroadcastReceiver arrayReceiever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                //intent.getBundleExtra("bundle");
+                /*
+                * This BroadCastReceiver receives the intent sent from TripTracker once the service is terminated AND the user
+                * selected to save the trip. Unpack the intent to find our beloved arraylist, and save the arraylist in the
+                * class specific arraylist savedTripCoordinateList. Once the intent has been received, array unpacked and saved
+                * then send the user to SaveTripFragment, where he/she/it can fill out further info.
+                 */
                 ArrayList<LatLng> receivedList = intent.getParcelableArrayListExtra("LatLngArray");
                 Log.i(MapsActivity.TAG, "BroadcastReceiver got the Array! Size of Array: " + String.valueOf(receivedList.size()));
                 savedTripCoordinateList = receivedList;
@@ -117,8 +122,19 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty){
 
             /*
-            * -Ongoing.
+            * handleStorageOfTrips is initialized when the user has saved the trip in SaveTripFragment.
+            * It starts of by getting the users current location from the LocationHandler class, and saves
+            * the users municipality (getLocality) and county (getAdminArea) in Strings.
             *
+            * Once that is done, we finally have all the pieces needed for adding the trip to firebase.
+            * 1. ArrayList<LatLng> comes from TripTracker
+            * 2. Municipality and county are extracted and saved in this method.
+            * 3. Name of the trip, description and difficulty are all made in SaveTripFragment.
+            *
+            * Then we add it to firebase, through the static method addTrip.
+            * Once added, empty the array so it won't get cluttered with future coordinates
+            *
+            * Todo: LocationHandler crashes if GPS doesn't exist. Fix that shit
             */
 
 
@@ -160,23 +176,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             Log.i(MapsActivity.TAG, "Slettet arrayet: " + String.valueOf(savedTripCoordinateList.size()));
 
 
-
-            //get data from savetrip.
-
-            //onclick for lagring -> addTrip(param)
-
-
-
-            //Log.i(MapsActivity.TAG, "handleStorageOfTrips called");
-
-            //Intent getArrayList = getIntent();
-            //Log.i(MapsActivity.TAG, "MemoryAllocation te arraylist" + getArrayList.toString());
-
-            //ArrayList<LatLng> receivedList = getIntent().getParcelableArrayListExtra("TestArray");
-            //Log.i(MapsActivity.TAG, "Size of receivedList is: " + String.valueOf(receivedList.size()));
-
-            //Bundle arrayListBundle = getArrayList.getBundleExtra("coordArrayList");
-            //Log.i(MapsActivity.TAG, "MemoryAllocation te ArrayListBundle: " + arrayListBundle.toString());
 
         }
 

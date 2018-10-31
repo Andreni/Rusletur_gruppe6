@@ -30,6 +30,12 @@ public class SaveTripFragment extends Fragment{
 
         final View view = inflater.inflate(R.layout.fragment_savetrip, container, false);
 
+
+        /*
+        * This is a pretty simple XML which just displays a name input, description input
+        * and RadioButtons for selecting difficulty.
+         */
+
         nameInput = view.findViewById(R.id.savetrip_nameOfTripInput);
         descInput = view.findViewById(R.id.savetrip_descriptionInput);
 
@@ -58,7 +64,12 @@ public class SaveTripFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 if (nameInput != null && descInput != null && selectedDifficulty != null) {
-
+                    /*
+                    * Check if input is not null lol.
+                    * If everything checks out, send input from name, description and radiogroup to
+                    * handleStorageOfTrips in MainScreen, and switch from this fragment back to the
+                    * MainMenuFragment. It happens lightning quick because Fragments are fucking rad bro.
+                     */
                     String nameinput = nameInput.getText().toString();
                     String description = descInput.getText().toString();
 

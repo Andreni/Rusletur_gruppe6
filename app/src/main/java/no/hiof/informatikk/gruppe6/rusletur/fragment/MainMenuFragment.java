@@ -48,6 +48,7 @@ public class MainMenuFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<LatLng> savedTrip;
+    private boolean recordAlreadyClicked = false;
     //Worst practice = best practice.
     public static boolean saveWasClicked = false;
 
@@ -61,14 +62,31 @@ public class MainMenuFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_mainscreen, container, false);
         Log.d("TESTER", "UTENFOR ONCLICK");
 
-
+        /*
+        * Currently two buttons: Start record and stop record.
+        * Start record checks if the button has already been clicked, because startService
+        * calls onStartCommand in service, where a method is called to start recording.
+        * onStartCommand runs everytime the button is clicked, so if you click it multiple times
+        * FusedLocationProvider will queue up multiple times.
+         */
 
         view.findViewById(R.id.recordTripButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startService(new Intent(getActivity(), TripTracker.class));
+                if(!recordAlreadyClicked) {
+                    getActivity().startService(new Intent(getActivity(), TripTracker.class));
+                }
+                else{
+                    Toast.makeText(getActivity(), "Recording in prosess. Stop first", Toast.LENGTH_SHORT).show();
+                }
+                recordAlreadyClicked = true;
             }
         });
+
+        /*
+        * Stop record currently creates an AlertDialog which gives the user a choice of either
+        * discarding their trip, or saving it.
+         */
 
         view.findViewById(R.id.stopRecordButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +106,7 @@ public class MainMenuFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.i(MapsActivity.TAG, "Yes selected");
                                 saveWasClicked = true;
+                                recordAlreadyClicked = false;
                                 getActivity().stopService(new Intent(getActivity(), TripTracker.class));
                             }
                         })
@@ -95,6 +114,7 @@ public class MainMenuFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getActivity(), "Tur slettet", Toast.LENGTH_SHORT).show();
+                                recordAlreadyClicked = false;
                                 saveWasClicked = false;
                                 getActivity().stopService(new Intent(getActivity(), TripTracker.class));
                             }
