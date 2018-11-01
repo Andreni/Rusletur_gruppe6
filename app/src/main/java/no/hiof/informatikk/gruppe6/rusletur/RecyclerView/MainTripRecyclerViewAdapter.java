@@ -38,7 +38,6 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         Log.d(TAG, "onCreateViewHolder:");
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.layout_listitem_tripsview, viewGroup, false);
         ViewHolder holder = new ViewHolder(view);
-        Trips.view = view;
 
         return holder;
     }

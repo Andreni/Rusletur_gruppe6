@@ -63,8 +63,7 @@ public class ApiNasjonalturbase {
              JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                  @Override
                  public void onResponse(JSONObject response) {
-
-                     try {
+                     try{
                          String id = response.get("_id").toString();
                          String navn = response.get("navn").toString();
 
@@ -97,13 +96,11 @@ public class ApiNasjonalturbase {
 
                          JSONObject tidsbrukObj = (JSONObject) response.get("tidsbruk");
                          JSONObject normal = (JSONObject) tidsbrukObj.get("normal");
-                         String tidsbruk = normal.get("timer").toString() + " timer, " + normal.get("minutter").toString() + " minutter";
+                         //String tidsbruk = normal.get("timer").toString() + " timer, " + normal.get("minutter").toString() + " minutter";
 
-                         Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk));
+                         Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, "xx"));
 
                          Log.d(TAG, "onResponse: " + Trips.turer);
-
-                         Trips.initRecyclerView(kont);
 
                      } catch (JSONException e) {
                          e.printStackTrace();

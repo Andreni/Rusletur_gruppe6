@@ -2,6 +2,7 @@ package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.HttpAuthHandler;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -33,15 +35,16 @@ import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAda
  * Takes backs generated objects and populates the spinners with them
  */
 public class Trips extends AppCompatActivity  {
-    Spinner spinnerKommune;
-    Spinner spinnerFylke;
-    Boolean kommuneListLoaded = false;
-    Boolean fylkeListLoaded = false;
-    String TAG = "TRIPS";
-    int selectionFylke = 0;
-    int selectionKommune = 0;
+    private Spinner spinnerKommune;
+    private Spinner spinnerFylke;
+    private Boolean kommuneListLoaded = false;
+    private Boolean fylkeListLoaded = false;
+    private String TAG = "TRIPS";
+    private int selectionFylke = 0;
+    private int selectionKommune = 0;
     public static ArrayList<Trip> turer = new ArrayList<>();
-    public static View view;
+    private MainTripRecyclerViewAdapter adapter;
+    private int antall = 0;
 
 
 
@@ -66,8 +69,8 @@ public class Trips extends AppCompatActivity  {
     }
 
 
-
     //Initalize the fylke dropdown menu
+
     public void setUpFylkeSpinner(FylkeList alist){
         spinnerFylke = findViewById(R.id.tripsA_SelectFylke_spinner);
         //Load fylker from array
@@ -120,8 +123,8 @@ public class Trips extends AppCompatActivity  {
 
     }
 
-
     //Load the kommunespinner
+
     public void setupKommuneSpinner(Integer positonFylke){
         //Load Kommuner from array
         //Setup adapter for loading Kommune objects
@@ -137,6 +140,9 @@ public class Trips extends AppCompatActivity  {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //Selection statement for K spinner
+
+                turer.clear();
+                antall = 0;
 
                 int lastPosition = position;
 
@@ -185,7 +191,7 @@ public class Trips extends AppCompatActivity  {
         }
 
         Log.d(TAG, "onResponse: Init?");
-
+        initRecyclerView();
 
     }
 
@@ -205,17 +211,47 @@ public class Trips extends AppCompatActivity  {
     }
 
 
-    public static void initRecyclerView(Context kont){
+    public void initRecyclerView(){
 
-        if(turer.size() != 0){
+        RecyclerView recyclerView = findViewById(R.id.tripsRecyclerView);
+        adapter = new MainTripRecyclerViewAdapter(this, turer);
 
-            RecyclerView recyclerView = view.findViewById(R.id.tripsRecyclerView);
-            MainTripRecyclerViewAdapter adapter = new MainTripRecyclerViewAdapter(kont, turer);
-
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(kont));
-        }
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Log.d(TAG, "onResponse: Run check");
+        checkChange();
 
     }
 
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if(antall < turer.size()){
+                adapter.notifyItemInserted(0);
+                Log.d(TAG, "onResponse: CHECK");
+                antall++;
+                checkChange();
+            }
+        }
+    };
+
+    private void checkChange(){
+        Log.d(TAG, "onResponse: Check runned");
+
+        final Handler handler2 = new Handler();
+        handler2.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(antall < turer.size()){
+                    handler.removeCallbacks(runnable);
+                    handler.postDelayed(runnable, 0);
+                }if(antall == turer.size()){
+                    Log.d(TAG, "run: onResonse: " + turer);
+                    checkChange();
+                }
+            }
+        }, 3000);
+
+    }
 }
