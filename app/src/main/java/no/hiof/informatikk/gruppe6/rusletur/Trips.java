@@ -150,7 +150,7 @@ public class Trips extends AppCompatActivity  {
 
                     }else{
                         kommuneListLoaded = true;
-                        selectionKommune = position;
+                        selectionKommune = position-1;
                         //Send the position so we can start a search based on all the valid ids
                         fetchIds();
                     }

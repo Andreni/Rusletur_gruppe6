@@ -60,6 +60,7 @@ public class ApiNasjonalturbase {
              mQueue = Volley.newRequestQueue(context);
 
              String url = "http://dev.nasjonalturbase.no/turer/" + idForTrip + "?api_key%{cb93d09a566a0ea1e6499a2be18beed87d7e2bb2}";
+             Log.d(TAG, "getTripInfo onResponse2: Id for tur: " + idForTrip);
              JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                  @Override
                  public void onResponse(JSONObject response) {
@@ -94,11 +95,29 @@ public class ApiNasjonalturbase {
                              }
                          }
 
+                         //Setter sammen strengen for tidsbruk
                          JSONObject tidsbrukObj = (JSONObject) response.get("tidsbruk");
                          JSONObject normal = (JSONObject) tidsbrukObj.get("normal");
-                         //String tidsbruk = normal.get("timer").toString() + " timer, " + normal.get("minutter").toString() + " minutter";
 
-                         Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, "xx"));
+                         String dager = null;
+                         String timer = null;
+                         String minutter = null;
+                         String tidsbruk;
+
+                         Log.d(TAG, "onResponse2: Normal: " + normal);
+                         if(normal.has("dager")){
+                             dager = normal.getString("dager");
+                         }
+                         if(normal.has("timer")){
+                             timer = normal.getString("timer");
+                         }
+                         if(normal.has("minutter")){
+                             minutter = normal.getString("minutter");
+                         }
+
+                         tidsbruk = ((dager != null) ? (dager + " dager, ") : "") + "" + (((timer != null) ? (timer + " timer, ") : "0 timer, ")) + "" + ((minutter != null) ? (minutter + " minutter") : "0 minutter");
+
+                         Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk));
 
                          Log.d(TAG, "onResponse: " + Trips.turer);
 
