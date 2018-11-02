@@ -97,7 +97,15 @@ public class ApiNasjonalturbase {
 
                          //Setter sammen strengen for tidsbruk
                          JSONObject tidsbrukObj = (JSONObject) response.get("tidsbruk");
-                         JSONObject normal = (JSONObject) tidsbrukObj.get("normal");
+                         JSONObject normal = null;
+
+                         if(tidsbrukObj.has("normal")){
+                             normal = (JSONObject) tidsbrukObj.get("normal");
+                         }else if(tidsbrukObj.has("min")){
+                             normal = (JSONObject) tidsbrukObj.get("min");
+                         }
+
+
 
                          String dager = null;
                          String timer = null;

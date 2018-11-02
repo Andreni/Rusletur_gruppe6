@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.webkit.HttpAuthHandler;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class Trips extends AppCompatActivity  {
     public static ArrayList<Trip> turer = new ArrayList<>();
     private MainTripRecyclerViewAdapter adapter;
     private int antall = 0;
+    private ProgressBar pgsBar;
 
 
 
@@ -52,6 +54,8 @@ public class Trips extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
+
+        pgsBar = findViewById(R.id.progressBarForLoadingTrips);
 
         loadLists();
     }
@@ -88,31 +92,32 @@ public class Trips extends AppCompatActivity  {
         spinnerFylke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String fylkeSelected;
+                String fylkeSelected;
+                turer.clear();
+                 antall = 0;
 
-                    //If the position is 0, nothing is selected
-                    if (position==0){
-                        spinnerKommune.setVisibility(View.INVISIBLE);
+                //If the position is 0, nothing is selected
+                if (position==0){
+                    spinnerKommune.setVisibility(View.INVISIBLE);
 
-                    }
-                    else if(kommuneListLoaded){
-                        //If there already is loaded a kommunelist, set the kommunespinner
-                        //selection to zero
-                        spinnerKommune.setVisibility(View.VISIBLE);
-                        spinnerKommune.setSelection(0);
-                        setupKommuneSpinner(position);
+                }
+                else if(kommuneListLoaded){
+                    //If there already is loaded a kommunelist, set the kommunespinner
+                    //selection to zero
+                    spinnerKommune.setVisibility(View.VISIBLE);
+                    spinnerKommune.setSelection(0);
+                    setupKommuneSpinner(position);
 
-                    }
+                }
 
-                    else{
-                        //When a valid selection is made, pass the positon for the method,
-                        //so the proper kommunelist can be loaded from the fylke.
-                        spinnerKommune.setVisibility(View.VISIBLE);
-                        setupKommuneSpinner(position);
-                        fylkeListLoaded = true;
-                        selectionFylke = position;
-                    }
-
+                else{
+                    //When a valid selection is made, pass the positon for the method,
+                    //so the proper kommunelist can be loaded from the fylke.
+                    spinnerKommune.setVisibility(View.VISIBLE);
+                    setupKommuneSpinner(position);
+                    fylkeListLoaded = true;
+                    selectionFylke = position;
+                }
             }
             //Not in use
             @Override
@@ -151,6 +156,7 @@ public class Trips extends AppCompatActivity  {
                     }else{
                         kommuneListLoaded = true;
                         selectionKommune = position-1;
+                        pgsBar.setVisibility(View.VISIBLE);
                         //Send the position so we can start a search based on all the valid ids
                         fetchIds();
                     }
@@ -228,6 +234,7 @@ public class Trips extends AppCompatActivity  {
         @Override
         public void run() {
             if(antall < turer.size()){
+                pgsBar.setVisibility(View.GONE);
                 adapter.notifyItemInserted(0);
                 Log.d(TAG, "onResponse: CHECK");
                 antall++;
