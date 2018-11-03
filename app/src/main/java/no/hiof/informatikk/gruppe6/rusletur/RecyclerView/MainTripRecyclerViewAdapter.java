@@ -1,6 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import no.hiof.informatikk.gruppe6.rusletur.DisplayAtrip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.Trips;
@@ -57,6 +59,11 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, mItem.get(position).getNavn() + " clicked", Toast.LENGTH_SHORT).show();
+                // using context and next component class to create intent
+                Intent intent = new Intent(mContext, DisplayAtrip.class);
+                // using putExtra(String key, Parcelable value) method
+                intent.putExtra("object", mItem.get(position));
+                mContext.startActivity(intent);
             }
         });
         

@@ -227,7 +227,9 @@ public class Trips extends AppCompatActivity  {
         Log.d(TAG, "onResponse: Run check");
         checkChange();
 
+
     }
+
 
     Handler handler = new Handler();
     Runnable runnable = new Runnable() {
