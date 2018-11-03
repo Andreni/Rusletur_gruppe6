@@ -63,4 +63,9 @@ public class DisplayAtrip extends AppCompatActivity {
     public void openBrowser(View view){
         Toast.makeText(this,"Webview Clicked",Toast.LENGTH_SHORT).show();
     }
+
+    public void goBack(View view){
+        super.onBackPressed();
+    }
+
 }
