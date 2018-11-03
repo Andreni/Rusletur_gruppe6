@@ -7,6 +7,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
+/**
+ * A trip object
+ */
 public class Trip implements Parcelable {
 
 

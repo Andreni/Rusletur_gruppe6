@@ -82,8 +82,13 @@ public class ApiNasjonalturbase {
 
                          String beskrivelse = response.get("beskrivelse").toString();
                          String lisens = response.get("lisens").toString();
-                         String urlFraUrl = response.get("url").toString();
 
+
+                         String urlFraUrl;// = response.get("url").toString();
+
+                         String urlFraUrl1 = response.get("url").toString();
+
+                            urlFraUrl = urlFraUrl1;
                          ArrayList<LatLng> latlng = new ArrayList<>();
 
                          JSONObject geojson = (JSONObject) response.get("geojson");

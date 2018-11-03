@@ -3,8 +3,12 @@ package no.hiof.informatikk.gruppe6.rusletur;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 
@@ -45,9 +49,18 @@ public class DisplayAtrip extends AppCompatActivity {
         displayLengthOfTripTime.setText(aTrip.getTidsbruk());
         TextView displayUrl = findViewById(R.id.displayAtrip_urlForTrip_textView);
         displayUrl.setText(aTrip.getUrl());
+        WebView webView = findViewById(R.id.displayAtrip_urlView_vewview);
 
-        ImageView displayTripPic = findViewById(R.id.displayAtrip_TripImage_imageView);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl("https://ut.no/kart/" + aTrip.getId());
 
 
+
+
+    }
+
+    public void openBrowser(View view){
+        Toast.makeText(this,"Webview Clicked",Toast.LENGTH_SHORT).show();
     }
 }
