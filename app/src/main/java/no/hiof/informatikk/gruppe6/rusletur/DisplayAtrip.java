@@ -92,7 +92,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
         //Place a marker on the map
         mMap.addMarker(new MarkerOptions().position(tripStartLocation).title(aTrip.getNavn()));
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartLocation, 12, 0, 0)));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartLocation, 11, 0, 0)));
 
 
         //Polylines options
