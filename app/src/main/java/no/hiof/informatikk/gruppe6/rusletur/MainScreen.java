@@ -100,7 +100,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_trip:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
+                    startActivity(new Intent(this,Trips.class));
                     break;
                 case R.id.to_debug_page:
                     startActivity(new Intent(this, UserManagmentDebug.class));
