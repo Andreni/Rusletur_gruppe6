@@ -53,7 +53,10 @@
         <activity android:name=".UserManagement.UserManagmentDebug" />
         <activity android:name=".UserManagement.UserRegistration" />
         <activity android:name=".Trips" />
-        <activity android:name=".DisplayAtrip"></activity>
+        <activity android:name=".DisplayAtrip" />
+        <activity
+            android:name=".DisplayAtripMap"
+            android:label="@string/title_activity_display_atrip_map"></activity>
     </application>
 
 </manifest>

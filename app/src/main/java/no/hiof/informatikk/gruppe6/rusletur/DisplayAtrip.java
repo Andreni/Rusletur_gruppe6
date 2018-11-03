@@ -1,32 +1,53 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 
 /**
  * Class used for displaying a trip object
  */
-public class DisplayAtrip extends AppCompatActivity {
+public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallback {
 
     private Trip aTrip;
+    private GoogleMap mMap;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_atrip);
 
         // Using getParcelableExtra(String key) method
         aTrip = (Trip) getIntent().getParcelableExtra("object");
 
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.mapFrag);
+        mapFragment.getMapAsync(( this));
         setupItems();
 
     }
@@ -49,12 +70,6 @@ public class DisplayAtrip extends AppCompatActivity {
         displayLengthOfTripTime.setText(aTrip.getTidsbruk());
         TextView displayUrl = findViewById(R.id.displayAtrip_urlForTrip_textView);
         displayUrl.setText(aTrip.getUrl());
-        WebView webView = findViewById(R.id.displayAtrip_urlView_vewview);
-
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://ut.no/kart/" + aTrip.getId());
-
 
 
 
@@ -63,4 +78,31 @@ public class DisplayAtrip extends AppCompatActivity {
     public void openBrowser(View view){
         Toast.makeText(this,"Webview Clicked",Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
+        PolylineOptions options = new PolylineOptions();
+        //Start position
+        LatLng tripStartLocation = null;
+        tripStartLocation = new LatLng(aTrip.getCoordinates().get(0).latitude, aTrip.getCoordinates().get(0).longitude);
+
+        //Registers the first polylines at the start of the trip, this will be used in the addMarker.
+        for (int i = 0; i< aTrip.getCoordinates().size();i++) {
+            options.add(new LatLng(aTrip.getCoordinates().get(i).latitude,aTrip.getCoordinates().get(i).longitude));
+
+        }
+
+        //Place a marker on the map
+        mMap.addMarker(new MarkerOptions().position(tripStartLocation).title(aTrip.getNavn()));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartLocation, 15, 0, 0)));
+
+
+        //Polylines options
+        options.color(Color.GREEN);
+        options.width(10);
+        mMap.addPolyline(options);
+    }
+
+
 }
