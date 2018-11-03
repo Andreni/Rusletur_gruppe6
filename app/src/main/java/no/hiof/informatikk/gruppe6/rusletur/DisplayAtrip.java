@@ -75,9 +75,6 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-    public void openBrowser(View view){
-        Toast.makeText(this,"Webview Clicked",Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onMapReady(GoogleMap map) {
@@ -85,17 +82,17 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         PolylineOptions options = new PolylineOptions();
         //Start position
         LatLng tripStartLocation = null;
-        tripStartLocation = new LatLng(aTrip.getCoordinates().get(0).latitude, aTrip.getCoordinates().get(0).longitude);
+        tripStartLocation = new LatLng(aTrip.getCoordinates().get(0).longitude, aTrip.getCoordinates().get(0).latitude);
 
         //Registers the first polylines at the start of the trip, this will be used in the addMarker.
         for (int i = 0; i< aTrip.getCoordinates().size();i++) {
-            options.add(new LatLng(aTrip.getCoordinates().get(i).latitude,aTrip.getCoordinates().get(i).longitude));
+            options.add(new LatLng(aTrip.getCoordinates().get(i).longitude,aTrip.getCoordinates().get(i).latitude));
 
         }
 
         //Place a marker on the map
         mMap.addMarker(new MarkerOptions().position(tripStartLocation).title(aTrip.getNavn()));
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartLocation, 15, 0, 0)));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartLocation, 12, 0, 0)));
 
 
         //Polylines options

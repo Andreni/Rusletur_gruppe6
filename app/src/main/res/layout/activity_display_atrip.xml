@@ -9,235 +9,176 @@
 
     <TextView
         android:id="@+id/displayAtrip_displayProviders_textView"
-        android:layout_width="84dp"
-        android:layout_height="18dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="28dp"
         android:text="Tilbyder"
         android:textAlignment="center"
-        app:layout_constraintBaseline_toBaselineOf="@+id/displayAtrip_providerInfo_textView"
-        app:layout_constraintStart_toStartOf="@+id/displayAtrip_displayLisens_textView3" />
+        app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_providerInfo_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/displayAtrip_providerInfo_textView"
+        app:layout_constraintTop_toTopOf="@+id/displayAtrip_providerInfo_textView" />
 
     <TextView
         android:id="@+id/displayAtrip_providerInfo_textView"
-        android:layout_width="64dp"
+        android:layout_width="0dp"
         android:layout_height="18dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="Tilbyder:"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_LisensInfo_textView2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_displayProviders_textView"
+        app:layout_constraintStart_toEndOf="@+id/displayAtrip_urlForTrip_textView"
+        app:layout_constraintTop_toTopOf="@+id/displayAtrip_LisensInfo_textView2" />
 
     <TextView
         android:id="@+id/displayAtrip_displayLisens_textView3"
-        android:layout_width="82dp"
-        android:layout_height="18dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         android:text="Lisens:"
         android:textAlignment="center"
-        app:layout_constraintBaseline_toBaselineOf="@+id/displayAtrip_LisensInfo_textView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.992"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_LisensInfo_textView2"
+        app:layout_constraintEnd_toEndOf="@+id/displayAtrip_tripDesc_textView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/displayAtrip_goTrip_button"
+        app:layout_constraintTop_toTopOf="@+id/displayAtrip_LisensInfo_textView2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/displayAtrip_LisensInfo_textView2"
-        android:layout_width="82dp"
+        android:layout_width="77dp"
         android:layout_height="18dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="28dp"
         android:text="Lisens:"
         app:layout_constraintEnd_toStartOf="@+id/displayAtrip_displayLisens_textView3"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripDesc_textView2" />
+        tools:layout_editor_absoluteY="448dp" />
 
     <TextView
         android:id="@+id/displayAtrip_tagOfTrip_textView2"
         android:layout_width="114dp"
         android:layout_height="23dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="55dp"
         android:text="tag"
+        app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_trip_TimeLength_textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_gradeOfTrip_textView" />
+        app:layout_constraintTop_toTopOf="@+id/displayAtrip_tripDesc_textView2" />
 
     <TextView
         android:id="@+id/displayAtrip_gradeOfTrip_textView"
-        android:layout_width="114dp"
+        android:layout_width="0dp"
         android:layout_height="22dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="39dp"
         android:text="Vanskelighetsgrad"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_GraderingInfo_textView" />
+        app:layout_constraintBottom_toTopOf="@+id/displayAtrip_timeLengthInfo_textViw"
+        app:layout_constraintEnd_toEndOf="@+id/displayAtrip_tagOfTrip_textView2"
+        app:layout_constraintStart_toStartOf="@+id/displayAtrip_tagOfTrip_textView2"
+        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" />
 
     <TextView
         android:id="@+id/displayAtrip_tripDesc_textView2"
-        android:layout_width="189dp"
+        android:layout_width="0dp"
         android:layout_height="160dp"
-        android:layout_marginEnd="28dp"
-        android:layout_marginTop="248dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="26dp"
         android:text="Beskrivelse"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/displayAtrip_timeLengthInfo_textViw"
         app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" />
 
     <TextView
         android:id="@+id/displayAtrip_tripName_textView"
-        android:layout_width="match_parent"
-        android:layout_height="26dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="358dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="26dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="26dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintHorizontal_bias="0.51"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <TextView
         android:id="@+id/displayAtrip_GraderingInfo_textView"
         android:layout_width="68dp"
         android:layout_height="22dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="292dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:text="Gradering:"
+        app:layout_constraintBottom_toTopOf="@+id/displayAtrip_gradeOfTrip_textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" />
 
     <TextView
         android:id="@+id/displayAtrip_urlForTrip_textView"
-        android:layout_width="86dp"
+        android:layout_width="0dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="77dp"
+        android:layout_marginBottom="82dp"
         android:text="Lenke"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintBottom_toTopOf="@+id/displayAtrip_goBack_button"
+        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_providerInfo_textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_trip_TimeLength_textView"
-        app:layout_constraintVertical_bias="0.144" />
+        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_timeLengthInfo_textViw" />
 
     <Button
         android:id="@+id/displayAtrip_goTrip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="31dp"
         android:text="Gå!"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_displayProviders_textView"
-        app:layout_constraintVertical_bias="0.657" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/displayAtrip_goBack_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginBottom="31dp"
         android:text="Tilbake"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_goTrip_button"
-        app:layout_constraintHorizontal_bias="0.045"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_urlForTrip_textView"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/displayAtrip_timeLengthInfo_textViw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="109dp"
+        android:layout_marginBottom="278dp"
         android:text="Tidsbruk"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tagOfTrip_textView2" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_tripDesc_textView2"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/displayAtrip_trip_TimeLength_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="8dp"
         android:text="tidsbruk"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/displayAtrip_timeLengthInfo_textViw" />
 
-    <WebView
-        android:id="@+id/displayAtrip_urlView_vewview"
-        android:layout_width="match_parent"
-        android:layout_height="235dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:onClick="openBrowser"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/displayAtrip_GraderingInfo_textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.848" >
-
-    </WebView>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="178dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="7dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_urlView_vewview"
-        app:layout_constraintGuide_end="552dp"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="15dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="367dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_end="120dp" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="340dp"
-        android:orientation="vertical">
+        android:id="@+id/linearLayout2"
+        android:layout_width="353dp"
+        android:layout_height="214dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="26dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/mapFrag"
