@@ -34,7 +34,7 @@ public class LookUpRegisterNasjonalTurbase {
 
     private RequestQueue mQueue;
     private Context currentContext;
-    private String urlForRegister = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3_2Tq7QAEoM5ugLuRP37chMdF13Eks5b3xfuwA%3D%3D";
+    private String urlForRegister = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3xPSJyoUwQKbpO2uoHA78Lx6MRqzks5b4XrbwA%3D%3D";
     String TAG = "JSON";
 
     //Constructor for creating downloader
