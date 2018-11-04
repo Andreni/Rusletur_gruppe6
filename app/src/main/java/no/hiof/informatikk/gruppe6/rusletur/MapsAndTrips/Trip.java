@@ -4,8 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+
+import no.hiof.informatikk.gruppe6.rusletur.User.User;
+
 
 /**
  * A trip object
@@ -25,6 +31,8 @@ public class Trip implements Parcelable {
     private String url;
     private String tidsbruk;
     private ArrayList<LatLng> coordinates;
+    public static ArrayList<Trip> trips;
+    private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
 
     public Trip(String id, String navn, String tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates, String tidsbruk) {
@@ -41,10 +49,29 @@ public class Trip implements Parcelable {
         this.coordinates = coordinates;
         this.tidsbruk = tidsbruk;
     }
+    public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user, String difficulty, String fylke, String kommune, String beskrivelse) {
+        if(user != null) {
+            User.addTrip(tripname);
+            myRef.child("trip").child(tripname).child("Created by").setValue(user.getEmail());
+        }
+        int count = 0;
+        for(LatLng i : coords) {
+            myRef.child("trip").child(tripname).child("LatLng").child("Lat").child(String.valueOf(count)).setValue(i.latitude);
+            myRef.child("trip").child(tripname).child("LatLng").child("Lon").child(String.valueOf(count)).setValue(i.longitude);
+            myRef.child("trip").child(tripname).child("Grad").setValue(difficulty);
+            myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
+            myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
+            myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
+            count++;
+        }
 
 
     public String getId() {
         return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
     public String getTag() {
         return tag;

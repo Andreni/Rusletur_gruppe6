@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.EditText;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,13 +16,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
 /**
  *                              User.class
- * It is used as a easier way to collaborate the realtime database
+ * It is used as an easier way to collaborate the realtime database
  * with information from user and Authentication database.
- * A user.class will always be created when the user logs in.
  *
  * Treat User.class as the logged in user, as the user.class will always store
  * its information directly onto the UID branch, and also call from the UID branch.
@@ -29,46 +31,40 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
  *      Example:
  *          Anna want to change her email,
  *          the app should do:
- *              User anna = new User(FirebaseUser);
- *              anna.setEmail("AnnasNewEmail@Mail.com");
+ *              User.setEmail(FirebaserUser, "AnnasNewEmail@Mail.com", "password");
  *          This will update the email in the auth DB, and the RTDB.
  *
- *
- *          Anna wanna change her phone number? Call new User()
  */
 
 public class User {
 
     private static final String TAG = "User";
-    private String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    private DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
-    private DatabaseReference uidRef = myRef.child("user").child(uid);
-    private FirebaseUser mUser;
-
-    public User(FirebaseUser user) {
-        this.mUser = user;
-    }
-
+    private static String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    private static DatabaseReference uidRef = myRef.child("user").child(uid);
+    private static FirebaseUser mUser = null;
 
     //Method to set all basic information about user. Preferable used in Registration of user.
-    public void setAll(String username, String firstname, String lastname) {
+    public static void setAll(String username, String firstname, String lastname) {
         uidRef.child("username").setValue(username);
         uidRef.child("firstname").setValue(firstname);
         uidRef.child("lastname").setValue(lastname);
     }
-    public String getUsername() {
+    public static String getUsername(FirebaseUser user) {
+
         return uidRef.child("username").getKey();
     }
-    public void setUsername(String username) {
+    public static void setUsername(String username) {
         uidRef.child("username").setValue(username);
     }
-    public void setFirstname(String firstname) {
+    public static void setFirstname(String firstname) {
         uidRef.child("firstname").setValue(firstname);
     }
-    public void setLastname(String lastname) {
+    public static void setLastname(String lastname) {
         uidRef.child("lastname").setValue(lastname);
     }
-    public void setEmail(String email, String password) {
+    public static void setEmail(FirebaseUser user, String email, String password) {
+        mUser = user;
         //Change out password and NEW_EMAIL with real inputs
         final String NEW_EMAIL = email;
         // Ask user to provide the password for authentication.
@@ -92,10 +88,26 @@ public class User {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.i(TAG,"Creditentials are invalid");
+                Log.e(TAG,"Creditentials are invalid");
             }
         });
     }
+    /*
+        Saves the trip like this:
+        user
+           |-Trip
+               |-Tripname
+                    |-LatLng1
+                    |-LatLng2
+                    |-LatLng3
 
+     */
+    public static void addTrip(String tripName) {
+        uidRef.child("trip").child(tripName);
+    }
+
+    public static DatabaseReference getUidRef() {
+        return uidRef;
+    }
 
 }
