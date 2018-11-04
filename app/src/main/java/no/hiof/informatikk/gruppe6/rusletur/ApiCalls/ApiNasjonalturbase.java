@@ -110,8 +110,6 @@ public class ApiNasjonalturbase {
                              normal = (JSONObject) tidsbrukObj.get("min");
                          }
 
-
-
                          String dager = null;
                          String timer = null;
                          String minutter = null;
