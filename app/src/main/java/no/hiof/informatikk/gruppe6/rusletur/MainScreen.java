@@ -45,7 +45,6 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.TripsRecyclerViewFragment;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.RecyclerViewFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,7 +52,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private FirebaseAuth mAuth;
         private FirebaseUser mUser;
         private DrawerLayout drawerLayout;
-        private final String TAG = "MainScreen";
+        private String TAG = "MainScreen";
         private ArrayList<LatLng> savedTripCoordinateList;
         private Geocoder geocoder;
         private String fylke;
@@ -91,7 +90,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
             if(savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecyclerViewFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
             }
 
             //Clickhandling on navigationdrawer

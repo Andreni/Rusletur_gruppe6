@@ -54,7 +54,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     static final String GPXLOG = "GPXLOG";
-    static final String TAG = "MapsActivity";
     private Trip aTrip;
     public static final String TAG = "MapsActivity";
     private LatLng currentPosition = new LatLng(0,0);
