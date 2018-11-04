@@ -143,8 +143,9 @@
         android:id="@+id/displayAtrip_goTrip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="26dp"
         android:layout_marginBottom="31dp"
+        android:layout_marginEnd="26dp"
+        android:onClick="goToMaps"
         android:text="Gå!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

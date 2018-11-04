@@ -32,6 +32,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     static final String GPXLOG = "GPXLOG";
     static final String TAG = "MapsActivity";
+    private Trip aTrip;
 
 
     GPXParser mParser = new GPXParser(); // consider injection
@@ -52,10 +53,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.i(TAG, "Method onMapReady() started.");
         mMap = googleMap;
 
-        //Display trip
-        String url = getIntent().getStringExtra("url");
-        Log.d(TAG, url);
-        parseGpx(url);
+        //Display trip from url
+        if(getIntent().hasExtra("url")){
+            String url = getIntent().getStringExtra("url");
+            Log.d(TAG, url);
+            parseGpx(url);
+        }
+        if(getIntent().hasExtra("object")){
+            aTrip = getIntent().getParcelableExtra("object");
+            parseObject(aTrip);
+        }
+
     }
 
 
@@ -111,4 +119,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
     }
+
+    private void parseObject(Trip trip){
+        PolylineOptions options = new PolylineOptions();
+        //Start position
+        LatLng tripStartPos = null;
+        tripStartPos = new LatLng(trip.getCoordinates().get(0).longitude, trip.getCoordinates().get(0).latitude);
+
+        for(int i = 0; i < trip.getCoordinates().size(); i++){
+            options.add(new LatLng(trip.getCoordinates().get(i).longitude, trip.getCoordinates().get(i).latitude));
+        }
+
+        mMap.addMarker(new MarkerOptions().position(tripStartPos).title(trip.getNavn()));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(tripStartPos, 11,0,0)));
+
+        options.color(Color.BLUE);
+        options.width(10);
+        mMap.addPolyline(options);
+
+    }
+
+
 }

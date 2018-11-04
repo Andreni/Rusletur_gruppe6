@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 
 /**
@@ -105,6 +107,13 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     public void goBack(View view){
         super.onBackPressed();
+    }
+
+    public void goToMaps(View view){
+        Intent intent = new Intent(this, MapsActivity.class);
+
+        intent.putExtra("object", aTrip);
+        startActivity(intent);
     }
 
 }
