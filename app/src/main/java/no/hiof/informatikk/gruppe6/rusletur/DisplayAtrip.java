@@ -1,24 +1,15 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -30,6 +21,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 
 /**
  * Class used for displaying a trip object
+ * Takes the trip object that is passed, and displays the data that is stored in it.
  */
 public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -44,7 +36,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         // Using getParcelableExtra(String key) method
         aTrip = (Trip) getIntent().getParcelableExtra("object");
 
-
+        //Load the map Fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFrag);
         mapFragment.getMapAsync(( this));
@@ -52,7 +44,11 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    //TODO Make method that passes the object, if the user chooses to take the trip
 
+    /**
+     * Initializes the view items, and populates them with text.
+     */
     public void setupItems(){
         TextView displayTripName = findViewById(R.id.displayAtrip_tripName_textView);
         displayTripName.setText(aTrip.getNavn());
@@ -62,8 +58,10 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         displayProvider.setText(aTrip.getTilbyder());
         TextView displayDifficulty = findViewById(R.id.displayAtrip_gradeOfTrip_textView);
         displayDifficulty.setText(aTrip.getGradering());
-        TextView displayDescrption = findViewById(R.id.displayAtrip_tripDesc_textView2);
-        displayDescrption.setText(Html.fromHtml(aTrip.getBeskrivelse()));
+        ScrollView displayDescrption = findViewById(R.id.displayAtrip_tripDesc_ScrollView);
+        TextView desc = findViewById(R.id.displayAtrip_description_TextView);
+
+        desc.setText(Html.fromHtml(aTrip.getBeskrivelse()));
         TextView displayTag = findViewById(R.id.displayAtrip_tagOfTrip_textView2);
         displayTag.setText(aTrip.getTag());
         TextView displayLengthOfTripTime = findViewById(R.id.displayAtrip_trip_TimeLength_textView);
@@ -75,7 +73,10 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
-
+    /**
+     * Google Maps fragment for drawing a preview of the selected trip
+     * @param map takes the map variable when is loaded.
+     */
     @Override
     public void onMapReady(GoogleMap map) {
         mMap = map;
@@ -101,9 +102,6 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addPolyline(options);
     }
 
-    public void openBrowser(View view){
-        Toast.makeText(this,"Webview Clicked",Toast.LENGTH_SHORT).show();
-    }
 
     public void goBack(View view){
         super.onBackPressed();

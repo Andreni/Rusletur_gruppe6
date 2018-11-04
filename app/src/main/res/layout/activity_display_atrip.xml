@@ -17,13 +17,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_providerInfo_textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/displayAtrip_providerInfo_textView"
-        app:layout_constraintTop_toTopOf="@+id/displayAtrip_providerInfo_textView" />
+        app:layout_constraintTop_toTopOf="@+id/displayAtrip_providerInfo_textView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/displayAtrip_providerInfo_textView"
         android:layout_width="0dp"
         android:layout_height="18dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:text="Tilbyder:"
         app:layout_constraintEnd_toStartOf="@+id/displayAtrip_displayProviders_textView"
         app:layout_constraintStart_toEndOf="@+id/displayAtrip_urlForTrip_textView"
@@ -38,7 +39,7 @@
         android:text="Lisens:"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_LisensInfo_textView2"
-        app:layout_constraintEnd_toEndOf="@+id/displayAtrip_tripDesc_textView2"
+        app:layout_constraintEnd_toEndOf="@+id/displayAtrip_tripDesc_ScrollView"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/displayAtrip_goTrip_button"
         app:layout_constraintTop_toTopOf="@+id/displayAtrip_LisensInfo_textView2"
@@ -48,10 +49,14 @@
         android:id="@+id/displayAtrip_LisensInfo_textView2"
         android:layout_width="77dp"
         android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="28dp"
         android:text="Lisens:"
         app:layout_constraintEnd_toStartOf="@+id/displayAtrip_displayLisens_textView3"
-        tools:layout_editor_absoluteY="448dp" />
+        app:layout_constraintHorizontal_bias="0.994"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripDesc_ScrollView" />
 
     <TextView
         android:id="@+id/displayAtrip_tagOfTrip_textView2"
@@ -63,7 +68,7 @@
         android:text="tag"
         app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_trip_TimeLength_textView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/displayAtrip_tripDesc_textView2" />
+        app:layout_constraintTop_toTopOf="@+id/displayAtrip_tripDesc_ScrollView" />
 
     <TextView
         android:id="@+id/displayAtrip_gradeOfTrip_textView"
@@ -77,8 +82,8 @@
         app:layout_constraintStart_toStartOf="@+id/displayAtrip_tagOfTrip_textView2"
         app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" />
 
-    <TextView
-        android:id="@+id/displayAtrip_tripDesc_textView2"
+    <ScrollView
+        android:id="@+id/displayAtrip_tripDesc_ScrollView"
         android:layout_width="0dp"
         android:layout_height="160dp"
         android:layout_marginTop="12dp"
@@ -86,7 +91,14 @@
         android:text="Beskrivelse"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/displayAtrip_timeLengthInfo_textViw"
-        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" >
+
+        <TextView
+            android:id="@+id/displayAtrip_description_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="TextView" />
+    </ScrollView>
 
     <TextView
         android:id="@+id/displayAtrip_tripName_textView"
@@ -123,6 +135,7 @@
         android:text="Lenke"
         app:layout_constraintBottom_toTopOf="@+id/displayAtrip_goBack_button"
         app:layout_constraintEnd_toStartOf="@+id/displayAtrip_providerInfo_textView"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/displayAtrip_timeLengthInfo_textViw" />
 
@@ -142,6 +155,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="26dp"
         android:layout_marginBottom="31dp"
+        android:onClick="goBack"
         android:text="Tilbake"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -155,7 +169,7 @@
         android:layout_marginBottom="278dp"
         android:text="Tidsbruk"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_tripDesc_textView2"
+        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_tripDesc_ScrollView"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView

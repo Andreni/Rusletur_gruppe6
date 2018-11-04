@@ -50,9 +50,5 @@ public class UserManagmentDebug extends AppCompatActivity {
 
     }
 
-    public void goToTrips(View view){
-        startActivity(new Intent(UserManagmentDebug.this,Trips.class));
-
-    }
 
 }
