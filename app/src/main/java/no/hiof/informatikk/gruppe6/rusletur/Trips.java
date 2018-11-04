@@ -231,32 +231,48 @@ public class Trips extends AppCompatActivity  {
     }
 
 
+    //Handler for notifying a new item in recycler view
     Handler handler = new Handler();
+    //It's a handler/runnablew for doing it in a new thread
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            //If antall (amaount of trips in recyclerView) is less than the amount of trips in ArrayList
             if(antall < turer.size()){
+                //When the loading is complete, remove progression bar
                 pgsBar.setVisibility(View.GONE);
+                //The method for loading a new item that is in the array for the recyclerview
                 adapter.notifyItemInserted(0);
                 Log.d(TAG, "onResponse: CHECK");
+                //incrementing antall
                 antall++;
+                //Recursion. Make sure to have a constant loop to always check if there is a new item in the arraylist
                 checkChange();
             }
         }
     };
 
+    //Method for cheking new items in arraylist for recycler view
     private void checkChange(){
         Log.d(TAG, "onResponse: Check runned");
 
+        //Makes a new handler, it should run in a new thread so the UI dosnæt stop
         final Handler handler2 = new Handler();
+        //Makes it so it chekcs every 3 seconds. Laggy if we constantly makes new threads?
         handler2.postDelayed(new Runnable() {
             @Override
             public void run() {
+                //If there is a new item
                 if(antall < turer.size()){
+                    //Removes any pending postDelay callbacks in handler
                     handler.removeCallbacks(runnable);
+                    //Runs the hadnler with a postDelayed method, set to 0 seconds
                     handler.postDelayed(runnable, 0);
-                }if(antall == turer.size()){
+                }
+                //If there isn't a new item
+                if(antall == turer.size()){
                     Log.d(TAG, "run: onResonse: " + turer);
+                    //Recursion. Checking again after 3 seconds
                     checkChange();
                 }
             }
