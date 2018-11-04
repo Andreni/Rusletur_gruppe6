@@ -17,4 +17,5 @@
     <string name="hint_text_username">Brukernavn</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="title_activity_display_atrip_map">Map</string>
 </resources>

@@ -28,7 +28,7 @@ public class GenerateMap {
     //TODO Call on
     //        super.onCreate();
     //        JodaTimeAndroid.init(this);
-    static final String GPXLOG = "GPXLOG";
+    private static final String GPXLOG = "GPXLOG";
 
 
     GPXParser mParser = new GPXParser(); // consider injection
@@ -72,27 +72,4 @@ public class GenerateMap {
 
         });
     }
-
-    /*public void parseLocalGpx(String pathToFile){
-        Gpx parsedGpx = null;
-        try {
-            InputStream in = getAssets() .open(pathToFile);
-            parsedGpx = mParser.parse(in);
-        } catch (IOException | XmlPullParserException e) {
-            // do something with this exception
-            e.printStackTrace();
-        }
-        if (parsedGpx == null) {
-            // error parsing track
-        } else {
-            // do something with the parsed track
-        }
-    } */
-
-
-
-
-
-
-
 }

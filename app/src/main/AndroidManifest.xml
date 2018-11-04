@@ -9,13 +9,10 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-
-
-     //TODO Check to see if there are more needed permissions
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    //TODO Check to see if there are more needed permissions
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,10 +20,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <!-- Need it for Android Version 9.0 -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,7 +51,9 @@
             android:name=".MapsAndTrips.MapsActivity"
             android:label="@string/title_activity_maps" />
         <activity android:name=".UserManagement.UserManagmentDebug" />
-        <activity android:name=".UserManagement.UserRegistration"></activity>
+        <activity android:name=".UserManagement.UserRegistration" />
+        <activity android:name=".Trips" />
+        <activity android:name=".DisplayAtrip" />
     </application>
 
 </manifest>
