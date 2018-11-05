@@ -20,6 +20,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -44,6 +46,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfileFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.TripsRecyclerViewFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
@@ -59,6 +62,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private String kommune;
         private Location currentLocation;
         private Context context;
+        private TextView navHeaderMail;
+        private TextView navHeaderProfile;
+        private NavigationView navigationView;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 Log.d(TAG, "Lat: " + currentLocation.getLatitude() + " Lon; " + currentLocation.getLongitude());
             }
 
+
             //Set toolbar
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -90,11 +97,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
             if(savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
             }
 
             //Clickhandling on navigationdrawer
-            NavigationView navigationView = findViewById(R.id.navigationView);
+            navigationView = findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
 
             //Make a cool spinning animation for the hamburgermeny when navigationdrawer opens
@@ -102,6 +108,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
 
+            //Personalize NavigationDrawer
+            mUser = FirebaseAuth.getInstance().getCurrentUser();
+            View navHeaderView = navigationView.getHeaderView(0);
+            navHeaderMail = (TextView) navHeaderView.findViewById(R.id.nav_header_email);
+            navHeaderProfile = (TextView) navHeaderView.findViewById(R.id.nav_header_profilename);
+            navHeaderMail.setText(mUser.getEmail());
 
 
         }
@@ -212,7 +224,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                     break;
                 case R.id.nav_profile:
-                    Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
                     break;
                 case R.id.nav_settings:
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();

@@ -62,7 +62,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Checking if current trip is a new trip.
     private boolean AddTrip = false;
 
-    
+
     GPXParser mParser = new GPXParser(); // consider injection
 
     @Override
