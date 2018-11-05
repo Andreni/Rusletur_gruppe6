@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/fragment_profile_username"
+            android:id="@+id/fragment_profile_usermail"
             android:fontFamily="sans-serif-light"
             android:text="Gaylord@gaymail.com"
             android:layout_marginTop="10dp"
