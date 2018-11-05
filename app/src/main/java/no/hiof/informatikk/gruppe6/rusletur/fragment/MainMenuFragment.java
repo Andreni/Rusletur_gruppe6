@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+import no.hiof.informatikk.gruppe6.rusletur.DisplayAtrip;
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
