@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.ShowProgressOfTrip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
@@ -137,6 +138,14 @@ public class MainMenuFragment extends Fragment {
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
+            }
+        });
+
+        view.findViewById(R.id.showContextOfArray).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), ShowProgressOfTrip.class);
+                    getActivity().startActivity(intent);
             }
         });
 
