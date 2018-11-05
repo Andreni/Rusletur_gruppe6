@@ -49,7 +49,7 @@ public class TripTracker extends Service {
 
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
-    public final ArrayList<LatLng> savedLocations = new ArrayList<>();
+    public static final ArrayList<LatLng> savedLocations = new ArrayList<>();
 
 
 
@@ -119,6 +119,10 @@ public class TripTracker extends Service {
             fClient.requestLocationUpdates(locationRequest, locationCallback, null);
         }
 
+    }
+
+    public static ArrayList<LatLng> fetchArray(){
+        return savedLocations;
     }
 
 
