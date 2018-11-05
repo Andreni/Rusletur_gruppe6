@@ -50,7 +50,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
         gMap = googleMap;
 
         PolylineOptions poly = new PolylineOptions();
-        startLocation = new LatLng(receievedList.get(0).longitude, receievedList.get(0).longitude);
+        startLocation = new LatLng(receievedList.get(0).longitude, receievedList.get(0).latitude);
 
         //dRAW POLYLINES.
         for(int i=0; i < receievedList.size();i++){
@@ -58,7 +58,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
         }
 
         //Fløtt kamera
-        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(startLocation, 10, 0, 0)));
+        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(startLocation, 12, 0, 0)));
 
         //Fargefaen
         poly.color(Color.GREEN);
