@@ -62,6 +62,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Checking if current trip is a new trip.
     private boolean AddTrip = false;
 
+    //Used for drawing up stuff
+    private ArrayList<LatLng> receivedTripInProgress = new ArrayList<>();
+
 
     GPXParser mParser = new GPXParser(); // consider injection
 
@@ -93,16 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         //Log.d(TAG,"BEFORE showPathToTripFromCurrentPosition, startLocation: " +  tripStartLocation.latitude);
 
-
     }
-
-
-    private void startTracking(){
-        //Context.startService(new Intent(this, TripTracker.class))
-        startService(new Intent(this, TripTracker.class));
-        Log.i(TAG, "startTracking is called");
-    }
-
 
 
     public void showPathToTripFromCurrentPosition() {

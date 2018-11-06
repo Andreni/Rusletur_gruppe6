@@ -126,6 +126,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         };
 
 
+        public void getArrayFromTripTracker(){
+            ArrayList<LatLng> gimmegimme;
+            gimmegimme = TripTracker.fetchArray();
+            Log.i(MapsActivity.TAG, "getArrayFromTripTracker : " + String.valueOf(gimmegimme.size()));
+            gimmegimme.clear();
+            Log.i(MapsActivity.TAG, "getArrayFromTripTracker empty : " + String.valueOf(gimmegimme.size()));
+
+        }
+
 
         public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty){
 
