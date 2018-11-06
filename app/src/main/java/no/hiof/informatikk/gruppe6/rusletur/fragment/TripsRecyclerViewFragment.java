@@ -51,12 +51,9 @@ public class TripsRecyclerViewFragment extends Fragment {
         mItem.add("Halden Byvandring");
         mItem.add("GAPAHUKENE");
 
-<<<<<<< HEAD:app/src/main/java/no/hiof/informatikk/gruppe6/rusletur/fragment/TripsRecyclerViewFragment.java
         //Adds URL to the demo items.
-        mUrl.add("https://www.ut.no/tur/2.15173/gpx");
-=======
+
         mUrl.add("https://www.ut.no/tur/2.4808/gpx/");
->>>>>>> Feature_SaveTripWithFragments:app/src/main/java/no/hiof/informatikk/gruppe6/rusletur/fragment/RecyclerViewFragment.java
         mUrl.add("https://www.ut.no/tur/2.6916/gpx");
         mUrl.add("https://www.ut.no/tur/2.9239/gpx");
 
