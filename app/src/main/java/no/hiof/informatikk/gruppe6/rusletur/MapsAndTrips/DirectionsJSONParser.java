@@ -21,6 +21,8 @@ public class DirectionsJSONParser {
         JSONArray jRoutes = null;
         JSONArray jLegs = null;
         JSONArray jSteps = null;
+        String distance = null;
+        String duration = null;
 
         try {
 
@@ -30,10 +32,16 @@ public class DirectionsJSONParser {
             for(int i=0;i<jRoutes.length();i++){
                 jLegs = ( (JSONObject)jRoutes.get(i)).getJSONArray("legs");
                 List path = new ArrayList<HashMap<String, String>>();
+                /* Fetches total distance and duration */
+                if(i == 0) {
+                    distance = (String) ((JSONObject) ((JSONObject) jLegs.get(0)).get("distance")).get("text");
+                    duration = (String) ((JSONObject) ((JSONObject) jLegs.get(0)).get("duration")).get("text");
+                }
 
                 /** Traversing all legs */
                 for(int j=0;j<jLegs.length();j++){
                     jSteps = ( (JSONObject)jLegs.get(j)).getJSONArray("steps");
+
 
                     /** Traversing all steps */
                     for(int k=0;k<jSteps.length();k++){
@@ -46,6 +54,10 @@ public class DirectionsJSONParser {
                             HashMap<String, String> hm = new HashMap<String, String>();
                             hm.put("lat", Double.toString(((LatLng)list.get(l)).latitude) );
                             hm.put("lng", Double.toString(((LatLng)list.get(l)).longitude) );
+                            if(l == 0) {
+                                hm.put("distance", distance);
+                                hm.put("duration", duration);
+                            }
                             Log.d(TAG,"Lat: " + list.get(l).latitude + " Lon: " + list.get(l).longitude + " ...");
                             path.add(hm);
                         }
