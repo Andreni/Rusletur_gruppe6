@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -59,8 +60,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected static LatLng tripStartLocation = null;
     private ArrayList<LatLng> markerpoints;
     //Checking if current trip is a new trip.
+    private GoogleDirections test = null;
     private boolean AddTrip = false;
-
+    private int count = 0;
+    String tripTitleName = null;
 
     GPXParser mParser = new GPXParser(); // consider injection
 
@@ -95,17 +98,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
     private void startTracking(){
         //Context.startService(new Intent(this, TripTracker.class))
         startService(new Intent(this, TripTracker.class));
         Log.i(TAG, "startTracking is called");
     }
-
-
-
-
-
+    public void showPath(View view) {
+        if(count == 0) {
+            test = new GoogleDirections(tripStartLocation, tripTitleName);
+            count++;
+        }
+        if(test.getStatus() == test.STATUS_READY) {
+            mMap.addPolyline(test.getPolylineOptions());
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -117,9 +123,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, url);
         parseGpx(url);
     }
-
-
-
 
     public void parseGpx(String urlToGpx){
         Log.i(TAG, "Method urlToGpx() started.");
@@ -133,7 +136,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onGpxFetchedAndParsed(Gpx gpx) {
                 Log.i(TAG, "Method onGpxGetchedAndParsed started.");
-                String tripTitleName = null;
                 if (gpx == null) {
                     // error parsing track
                     Log.e(TAG, "onGpxFetchedAndParsed: Error parsing GPX");
@@ -177,6 +179,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     } else {
                         Log.e(TAG, "Error parsing gpx track!");
                     }
+
                 }
             }
 
@@ -191,7 +194,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     public void setTripStartLocation(LatLng pos) {
         tripStartLocation = pos;
-        LocationHandler.showPathToTripFromCurrentPosition(mMap, tripStartLocation);
     }
 
 }

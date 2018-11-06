@@ -50,7 +50,7 @@ public class RecyclerViewFragment extends Fragment {
         mItem.add("Halden Byvandring");
         mItem.add("GAPAHUKENE");
 
-        mUrl.add("https://www.ut.no/tur/2.15173/gpx");
+        mUrl.add("https://www.ut.no/tur/2.4808/gpx/");
         mUrl.add("https://www.ut.no/tur/2.6916/gpx");
         mUrl.add("https://www.ut.no/tur/2.9239/gpx");
 
