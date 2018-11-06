@@ -65,15 +65,6 @@ public class MainMenuFragment extends Fragment {
         Log.d("TESTER", "UTENFOR ONCLICK");
 
 
-
-        //Showcase Method: How to find items in fragment XML.
-        view.findViewById(R.id.mainScreen_logout_Button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Click", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         /*
         * This is how you call methods from fragment to activity. In most cases it's easier to create the relevant methods here,
         * except in cases where you want to create a method which more than one fragment needs.
