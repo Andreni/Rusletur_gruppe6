@@ -15,20 +15,21 @@ import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 public class TripsRecycleViewAdapter extends RecyclerView.Adapter<TripsRecycleViewAdapter.Viewholder>{
 
     private ArrayList<String> mItem = new ArrayList<>();
-    private ArrayList<String> mUrl = new ArrayList<>();
+    private ArrayList<Intent> mIntent = new ArrayList<>();
     private Context context;
 
     private String selectedIndex;
 
 
-    public TripsRecycleViewAdapter(ArrayList<String> mItem, ArrayList<String> mUrl, Context context) {
+    public TripsRecycleViewAdapter(ArrayList<String> mItem, ArrayList<Intent> mIntent, Context context) {
         this.context = context;
         this.mItem = mItem;
-        this.mUrl = mUrl;
+        this.mIntent = mIntent;
     }
 
 
@@ -46,7 +47,7 @@ public class TripsRecycleViewAdapter extends RecyclerView.Adapter<TripsRecycleVi
 
         //Set text and tag for i in both arrays.
         viewholder.item.setText(mItem.get(i));
-        viewholder.item.setTag(mUrl.get(i));
+        viewholder.item.setTag(mIntent.get(i));
         Log.d("CLICKTEST", "BINDVIEWHOLDER");
 
 
@@ -55,11 +56,17 @@ public class TripsRecycleViewAdapter extends RecyclerView.Adapter<TripsRecycleVi
             @Override
             public void onClick(View v) {
                 //Toast.makeText(context, "Button pressed " + mItem.get(i), Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(v.getContext(), MapsActivity.class);
+               // Intent intent = new Intent(v.getContext(), MapsActivity.class);
                 //Recieves the URL from the pressed button tag-data.
                 String urlLink = v.getTag().toString();
-                intent.putExtra("url", urlLink);
-                v.getContext().startActivity(intent);
+                //intent.putExtra("url", urlLink);
+                //v.getContext().startActivity(intent);
+
+                v.getContext().startActivity(mIntent.get(i));
+                if(i==2){
+                    // beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+
+                }
 
             }
         });
