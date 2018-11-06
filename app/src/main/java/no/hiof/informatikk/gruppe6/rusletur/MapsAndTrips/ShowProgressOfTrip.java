@@ -1,7 +1,11 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -30,13 +34,15 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
     private LatLng startLocation;
     public  final String TAG = "ShowProgressOfTrip";
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_progressmap);
 
-        receievedList = TripTracker.fetchArray();
+        receievedList = getIntent().getParcelableArrayListExtra("progressArray");
         Log.i(TAG, "onCreate size of array : " + String.valueOf(receievedList.size()));
 
 
@@ -60,7 +66,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
         //Fløtt kamera
         gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(startLocation, 12, 0, 0)));
 
-        //Fargefaen
+        //Farger.
         poly.color(Color.GREEN);
         poly.width(10);
         gMap.addPolyline(poly);

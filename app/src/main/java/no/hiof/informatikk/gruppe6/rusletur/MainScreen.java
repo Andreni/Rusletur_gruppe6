@@ -1,12 +1,15 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -40,6 +43,7 @@ import java.util.Locale;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GenerateMap;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.ShowProgressOfTrip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
@@ -65,6 +69,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private TextView navHeaderMail;
         private TextView navHeaderProfile;
         private NavigationView navigationView;
+
+        public TripTracker tripTracker;
+        private boolean boundService = false;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +137,41 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             // menuFrag.showcaseMethodTwo();
 
             Log.d("FragmentDemo", "Dance for me baby");
+        }
+
+        public void showProgressInMap(){
+            ArrayList<LatLng> tempArray = new ArrayList<>();
+            tempArray = tripTracker.fetchArray();
+            Intent intent = new Intent(this, ShowProgressOfTrip.class);
+            intent.putExtra("progressArray", tempArray);
+            startActivity(intent);
+        }
+
+        private ServiceConnection serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                TripTracker.TrackerBinder trackerBinder = (TripTracker.TrackerBinder) service;
+                tripTracker = trackerBinder.getService();
+                boundService = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                boundService = false;
+            }
+        };
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+            Intent intent = new Intent(this, TripTracker.class);
+            bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+        }
+
+        @Override
+        protected void onStop() {
+            super.onStop();
+            unbindService(serviceConnection);
         }
 
         private BroadcastReceiver arrayReceiever = new BroadcastReceiver() {
