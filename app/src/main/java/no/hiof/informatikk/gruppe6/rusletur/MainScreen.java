@@ -10,7 +10,6 @@ import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,24 +22,17 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
-import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ReadFromFileFromUrl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GenerateMap;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
-import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagement;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
@@ -70,8 +62,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
-
-            ReadFromFileFromUrl.getFile(this);
 
             //Calls location
             LocationHandler.forceUpdateOfCurrentLocation(this);

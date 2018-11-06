@@ -60,7 +60,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         displayProvider.setText(aTrip.getTilbyder());
         TextView displayDifficulty = findViewById(R.id.displayAtrip_gradeOfTrip_textView);
         displayDifficulty.setText(aTrip.getGradering());
-        ScrollView displayDescrption = findViewById(R.id.displayAtrip_tripDesc_ScrollView);
+        //ScrollView displayDescrption = findViewById(R.id.displayAtrip_tripDesc_ScrollView);
         TextView desc = findViewById(R.id.displayAtrip_description_TextView);
 
         desc.setText(Html.fromHtml(aTrip.getBeskrivelse()));
