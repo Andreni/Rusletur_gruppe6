@@ -51,15 +51,13 @@ public class ApiNasjonalturbase {
      static RequestQueue mQueue;
      private static Trip trip;
      private static Context kont;
-
-         String url = "https://raw.githubusercontent.com/Andreas981/httpRequestForRusleTur/master/register.json?token=Ae4q3xPSJyoUwQKbpO2uoHA78Lx6MRqzks5b4XrbwA%3D%3D";
-
+     
          public static void getTripInfo(String idForTrip, final Context context) {
 
              kont = context;
              mQueue = Volley.newRequestQueue(context);
 
-             String url = "http://dev.nasjonalturbase.no/turer/" + idForTrip;
+             String url = "https://dev.nasjonalturbase.no/turer/" + idForTrip;
              Log.d(TAG, "getTripInfo onResponse2: Id for tur: " + idForTrip);
              JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                  @Override
