@@ -59,7 +59,7 @@ public class ApiNasjonalturbase {
              kont = context;
              mQueue = Volley.newRequestQueue(context);
 
-             String url = "http://dev.nasjonalturbase.no/turer/" + idForTrip + "?api_key%{cb93d09a566a0ea1e6499a2be18beed87d7e2bb2}";
+             String url = "http://dev.nasjonalturbase.no/turer/" + idForTrip;
              Log.d(TAG, "getTripInfo onResponse2: Id for tur: " + idForTrip);
              JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                  @Override

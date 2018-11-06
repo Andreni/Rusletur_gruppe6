@@ -55,6 +55,7 @@
         <activity android:name=".UserManagement.UserRegistration" />
         <activity android:name=".Trips" />
         <activity android:name=".DisplayAtrip" />
+        <activity android:name=".MapsAndTrips.ShowProgressOfTrip" />
         <service android:name=".MapsAndTrips.TripTracker"
             android:enabled="true"></service>
         <activity android:name=".UserManagement.UserRegistration"></activity>
