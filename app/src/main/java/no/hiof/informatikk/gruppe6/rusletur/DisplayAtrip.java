@@ -64,8 +64,8 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         TextView desc = findViewById(R.id.displayAtrip_description_TextView);
 
         desc.setText(Html.fromHtml(aTrip.getBeskrivelse()));
-        TextView displayTag = findViewById(R.id.displayAtrip_tagOfTrip_textView2);
-        displayTag.setText(aTrip.getTag());
+        //TextView displayTag = findViewById(R.id.displayAtrip_tagOfTrip_textView2);
+        //displayTag.setText(aTrip.getTag());
         TextView displayLengthOfTripTime = findViewById(R.id.displayAtrip_trip_TimeLength_textView);
         displayLengthOfTripTime.setText(aTrip.getTidsbruk());
         TextView displayUrl = findViewById(R.id.displayAtrip_urlForTrip_textView);
