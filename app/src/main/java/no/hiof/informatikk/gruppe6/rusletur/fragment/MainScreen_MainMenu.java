@@ -28,9 +28,26 @@ public class MainScreen_MainMenu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
+
         final View view = inflater.inflate(R.layout.fragment_main_screen__main_menu, container, false);
-        return inflater.inflate(R.layout.fragment_main_screen__main_menu, container, false);
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+
+
+        view.findViewById(R.id.fragment_mainmenu_tester).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+            }
+        });
+
+
+
+        return view;
+
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
