@@ -11,11 +11,14 @@
     <string name="nav_message">Meldinger</string>
     <string name="nav_home">Hjem</string>
     <string name="nav_profile">Profil</string>
-    <string name="nav_trip">Tur</string>
+    <string name="nav_trip">Lag en tur</string>
     <string name="nav_settings">Innstillinger</string>
     <string name="nav_logout">Logg ut</string>
     <string name="hint_text_username">Brukernavn</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="title_activity_display_atrip_map">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

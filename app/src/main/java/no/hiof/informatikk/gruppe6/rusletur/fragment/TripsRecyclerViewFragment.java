@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,8 +17,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.TripsRecycleViewAdapter;
+import no.hiof.informatikk.gruppe6.rusletur.Trips;
 
 public class TripsRecyclerViewFragment extends Fragment {
 
@@ -28,7 +32,7 @@ public class TripsRecyclerViewFragment extends Fragment {
     public static final String TAG = "RusleTur";
     private int LOCATION_PERMISSION_CODE = 1;
     private ArrayList<String> mItem = new ArrayList<>();
-    private ArrayList<String> mUrl = new ArrayList<>();
+    private ArrayList<Intent> mIntent = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -47,19 +51,18 @@ public class TripsRecyclerViewFragment extends Fragment {
 
 
         //Added a few demo items for alpha.
-        mItem.add("Øyer");
-        mItem.add("Halden Byvandring");
-        mItem.add("GAPAHUKENE");
+        mItem.add("Finn en tur");
+        mItem.add("Lag en tur");
+
 
         //Adds URL to the demo items.
+        mIntent.add(new Intent(getContext(),Trips.class));
+        mIntent.add(new Intent(getContext(),MainMenuFragment.class));
 
-        mUrl.add("https://www.ut.no/tur/2.4808/gpx/");
-        mUrl.add("https://www.ut.no/tur/2.6916/gpx");
-        mUrl.add("https://www.ut.no/tur/2.9239/gpx");
 
 
         //Set adapter. The adapter takes three parameters (two arrays and context)
-        TripsRecycleViewAdapter rAdapter = new TripsRecycleViewAdapter(mItem, mUrl, getActivity());
+        TripsRecycleViewAdapter rAdapter = new TripsRecycleViewAdapter(mItem, mIntent, getActivity());
         recyclerView.setAdapter(rAdapter);
 
         return view;

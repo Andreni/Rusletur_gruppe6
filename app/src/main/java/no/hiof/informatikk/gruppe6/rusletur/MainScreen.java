@@ -2,6 +2,7 @@ package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.location.Address;
@@ -14,6 +15,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +39,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.TripsRecyclerViewFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
@@ -80,8 +83,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
             if(savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
             }
 
             //Clickhandling on navigationdrawer
@@ -104,7 +107,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
              */
             FragmentManager fragmentManager = getSupportFragmentManager();
 
-            MainMenuFragment menuFrag = (MainMenuFragment)fragmentManager.findFragmentById(R.id.fragment_mainscreen);
+            MainMenuFragment menuFrag = (MainMenuFragment)fragmentManager.findFragmentById(R.id.fragment_container);
             // menuFrag.showcaseMethodTwo();
 
             Log.d("FragmentDemo", "Dance for me baby");
@@ -209,7 +212,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
              */
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
                     break;
                 case R.id.nav_profile:
                     Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
@@ -218,7 +221,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_trip:
-                    startActivity(new Intent(this,Trips.class));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                     break;
                 case R.id.to_debug_page:
                     startActivity(new Intent(this, UserManagmentDebug.class));
@@ -240,14 +243,33 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         @Override
         public void onBackPressed() {
             /*
-             * When the navigation drawer is open, clicking back will close the navigation drawer before
-             * going to the previous view. Quality of life change, OH YAAAAH
+             * When the navigation drawer is open, clicking back will close the navigation drawer,
+             * or open a dialog to ask if the user wants to log out.
              */
 
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
             } else {
-                super.onBackPressed();
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Log ut")
+                        .setMessage("Vil du logge ut?:")
+                        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                FirebaseAuth.getInstance().signOut();
+                                startActivity(new Intent(getApplication(),MainActivity.class));
+
+                            }
+                        })
+                        .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .show();
+
             }
         }
 
