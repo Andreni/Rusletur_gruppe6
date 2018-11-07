@@ -83,7 +83,8 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!recordAlreadyClicked) {
-                    getActivity().startService(new Intent(getActivity(), TripTracker.class));
+                    Intent startRecordIntent = new Intent(getActivity(), TripTracker.class);
+                    getActivity().startService(startRecordIntent);
                 }
                 else{
                     Toast.makeText(getActivity(), "Recording in prosess. Stop first", Toast.LENGTH_SHORT).show();
@@ -116,7 +117,8 @@ public class MainMenuFragment extends Fragment {
                                 Log.i(MapsActivity.TAG, "Yes selected");
                                 saveWasClicked = true;
                                 recordAlreadyClicked = false;
-                                getActivity().stopService(new Intent(getActivity(), TripTracker.class));
+                                Intent saveAndStopIntent = new Intent(getActivity(), TripTracker.class);
+                                getActivity().stopService(saveAndStopIntent);
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -125,7 +127,8 @@ public class MainMenuFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Tur slettet", Toast.LENGTH_SHORT).show();
                                 recordAlreadyClicked = false;
                                 saveWasClicked = false;
-                                getActivity().stopService(new Intent(getActivity(), TripTracker.class));
+                                Intent discardAndStopIntent = new Intent(getActivity(), TripTracker.class);
+                                getActivity().stopService(discardAndStopIntent);
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
