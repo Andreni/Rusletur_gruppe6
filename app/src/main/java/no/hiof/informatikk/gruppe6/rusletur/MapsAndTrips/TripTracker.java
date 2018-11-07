@@ -70,6 +70,8 @@ public class TripTracker extends Service {
         Log.i(MapsActivity.TAG, "Tracker - onStartCommmand called");
         testMethod();
 
+        savedLocations.clear();
+
 
         return START_STICKY;
     }
