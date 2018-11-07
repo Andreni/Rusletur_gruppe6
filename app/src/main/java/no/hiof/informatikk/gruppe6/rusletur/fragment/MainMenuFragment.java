@@ -136,8 +136,7 @@ public class MainMenuFragment extends Fragment {
         view.findViewById(R.id.showContextOfArray).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), ShowProgressOfTrip.class);
-                    getActivity().startActivity(intent);
+                ((MainScreen)getActivity()).showProgressInMap();
             }
         });
 

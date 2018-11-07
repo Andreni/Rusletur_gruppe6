@@ -36,7 +36,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
 
         setContentView(R.layout.activity_progressmap);
 
-        receievedList = TripTracker.fetchArray();
+        receievedList = getIntent().getParcelableArrayListExtra("progressArray");
         Log.i(TAG, "onCreate size of array : " + String.valueOf(receievedList.size()));
 
 

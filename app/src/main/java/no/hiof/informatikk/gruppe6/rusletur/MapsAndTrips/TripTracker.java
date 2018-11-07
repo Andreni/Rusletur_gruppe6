@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcelable;
@@ -49,13 +50,25 @@ public class TripTracker extends Service {
 
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
-    public static final ArrayList<LatLng> savedLocations = new ArrayList<>();
+    public final ArrayList<LatLng> savedLocations = new ArrayList<>();
+
+    private TrackerBinder trackerBinder = new TrackerBinder();
+
+
+
+    //Bound service.
+    public class TrackerBinder extends Binder {
+        public TripTracker getService(){
+            return TripTracker.this;
+        }
+    }
+
 
 
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return trackerBinder;
     }
 
 
@@ -121,7 +134,7 @@ public class TripTracker extends Service {
 
     }
 
-    public static ArrayList<LatLng> fetchArray(){
+    public ArrayList<LatLng> fetchArray(){
         return savedLocations;
     }
 
