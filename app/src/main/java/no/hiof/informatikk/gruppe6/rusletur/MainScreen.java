@@ -81,7 +81,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
             if(savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
             }
 
             //Clickhandling on navigationdrawer
@@ -209,7 +209,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
              */
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                    //Remove all open fragments
+                    ((MainScreen)context).getSupportFragmentManager().popBackStack();
                     break;
                 case R.id.nav_profile:
                     Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
@@ -218,7 +219,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_trip:
-                    startActivity(new Intent(this,Trips.class));
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                     break;
                 case R.id.to_debug_page:
                     startActivity(new Intent(this, UserManagmentDebug.class));

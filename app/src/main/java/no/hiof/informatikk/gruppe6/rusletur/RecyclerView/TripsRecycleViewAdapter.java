@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
@@ -63,10 +66,9 @@ public class TripsRecycleViewAdapter extends RecyclerView.Adapter<TripsRecycleVi
                 //v.getContext().startActivity(intent);
 
                 v.getContext().startActivity(mIntent.get(i));
-                if(i==2){
-                    // beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
 
-                }
+
+
 
             }
         });
