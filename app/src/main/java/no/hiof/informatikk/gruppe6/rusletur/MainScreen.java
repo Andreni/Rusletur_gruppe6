@@ -37,6 +37,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.TripsRecyclerViewFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
@@ -210,7 +211,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
                     //Remove all open fragments
-                    ((MainScreen)context).getSupportFragmentManager().popBackStack();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
+                    //((MainScreen)context).getSupportFragmentManager().popBackStack();
                     break;
                 case R.id.nav_profile:
                     Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
