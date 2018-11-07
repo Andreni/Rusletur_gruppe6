@@ -40,6 +40,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.TripsRecyclerViewFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
@@ -215,7 +216,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
                     break;
                 case R.id.nav_profile:
-                    Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePageFragment()).commit();
                     break;
                 case R.id.nav_settings:
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
