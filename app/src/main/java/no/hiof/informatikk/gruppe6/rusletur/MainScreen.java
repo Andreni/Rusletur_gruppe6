@@ -24,6 +24,9 @@ import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -56,6 +59,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private String kommune;
         private Location currentLocation;
         private Context context;
+        private boolean checkIfNewUser;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,25 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
+
+            //Check if user is new user.
+            Bundle extras = getIntent().getExtras();
+            if(extras != null){
+                checkIfNewUser = extras.getBoolean("newUser");
+                Log.i(MapsActivity.TAG, String.valueOf(checkIfNewUser));
+            }
+            else {
+                Log.i(MapsActivity.TAG, "Extras contained nothing");
+            }
+
+            if(checkIfNewUser){
+                Toast.makeText(this, "Welcome, new user!", Toast.LENGTH_SHORT).show();
+                Log.i(MapsActivity.TAG, "MainScreen found new user");
+            }
+            else {
+                Log.i(MapsActivity.TAG, "checkIfNewUser is false");
+            }
+
 
             //Calls location
             LocationHandler.forceUpdateOfCurrentLocation(this);
@@ -97,9 +120,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
 
-
-
         }
+
 
         public void showcaseMethod(){
             /*

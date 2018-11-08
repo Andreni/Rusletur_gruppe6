@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -53,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+
+    private boolean newUser;
+
     //Global variable for permission:
 
     private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA = 1;
@@ -112,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -144,7 +148,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                             if(task.isSuccessful()){
                                 //Send user to second screen
                                 if(checkPermissions()){
-                                    startActivity(new Intent(MainActivity.this, MainScreen.class));
+                                    Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
+                                    loginIntent.putExtra("newUser", newUser);
+                                    startActivity(loginIntent);
+
                                 }else{
                                     writeMessageToUser("Du får ikke logget inn uten å ha gitt tilattelser");
 
@@ -170,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            newUser = task.getResult().getAdditionalUserInfo().isNewUser();
                             if(task.isSuccessful()){
                                 writeMessageToUser("Du er registrert :)");
                                 registerPage.setVisibility(View.INVISIBLE);
