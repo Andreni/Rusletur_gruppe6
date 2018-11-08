@@ -75,10 +75,10 @@ public class FirebaseHandler {
                     Log.d(TAG, "Obj: " + aShot.getKey());
                     for(DataSnapshot bShot : aShot.getChildren() ) {
                         Log.d(TAG, "LatLng == " + bShot.getKey());
-                        if(bShot.getKey() == "LatLng") {
-                            for(DataSnapshot latlng : bShot.getChildren()) {
-                                Log.d(TAG,"Lat: " + latlng.getKey());
-                            }
+                        String test = bShot.getKey();
+                        for(DataSnapshot latlng : bShot.getChildren()) {
+                            String[] data = ((String)latlng.getValue()).split("¤");
+                            Log.d(TAG,"Lat: " + data[0] + " Lon: " + data[1]);
                         }
                         inner.put(bShot.getKey(), bShot.getValue().toString());
                         //for(Map.Entry<String, String> latlng : bShot.getValue())

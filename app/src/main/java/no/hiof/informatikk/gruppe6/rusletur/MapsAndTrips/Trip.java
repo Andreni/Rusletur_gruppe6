@@ -73,8 +73,7 @@ public class Trip implements Parcelable {
         myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
         int count = 0;
         for (LatLng i : coords) {
-            myRef.child("trip").child(tripname).child("LatLng").child("Lat").child(String.valueOf(count)).setValue(i.latitude);
-            myRef.child("trip").child(tripname).child("LatLng").child("Lon").child(String.valueOf(count)).setValue(i.longitude);
+            myRef.child("trip").child(tripname).child("LatLng").child(String.valueOf(count)).setValue(i.latitude + "¤" + i.longitude);
             count++;
         }
         count = 0;
