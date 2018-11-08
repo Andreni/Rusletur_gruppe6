@@ -1,9 +1,11 @@
 package no.hiof.informatikk.gruppe6.rusletur.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,8 @@ public class SaveTripFragment extends Fragment{
     private RadioGroup difficultyRadioGroup;
     private Button saveTripButton;
     private boolean checked;
+    private String nameinput;
+    private String description;
 
     @Nullable
     @Override
@@ -70,12 +74,30 @@ public class SaveTripFragment extends Fragment{
                     * handleStorageOfTrips in MainScreen, and switch from this fragment back to the
                     * MainMenuFragment. It happens lightning quick because Fragments are fucking rad bro.
                      */
-                    String nameinput = nameInput.getText().toString();
-                    String description = descInput.getText().toString();
+                    nameinput = nameInput.getText().toString();
+                    description = descInput.getText().toString();
 
+                    new AlertDialog.Builder(getActivity())
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setTitle("Lagring")
+                            .setMessage("Vil du dele turen?")
+                            .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty);
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
 
-                    ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty);
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                                }
+                            })
+                            .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ((MainScreen) getActivity()).handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty);
+                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                                }
+                            })
+                            .show();
+
                 } else {
                     Toast.makeText(getActivity(), "Husk å fylle ut alt, din jævla retard", Toast.LENGTH_SHORT).show();
                 }

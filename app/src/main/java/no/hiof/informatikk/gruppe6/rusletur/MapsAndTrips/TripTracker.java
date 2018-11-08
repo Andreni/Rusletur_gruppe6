@@ -138,6 +138,7 @@ public class TripTracker extends Service {
         * Check MainScreen for further info.
          */
 
+
         if(MainMenuFragment.saveWasClicked == true) {
             Intent sendArrayIntent = new Intent("SendArrayList").putExtra("LatLngArray", savedLocations);
             LocalBroadcastManager.getInstance(TripTracker.this).sendBroadcast(sendArrayIntent);

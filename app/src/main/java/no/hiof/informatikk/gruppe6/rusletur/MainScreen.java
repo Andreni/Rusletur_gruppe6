@@ -28,6 +28,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -195,7 +197,36 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             savedTripCoordinateList.clear();
 
             Log.i(MapsActivity.TAG, "Slettet arrayet: " + String.valueOf(savedTripCoordinateList.size()));
+        }
 
+        public void handleOfflineStorageOfTrips(String tripName, String tripDescription, String tripDifficulty){
+
+
+            //Geocoder for locations.
+            geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+            LocationHandler.forceUpdateOfCurrentLocation(this);
+            currentLocation = LocationHandler.getCurrentLocation();
+            double lat = currentLocation.getLatitude();
+            double lon = currentLocation.getLongitude();
+            try {
+                Log.i(MapsActivity.TAG, "try-catch method called");
+                List<Address> listAdresses = geocoder.getFromLocation(lat, lon, 1);
+                if(listAdresses != null && listAdresses.size()>0){
+                    Log.i(MapsActivity.TAG, "Listadresses contains items.");
+                    kommune = listAdresses.get(0).getLocality();
+                    fylke = listAdresses.get(0).getAdminArea();
+                }
+                else {
+                    Log.i(MapsActivity.TAG, "Listadresses ga null eller va mindre enn 0");
+                }
+            } catch (IOException io){
+                io.printStackTrace();
+            }
+
+            String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
+
+            Trip localTrip = new Trip(timestamp, tripName, null, tripDifficulty, "Rusletur", fylke, kommune, tripDescription, "Rusletur","", savedTripCoordinateList, null);
+            Trip.trips.add(localTrip);
 
 
         }

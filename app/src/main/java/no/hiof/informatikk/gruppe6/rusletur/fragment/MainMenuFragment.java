@@ -117,6 +117,8 @@ public class MainMenuFragment extends Fragment {
                                 saveWasClicked = true;
                                 recordAlreadyClicked = false;
                                 getActivity().stopService(new Intent(getActivity(), TripTracker.class));
+
+
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
