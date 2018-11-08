@@ -177,8 +177,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             ArrayList<String> tagList = new ArrayList<>();
                             tagList.add("Bratt");
                             Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser(), "Normal", "",
-                                    "", track.getTrackDesc(), tagList,
-                                    ""+track.getTrackCmt(), "20 min", "",""+FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                    "", "", tagList,
+                                    "", "20 min", "",FirebaseAuth.getInstance().getCurrentUser().getEmail());
                             Log.i(TAG,"Trip created!");
                         }
                         //Place a marker on the map

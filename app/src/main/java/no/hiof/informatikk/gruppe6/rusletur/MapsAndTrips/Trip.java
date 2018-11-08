@@ -21,7 +21,7 @@ public class Trip implements Parcelable {
 
     private String id;
     private String navn;
-    private String tag;
+    private ArrayList<String> tag;
     private String gradering;
     private String tilbyder;
     private String fylke;
@@ -32,12 +32,12 @@ public class Trip implements Parcelable {
     private String tidsbruk;
     private ArrayList<LatLng> coordinates;
     private static int idCount = 0;
-    public static ArrayList<Trip> AllCustomTrips;
     public static ArrayList<Trip> trips;
     private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    public static ArrayList<Trip> allCustomTrips = new ArrayList<>();
 
 
-    public Trip(String id, String navn, String tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates, String tidsbruk) {
+    public Trip(String id, String navn, ArrayList<String> tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates, String tidsbruk) {
         this.id = id;
         this.navn = navn;
         this.tag = tag;
@@ -51,9 +51,7 @@ public class Trip implements Parcelable {
         this.coordinates = coordinates;
         this.tidsbruk = tidsbruk;
     }
-    public static void addTripToAllcustomTrips(Trip newTrip) {
-        AllCustomTrips.add(newTrip);
-    }
+
     public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user,
                                String difficulty, String fylke, String kommune,
                                String beskrivelse, ArrayList<String> tagList, String lisens,
@@ -69,8 +67,8 @@ public class Trip implements Parcelable {
         myRef.child("trip").child(tripname).child("URL").setValue(url);
         myRef.child("trip").child(tripname).child("Tilbyder").setValue(tilbyder);
         myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
-        myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
         myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
+        myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
         int count = 0;
         for (LatLng i : coords) {
             myRef.child("trip").child(tripname).child("LatLng").child(String.valueOf(count)).setValue(i.latitude + "¤" + i.longitude);
@@ -78,7 +76,7 @@ public class Trip implements Parcelable {
         }
         count = 0;
         for(String tag : tagList) {
-            myRef.child("trip").child(tripname).child("Tag").child(String.valueOf(count)).child(String.valueOf(count)).setValue(tag);
+            myRef.child("trip").child(tripname).child("Tag").child(String.valueOf(count)).setValue(tag);
             count++;
         }
         idCount++;
@@ -92,9 +90,9 @@ public class Trip implements Parcelable {
     public void setName(String name) {
         this.navn = name;
     }
-    public String getTag() {
+    /*public String getTag() {
         return tag;
-    }
+    }*/
     public String getGradering() {
         return gradering;
     }
@@ -136,7 +134,12 @@ public class Trip implements Parcelable {
     protected Trip(Parcel in) {
         id = in.readString();
         navn = in.readString();
-        tag = in.readString();
+        if (in.readByte() == 0x01) {
+            tag = new ArrayList<String>();
+            in.readList(tag, String.class.getClassLoader());
+        } else {
+            tag = null;
+        }
         gradering = in.readString();
         tilbyder = in.readString();
         fylke = in.readString();
@@ -162,7 +165,12 @@ public class Trip implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(navn);
-        dest.writeString(tag);
+        if (tag == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(tag);
+        }
         dest.writeString(gradering);
         dest.writeString(tilbyder);
         dest.writeString(fylke);
