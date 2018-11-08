@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -29,16 +31,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
+import no.hiof.informatikk.gruppe6.rusletur.User.User;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
@@ -61,6 +67,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private Location currentLocation;
         private Context context;
         private boolean checkIfNewUser;
+        public static String mainscreenUsername;
+        public static String mainscreenFirstname;
+        public static String mainscreenLastname;
+        private DatabaseReference db;
+        public final static String TAG2 = "Jesus";
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -122,21 +133,33 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
 
+            //Get registered information from Firebase.
+            mUser = FirebaseAuth.getInstance().getCurrentUser();
+            Log.i(TAG2, mUser.toString());
+            Log.i(TAG2, mUser.getUid());
+            FirebaseHandler.getUserInfo(mUser.getUid());
+
+            //Personalize navigation drawer.
+            View headerView = navigationView.getHeaderView(0);
+            TextView navHeaderUsername = (TextView)headerView.findViewById(R.id.nav_header_username);
+            TextView navHeaderEmail = (TextView)headerView.findViewById(R.id.nav_header_email);
+            navHeaderUsername.setText("Velkommen");
+            Log.i(TAG2, "Navigation drawer ser: " + mainscreenUsername);
+            navHeaderEmail.setText(mUser.getEmail());
+        }
+
+        //Static method required for getting data from FireBaseHandler
+        public static void getAllUserInfo(String username, String firstname, String lastname){
+            mainscreenUsername = username;
+            Log.i(TAG2, username);
+            mainscreenFirstname = firstname;
+            mainscreenLastname = lastname;
         }
 
 
-        public void showcaseMethod(){
-            /*
-            * This is how you call from activity to methods in fragments.
-            * 
-             */
-            FragmentManager fragmentManager = getSupportFragmentManager();
 
-            MainMenuFragment menuFrag = (MainMenuFragment)fragmentManager.findFragmentById(R.id.fragment_container);
-            // menuFrag.showcaseMethodTwo();
 
-            Log.d("FragmentDemo", "Dance for me baby");
-        }
+
 
         private BroadcastReceiver arrayReceiever = new BroadcastReceiver() {
             @Override

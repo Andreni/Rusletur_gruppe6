@@ -13,6 +13,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
+
+import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.TAG2;
+import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.getAllUserInfo;
+
 /**
  * A class used for checking data of the firebasedatabase.
  */
@@ -55,6 +60,36 @@ public class FirebaseHandler {
             return false;
         }
     }
+
+    //Takes UID from User in Auth, checks for corresponding UID in Database and retrieves username, firstname and lastname.
+    public static void getUserInfo(final String userUid){
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("user");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String username = (String) dataSnapshot.child(userUid).child("username").getValue();
+                String firstname = (String) dataSnapshot.child(userUid).child("firstname").getValue();
+                String lastname = (String) dataSnapshot.child(userUid).child("lastname").getValue();
+                Log.i(TAG2, "Fra FirebaseHandler: " + username);
+                Log.i(TAG2, "Fra FirebaseHandler: " + firstname);
+                Log.i(TAG2, "Fra FirebaseHandler: " + lastname);
+                getAllUserInfo(username, firstname, lastname);
+        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+
+
+
+
+
     private static void createStartLocationOfTrip(final String tripName) {
         DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("trip");
         zonesRef.addListenerForSingleValueEvent(new ValueEventListener() {
