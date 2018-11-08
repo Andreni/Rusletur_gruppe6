@@ -254,8 +254,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public void onComplete(@NonNull Task task) {
                     if(task.isSuccessful()){
                         Log.d(TAG, "onComplete: Found location");
-                        Location currentLocation = (Location) task.getResult();
-                        current = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+                        mMap.setMyLocationEnabled(true);
 
                     }
                 }
@@ -272,16 +272,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         currentLocHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                current = null;
+                current = null; 
                 getCurrentLocation();
-                if(current != null){
-                    Log.d(TAG, "checkLocation run: Running handler");
-                    currentMarkerHash.clear();
-                    Log.d(TAG, "checkLocation: hashmap cleared");
-                    currentMarkerOptions.position(new LatLng(current.latitude, current.longitude));
-                    Marker currentMarker = mMap.addMarker(currentMarkerOptions);
-                    currentMarkerHash.put("Current", currentMarker);
-                }
                 checkLocation();
             }
         }, 2000);
