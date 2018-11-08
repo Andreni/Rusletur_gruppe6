@@ -10,6 +10,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -54,6 +61,53 @@ public class FirebaseHandler {
         } else {
             return false;
         }
+    }
+    public static void downloadAllCustomTrips() {
+        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("trip");
+        zonesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                HashMap<String, HashMap<String, String>> outer = new HashMap<>();
+                for(DataSnapshot aShot : dataSnapshot.getChildren()) {
+                    String tripName = aShot.getKey();
+                    HashMap<String, String> inner = new HashMap<>();
+                    Log.d(TAG, "Obj: " + aShot.getKey());
+                    for(DataSnapshot bShot : aShot.getChildren() ) {
+                        Log.d(TAG, "LatLng == " + bShot.getKey());
+                        if(bShot.getKey() == "LatLng") {
+                            for(DataSnapshot latlng : bShot.getChildren()) {
+                                Log.d(TAG,"Lat: " + latlng.getKey());
+                            }
+                        }
+                        inner.put(bShot.getKey(), bShot.getValue().toString());
+                        //for(Map.Entry<String, String> latlng : bShot.getValue())
+                    }
+                    outer.put(aShot.getKey(), inner);
+
+                }
+                for(Map.Entry<String, HashMap<String, String>> i : outer.entrySet()) {
+                    Log.d(TAG, "Navn: " + i.getKey());
+                    Log.d(TAG,"Id: " + i.getValue().get("Id"));
+                    String id = i.getValue().get("Id");
+                    String navn = i.getKey();
+                    String gradering = i.getValue().get("Grag");
+                    String tilbyder = i.getValue().get("Tilbyder");
+                    String fylke = i.getValue().get("Fylke");
+                    String kommune = i.getValue().get("Kommune");
+                    String beskrivelse = i.getValue().get("Beskrivelse");
+                    String lisens = i.getValue().get("Lisens");
+                    String url = i.getValue().get("Url");
+                    String tidsbruk = i.getValue().get("Tidsbruk");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
     private static void createStartLocationOfTrip(final String tripName) {
         DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("trip");

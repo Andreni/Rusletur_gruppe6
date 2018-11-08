@@ -31,6 +31,8 @@ public class Trip implements Parcelable {
     private String url;
     private String tidsbruk;
     private ArrayList<LatLng> coordinates;
+    private static int idCount = 0;
+    public static ArrayList<Trip> AllCustomTrips;
     public static ArrayList<Trip> trips;
     private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
 
@@ -49,21 +51,38 @@ public class Trip implements Parcelable {
         this.coordinates = coordinates;
         this.tidsbruk = tidsbruk;
     }
-    public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user, String difficulty, String fylke, String kommune, String beskrivelse) {
+    public static void addTripToAllcustomTrips(Trip newTrip) {
+        AllCustomTrips.add(newTrip);
+    }
+    public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user,
+                               String difficulty, String fylke, String kommune,
+                               String beskrivelse, ArrayList<String> tagList, String lisens,
+                               String tidsbruk, String url, String tilbyder) {
         if (user != null) {
             User.addTrip(tripname);
             myRef.child("trip").child(tripname).child("Created by").setValue(user.getEmail());
         }
+        myRef.child("trip").child(tripname).child("Id").setValue("rusletur_"+idCount);
+        myRef.child("trip").child(tripname).child("Grad").setValue(difficulty);
+        myRef.child("trip").child(tripname).child("Lisens").setValue(lisens);
+        myRef.child("trip").child(tripname).child("Tidsbruk").setValue(tidsbruk);
+        myRef.child("trip").child(tripname).child("URL").setValue(url);
+        myRef.child("trip").child(tripname).child("Tilbyder").setValue(tilbyder);
+        myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
+        myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
+        myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
         int count = 0;
         for (LatLng i : coords) {
             myRef.child("trip").child(tripname).child("LatLng").child("Lat").child(String.valueOf(count)).setValue(i.latitude);
             myRef.child("trip").child(tripname).child("LatLng").child("Lon").child(String.valueOf(count)).setValue(i.longitude);
-            myRef.child("trip").child(tripname).child("Grad").setValue(difficulty);
-            myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
-            myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
-            myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
             count++;
         }
+        count = 0;
+        for(String tag : tagList) {
+            myRef.child("trip").child(tripname).child("Tag").child(String.valueOf(count)).child(String.valueOf(count)).setValue(tag);
+            count++;
+        }
+        idCount++;
     }
 
 

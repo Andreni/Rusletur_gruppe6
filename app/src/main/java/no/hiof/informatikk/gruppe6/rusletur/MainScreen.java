@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
@@ -63,6 +64,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
+
+
+            FirebaseHandler.downloadAllCustomTrips();
+
 
             //Calls location
             LocationHandler.forceUpdateOfCurrentLocation(this);
@@ -186,7 +191,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             Log.i(MapsActivity.TAG, "Innhold av arrayet: " + String.valueOf(savedTripCoordinateList.size()));
 
             //Test the realshitz
-            Trip.addTrip(tripName, savedTripCoordinateList, FirebaseAuth.getInstance().getCurrentUser(), tripDifficulty, fylke, kommune, tripDescription);
+            //Trip.addTrip(tripName, savedTripCoordinateList, FirebaseAuth.getInstance().getCurrentUser(), tripDifficulty, fylke, kommune, tripDescription);
 
             //After add trip
             savedTripCoordinateList.clear();
