@@ -4,79 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginscreen_background">
+    android:background="@drawable/loginscreen_background"
+    style="@style/Theme.AppCompat.NoActionBar">
 
 
     <EditText
-        android:id="@+id/personal_info_name"
+        android:id="@+id/fragment_newuser_lastname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Navn"
-        android:inputType="textEmailAddress"
+        android:hint="Etternavn"
         android:textColor="#fff"
-        app:layout_constraintBottom_toTopOf="@+id/personal_info_phonenr"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_newuser_register"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_info_username" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_newuser_firstname" />
 
     <EditText
-        android:id="@+id/personal_info_username"
+        android:id="@+id/fragment_newuser_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="Brukernavn"
         android:inputType="text"
         android:textColor="#fff"
-        app:layout_constraintBottom_toTopOf="@+id/personal_info_name"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_newuser_firstname"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/personal_info_phonenr"
-        android:layout_width="wrap_content"
+        android:id="@+id/fragment_newuser_firstname"
+        android:layout_width="216dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:hint="Telefonnummer"
-        android:inputType="phone"
+        android:hint="Fornavn"
         android:textColor="#fff"
-        app:layout_constraintBottom_toTopOf="@+id/personal_info_reg_button"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_newuser_lastname"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_info_name" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_newuser_username" />
 
     <Button
-        android:id="@+id/personal_info_reg_button"
+        android:id="@+id/fragment_newuser_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:onClick="registerUser"
         android:text="@string/registrer"
-        app:layout_constraintBottom_toTopOf="@+id/personal_info_cancel_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_info_phonenr" />
-
-    <Button
-        android:id="@+id/personal_info_cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="cancleRegistration"
-        android:text="@string/avbryt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/personal_info_reg_button" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_newuser_lastname" />
 
 
 </android.support.constraint.ConstraintLayout>

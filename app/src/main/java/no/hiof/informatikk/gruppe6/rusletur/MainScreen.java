@@ -43,6 +43,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.NewUserFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.TripsRecyclerViewFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
@@ -85,9 +86,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             if(checkIfNewUser){
                 Toast.makeText(this, "Welcome, new user!", Toast.LENGTH_SHORT).show();
                 Log.i(MapsActivity.TAG, "MainScreen found new user");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewUserFragment()).commit();
             }
             else {
                 Log.i(MapsActivity.TAG, "checkIfNewUser is false");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
             }
 
 
@@ -107,7 +110,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
             if(savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
             }
 
