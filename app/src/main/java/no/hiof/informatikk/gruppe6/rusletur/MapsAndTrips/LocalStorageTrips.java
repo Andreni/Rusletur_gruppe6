@@ -48,7 +48,7 @@ public class LocalStorageTrips extends AppCompatActivity {
 
 
 
-        SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
+        /*SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
         //Intitial run config
 
 
@@ -77,10 +77,7 @@ public class LocalStorageTrips extends AppCompatActivity {
                 String tidsbruk = cursor.getString(10);
                 String latLng = cursor.getString(11);
 
-
-
-
-                Log.d("SQLQ",id + "-" + name + " - " + tag + " - " 
+                Log.i("SQLQ",id + "-" + name + " - " + tag + " - "
                      );
 
 
@@ -109,14 +106,18 @@ public class LocalStorageTrips extends AppCompatActivity {
                 for (int i = 0; i < myLatLng.size(); i++) {
                     Log.d("SQLQ", myLatLng.get(i) + "OY!!");
                 }*/
-            } while ((cursor.moveToNext()));
+          /*  } while ((cursor.moveToNext()));
 
 
         }
         cursor.close();
-        sqLiteDatabase.close();
-    }
+        sqLiteDatabase.close(); */
 
+
+          /* Ta imot dette arrayet */
+          retriveItemsFromStorage();
+    }
+    //TODO Rework LatLNG Compressor
     public static String addAitemToStorage(Context context,Trip aTrip){
         SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
         Log.d("SQLQ","Attempting to write to database");
@@ -141,8 +142,110 @@ public class LocalStorageTrips extends AppCompatActivity {
 
     }
 
-    public static ArrayList<Trip> retriveItemsFromStorage(String fylke, String kommune){
+    //Method for retrieving all the objects the user has stored
+    public static ArrayList<Trip> retriveItemsFromStorage(Context context,String aFylke, String aKommune){
         ArrayList<Trip> availableTrips = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
+        //Intitial run config
+        //String sqlToInsert = "DROP TABLE trips;";
+        //sqLiteDatabase.execSQL(sqlToInsert);
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS trips(id TEXT,navn TEXT," +
+                "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
+                "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM trips" +
+                "WHERE fylke LIKE + '"+aFylke+"' + AND kommune LIKE + '"+aKommune+"';", null);
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(0);
+                String navn = cursor.getString(1);
+                String tag = cursor.getString(2);
+                String gradering = cursor.getString(3);
+                String tilbyder = cursor.getString(4);
+                String fylke = cursor.getString(5);
+                String kommune = cursor.getString(6);
+                String beskrivelse = cursor.getString(7);
+                String lisens = cursor.getString(8);
+                String url = cursor.getString(9);
+                String tidsbruk = cursor.getString(10);
+                String latLng = cursor.getString(11);
+                //Fetch the string that contains the compressed Array
+                //Remove the [ ] from the recovered string
+                String arrRemoved = latLng.substring(1, latLng.length() - 1);
+                //Make a new Array by splitting the latLng points by ,
+                String[] latLngArray = arrRemoved.split(", ");
+                ArrayList<LatLng> arrayListLatLng = new ArrayList<>();
+                //Split simple array into Lat[0} and Long[1]
+                for (int i = 0; i < latLngArray.length; i++) {
+                    String[] latLngSplits = latLngArray[0].split(" - ");
+                    Double lat = Double.parseDouble(latLngSplits[0]);
+                    Double longt = Double.parseDouble(latLngSplits[1]);
+                    arrayListLatLng.add(new LatLng(lat, longt));
+                }
+                //Build the retrived trip object from storage
+                availableTrips.add(new Trip(id,navn,tag,gradering,tilbyder,
+                        fylke,kommune,beskrivelse,lisens,url,arrayListLatLng,tidsbruk));
+
+
+            } while ((cursor.moveToNext()));
+
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return availableTrips;
+    }
+
+    //Method for retrieving all the objects the user has stored with no search criteria
+    public ArrayList<Trip> retriveItemsFromStorage(){
+        ArrayList<Trip> availableTrips = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
+        //Intitial run config
+        //String sqlToInsert = "DROP TABLE trips;";
+        //sqLiteDatabase.execSQL(sqlToInsert);
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS trips(id TEXT,navn TEXT," +
+                "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
+                "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM trips;", null);
+        if (cursor.moveToFirst()) {
+            do {
+                String id = cursor.getString(0);
+                String navn = cursor.getString(1);
+                String tag = cursor.getString(2);
+                String gradering = cursor.getString(3);
+                String tilbyder = cursor.getString(4);
+                String fylke = cursor.getString(5);
+                String kommune = cursor.getString(6);
+                String beskrivelse = cursor.getString(7);
+                String lisens = cursor.getString(8);
+                String url = cursor.getString(9);
+                String tidsbruk = cursor.getString(10);
+                String latLng = cursor.getString(11);
+                //Fetch the string that contains the compressed Array
+                //Remove the [ ] from the recovered string
+                Log.i("SQLQ",latLng);
+                String arrRemoved = latLng.substring(1, latLng.length() - 1);
+                Log.i("SQLQ",arrRemoved);
+                //Make a new Array by splitting the latLng points by ,
+                String[] latLngArray = arrRemoved.split(", ");
+                Log.i("SQLQ",latLngArray[0]);
+                ArrayList<LatLng> arrayListLatLng = new ArrayList<>();
+                //Split simple array into Lat[0} and Long[1]
+                for (int i = 0; i < latLngArray.length; i++) {
+                    String[] latLngSplits = latLngArray[i].split(" - ");
+                    Double lat = Double.parseDouble(latLngSplits[0]);
+                    Double longt = Double.parseDouble(latLngSplits[1]);
+                    arrayListLatLng.add(new LatLng(lat, longt));
+                }
+                //Build the retrived trip object from storage
+                availableTrips.add(new Trip(id,navn,tag,gradering,tilbyder,
+                        fylke,kommune,beskrivelse,lisens,url,arrayListLatLng,tidsbruk));
+
+
+            } while ((cursor.moveToNext()));
+
+        }
+        cursor.close();
+        sqLiteDatabase.close();
 
         return availableTrips;
     }
