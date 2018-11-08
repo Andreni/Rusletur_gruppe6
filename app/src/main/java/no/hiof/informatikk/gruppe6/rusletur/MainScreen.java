@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
@@ -225,8 +226,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
 
-            Trip localTrip = new Trip(timestamp, tripName, null, tripDifficulty, "Rusletur", fylke, kommune, tripDescription, "Rusletur","", savedTripCoordinateList, null);
-            Trip.trips.add(localTrip);
+           String msg = LocalStorageTrips.addAitemToStorage(this,new Trip(timestamp, tripName, null, tripDifficulty, "Rusletur", fylke, kommune, tripDescription, "Rusletur","", savedTripCoordinateList, "0"));
+            Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
 
 
         }
