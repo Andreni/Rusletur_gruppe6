@@ -126,7 +126,7 @@ public class ApiNasjonalturbase {
 
                          tidsbruk = ((dager != null) ? (dager + " dager, ") : "") + "" + ((timer != null) ? (timer + " timer, ") : "0 timer, ") + "" + ((minutter != null) ? (minutter + " minutter") : "0 minutter");
 
-                         Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk));
+                         //Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk));
 
                          Log.d(TAG, "onResponse: " + Trips.turer);
 

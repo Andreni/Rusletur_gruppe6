@@ -185,6 +185,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.d(TAG, "mParser is not null, parsing instantiated ");
                         Track track = gpx.getTracks().get(0);
                         tripTitleName = track.getTrackName();
+
                         ArrayList<LatLng> saveList = new ArrayList<>();
                         List<TrackSegment> segments = track.getTrackSegments();
                         for (int j = 0; j < segments.size(); j++) {
@@ -202,7 +203,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
                         }
                         if(!FirebaseHandler.isTripInFirebaseDatabase(tripTitleName)) {
-                            Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser(), "Normal", "", "", "Dette er en test tur");
+                            ArrayList<String> tagList = new ArrayList<>();
+                            tagList.add("Bratt");
+                            Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser(), "Normal", "",
+                                    "", "", tagList,
+                                    "", "20 min", "",FirebaseAuth.getInstance().getCurrentUser().getEmail());
                             Log.i(TAG,"Trip created!");
                         }
                         //Place a marker on the map
