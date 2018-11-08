@@ -8,13 +8,18 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.webkit.GeolocationPermissions;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,8 +28,11 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONObject;
@@ -121,6 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "Method onMapReady() started.");
         mMap = googleMap;
+        checkLocation();
 
         //Display trip from url
         if(getIntent().hasExtra("url")){
@@ -132,8 +141,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             aTrip = getIntent().getParcelableExtra("object");
             parseObject(aTrip);
         }
-
     }
+
+
 
     public void parseGpx(String urlToGpx){
         Log.i(TAG, "Method urlToGpx() started.");
@@ -226,6 +236,56 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void setTripStartLocation(LatLng pos) {
         tripStartLocation = pos;
+    }
+
+    private HashMap<String, Marker> currentMarkerHash = new HashMap<>();
+    private MarkerOptions currentMarkerOptions = new MarkerOptions();
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    public LatLng current = null;
+
+    private void getCurrentLocation(){
+
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        try{
+            Task location = mFusedLocationProviderClient.getLastLocation();
+            location.addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if(task.isSuccessful()){
+                        Log.d(TAG, "onComplete: Found location");
+                        Location currentLocation = (Location) task.getResult();
+                        current = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+                    }
+                }
+            });
+        }catch (SecurityException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void checkLocation(){
+        Log.d(TAG, "checkLocation: Started");
+        Handler currentLocHandler = new Handler();
+        Log.d(TAG, "checkLocation: New handler");
+        currentLocHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                current = null;
+                getCurrentLocation();
+                if(current != null){
+                    Log.d(TAG, "checkLocation run: Running handler");
+                    currentMarkerHash.clear();
+                    Log.d(TAG, "checkLocation: hashmap cleared");
+                    currentMarkerOptions.position(new LatLng(current.latitude, current.longitude));
+                    Marker currentMarker = mMap.addMarker(currentMarkerOptions);
+                    currentMarkerHash.put("Current", currentMarker);
+                }
+                checkLocation();
+            }
+        }, 2000);
+
     }
 
 }
