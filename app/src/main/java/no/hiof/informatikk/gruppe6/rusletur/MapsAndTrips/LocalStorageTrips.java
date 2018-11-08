@@ -1,5 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -97,6 +98,35 @@ public class LocalStorageTrips extends AppCompatActivity {
         }
         cursor.close();
         sqLiteDatabase.close();
+    }
+
+    public static String addAitemToStorage(Context context,Trip aTrip){
+        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
+
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS trips(navn TEXT," +
+                "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
+                "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
+
+        String[] mValue = new String[aTrip.getCoordinates().size()];
+        for (int i = 0; i < aTrip.getCoordinates().size(); i++) {
+            mValue[i] = aTrip.getCoordinates().get(i).latitude + " - " + aTrip.getCoordinates().get(i).longitude;
+        }
+
+        String insertIntoDB = "INSERT INTO trips VALUES('"+aTrip.getNavn()+"','"+aTrip.getTag()+
+                "','"+aTrip.getGradering()+"','"+aTrip.getTilbyder()+"','"+aTrip.getFylke()+"','"+
+                aTrip.getKommune()+"','"+aTrip.getBeskrivelse()+"','"+aTrip.getLisens()+"','"+
+                aTrip.getUrl()+"','"+aTrip.getTidsbruk()+"','"+mValue.toString()+"');";
+
+        sqLiteDatabase.execSQL(insertIntoDB);
+
+        return "Lagret";
+
+    }
+
+    public static ArrayList<Trip> retriveItemsFromStorage(String fylke, String kommune){
+        ArrayList<Trip> availableTrips = new ArrayList<>();
+
+        return availableTrips;
     }
 
     public void goBack(View view){
