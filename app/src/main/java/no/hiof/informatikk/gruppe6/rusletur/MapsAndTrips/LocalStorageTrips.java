@@ -25,26 +25,33 @@ public class LocalStorageTrips extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_storage_trips);
         btnBack = findViewById(R.id.localStorage_goBack_button);
-        double a1, a2, b1,b2,c1,c2;
-        a1=6.28295153901365; a2 = 58.8226193213945;
-        myLatLng.add(new LatLng(a1,a2));
-        b1=6.29651278779295; b2=58.8205753142577;
-        c1=6.30921572968748; c2=58.8211085451286;
-        myLatLng.add(new LatLng(b1,b2));
-        myLatLng.add(new LatLng(c1,c2));
+        double a1, a2, b1, b2, c1, c2;
+        a1 = 6.28295153901365;
+        a2 = 58.8226193213945;
+        myLatLng.add(new LatLng(a1, a2));
+        b1 = 6.29651278779295;
+        b2 = 58.8205753142577;
+        c1 = 6.30921572968748;
+        c2 = 58.8211085451286;
+        myLatLng.add(new LatLng(b1, b2));
+        myLatLng.add(new LatLng(c1, c2));
         String[] mValue = new String[myLatLng.size()];
-        for(int i = 0; i<myLatLng.size(); i++){
-            mValue[i] = myLatLng.get(i).latitude+","+myLatLng.get(i).longitude;
+        for (int i = 0; i < myLatLng.size(); i++) {
+            mValue[i] = myLatLng.get(i).latitude + " - " + myLatLng.get(i).longitude;
+        }
+
+        for (int i = 0; i < myLatLng.size(); i++) {
+            Log.d("SQLQ", myLatLng.get(i) + "OY!!");
         }
         /////////////////////////////////////////
 
         /**
          * TODO: final you can see this result and can store into database
          */
-        Log.e("value:",""+Arrays.toString(mValue));
+        Log.e("value:", "" + Arrays.toString(mValue));
 
 
-        SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db",MODE_PRIVATE,null);
+        SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
         //Intitial run config
 
         String sqlToInsert = "DROP TABLE trips;";
@@ -53,17 +60,38 @@ public class LocalStorageTrips extends AppCompatActivity {
                 "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
                 "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
 
-         sqlToInsert = "INSERT INTO trips VALUES('Vallresknuten','kort','vanskelig','lokal','Rogaland','Strand','en beskrivelse','Ingen','blank','0','"+Arrays.toString(mValue)+"');";
+        sqlToInsert = "INSERT INTO trips VALUES('Vallresknuten','kort','vanskelig','lokal','Rogaland','Strand','en beskrivelse','Ingen','blank','0','" + Arrays.toString(mValue) + "');";
         sqLiteDatabase.execSQL(sqlToInsert);
 
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM trips;",null);
-        if(cursor.moveToFirst()){
+        ArrayList<String[]> arrayList = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM trips;", null);
+        if (cursor.moveToFirst()) {
             do {
                 String name = cursor.getString(0);
+
+                //Fetch the string that contains the compressed Array
                 String latLng = cursor.getString(10);
-                Toast.makeText(getApplicationContext(),name,Toast.LENGTH_LONG).show();
-                Log.d("SQLQ",name + latLng);
-            }while ((cursor.moveToNext()));
+                Log.d("SQLQ", latLng + " looks like this");
+
+                //Remove the [ ] from the recovered string
+                String arrRemoved = latLng.substring(1, latLng.length() - 1);
+
+                //Make a new Array by splitting the latLng points by ,
+                String[] latLngArray = arrRemoved.split(", ");
+
+                //Split simple array into Lat[0} and Long[1]
+                for (int i = 0; i < latLngArray.length; i++) {
+                    String[] latLngSplits = latLngArray[0].split(" - ");
+                    Double lat = Double.parseDouble(latLngSplits[0]);
+                    Double longt = Double.parseDouble(latLngSplits[1]);
+                    myLatLng.add(new LatLng(lat, longt));
+
+                }
+
+                for (int i = 0; i < myLatLng.size(); i++) {
+                    Log.d("SQLQ", myLatLng.get(i) + "OY!!");
+                }
+            } while ((cursor.moveToNext()));
 
 
         }
@@ -78,21 +106,3 @@ public class LocalStorageTrips extends AppCompatActivity {
 
 
 
-/*
-private String id;
-    private String navn;
-    private String tag;
-    private String gradering;
-    private String tilbyder;
-    private String fylke;
-    private String kommune;
-    private String beskrivelse;
-    private String lisens;
-    private String url;
-    private String tidsbruk;
-    private ArrayList<LatLng> coordinates;
-
-
-
-
- */
