@@ -12,7 +12,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    
     //TODO Check to see if there are more needed permissions
     <application
         android:allowBackup="true"
@@ -56,9 +55,13 @@
         <activity android:name=".Trips" />
         <activity android:name=".DisplayAtrip" />
         <activity android:name=".MapsAndTrips.ShowProgressOfTrip" />
-        <service android:name=".MapsAndTrips.TripTracker"
-            android:enabled="true"></service>
-        <activity android:name=".UserManagement.UserRegistration"></activity>
+
+        <service
+            android:name=".MapsAndTrips.TripTracker"
+            android:enabled="true" />
+
+        <activity android:name=".UserManagement.UserRegistration" />
+        <activity android:name=".MapsAndTrips.LocalStorageTrips"></activity>
     </application>
 
 </manifest>

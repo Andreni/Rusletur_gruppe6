@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.Trips;
 
@@ -41,6 +42,13 @@ public class MainScreen_MainMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+            }
+        });
+
+        view.findViewById(R.id.mainScreenMainMenu_goToLocalStorage_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(),LocalStorageTrips.class));
             }
         });
         return view;
