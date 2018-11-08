@@ -82,6 +82,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Polyline options
     private PolylineOptions options;
     private double differenceBeforePing = 0.0025;
+    private String CHANNEL_1_ID = "default";
+    private boolean STOP = false;
 
     //Used for drawing up stuff
     private ArrayList<LatLng> receivedTripInProgress = new ArrayList<>();
@@ -96,7 +98,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG,"MapsActivity has been initiated");
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            new NotificationChannel("default", "Default", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID, "Default", NotificationManager.IMPORTANCE_HIGH);
+            channel1.setDescription("Alert for avstand fra tur");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel1);
         }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -252,50 +258,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void getCurrentLocation(){
-        FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        try{
-            Task location = mFusedLocationProviderClient.getLastLocation();
-            location.addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    if(task.isSuccessful()){
-                        Log.d(TAG, "onComplete: Found location");
-                        //Adds blue dot at your location
-                        mMap.setMyLocationEnabled(true);
-                        current = (Location) task.getResult();
+        if(!STOP) {
+            Log.d(TAG, "getCurrentLocation: checkLocation Before fusedlocationprovider");
+            FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            try {
+                Task location = mFusedLocationProviderClient.getLastLocation();
+                Log.d(TAG, "getCurrentLocation: checkLocation: after init task");
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "onComplete: checkLocation: Location found");
+                            //Adds blue dot at your location
+                            mMap.setMyLocationEnabled(true);
+                            current = (Location) task.getResult();
+
+
+                            if (calcClosestMarker() > differenceBeforePing) {
+                                Log.d(TAG, "onComplete: checkLocation: ALERT");
+                                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MapsActivity.this, CHANNEL_1_ID)
+                                        .setSmallIcon(R.mipmap.ic_launcher)
+                                        .setContentTitle("Warning!")
+                                        .setContentText("Du går bort fra turen")
+                                        .setAutoCancel(true)
+                                        .setPriority(NotificationManager.IMPORTANCE_HIGH);
+                                mNotificationManager.notify(0, mBuilder.build());
+                            }
+
+
+                        } else {
+                            Log.d(TAG, "onComplete: checkLocation: Failed to find location");
+                        }
                     }
-                }
-            });
-        }catch (SecurityException e){
-            e.printStackTrace();
+                });
+                Log.d(TAG, "getCurrentLocation: checkLocation: Task complete");
+            } catch (SecurityException e) {
+                Log.d(TAG, "getCurrentLocation: checkLocation Permission not granted");
+                e.printStackTrace();
+            }
         }
     }
 
     private void checkLocation(){
-        Log.d(TAG, "checkLocation: Started");
-        Handler currentLocHandler = new Handler();
-        Log.d(TAG, "checkLocation: New handler");
-        currentLocHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                current = null;
-                getCurrentLocation();
+        if(!STOP) {
+            Log.d(TAG, "checkLocation: Started");
+            Handler currentLocHandler = new Handler();
+            Log.d(TAG, "checkLocation: New handler");
+            currentLocHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
 
-                List<LatLng> polyLine = options.getPoints();
-                Log.d(TAG, "checkLocation: getPoints: " + polyLine);
-                Log.d(TAG, "checkLocation: getPoints: " + polyLine.get(0).latitude);
-                if(calcClosestMarker() > differenceBeforePing){
-                    NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MapsActivity.this, "default")
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setContentTitle("Warning!")
-                            .setContentText("Du går bort fra turen")
-                            .setAutoCancel(true);
-                    mNotificationManager.notify(0, mBuilder.build());
+                    getCurrentLocation();
+                    checkLocation();
                 }
-                checkLocation();
-            }
-        }, 5000);
+            }, 5000);
+        }
 
     }
     //Calculate the closetst point on the polyline
@@ -303,13 +321,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Log.d(TAG, "calcClosestMarker: checkLocation: started calculation");
         //Gets current coordinates
-        double curretnX = current.getLatitude();
-        double currentY = current.getLongitude();
-        LatLng closestPoint = new LatLng(options.getPoints().get(0).latitude, options.getPoints().get(0).longitude);
         double closestValue = 0;
 
 
         for(int i = 0; i < options.getPoints().size(); i++){
+            Log.d(TAG, "calcClosestMarker: checkLocation: inside for");
             LatLng currentPolylinePoint = options.getPoints().get(i);
 
             //Think of the polyline points and your position as points in a 2 dim graph
@@ -327,19 +343,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //Gets the length between (x1,y1) and (x2,y2)
             double hypotenuse = Math.sqrt((differenceInX+differenceInY));
 
+            Log.d(TAG, "calcClosestMarker: checkLocation: " + hypotenuse);
+
             //Init the first polyline as the closest
             if(i == 0){
                 closestValue = hypotenuse;
-                closestPoint = currentPolylinePoint;
             }
             //If the new difference is lower than the old
             if(hypotenuse < closestValue){
                 closestValue = hypotenuse;
-                closestPoint = currentPolylinePoint;
             }
         }
 
         return closestValue;
+    }
+
+    @Override
+    public void onDestroy(){
+        STOP = true;
+        super.onDestroy();
     }
 
 }
