@@ -67,7 +67,8 @@ public class ApiNasjonalturbase {
                          String navn = response.get("navn").toString();
 
                          JSONArray tags = (JSONArray) response.get("tags");
-                         String tag = tags.get(0).toString();
+                         ArrayList<String> tag = new ArrayList<>();
+                         tag.add(tags.get(0).toString());
 
                          String gradering = response.get("gradering").toString();
                          String tilbyder = response.get("tilbyder").toString();
@@ -126,7 +127,7 @@ public class ApiNasjonalturbase {
 
                          tidsbruk = ((dager != null) ? (dager + " dager, ") : "") + "" + ((timer != null) ? (timer + " timer, ") : "0 timer, ") + "" + ((minutter != null) ? (minutter + " minutter") : "0 minutter");
 
-                         //Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk));
+                         Trips.turer.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommume, beskrivelse, lisens, urlFraUrl, latlng, tidsbruk));
 
                          Log.d(TAG, "onResponse: " + Trips.turer);
 

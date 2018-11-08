@@ -328,7 +328,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Gets current coordinates
         double closestValue = 0;
 
-
         for(int i = 0; i < options.getPoints().size(); i++){
             Log.d(TAG, "calcClosestMarker: checkLocation: inside for");
             LatLng currentPolylinePoint = options.getPoints().get(i);
