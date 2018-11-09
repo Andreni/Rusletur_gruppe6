@@ -92,6 +92,7 @@ public class Trips extends AppCompatActivity  {
         spinnerKommune.setVisibility(View.INVISIBLE);
 
 
+
         spinnerFylke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

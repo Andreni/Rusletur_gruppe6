@@ -26,6 +26,24 @@
         <item>Vågå</item>
     </string-array>
     <string-array name="fylke">
+        <item>Valg:</item>
+        <item>Rogaland</item>
+        <item>Hordaland</item>
+        <item>Akershus</item>
+        <item>Sogn og Fjordane</item>
+        <item>Sør-Trøndelag</item>
+        <item>Troms</item>
+        <item>Telemark</item>
+        <item>Buskerud</item>
+        <item>Oslo</item>
+        <item>Nordland</item>
+        <item>Hedmark</item>
+        <item>Møre og Romsdal</item>
+        <item>Østfold</item>
+        <item>Vestfold</item>
+        <item>Aust-agder</item>
+        <item>Vest-agder</item>
+        <item>Nord-Trøndelag</item>
         <item>Oppland</item>
     </string-array>
 </resources>

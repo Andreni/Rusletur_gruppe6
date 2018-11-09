@@ -168,9 +168,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
 
-
-
-
         private BroadcastReceiver arrayReceiever = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
