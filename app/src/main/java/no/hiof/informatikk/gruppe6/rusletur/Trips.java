@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
@@ -42,7 +43,9 @@ public class Trips extends AppCompatActivity  {
     private Boolean fylkeListLoaded = false;
     private String TAG = "TRIPS";
     private int selectionFylke = 0;
+    private String selectionNameFylke = "";
     private int selectionKommune = 0;
+    private String selectionNameKommune = "";
     public static ArrayList<Trip> turer = new ArrayList<>();
     private MainTripRecyclerViewAdapter adapter;
     private int antall = 0;
@@ -191,9 +194,22 @@ public class Trips extends AppCompatActivity  {
                     .getKommuneArrayList()
                     .get(selectionKommune)
                     .getIdForTurArrayList().get(i).getIdForTur();
+           selectionNameFylke = FylkeList.getRegisterForFylke()
+                    .get(selectionFylke).toString();
+           selectionNameKommune = FylkeList.getRegisterForFylke()
+                   .get(selectionFylke)
+                   .getKommuneArrayList()
+                   .get(selectionKommune+1).toString();
             //Pass the id to the API class to build a trip object from it
             Log.d(TAG, "fetchIds: Addede to turer");
             ApiNasjonalturbase.getTripInfo(selection, this);
+            //If the response to the query is greater than -1 add the results to the array
+            Log.d("SQLQ", "Searching for: " + selectionNameKommune + " in" + selectionNameFylke );
+            if(LocalStorageTrips.retriveItemsFromStorage(this,selectionNameFylke,selectionNameKommune).size()>-1){
+                turer.addAll(LocalStorageTrips.retriveItemsFromStorage(this,selectionNameFylke,selectionNameKommune));
+            }
+
+
         }
 
         Log.d(TAG, "onResponse: Init?");

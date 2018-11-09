@@ -38,6 +38,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     private Trip aTrip;
     private GoogleMap mMap;
+    private String rowId;
 
     Context context = this;
 
@@ -60,6 +61,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
             setupItems(false);
         }else if (senderClass.equals("LocalStorageTrips")){
             setupItems(true);
+           rowId = getIntent().getStringExtra("rowid");
         }
 
 
@@ -102,8 +104,9 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    int rowId = getIntent().getIntExtra("rowid",-1);
+                                    Log.i("SQLQ","row is " + rowId);
                                     String msg = LocalStorageTrips.deleteTripFromTable(context,rowId);
+                                    Log.i("SQLQ","deleting row_" + rowId);
                                     Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(context,LocalStorageTrips.class));
                                 }
