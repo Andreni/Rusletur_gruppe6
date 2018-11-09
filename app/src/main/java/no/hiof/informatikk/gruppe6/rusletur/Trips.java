@@ -267,7 +267,7 @@ public class Trips extends AppCompatActivity  {
                 //Call to local storage:
                 if (LocalStorageTrips.retriveItemsFromStorage(getApplicationContext(),selectionNameFylke,selectionNameKommune).size()>0){
                     turer.addAll(LocalStorageTrips.retriveItemsFromStorage(getApplicationContext(),selectionNameFylke,selectionNameKommune));
-                    antall++;
+                    antall+= LocalStorageTrips.retriveItemsFromStorage(getApplicationContext(),selectionNameFylke,selectionNameKommune).size();
                 }
 
 
