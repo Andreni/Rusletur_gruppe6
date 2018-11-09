@@ -1,5 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,13 +10,20 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.webkit.GeolocationPermissions;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,8 +32,11 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONObject;
@@ -54,7 +66,7 @@ import no.hiof.informatikk.gruppe6.rusletur.User.User;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    static final String GPXLOG = "GPXLOG";
+    public static final String GPXLOG = "GPXLOG";
     private Trip aTrip;
     public static final String TAG = "MapsActivity";
     private LatLng currentPosition = new LatLng(0,0);
@@ -64,7 +76,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleDirections test = null;
     private boolean AddTrip = false;
     private int count = 0;
-    String tripTitleName = null;
+    private String tripTitleName = null;
+    //Current location
+    private Location current = null;
+    //Polyline options
+    private PolylineOptions options;
+    private double differenceBeforePing = 0.0025;
+    private String CHANNEL_1_ID = "default";
+    private boolean STOP = false;
 
     //Used for drawing up stuff
     private ArrayList<LatLng> receivedTripInProgress = new ArrayList<>();
@@ -77,6 +96,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         Log.d(TAG,"MapsActivity has been initiated");
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID, "Default", NotificationManager.IMPORTANCE_HIGH);
+            channel1.setDescription("Alert for avstand fra tur");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel1);
+        }
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -121,6 +148,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "Method onMapReady() started.");
         mMap = googleMap;
+        checkLocation();
+        options = new PolylineOptions();
 
         //Display trip from url
         if(getIntent().hasExtra("url")){
@@ -132,14 +161,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             aTrip = getIntent().getParcelableExtra("object");
             parseObject(aTrip);
         }
-
     }
+
+
 
     public void parseGpx(String urlToGpx){
         Log.i(TAG, "Method urlToGpx() started.");
         //Standard GPX parser....
         final GPXParser mParser = new GPXParser();
-        final PolylineOptions options = new PolylineOptions();
         final ArrayList<LatLng> listOfLatLng = null;
 
 
@@ -156,6 +185,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.d(TAG, "mParser is not null, parsing instantiated ");
                         Track track = gpx.getTracks().get(0);
                         tripTitleName = track.getTrackName();
+
                         ArrayList<LatLng> saveList = new ArrayList<>();
                         List<TrackSegment> segments = track.getTrackSegments();
                         for (int j = 0; j < segments.size(); j++) {
@@ -173,7 +203,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
                         }
                         if(!FirebaseHandler.isTripInFirebaseDatabase(tripTitleName)) {
-                            Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser(), "Normal", "", "", "Dette er en test tur");
+                            ArrayList<String> tagList = new ArrayList<>();
+                            tagList.add("Bratt");
+                            Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser(), "Normal", "",
+                                    "", "", tagList,
+                                    "", "20 min", "",FirebaseAuth.getInstance().getCurrentUser().getEmail());
                             Log.i(TAG,"Trip created!");
                         }
                         //Place a marker on the map
@@ -205,7 +239,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void parseObject(Trip trip){
-        PolylineOptions options = new PolylineOptions();
+
         //Start position
         LatLng tripStartPos = null;
         tripStartPos = new LatLng(trip.getCoordinates().get(0).longitude, trip.getCoordinates().get(0).latitude);
@@ -226,6 +260,112 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void setTripStartLocation(LatLng pos) {
         tripStartLocation = pos;
+    }
+
+    private void getCurrentLocation(){
+        if(!STOP) {
+            Log.d(TAG, "getCurrentLocation: checkLocation Before fusedlocationprovider");
+            FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            try {
+                Task location = mFusedLocationProviderClient.getLastLocation();
+                Log.d(TAG, "getCurrentLocation: checkLocation: after init task");
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "onComplete: checkLocation: Location found");
+                            //Adds blue dot at your location
+                            mMap.setMyLocationEnabled(true);
+                            current = (Location) task.getResult();
+
+
+                            if (calcClosestMarker() > differenceBeforePing) {
+                                Log.d(TAG, "onComplete: checkLocation: ALERT");
+                                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MapsActivity.this, CHANNEL_1_ID)
+                                        .setSmallIcon(R.mipmap.ic_launcher)
+                                        .setContentTitle("Warning!")
+                                        .setContentText("Du går bort fra turen")
+                                        .setAutoCancel(true)
+                                        .setPriority(NotificationManager.IMPORTANCE_HIGH);
+                                mNotificationManager.notify(0, mBuilder.build());
+                            }
+
+
+                        } else {
+                            Log.d(TAG, "onComplete: checkLocation: Failed to find location");
+                        }
+                    }
+                });
+                Log.d(TAG, "getCurrentLocation: checkLocation: Task complete");
+            } catch (SecurityException e) {
+                Log.d(TAG, "getCurrentLocation: checkLocation Permission not granted");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void checkLocation(){
+        if(!STOP) {
+            Log.d(TAG, "checkLocation: Started");
+            Handler currentLocHandler = new Handler();
+            Log.d(TAG, "checkLocation: New handler");
+            currentLocHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    getCurrentLocation();
+                    checkLocation();
+                }
+            }, 5000);
+        }
+
+    }
+    //Calculate the closetst point on the polyline
+    private double calcClosestMarker(){
+
+        Log.d(TAG, "calcClosestMarker: checkLocation: started calculation");
+        //Gets current coordinates
+        double closestValue = 0;
+
+        for(int i = 0; i < options.getPoints().size(); i++){
+            Log.d(TAG, "calcClosestMarker: checkLocation: inside for");
+            LatLng currentPolylinePoint = options.getPoints().get(i);
+
+            //Think of the polyline points and your position as points in a 2 dim graph
+            // (x1, y1) is the coordinates for the polyline marker
+            // (x2, y2) is the coordinates for your position
+            double x1 = currentPolylinePoint.latitude;
+            double y1 = currentPolylinePoint.longitude;
+            double x2 = current.getLatitude();
+            double y2 = current.getLongitude();
+
+            //Gets the difference in x-axis and y-axis
+            double differenceInX = Math.pow(Math.abs(x2-x1) , 2);
+            double differenceInY = Math.pow(Math.abs(y2-y1) , 2);
+
+            //Gets the length between (x1,y1) and (x2,y2)
+            double hypotenuse = Math.sqrt((differenceInX+differenceInY));
+
+            Log.d(TAG, "calcClosestMarker: checkLocation: " + hypotenuse);
+
+            //Init the first polyline as the closest
+            if(i == 0){
+                closestValue = hypotenuse;
+            }
+            //If the new difference is lower than the old
+            if(hypotenuse < closestValue){
+                closestValue = hypotenuse;
+            }
+        }
+
+        return closestValue;
+    }
+
+    @Override
+    public void onDestroy(){
+        STOP = true;
+        super.onDestroy();
     }
 
 }

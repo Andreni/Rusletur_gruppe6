@@ -96,6 +96,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
 
+
+            FirebaseHandler.downloadAllCustomTrips();
+
+
             //Check if user is new user.
             Bundle extras = getIntent().getExtras();
             if(extras != null){
@@ -248,7 +252,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             */
 
             //Test the realshitz
-            Trip.addTrip(tripName, savedTripCoordinateList, FirebaseAuth.getInstance().getCurrentUser(), tripDifficulty, county, municipality, tripDescription);
+            //Trip.addTrip(tripName, savedTripCoordinateList, FirebaseAuth.getInstance().getCurrentUser(), tripDifficulty, fylke, kommune, tripDescription);
 
             //After add trip
             savedTripCoordinateList.clear();

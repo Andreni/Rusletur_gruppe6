@@ -95,16 +95,6 @@ public class User {
             }
         });
     }
-    /*
-        Saves the trip like this:
-        user
-           |-Trip
-               |-Tripname
-                    |-LatLng1
-                    |-LatLng2
-                    |-LatLng3
-
-     */
     public static void addTrip(String tripName) {
         uidRef.child("trip").child(tripName);
     }

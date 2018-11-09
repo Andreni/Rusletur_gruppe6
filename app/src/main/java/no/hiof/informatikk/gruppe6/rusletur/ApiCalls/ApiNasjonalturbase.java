@@ -67,7 +67,8 @@ public class ApiNasjonalturbase {
                          String navn = response.get("navn").toString();
 
                          JSONArray tags = (JSONArray) response.get("tags");
-                         String tag = tags.get(0).toString();
+                         ArrayList<String> tag = new ArrayList<>();
+                         tag.add(tags.get(0).toString());
 
                          String gradering = response.get("gradering").toString();
                          String tilbyder = response.get("tilbyder").toString();

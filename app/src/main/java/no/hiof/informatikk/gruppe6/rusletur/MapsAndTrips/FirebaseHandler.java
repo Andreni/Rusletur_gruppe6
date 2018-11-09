@@ -1,6 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -10,6 +11,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -35,14 +43,17 @@ public class FirebaseHandler {
      * @return true if trip is database. False if trip was not found in database.
      */
     public static boolean isTripInFirebaseDatabase(final String tripName) {
+        /** Sets the reference zone in the Realtime database to Trip */
         DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("trip");
+        /** Adds a listener that will loop through all dataChange */
         zonesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String currentTripname = "";
+                /** For each trip in Firebase-Trip */
                 for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "Tripname: " + (String) zoneSnapshot.child("name").getValue());
-                    currentTripname = (String)zoneSnapshot.child("name").getValue();
+                    /** If currentTripname equals the tripname beeing checked, set  */
+                    String currentTripname = (String)zoneSnapshot.child("name").getValue();
                     if(tripName == currentTripname) {
                         found = true;
                     }
@@ -60,6 +71,79 @@ public class FirebaseHandler {
             return false;
         }
     }
+    public static void downloadAllCustomTrips() {
+        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("trip");
+        zonesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                /** For each Child in Trip */
+                for(DataSnapshot aShot : dataSnapshot.getChildren()) {
+                    /** HashMap that will store the String tripname and a Hashmap with all of the childs. */
+                    HashMap<String, HashMap<String, String>> outer = new HashMap<>();
+                    /** For storing the LatLng of current trip */
+                    ArrayList<LatLng> coords = new ArrayList<>();
+                    /** For storing the Tags of current trip */
+                    ArrayList<String> tag = new ArrayList<>();
+                    /** HashMap for every childnode in the DataSnapshot */
+                    HashMap<String, String> inner = new HashMap<>();
+                    Log.d(TAG, "Obj: " + aShot.getKey());
+                    /** For each Child of current trip */
+                    for(DataSnapshot bShot : aShot.getChildren() ) {
+                        Log.d(TAG, "LatLng == " + bShot.getKey());
+                        /** For each child of current child(Tag and LatLng) */
+                        for(DataSnapshot latLngTag : bShot.getChildren()) {
+                            if(bShot.getKey().equals("Tag")) {
+                                tag.add(latLngTag.getValue().toString());
+                                continue;
+                            }
+                            /** Splits the LatLng... Data[0] == Lat, Data[1] == Lon */
+                            String[] data = ((String)latLngTag.getValue()).split("¤");
+                            /** Creates a new LatLng and adds it to the coords ArrayList */
+                            coords.add(new LatLng(Double.parseDouble(data[0]),Double.parseDouble(data[1])));
+
+                        }
+                        /** If a Key does not have a value, set value to "Not set..." to prevent nullPointerException. */
+                        if(TextUtils.isEmpty(bShot.getValue().toString())) {
+                            inner.put(bShot.getKey(), "Not set...");
+                            continue;
+                        }
+                        /** Adds the Key and Value to the hashmap */
+                        inner.put(bShot.getKey(), bShot.getValue().toString());
+                    }
+                    /** Adds all the childnodes to the outer HashMap */
+                    outer.put(aShot.getKey(), inner);
+
+                    /** For current trip */
+                    for(Map.Entry<String, HashMap<String, String>> i : outer.entrySet()) {
+                        /** Create variables for each parameter to create a trip */
+                        Log.d(TAG, "Navn: " + i.getKey());
+                        Log.d(TAG,"Id: " + i.getValue().get("Id"));
+                        String id = i.getValue().get("Id");
+                        String navn = i.getKey();
+                        String gradering = i.getValue().get("Grad");
+                        String tilbyder = i.getValue().get("Tilbyder");
+                        String fylke = i.getValue().get("Fylke");
+                        String kommune = i.getValue().get("Kommune");
+                        String beskrivelse = i.getValue().get("Beskrivelse");
+                        String lisens = i.getValue().get("Lisens");
+                        String url = i.getValue().get("URL");
+                        String tidsbruk = i.getValue().get("Tidsbruk");
+                        /** Add trip to public static allCustomTrip. */
+                        Trip.allCustomTrips.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommune, beskrivelse, lisens, url, coords, tidsbruk));
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+    /** DO NOT FUCKING WORK!! */
 
     //Takes UID from User in Auth, checks for corresponding UID in Database and retrieves username, firstname and lastname.
     public static void getUserInfo(final String userUid){
@@ -99,6 +183,7 @@ public class FirebaseHandler {
                 double lon = (double) dataSnapshot.child(tripName).child("LatLng").child("Lon").child("0").getValue();
                 startPos = new LatLng(lat, lon);
 
+
             }
 
             @Override
@@ -108,7 +193,7 @@ public class FirebaseHandler {
         });
 
     }
-
+    /** DO NOT FUCKING WORK!! */
     public static LatLng getStartLocationOfTrip(final String tripName) {
         createStartLocationOfTrip(tripName);
         try {

@@ -249,9 +249,9 @@ public class Trips extends AppCompatActivity  {
 
 
     //Handler for notifying a new item in recycler view
-    Handler handler = new Handler();
+    private Handler handler = new Handler();
     //It's a handler/runnablew for doing it in a new thread
-    Runnable runnable = new Runnable() {
+    private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             //If antall (amaount of trips in recyclerView) is less than the amount of trips in ArrayList
