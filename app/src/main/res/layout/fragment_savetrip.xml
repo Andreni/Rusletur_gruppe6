@@ -5,20 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/savetrip_descriptionInput"
-        android:layout_width="207dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+    <TextView
+        android:id="@+id/savetrip_nameOfTrip"
+        android:layout_width="81dp"
+        android:layout_height="38dp"
         android:layout_marginStart="8dp"
-        android:ems="10"
-        android:hint="Beskrivelse"
-        android:inputType="textMultiLine"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Navngi turen"
+        app:layout_constraintBottom_toTopOf="@+id/savetrip_nameOfTripInput"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.567"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
         android:id="@+id/savetrip_nameOfTripInput"
@@ -35,6 +37,57 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/savetrip_nameOfTrip" />
+    <TextView
+        android:id="@+id/savetrip_descriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Gi en kort beskrivelse av turen"
+        app:layout_constraintBottom_toTopOf="@+id/savetrip_descriptionInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent" />
+    <EditText
+        android:id="@+id/savetrip_descriptionInput"
+        android:layout_width="207dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:hint="Beskrivelse"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/online_SelectKommuneSpinner"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tripsA_SelectFylke_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tripsA_SelectFylke_spinner"
+        app:layout_constraintTop_toBottomOf="@+id/savetrip_descriptionInput"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Spinner
+        android:id="@+id/online_SelectFylkeSpinner"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/tripsA_SelectKommune_spinner2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/savetrip_descriptionInput" />
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/savetrip_radioGroup"
@@ -50,7 +103,7 @@
         app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/savetrip_descriptionInput"
-        app:layout_constraintVertical_bias="0.148">
+        app:layout_constraintVertical_bias="0.45">
 
         <RadioButton
             android:id="@+id/savetrip_easySelected"
@@ -73,36 +126,6 @@
             android:paddingHorizontal="5dp"
             android:text="Vanskelig" />
     </RadioGroup>
-
-    <TextView
-        android:id="@+id/savetrip_nameOfTrip"
-        android:layout_width="81dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Navngi turen"
-        app:layout_constraintBottom_toTopOf="@+id/savetrip_nameOfTripInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.567"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/savetrip_descriptionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:text="Gi en kort beskrivelse av turen"
-        app:layout_constraintBottom_toTopOf="@+id/savetrip_descriptionInput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/savetrip_saveTripButton"
