@@ -65,26 +65,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/online_SelectKommuneSpinner"
+        android:id="@+id/savetrip_selectMunicipality"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tripsA_SelectFylke_spinner"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="120dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tripsA_SelectFylke_spinner"
-        app:layout_constraintTop_toBottomOf="@+id/savetrip_descriptionInput"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/savetrip_descriptionInput" />
 
     <Spinner
-        android:id="@+id/online_SelectFylkeSpinner"
+        android:id="@+id/savetrip_selectCounty"
         android:layout_width="0dp"
         android:layout_height="25dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/tripsA_SelectKommune_spinner2"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/savetrip_descriptionInput" />

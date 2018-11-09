@@ -6,16 +6,25 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
+import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
 public class SaveTripFragment extends Fragment{
@@ -27,6 +36,16 @@ public class SaveTripFragment extends Fragment{
     private boolean checked;
     private String nameinput;
     private String description;
+    private final View view = null;
+
+
+    private Spinner municipalitySpinner;
+    private Spinner countySpinner;
+
+    private ArrayAdapter<FylkeList> countyAdapter;
+    private ArrayAdapter<Kommune> municipalityAdapter;
+
+
 
     @Nullable
     @Override
@@ -39,6 +58,8 @@ public class SaveTripFragment extends Fragment{
         * This is a pretty simple XML which just displays a name input, description input
         * and RadioButtons for selecting difficulty.
          */
+
+        setUpCountySpinner();
 
         nameInput = view.findViewById(R.id.savetrip_nameOfTripInput);
         descInput = view.findViewById(R.id.savetrip_descriptionInput);
@@ -61,6 +82,7 @@ public class SaveTripFragment extends Fragment{
                 }
             }
         });
+
 
 
         saveTripButton = view.findViewById(R.id.savetrip_saveTripButton);
@@ -107,6 +129,22 @@ public class SaveTripFragment extends Fragment{
 
         return view;
     }
+
+    private void setUpCountySpinner(){
+        countySpinner = (Spinner)view.findViewById(R.id.savetrip_selectCounty);
+        countyAdapter = new ArrayAdapter<FylkeList>(getActivity(),android.R.layout.simple_list_item_1, FylkeList.getFylkeListArrayList());
+        countyAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        countySpinner.setAdapter(countyAdapter);
+    }
+
+    private void setUpMunicipalitySpinner(){
+        municipalitySpinner = (Spinner)view.findViewById(R.id.savetrip_selectMunicipality);
+        municipalityAdapter = new ArrayAdapter<Kommune>(getActivity(),android.R.layout.simple_list_item_1,FylkeList.getRegisterForFylke().get(0).getKommuneArrayList());
+        municipalityAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        municipalitySpinner.setAdapter(municipalityAdapter);
+    }
+
+
 }
 
 
