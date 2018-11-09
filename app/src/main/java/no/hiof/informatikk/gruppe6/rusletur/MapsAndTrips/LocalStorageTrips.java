@@ -44,15 +44,17 @@ public class LocalStorageTrips extends AppCompatActivity {
         SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
         //String sqlToInsert = "DROP TABLE trips;";
         String sqlToInsert = "SELECT rowid  FROM trips;";
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT ROWID, *  FROM trips;",null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT *  FROM trips WHERE kommune = 'Østfold' AND fylke='Halden';",null);
         if (cursor.moveToFirst()) {
             do {
 
                 //Intitial run config
-                Log.i("SQLQ",cursor.getString(0));
+                Log.i("SQLQ",cursor.getString(1));
 
             } while ((cursor.moveToNext()));
 
+        }else{
+            Log.i("SQLQ","No record found");
         }
         retriveItemsFromStorage();
         sqLiteDatabase.close();
@@ -84,7 +86,7 @@ public class LocalStorageTrips extends AppCompatActivity {
 
         String[] mValue = new String[aTrip.getCoordinates().size()];
         for (int i = 0; i < aTrip.getCoordinates().size(); i++) {
-            mValue[i] = aTrip.getCoordinates().get(i).longitude + " - " + aTrip.getCoordinates().get(i).latitude;
+            mValue[i] = aTrip.getCoordinates().get(i).latitude + " - " + aTrip.getCoordinates().get(i).longitude;
             Log.i("SQLQ",mValue[i]);
             Log.i("SQLQ", " " + aTrip.getCoordinates().get(i).latitude);
             Log.i("SQLQ",Arrays.toString(mValue));
@@ -111,9 +113,10 @@ public class LocalStorageTrips extends AppCompatActivity {
                 "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
                 "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM trips " +
-                "WHERE fylke LIKE + '"+aFylke+"'  AND kommune LIKE  '"+aKommune+"';", null);
+                "WHERE fylke = '"+aFylke+"'  AND kommune =  '"+aKommune+"';", null);
         if (cursor.moveToFirst()) {
             do {
+                Log.i("SQLQ","Match found!");
                 String id = cursor.getString(0);
                 String navn = cursor.getString(1);
                 String tag = cursor.getString(2);
@@ -142,7 +145,7 @@ public class LocalStorageTrips extends AppCompatActivity {
                 //Build the retrived trip object from storage
                 availableTrips.add(new Trip(id,navn,tag,gradering,tilbyder,
                         fylke,kommune,beskrivelse,lisens,url,arrayListLatLng,tidsbruk));
-
+                Log.i("SQLQ","Matches: " + availableTrips.size());
 
             } while ((cursor.moveToNext()));
 

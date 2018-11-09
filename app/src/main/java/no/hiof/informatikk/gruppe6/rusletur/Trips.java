@@ -203,11 +203,12 @@ public class Trips extends AppCompatActivity  {
             //Pass the id to the API class to build a trip object from it
             Log.d(TAG, "fetchIds: Addede to turer");
             ApiNasjonalturbase.getTripInfo(selection, this);
+           Log.d("SQLQ", "Size " +LocalStorageTrips.retriveItemsFromStorage(this,selectionNameFylke,selectionNameKommune).size());
             //If the response to the query is greater than -1 add the results to the array
             Log.d("SQLQ", "Searching for: " + selectionNameKommune + " in" + selectionNameFylke );
-            if(LocalStorageTrips.retriveItemsFromStorage(this,selectionNameFylke,selectionNameKommune).size()>-1){
-                turer.addAll(LocalStorageTrips.retriveItemsFromStorage(this,selectionNameFylke,selectionNameKommune));
-            }
+
+
+           // }
 
 
         }
@@ -260,8 +261,16 @@ public class Trips extends AppCompatActivity  {
                 //The method for loading a new item that is in the array for the recyclerview
                 adapter.notifyItemInserted(0);
                 Log.d(TAG, "onResponse: CHECK");
+
                 //incrementing antall
                 antall++;
+                //Call to local storage:
+                if (LocalStorageTrips.retriveItemsFromStorage(getApplicationContext(),selectionNameFylke,selectionNameKommune).size()>0){
+                    turer.addAll(LocalStorageTrips.retriveItemsFromStorage(getApplicationContext(),selectionNameFylke,selectionNameKommune));
+                    antall++;
+                }
+
+
                 //Recursion. Make sure to have a constant loop to always check if there is a new item in the arraylist
                 checkChange();
             }

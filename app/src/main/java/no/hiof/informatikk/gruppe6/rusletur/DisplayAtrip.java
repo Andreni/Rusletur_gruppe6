@@ -108,7 +108,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
                                     String msg = LocalStorageTrips.deleteTripFromTable(context,rowId);
                                     Log.i("SQLQ","deleting row_" + rowId);
                                     Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
-                                    startActivity(new Intent(context,LocalStorageTrips.class));
+                                    startActivity(new Intent(context,MainScreen.class));
                                 }
                             })
                             .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
