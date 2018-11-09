@@ -217,11 +217,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             * Then we add it to firebase, through the static method addTrip.
             * Once added, empty the array so it won't get cluttered with future coordinates
             *
-            * Todo: LocationHandler crashes if GPS doesn't exist. Fix that shit
+            *
+            * Under construction, rework in progress to fit with both local storage and firebase.
+            *
             */
 
 
-            //Geocoder for locations
+
+
             /*
             geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             LocationHandler.forceUpdateOfCurrentLocation(this);
@@ -241,19 +244,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 }
             } catch (IOException io){
                 io.printStackTrace();
-            }
+            }*/
 
-            Toast.makeText(this, "SUCCESS: " + kommune + " ligg i " + fylke, Toast.LENGTH_SHORT).show();
 
-            Log.i(MapsActivity.TAG, "Geocoder gives: " + kommune + " and " + fylke);
 
-            Log.i(MapsActivity.TAG, "handleStorageofTrips mottar: param1: " + tripName + " param2: " + tripDescription + " param3: " + tripDifficulty);
-            Log.i(MapsActivity.TAG, "Innhold av arrayet: " + String.valueOf(savedTripCoordinateList.size()));
-            */
-
-            //Test the realshitz
-            //Trip.addTrip(tripName, savedTripCoordinateList, FirebaseAuth.getInstance().getCurrentUser(), tripDifficulty, fylke, kommune, tripDescription);
-
+            //Upload to firebase, timer and location will be handled from timer in savetripfragment and location from geolocation/spinner with choices.
+            Trip.addTrip(tripName,savedTripCoordinateList,mUser,tripDifficulty,county,municipality,tripDescription,null,"Rusletur", "0", "", "Lokal");
             //After add trip
             savedTripCoordinateList.clear();
 

@@ -77,7 +77,7 @@ public class SaveTripFragment extends Fragment{
 
         /*
         * This is a pretty simple XML which just displays a name input, description input
-        * and RadioButtons for selecting difficulty.
+        * and RadioButtons for selecting difficulty. Currently expanding.
          */
 
         //setupArray();
@@ -185,6 +185,11 @@ public class SaveTripFragment extends Fragment{
     }
 
     private void setupArray(){
+        /*
+        * Under construction
+         */
+
+
         Log.d(TAG, "setupArray: setupSpinner: setup array");
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
