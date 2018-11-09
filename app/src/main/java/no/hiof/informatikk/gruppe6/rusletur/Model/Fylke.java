@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Fylke {
     String fylkeName;
-    ArrayList<Kommune> kommuneArrayList = new ArrayList<>();
+    public ArrayList<Kommune> kommuneArrayList = new ArrayList<>();
 
 
     public Fylke(String fylkeName) {

@@ -156,6 +156,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             navHeaderUsername.setText("Velkommen");
             Log.i(TAG2, "Navigation drawer ser: " + mainscreenUsername);
             navHeaderEmail.setText(mUser.getEmail());
+
         }
 
         //Static method required for getting data from FireBaseHandler

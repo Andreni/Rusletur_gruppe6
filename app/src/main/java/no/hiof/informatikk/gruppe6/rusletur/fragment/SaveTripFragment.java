@@ -61,7 +61,7 @@ public class SaveTripFragment extends Fragment{
         * and RadioButtons for selecting difficulty.
          */
 
-
+        
         countySpinner = view.findViewById(R.id.savetrip_selectCounty);
         //municipalitySpinner = view.findViewById(R.id.savetrip_selectMunicipality);
 
@@ -152,7 +152,9 @@ public class SaveTripFragment extends Fragment{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(TAG, String.valueOf(position));
-                setUpMunicipalitySpinner(position);
+                Log.i(TAG, ((Fylke)getActivity()).getKommuneArrayList().get(position).toString());
+                //setUpMunicipalitySpinner(position);
+
             }
 
             @Override
@@ -166,7 +168,7 @@ public class SaveTripFragment extends Fragment{
     private void setUpMunicipalitySpinner(int index){
         if(index > 0) {
 
-            ArrayList<Kommune> test = FylkeList.getRegisterForFylke().get(index).getKommuneArrayList();
+            ArrayList<Kommune> test = ((Fylke)getActivity()
             municipalityAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, test);
             municipalityAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
             municipalitySpinner.setAdapter(municipalityAdapter);
