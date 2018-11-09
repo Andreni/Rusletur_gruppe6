@@ -2,6 +2,7 @@ package no.hiof.informatikk.gruppe6.rusletur.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -171,45 +172,57 @@ public class SaveTripFragment extends Fragment{
 
     private void setupArray(){
         Log.d(TAG, "setupArray: setupSpinner: setup array");
-        try {
-            URL url =  new URL("https://raw.githubusercontent.com/Andreni/Rusletur_gruppe6/master/fylkerMedKommuner.txt?token=Ae4q33Lvwx1AhhoKJi7-i8pPs-nqFcIQks5b7uiJwA%3D%3D");
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url =  new URL("https://raw.githubusercontent.com/Andreni/Rusletur_gruppe6/master/fylkerMedKommuner.txt?token=Ae4q33Lvwx1AhhoKJi7-i8pPs-nqFcIQks5b7uiJwA%3D%3D");
 
-            conn = (HttpURLConnection) url.openConnection();
+                    Log.d(TAG, "setupArray: setupSpinner: Made URL");
 
-            InputStream in = conn.getInputStream();
-            if(conn.getResponseCode() == 200){
-                BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                String inputLine;
-                while((inputLine = br.readLine()) != null){
-                    String[] fylkeKommune = inputLine.split("|");
-                    boolean fylkeExists = false;
-                    int fylkeIndex = 0;
-                    for(int i = 0; i < fylkerOgKommuner.size(); i++){
-                        if (fylkerOgKommuner.get(i).get(0) == fylkeKommune[0]) {
-                            fylkeExists = true;
-                            fylkeIndex = i;
-                            break;
+                    conn = (HttpURLConnection) url.openConnection();
+                    Log.d(TAG, "setupArray: setupSpinner: Make conn");
+
+                    InputStream in = conn.getInputStream();
+                    Log.d(TAG, "setupArray: setupSpinner: Made inpustream");
+
+                    if(conn.getResponseCode() == 200){
+                        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+                        String inputLine;
+                        Log.d(TAG, "setupArray: setupSpinner: Buffered Reader");
+                        while((inputLine = br.readLine()) != null){
+                            Log.d(TAG, "setupArray: setupSpinner: WHILE");
+                            String[] fylkeKommune = inputLine.split("|");
+                            boolean fylkeExists = false;
+                            int fylkeIndex = 0;
+                            for(int i = 0; i < fylkerOgKommuner.size(); i++){
+                                if (fylkerOgKommuner.get(i).get(0) == fylkeKommune[0]) {
+                                    fylkeExists = true;
+                                    fylkeIndex = i;
+                                    break;
+                                }
+                            }
+                            if(fylkeExists){
+                                fylkerOgKommuner.get(fylkeIndex).add(fylkeKommune[1]);
+                            }else{
+                                fylkerOgKommuner.get(fylkerOgKommuner.size()-1).add(fylkeKommune[0]);
+                                fylkerOgKommuner.get(fylkerOgKommuner.size()-1).add(fylkeKommune[1]);
+                            }
                         }
                     }
-                    if(fylkeExists){
-                        fylkerOgKommuner.get(fylkeIndex).add(fylkeKommune[1]);
-                    }else{
-                        fylkerOgKommuner.get(fylkerOgKommuner.size()-1).add(fylkeKommune[0]);
-                        fylkerOgKommuner.get(fylkerOgKommuner.size()-1).add(fylkeKommune[1]);
-                    }
+
+                    setUpCountySpinner();
+
+                }catch (MalformedURLException e){
+                    Log.d(TAG, "setupArray: setupSpinner: MAlformed url exception");
+                    e.printStackTrace();
+                }catch (IOException e){
+                    Log.d(TAG, "setupArray: setupSpinner: IOexception");
+                    e.printStackTrace();
                 }
             }
-
-            setUpCountySpinner();
-
-        }catch (MalformedURLException e){
-            Log.d(TAG, "setupArray: setupSpinner: MAlformed url exception");
-            e.printStackTrace();
-        }catch (IOException e){
-            Log.d(TAG, "setupArray: setupSpinner: IOexception");
-            e.printStackTrace();
-        }
-
+        },0);
 
 
     }
