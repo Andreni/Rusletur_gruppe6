@@ -99,7 +99,7 @@ public class SaveTripFragment extends Fragment{
                             .show();
 
                 } else {
-                    Toast.makeText(getActivity(), "Husk å fylle ut alt, din jævla retard", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Er alle feltene fylt ut?", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -21,11 +21,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -34,15 +41,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
+import no.hiof.informatikk.gruppe6.rusletur.User.User;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.NewUserFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.TripsRecyclerViewFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
@@ -58,6 +69,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private String kommune;
         private Location currentLocation;
         private Context context;
+        private boolean checkIfNewUser;
+        public static String mainscreenUsername;
+        public static String mainscreenFirstname;
+        public static String mainscreenLastname;
+        private DatabaseReference db;
+        public final static String TAG2 = "Jesus";
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +84,35 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //Broadcast Receiver
             LocalBroadcastManager.getInstance(this).registerReceiver(arrayReceiever, new IntentFilter("SendArrayList"));
 
+            //Check user
+            mUser = FirebaseAuth.getInstance().getCurrentUser();
+
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
+
+            //Check if user is new user.
+            Bundle extras = getIntent().getExtras();
+            if(extras != null){
+                checkIfNewUser = extras.getBoolean("newUser");
+                Log.i(MapsActivity.TAG, String.valueOf(checkIfNewUser));
+            }
+            else {
+                Log.i(MapsActivity.TAG, "Extras contained nothing");
+            }
+
+            if(checkIfNewUser){
+                Toast.makeText(this, "Welcome, new user!", Toast.LENGTH_SHORT).show();
+                Log.i(MapsActivity.TAG, "MainScreen found new user");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewUserFragment()).commit();
+            }
+            else {
+                Log.i(MapsActivity.TAG, "checkIfNewUser is false");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
+                Log.i(TAG2, mUser.toString());
+                Log.i(TAG2, mUser.getUid());
+                FirebaseHandler.getUserInfo(mUser.getUid());
+            }
+
 
             //Calls location
             LocationHandler.forceUpdateOfCurrentLocation(this);
@@ -86,7 +130,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
             if(savedInstanceState == null) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
             }
 
@@ -100,21 +143,27 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             toggle.syncState();
 
 
-
+            //Personalize navigation drawer.
+            View headerView = navigationView.getHeaderView(0);
+            TextView navHeaderUsername = (TextView)headerView.findViewById(R.id.nav_header_username);
+            TextView navHeaderEmail = (TextView)headerView.findViewById(R.id.nav_header_email);
+            navHeaderUsername.setText("Velkommen");
+            Log.i(TAG2, "Navigation drawer ser: " + mainscreenUsername);
+            navHeaderEmail.setText(mUser.getEmail());
         }
 
-        public void showcaseMethod(){
-            /*
-            * This is how you call from activity to methods in fragments.
-            * 
-             */
-            FragmentManager fragmentManager = getSupportFragmentManager();
-
-            MainMenuFragment menuFrag = (MainMenuFragment)fragmentManager.findFragmentById(R.id.fragment_container);
-            // menuFrag.showcaseMethodTwo();
-
-            Log.d("FragmentDemo", "Dance for me baby");
+        //Static method required for getting data from FireBaseHandler
+        public static void getAllUserInfo(String username, String firstname, String lastname){
+            mainscreenUsername = username;
+            Log.i(TAG2, username);
+            mainscreenFirstname = firstname;
+            mainscreenLastname = lastname;
         }
+
+
+
+
+
 
         private BroadcastReceiver arrayReceiever = new BroadcastReceiver() {
             @Override
@@ -247,7 +296,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
                     break;
                 case R.id.nav_profile:
-                    Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePageFragment()).commit();
                     break;
                 case R.id.nav_settings:
                     Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();

@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -50,6 +52,10 @@ public class MainMenuFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<LatLng> savedTrip;
+    private Chronometer chronometer;
+    private boolean timerRunning;
+
+
     private boolean recordAlreadyClicked = false;
     //Worst practice = best practice.
     public static boolean saveWasClicked = false;
@@ -74,16 +80,24 @@ public class MainMenuFragment extends Fragment {
         * onStartCommand runs everytime the button is clicked, so if you click it multiple times
         * FusedLocationProvider will queue up multiple times.
          */
-        // ((MainScreen)getActivity()).showcaseMethod();
 
-
+        chronometer = view.findViewById(R.id.fragment_mainscreen_chronometer);
+        chronometer.setFormat("Tid brukt på tur: %s");
+        chronometer.setBase(SystemClock.elapsedRealtime());
 
 
         view.findViewById(R.id.recordTripButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!recordAlreadyClicked) {
-                    getActivity().startService(new Intent(getActivity(), TripTracker.class));
+                    Intent startRecordIntent = new Intent(getActivity(), TripTracker.class);
+                    getActivity().startService(startRecordIntent);
+
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    chronometer.start();
+                    timerRunning = true;
+
+
                 }
                 else{
                     Toast.makeText(getActivity(), "Recording in prosess. Stop first", Toast.LENGTH_SHORT).show();
@@ -116,8 +130,10 @@ public class MainMenuFragment extends Fragment {
                                 Log.i(MapsActivity.TAG, "Yes selected");
                                 saveWasClicked = true;
                                 recordAlreadyClicked = false;
-                                getActivity().stopService(new Intent(getActivity(), TripTracker.class));
+                                Intent saveAndStopIntent = new Intent(getActivity(), TripTracker.class);
+                                getActivity().stopService(saveAndStopIntent);
 
+                                chronometer.stop();
 
                             }
                         })
@@ -127,7 +143,10 @@ public class MainMenuFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Tur slettet", Toast.LENGTH_SHORT).show();
                                 recordAlreadyClicked = false;
                                 saveWasClicked = false;
-                                getActivity().stopService(new Intent(getActivity(), TripTracker.class));
+                                Intent discardAndStopIntent = new Intent(getActivity(), TripTracker.class);
+                                getActivity().stopService(discardAndStopIntent);
+
+                                chronometer.stop();
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
