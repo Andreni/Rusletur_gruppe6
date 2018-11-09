@@ -37,6 +37,7 @@ public class LocalStorageTrips extends AppCompatActivity {
         setContentView(R.layout.activity_local_storage_trips);
         btnBack = findViewById(R.id.localStorage_goBack_button);
 
+        //TODO Make prepared statements
         /*SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
         String sqlToInsert = "DROP TABLE trips;";
         sqLiteDatabase.execSQL(sqlToInsert);
@@ -194,10 +195,24 @@ public class LocalStorageTrips extends AppCompatActivity {
             } while ((cursor.moveToNext()));
 
         }
+
+
+        
         cursor.close();
         sqLiteDatabase.close();
 
         return availableTrips;
+    }
+
+    public static String deleteTripFromTable(Context context,Integer rowId){
+        SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
+
+
+        String sqlStatement = "DELETE FROM trips WHERE rowid="+rowId+";";
+        sqLiteDatabase.execSQL(sqlStatement);
+        sqLiteDatabase.close();
+
+        return "Slettet";
     }
 
     public void goBack(View view){

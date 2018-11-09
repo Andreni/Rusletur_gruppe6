@@ -63,10 +63,13 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
                 Intent intent = new Intent(mContext, DisplayAtrip.class);
                 // using putExtra(String key, Parcelable value) method
                 intent.putExtra("object", mItem.get(position));
+                intent.putExtra("sender",mContext.getClass().getSimpleName());
+                intent.putExtra("rowid",position);
+                Log.i("SQLQ",mContext.getClass().getSimpleName());
                 mContext.startActivity(intent);
             }
         });
-        
+
     }
 
     @Override
