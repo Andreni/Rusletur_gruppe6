@@ -95,8 +95,8 @@ public class Trips extends AppCompatActivity  {
         spinnerFylke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String fylkeSelected;
-                turer.clear();
+                 String fylkeSelected;
+                 turer.clear();
                  antall = 0;
 
                 //If the position is 0, nothing is selected
