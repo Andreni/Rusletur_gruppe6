@@ -21,7 +21,7 @@ public class Trip implements Parcelable {
 
     private String id;
     private String navn;
-    private ArrayList<String> tag;
+    private String tag;
     private String gradering;
     private String tilbyder;
     private String fylke;
@@ -37,7 +37,7 @@ public class Trip implements Parcelable {
     public static ArrayList<Trip> allCustomTrips = new ArrayList<>();
 
 
-    public Trip(String id, String navn, ArrayList<String> tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates, String tidsbruk) {
+    public Trip(String id, String navn, String tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates, String tidsbruk) {
         this.id = id;
         this.navn = navn;
         this.tag = tag;
@@ -124,22 +124,19 @@ public class Trip implements Parcelable {
         return tidsbruk;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
     @Override
     public String toString(){
         return beskrivelse;
     }
 
-
-
     protected Trip(Parcel in) {
         id = in.readString();
         navn = in.readString();
-        if (in.readByte() == 0x01) {
-            tag = new ArrayList<String>();
-            in.readList(tag, String.class.getClassLoader());
-        } else {
-            tag = null;
-        }
+        tag = in.readString();
         gradering = in.readString();
         tilbyder = in.readString();
         fylke = in.readString();
@@ -165,12 +162,7 @@ public class Trip implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(navn);
-        if (tag == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(tag);
-        }
+        dest.writeString(tag);
         dest.writeString(gradering);
         dest.writeString(tilbyder);
         dest.writeString(fylke);
@@ -199,4 +191,5 @@ public class Trip implements Parcelable {
             return new Trip[size];
         }
     };
+
 }

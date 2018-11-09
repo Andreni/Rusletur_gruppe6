@@ -83,8 +83,6 @@ public class FirebaseHandler {
                     HashMap<String, HashMap<String, String>> outer = new HashMap<>();
                     /** For storing the LatLng of current trip */
                     ArrayList<LatLng> coords = new ArrayList<>();
-                    /** For storing the Tags of current trip */
-                    ArrayList<String> tag = new ArrayList<>();
                     /** HashMap for every childnode in the DataSnapshot */
                     HashMap<String, String> inner = new HashMap<>();
                     Log.d(TAG, "Obj: " + aShot.getKey());
@@ -94,7 +92,6 @@ public class FirebaseHandler {
                         /** For each child of current child(Tag and LatLng) */
                         for(DataSnapshot latLngTag : bShot.getChildren()) {
                             if(bShot.getKey().equals("Tag")) {
-                                tag.add(latLngTag.getValue().toString());
                                 continue;
                             }
                             /** Splits the LatLng... Data[0] == Lat, Data[1] == Lon */
@@ -122,6 +119,7 @@ public class FirebaseHandler {
                         String id = i.getValue().get("Id");
                         String navn = i.getKey();
                         String gradering = i.getValue().get("Grad");
+                        String tag = i.getValue().get("Tag");
                         String tilbyder = i.getValue().get("Tilbyder");
                         String fylke = i.getValue().get("Fylke");
                         String kommune = i.getValue().get("Kommune");

@@ -201,6 +201,8 @@ public class LocalStorageTrips extends AppCompatActivity {
                     arrayListLatLng.add(new LatLng(lat, longt));
                 }
                 // Build the retrieved trip object from storage
+                ArrayList<String> taglist = new ArrayList<>();
+                taglist.add("Bratt");
                 availableTrips.add(new Trip(id,navn,tag,gradering,tilbyder,
                         fylke,kommune,beskrivelse,lisens,url,arrayListLatLng,tidsbruk));
 
