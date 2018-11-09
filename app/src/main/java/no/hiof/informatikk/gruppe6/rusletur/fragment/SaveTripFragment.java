@@ -77,7 +77,7 @@ public class SaveTripFragment extends Fragment{
                     ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty);
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                 } else {
-                    Toast.makeText(getActivity(), "Husk å fylle ut alt, din jævla retard", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Er alle feltene fylt ut?", Toast.LENGTH_SHORT).show();
                 }
             }
         });

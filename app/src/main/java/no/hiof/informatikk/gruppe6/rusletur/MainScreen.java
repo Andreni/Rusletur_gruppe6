@@ -81,6 +81,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //Broadcast Receiver
             LocalBroadcastManager.getInstance(this).registerReceiver(arrayReceiever, new IntentFilter("SendArrayList"));
 
+            //Check user
+            mUser = FirebaseAuth.getInstance().getCurrentUser();
+
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
 
@@ -102,6 +105,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             else {
                 Log.i(MapsActivity.TAG, "checkIfNewUser is false");
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
+                Log.i(TAG2, mUser.toString());
+                Log.i(TAG2, mUser.getUid());
+                FirebaseHandler.getUserInfo(mUser.getUid());
             }
 
 
@@ -133,11 +139,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
 
-            //Get registered information from Firebase.
-            mUser = FirebaseAuth.getInstance().getCurrentUser();
-            Log.i(TAG2, mUser.toString());
-            Log.i(TAG2, mUser.getUid());
-            FirebaseHandler.getUserInfo(mUser.getUid());
 
             //Personalize navigation drawer.
             View headerView = navigationView.getHeaderView(0);

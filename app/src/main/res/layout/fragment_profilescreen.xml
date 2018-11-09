@@ -33,7 +33,7 @@
             android:id="@+id/fragment_profile_username"
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif-light"
-            android:text="Motherfucker Jones"
+            android:text="James bond"
             android:layout_marginTop="10dp"
             android:textColor="#fff"
             android:textSize="32dp"
@@ -45,7 +45,7 @@
             android:layout_below="@+id/fragment_profile_username"
             android:id="@+id/fragment_profile_usermail"
             android:fontFamily="sans-serif-light"
-            android:text="Gaylord@gaymail.com"
+            android:text="007@mi6.gvt"
             android:layout_marginTop="10dp"
             android:textColor="#fff"
             android:paddingBottom="10dp"
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
                     android:id="@+id/fragment_profile_firstandlastname"
-                    android:text="Legg inn div info i slekk format?"
+                    android:text="Kjell"
                     android:paddingTop="14dp"
                     />
 
@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:text="F.eks statistikk ell no her"
+                    android:text="Statistikk"
                     android:paddingTop="14dp"
                     />
 
@@ -111,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:text="Ell antall turer gått i denna shetten"
+                    android:text="Totalt antall turer"
                     android:paddingTop="14dp"
                     />
 
@@ -127,7 +127,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:text="E vetta faen, kåm mæ forslag"
+                    android:text="Demo"
                     android:paddingTop="14dp"
                     />
 

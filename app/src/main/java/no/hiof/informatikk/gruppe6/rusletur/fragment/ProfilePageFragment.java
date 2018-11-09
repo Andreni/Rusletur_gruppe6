@@ -20,7 +20,6 @@ import no.hiof.informatikk.gruppe6.rusletur.User.User;
 public class ProfilePageFragment extends Fragment {
 
     private FirebaseUser mUser;
-    private String test = "Hei";
     private TextView username;
     private TextView usermail;
     private TextView fullName;

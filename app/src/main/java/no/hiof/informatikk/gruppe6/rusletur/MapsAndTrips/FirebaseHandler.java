@@ -75,7 +75,6 @@ public class FirebaseHandler {
                 Log.i(TAG2, "Fra FirebaseHandler: " + lastname);
                 getAllUserInfo(username, firstname, lastname);
         }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
