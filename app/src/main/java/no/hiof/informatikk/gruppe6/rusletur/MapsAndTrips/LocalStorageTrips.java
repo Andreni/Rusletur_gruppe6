@@ -48,12 +48,16 @@ public class LocalStorageTrips extends AppCompatActivity {
 
 
 
+
         /*SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
+        String sqlToInsert = "DROP TABLE trips;";
+        sqLiteDatabase.execSQL(sqlToInsert);
+        sqLiteDatabase.close();*/
         //Intitial run config
+        /*
 
 
-        //String sqlToInsert = "DROP TABLE trips;";
-        //sqLiteDatabase.execSQL(sqlToInsert);
+
 
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS trips(id TEXT,navn TEXT," +
                 "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
@@ -115,25 +119,30 @@ public class LocalStorageTrips extends AppCompatActivity {
 
 
           /* Ta imot dette arrayet */
-          retriveItemsFromStorage();
+        retriveItemsFromStorage();
     }
     //TODO Rework LatLNG Compressor
     public static String addAitemToStorage(Context context,Trip aTrip){
         SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
         Log.d("SQLQ","Attempting to write to database");
+
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS trips(id TEXT,navn TEXT," +
                 "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
                 "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
 
         String[] mValue = new String[aTrip.getCoordinates().size()];
         for (int i = 0; i < aTrip.getCoordinates().size(); i++) {
-            mValue[i] = aTrip.getCoordinates().get(i).latitude + " - " + aTrip.getCoordinates().get(i).longitude;
+            mValue[i] = aTrip.getCoordinates().get(i).longitude + " - " + aTrip.getCoordinates().get(i).latitude;
+            Log.i("SQLQ",mValue[i]);
+            Log.i("SQLQ", " " + aTrip.getCoordinates().get(i).latitude);
+            Log.i("SQLQ",Arrays.toString(mValue));
+
         }
 
         String insertIntoDB = "INSERT INTO trips VALUES('"+aTrip.getId()+"','"+aTrip.getNavn()+"','"+aTrip.getTag()+
                 "','"+aTrip.getGradering()+"','"+aTrip.getTilbyder()+"','"+aTrip.getFylke()+"','"+
                 aTrip.getKommune()+"','"+aTrip.getBeskrivelse()+"','"+aTrip.getLisens()+"','"+
-                aTrip.getUrl()+"','"+aTrip.getTidsbruk()+"','"+mValue.toString()+"');";
+                aTrip.getUrl()+"','"+aTrip.getTidsbruk()+"','"+Arrays.toString(mValue)+"');";
 
         sqLiteDatabase.execSQL(insertIntoDB);
         sqLiteDatabase.close();
