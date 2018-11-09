@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +18,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
 
 public class LocalStorageTrips extends AppCompatActivity {
     ArrayList<LatLng> myLatLng = new ArrayList<>();
     Button btnBack;
+    private MainTripRecyclerViewAdapter mainTripAdapter;
+    private ArrayList<Trip> availableTrips = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +125,20 @@ public class LocalStorageTrips extends AppCompatActivity {
 
           /* Ta imot dette arrayet */
         retriveItemsFromStorage();
+
+
+
+
+        //Initialize recyclerview and set adapter
+        
+        RecyclerView recyclerView = findViewById(R.id.local_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mainTripAdapter = new MainTripRecyclerViewAdapter(this, availableTrips);
+        recyclerView.setAdapter(mainTripAdapter);
+
+
+
     }
     //TODO Rework LatLNG Compressor
     public static String addAitemToStorage(Context context,Trip aTrip){
@@ -206,7 +225,7 @@ public class LocalStorageTrips extends AppCompatActivity {
 
     //Method for retrieving all the objects the user has stored with no search criteria
     public ArrayList<Trip> retriveItemsFromStorage(){
-        ArrayList<Trip> availableTrips = new ArrayList<>();
+        availableTrips = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
         //Intitial run config
         //String sqlToInsert = "DROP TABLE trips;";
