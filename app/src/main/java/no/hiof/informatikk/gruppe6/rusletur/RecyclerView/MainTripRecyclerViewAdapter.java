@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.DisplayAtrip;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.Trips;
@@ -64,8 +65,10 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
                 // using putExtra(String key, Parcelable value) method
                 intent.putExtra("object", mItem.get(position));
                 intent.putExtra("sender",mContext.getClass().getSimpleName());
-                intent.putExtra("rowid",position);
-                Log.i("SQLQ",mContext.getClass().getSimpleName());
+                // If the sending class is LocalStorage, add the rowId to the intent
+                if(mContext.getClass().getSimpleName().equals("LocalStorageTrips")){
+                    intent.putExtra("rowid", LocalStorageTrips.getRowId(position));
+                }
                 mContext.startActivity(intent);
             }
         });

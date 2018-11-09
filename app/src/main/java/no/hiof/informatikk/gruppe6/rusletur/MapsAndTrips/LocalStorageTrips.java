@@ -20,6 +20,8 @@ import java.util.Arrays;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
 
+import static no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip.trips;
+
 /**
  * Class for displaying stored Trip objects
  * SQLite
@@ -30,6 +32,7 @@ public class LocalStorageTrips extends AppCompatActivity {
     Button btnBack;
     private MainTripRecyclerViewAdapter mainTripAdapter;
     private ArrayList<Trip> availableTrips = new ArrayList<>();
+    public static ArrayList<String> rowIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,21 +41,22 @@ public class LocalStorageTrips extends AppCompatActivity {
         btnBack = findViewById(R.id.localStorage_goBack_button);
 
         //TODO Make prepared statements
-        /*SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
-        String sqlToInsert = "DROP TABLE trips;";
-        sqLiteDatabase.execSQL(sqlToInsert);
-        sqLiteDatabase.close();*/
-        //Intitial run config
+        SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
+        //String sqlToInsert = "DROP TABLE trips;";
+        String sqlToInsert = "SELECT rowid  FROM trips;";
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT ROWID, *  FROM trips;",null);
+        if (cursor.moveToFirst()) {
+            do {
 
+                //Intitial run config
+                Log.i("SQLQ",cursor.getString(0));
 
+            } while ((cursor.moveToNext()));
 
-          /* Ta imot dette arrayet */
+        }
         retriveItemsFromStorage();
-
-
-
-
-        //Initialize recyclerview and set adapter
+        sqLiteDatabase.close();
+        // Initialize recyclerview and set adapter
         
         RecyclerView recyclerView = findViewById(R.id.local_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -73,7 +77,7 @@ public class LocalStorageTrips extends AppCompatActivity {
     public static String addAitemToStorage(Context context,Trip aTrip){
         SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
         Log.d("SQLQ","Attempting to write to database");
-
+        // TODO MAKE Prepare statement
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS trips(id TEXT,navn TEXT," +
                 "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
                 "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
@@ -106,8 +110,8 @@ public class LocalStorageTrips extends AppCompatActivity {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS trips(id TEXT,navn TEXT," +
                 "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
                 "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM trips" +
-                "WHERE fylke LIKE + '"+aFylke+"' + AND kommune LIKE + '"+aKommune+"';", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM trips " +
+                "WHERE fylke LIKE + '"+aFylke+"'  AND kommune LIKE  '"+aKommune+"';", null);
         if (cursor.moveToFirst()) {
             do {
                 String id = cursor.getString(0);
@@ -149,31 +153,37 @@ public class LocalStorageTrips extends AppCompatActivity {
         return availableTrips;
     }
 
-    //Method for retrieving all the objects the user has stored with no search criteria
+    /**
+     * Method for showing all the stored objects to the user.
+     * Adds the row ids to the array
+     * @ Gives back a array of available objects
+     */
     public ArrayList<Trip> retriveItemsFromStorage(){
+        rowIds.clear();
+
         availableTrips = new ArrayList<>();
         SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
-        //Intitial run config
-        //String sqlToInsert = "DROP TABLE trips;";
-        //sqLiteDatabase.execSQL(sqlToInsert);
+        // TODO Make prepared statement
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS trips(id TEXT,navn TEXT," +
                 "tag TEXT,gradering TEXT,tilbyder TEXT,fylke TEXT,kommune TEXT,beskrivelse TEXT," +
                 "lisens TEXT, url TEXT, tidsbruk TEXT, latLng TEXT);");
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM trips;", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT ROWID,* FROM trips;", null);
         if (cursor.moveToFirst()) {
             do {
-                String id = cursor.getString(0);
-                String navn = cursor.getString(1);
-                String tag = cursor.getString(2);
-                String gradering = cursor.getString(3);
-                String tilbyder = cursor.getString(4);
-                String fylke = cursor.getString(5);
-                String kommune = cursor.getString(6);
-                String beskrivelse = cursor.getString(7);
-                String lisens = cursor.getString(8);
-                String url = cursor.getString(9);
-                String tidsbruk = cursor.getString(10);
-                String latLng = cursor.getString(11);
+                rowIds.add(cursor.getString(0));
+                Log.i("SQLQ",rowIds.get(0) + " Current row");
+                String id = cursor.getString(1);
+                String navn = cursor.getString(2);
+                String tag = cursor.getString(3);
+                String gradering = cursor.getString(4);
+                String tilbyder = cursor.getString(5);
+                String fylke = cursor.getString(6);
+                String kommune = cursor.getString(7);
+                String beskrivelse = cursor.getString(8);
+                String lisens = cursor.getString(9);
+                String url = cursor.getString(10);
+                String tidsbruk = cursor.getString(11);
+                String latLng = cursor.getString(12);
                 // Fetch the string that contains the compressed Array
                 // Remove the [ ] from the recovered string
                 String arrRemoved = latLng.substring(1, latLng.length() - 1);
@@ -197,19 +207,28 @@ public class LocalStorageTrips extends AppCompatActivity {
         }
 
 
-        
+
         cursor.close();
         sqLiteDatabase.close();
 
         return availableTrips;
     }
 
-    public static String deleteTripFromTable(Context context,Integer rowId){
+    public static String getRowId(int position){
+        return rowIds.get(position);
+    }
+
+    /**
+     * Method for deleting objects.
+     * @param context Context from the activity that wants to delete the object
+     * @param rowId The row index that the object is listed on
+     * @return Gives back a message when the object is deleted.
+     */
+    public static String deleteTripFromTable(Context context,String rowId){
         SQLiteDatabase sqLiteDatabase = context.openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
 
-
-        String sqlStatement = "DELETE FROM trips WHERE rowid="+rowId+";";
-        sqLiteDatabase.execSQL(sqlStatement);
+        sqLiteDatabase.delete("trips" , "ROWID"
+                    + " = " + rowId, null);
         sqLiteDatabase.close();
 
         return "Slettet";
