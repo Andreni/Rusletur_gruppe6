@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
@@ -36,6 +37,7 @@ public class SaveTripFragment extends Fragment{
     private boolean checked;
     private String nameinput;
     private String description;
+    private final String TAG = "Spinner";
 
 
     private Spinner municipalitySpinner;
@@ -61,7 +63,7 @@ public class SaveTripFragment extends Fragment{
 
 
         countySpinner = view.findViewById(R.id.savetrip_selectCounty);
-        municipalitySpinner = view.findViewById(R.id.savetrip_selectMunicipality);
+        //municipalitySpinner = view.findViewById(R.id.savetrip_selectMunicipality);
 
 
         nameInput = view.findViewById(R.id.savetrip_nameOfTripInput);
@@ -146,20 +148,29 @@ public class SaveTripFragment extends Fragment{
         cAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         countySpinner.setAdapter(cAdapter);
 
-        countySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        countySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, String.valueOf(position));
                 setUpMunicipalitySpinner(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
     }
 
     private void setUpMunicipalitySpinner(int index){
+        if(index > 0) {
 
-        municipalityAdapter = new ArrayAdapter<Kommune>(getActivity(),android.R.layout.simple_list_item_1,FylkeList.getRegisterForFylke().get(index).getKommuneArrayList());
-        municipalityAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        municipalitySpinner.setAdapter(municipalityAdapter);
+            ArrayList<Kommune> test = FylkeList.getRegisterForFylke().get(index).getKommuneArrayList();
+            municipalityAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, test);
+            municipalityAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+            municipalitySpinner.setAdapter(municipalityAdapter);
+        }
     }
 
 
