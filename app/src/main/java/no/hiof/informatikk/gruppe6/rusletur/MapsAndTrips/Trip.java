@@ -1,51 +1,195 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
+import no.hiof.informatikk.gruppe6.rusletur.User.User;
+
 
 /**
- * Class for trip objects in our format
- * Will be used later
- * UNDER CONSTRUCTION
+ * A trip object
  */
+public class Trip implements Parcelable {
 
-public class Trip {
 
-
-    private String name, description, author;
+    private String id;
+    private String navn;
+    private String tag;
+    private String gradering;
+    private String tilbyder;
+    private String fylke;
+    private String kommune;
+    private String beskrivelse;
+    private String lisens;
+    private String url;
+    private String tidsbruk;
     private ArrayList<LatLng> coordinates;
+    private static int idCount = 0;
     public static ArrayList<Trip> trips;
+    private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
+    public static ArrayList<Trip> allCustomTrips = new ArrayList<>();
 
-    public Trip(String name, String author, ArrayList<LatLng> coordinates) {
-        this.name = name;
-        this.author = author;
+
+    public Trip(String id, String navn, String tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates, String tidsbruk) {
+        this.id = id;
+        this.navn = navn;
+        this.tag = tag;
+        this.gradering = gradering;
+        this.tilbyder = tilbyder;
+        this.fylke = fylke;
+        this.kommune = kommune;
+        this.beskrivelse = beskrivelse;
+        this.lisens = lisens;
+        this.url = url;
         this.coordinates = coordinates;
+        this.tidsbruk = tidsbruk;
+    }
 
-        trips.add(this);
+    public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user,
+                               String difficulty, String fylke, String kommune,
+                               String beskrivelse, ArrayList<String> tagList, String lisens,
+                               String tidsbruk, String url, String tilbyder) {
+        if (user != null) {
+            User.addTrip(tripname);
+            myRef.child("trip").child(tripname).child("Created by").setValue(user.getEmail());
+        }
+        myRef.child("trip").child(tripname).child("Id").setValue("rusletur_"+idCount);
+        myRef.child("trip").child(tripname).child("Grad").setValue(difficulty);
+        myRef.child("trip").child(tripname).child("Lisens").setValue(lisens);
+        myRef.child("trip").child(tripname).child("Tidsbruk").setValue(tidsbruk);
+        myRef.child("trip").child(tripname).child("URL").setValue(url);
+        myRef.child("trip").child(tripname).child("Tilbyder").setValue(tilbyder);
+        myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
+        myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
+        myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
+        int count = 0;
+        for (LatLng i : coords) {
+            myRef.child("trip").child(tripname).child("LatLng").child(String.valueOf(count)).setValue(i.latitude + "¤" + i.longitude);
+            count++;
+        }
+        count = 0;
+        for(String tag : tagList) {
+            myRef.child("trip").child(tripname).child("Tag").child(String.valueOf(count)).setValue(tag);
+            count++;
+        }
+        idCount++;
+    }
+
+
+    public String getId() {
+        return id;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.navn = name;
     }
-    public void setDescription(String description) {
-        this.description = description;
+    /*public String getTag() {
+        return tag;
+    }*/
+    public String getGradering() {
+        return gradering;
     }
-    public void setAuthor(String author) {
-        this.author = author;
+    public String getTilbyder() {
+        return tilbyder;
     }
-
-    public String getName() {
-        return name;
+    public String getFylke() {
+        return fylke;
     }
-    public String getDescription() {
-        return description;
+    public String getKommune() {
+        return kommune;
     }
-    public String getAuthor() {
-        return author;
+    public String getBeskrivelse() {
+        return beskrivelse;
+    }
+    public String getNavn() {
+        return navn;
+    }
+    public String getLisens() {
+        return lisens;
+    }
+    public String getUrl() {
+        return url;
     }
     public ArrayList<LatLng> getCoordinates() {
         return coordinates;
     }
+    public String getTidsbruk(){
+        return tidsbruk;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    @Override
+    public String toString(){
+        return beskrivelse;
+    }
+
+    protected Trip(Parcel in) {
+        id = in.readString();
+        navn = in.readString();
+        tag = in.readString();
+        gradering = in.readString();
+        tilbyder = in.readString();
+        fylke = in.readString();
+        kommune = in.readString();
+        beskrivelse = in.readString();
+        lisens = in.readString();
+        url = in.readString();
+        tidsbruk = in.readString();
+        if (in.readByte() == 0x01) {
+            coordinates = new ArrayList<LatLng>();
+            in.readList(coordinates, LatLng.class.getClassLoader());
+        } else {
+            coordinates = null;
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(navn);
+        dest.writeString(tag);
+        dest.writeString(gradering);
+        dest.writeString(tilbyder);
+        dest.writeString(fylke);
+        dest.writeString(kommune);
+        dest.writeString(beskrivelse);
+        dest.writeString(lisens);
+        dest.writeString(url);
+        dest.writeString(tidsbruk);
+        if (coordinates == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(coordinates);
+        }
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Trip> CREATOR = new Parcelable.Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel in) {
+            return new Trip(in);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
+
 }

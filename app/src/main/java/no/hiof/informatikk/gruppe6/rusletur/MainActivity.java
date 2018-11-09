@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -41,6 +43,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
 
     //TEST COMMENT
+    //TEST COMMENT
 
     EditText edPass;
     EditText edEmail;
@@ -52,8 +55,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+
+    private boolean newUser;
+
     //Global variable for permission:
-    //TODO Remove global variable?
+
     private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA = 1;
 
     private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -72,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (checkPermissions()){
             //Check if there is an active session with firebase and user is logged in:
             if(mUser!=null){
-                startActivity(new Intent(MainActivity.this,MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
+                startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         }
 
@@ -103,13 +109,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             isPermissionsGranted = true;
         }else{
             EasyPermissions.requestPermissions(this, "Appen trenger tilattelser til å bruke \n" +
-                    "GPS, Kamera og Lagring",123,neededPermissions);
+                    "GPS, Kamera og Lagring",MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA,neededPermissions);
 
             }
 
         return isPermissionsGranted;
     }
-
 
 
     @Override
@@ -143,7 +148,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                             if(task.isSuccessful()){
                                 //Send user to second screen
                                 if(checkPermissions()){
-                                    startActivity(new Intent(MainActivity.this,MainScreen.class));
+                                    Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
+                                    loginIntent.putExtra("newUser", newUser);
+                                    startActivity(loginIntent);
+
                                 }else{
                                     writeMessageToUser("Du får ikke logget inn uten å ha gitt tilattelser");
 
@@ -169,6 +177,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            newUser = task.getResult().getAdditionalUserInfo().isNewUser();
                             if(task.isSuccessful()){
                                 writeMessageToUser("Du er registrert :)");
                                 registerPage.setVisibility(View.INVISIBLE);

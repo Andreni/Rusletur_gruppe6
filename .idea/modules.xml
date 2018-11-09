@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Rusletur_gruppe6.iml" filepath="$PROJECT_DIR$/Rusletur_gruppe6.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rusletur.iml" filepath="$PROJECT_DIR$/rusletur.iml" />
     </modules>
   </component>
 </project>
