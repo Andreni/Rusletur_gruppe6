@@ -198,7 +198,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         }
 
 
-        public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty){
+        public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
             /*
             * handleStorageOfTrips is initialized when the user has saved the trip in SaveTripFragment.
@@ -218,7 +218,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
 
             //Geocoder for locations
-
+            /*
             geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             LocationHandler.forceUpdateOfCurrentLocation(this);
             currentLocation = LocationHandler.getCurrentLocation();
@@ -245,9 +245,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             Log.i(MapsActivity.TAG, "handleStorageofTrips mottar: param1: " + tripName + " param2: " + tripDescription + " param3: " + tripDifficulty);
             Log.i(MapsActivity.TAG, "Innhold av arrayet: " + String.valueOf(savedTripCoordinateList.size()));
+            */
 
             //Test the realshitz
-            Trip.addTrip(tripName, savedTripCoordinateList, FirebaseAuth.getInstance().getCurrentUser(), tripDifficulty, fylke, kommune, tripDescription);
+            Trip.addTrip(tripName, savedTripCoordinateList, FirebaseAuth.getInstance().getCurrentUser(), tripDifficulty, county, municipality, tripDescription);
 
             //After add trip
             savedTripCoordinateList.clear();
@@ -255,11 +256,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             Log.i(MapsActivity.TAG, "Slettet arrayet: " + String.valueOf(savedTripCoordinateList.size()));
         }
 
-        public void handleOfflineStorageOfTrips(String tripName, String tripDescription, String tripDifficulty){
+        public void handleOfflineStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
 
             //Geocoder for locations.
-            geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+            /*geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             LocationHandler.forceUpdateOfCurrentLocation(this);
             currentLocation = LocationHandler.getCurrentLocation();
             double lat = currentLocation.getLatitude();
@@ -277,11 +278,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 }
             } catch (IOException io){
                 io.printStackTrace();
-            }
+            }*/
 
             String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
 
-           String msg = LocalStorageTrips.addAitemToStorage(this,new Trip(timestamp, tripName, null, tripDifficulty, "Rusletur", fylke, kommune, tripDescription, "Rusletur","", savedTripCoordinateList, "0"));
+           String msg = LocalStorageTrips.addAitemToStorage(this,new Trip(timestamp, tripName, null, tripDifficulty, "Rusletur", municipality, county, tripDescription, "Rusletur","", savedTripCoordinateList, "0"));
             Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
 
 

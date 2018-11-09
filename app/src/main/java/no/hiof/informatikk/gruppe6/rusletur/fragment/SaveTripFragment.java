@@ -45,12 +45,15 @@ public class SaveTripFragment extends Fragment{
     private String selectedDifficulty;
     private EditText nameInput;
     private EditText descInput;
+    private EditText municipalityInput;
+    private EditText countyInput;
     private RadioGroup difficultyRadioGroup;
     private Button saveTripButton;
     private boolean checked;
     private String nameinput;
     private String description;
-    private final View view = null;
+    private String municipality;
+    private String county;
 
     private ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
     private ArrayList<String> tmpFylker;
@@ -77,10 +80,20 @@ public class SaveTripFragment extends Fragment{
         * and RadioButtons for selecting difficulty.
          */
 
-        setupArray();
+        //setupArray();
+
+        municipalitySpinner = view.findViewById(R.id.savetrip_selectMunicipality);
+        municipalitySpinner.setVisibility(View.INVISIBLE);
+        countySpinner = view.findViewById(R.id.savetrip_selectMunicipality);
+        countySpinner.setVisibility(View.INVISIBLE);
+
+
+
 
         nameInput = view.findViewById(R.id.savetrip_nameOfTripInput);
         descInput = view.findViewById(R.id.savetrip_descriptionInput);
+        municipalityInput = view.findViewById(R.id.savetrip_municipality_input);
+        countyInput = view.findViewById(R.id.savetrip_county_input);
 
         difficultyRadioGroup = (RadioGroup) view.findViewById(R.id.savetrip_radioGroup);
 
@@ -116,6 +129,8 @@ public class SaveTripFragment extends Fragment{
                      */
                     nameinput = nameInput.getText().toString();
                     description = descInput.getText().toString();
+                    municipality = municipalityInput.getText().toString();
+                    county = countyInput.getText().toString();
 
                     new AlertDialog.Builder(getActivity())
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -124,7 +139,7 @@ public class SaveTripFragment extends Fragment{
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty);
+                                    ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
 
                                 }
@@ -132,7 +147,7 @@ public class SaveTripFragment extends Fragment{
                             .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ((MainScreen) getActivity()).handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty);
+                                    ((MainScreen) getActivity()).handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                                 }
                             })
@@ -157,17 +172,16 @@ public class SaveTripFragment extends Fragment{
             tmpFylker.add(fylkerOgKommuner.get(i).get(0));
         }
 
-        countySpinner = (Spinner)view.findViewById(R.id.savetrip_selectCounty);
         countyAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, tmpFylker);
         countyAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         countySpinner.setAdapter(countyAdapter);
     }
 
     private void setUpMunicipalitySpinner(){
-        municipalitySpinner = (Spinner)view.findViewById(R.id.savetrip_selectMunicipality);
+        /*municipalitySpinner = (Spinner)view.findViewById(R.id.savetrip_selectMunicipality);
         municipalityAdapter = new ArrayAdapter<Kommune>(getActivity(),android.R.layout.simple_list_item_1,FylkeList.getRegisterForFylke().get(0).getKommuneArrayList());
         municipalityAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        municipalitySpinner.setAdapter(municipalityAdapter);
+        municipalitySpinner.setAdapter(municipalityAdapter);*/
     }
 
     private void setupArray(){
