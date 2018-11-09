@@ -41,23 +41,8 @@ public class LocalStorageTrips extends AppCompatActivity {
         btnBack = findViewById(R.id.localStorage_goBack_button);
 
         //TODO Make prepared statements
-        SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("TripsLocal.db", MODE_PRIVATE, null);
-        //String sqlToInsert = "DROP TABLE trips;";
-        String sqlToInsert = "SELECT rowid  FROM trips;";
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT *  FROM trips WHERE kommune = 'Østfold' AND fylke='Halden';",null);
-        if (cursor.moveToFirst()) {
-            do {
 
-                //Intitial run config
-                Log.i("SQLQ",cursor.getString(1));
-
-            } while ((cursor.moveToNext()));
-
-        }else{
-            Log.i("SQLQ","No record found");
-        }
         retriveItemsFromStorage();
-        sqLiteDatabase.close();
         // Initialize recyclerview and set adapter
         
         RecyclerView recyclerView = findViewById(R.id.local_recyclerview);
