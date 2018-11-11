@@ -15,10 +15,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.DisplayAtrip;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.Trips;
 
 public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRecyclerViewAdapter.ViewHolder>{
 

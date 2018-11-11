@@ -1,9 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur.ApiCalls;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,9 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
-import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.Trips;
 
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;

@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -22,46 +20,29 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
-import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
-import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
-import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
-import no.hiof.informatikk.gruppe6.rusletur.User.User;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.NewUserFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.TripsRecyclerViewFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {

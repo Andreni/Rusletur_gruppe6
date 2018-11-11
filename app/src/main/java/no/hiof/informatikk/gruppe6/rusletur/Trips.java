@@ -1,6 +1,5 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,25 +8,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.HttpAuthHandler;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Toast;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
-import no.hiof.informatikk.gruppe6.rusletur.Model.IdForTur;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;

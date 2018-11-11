@@ -12,12 +12,10 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
-
 /**
  * Local DB for Rusletur
  * Allows only one copy of the database to be available for the user
- * Not thread safe
+ * Used for storing Trip Link{Trip} objects.
  */
 public class LocalStorage extends SQLiteOpenHelper {
     private static final String TAG = "LocalStorageSQL";
@@ -130,7 +128,6 @@ public class LocalStorage extends SQLiteOpenHelper {
 
     /**
      * Method for reading all the stored objects
-     *
      * @return Gives a Built array with all the available trip Objects
      */
     public ArrayList<Trip> getAllTrips(){
@@ -172,6 +169,12 @@ public class LocalStorage extends SQLiteOpenHelper {
         return availableTrips;
     }
 
+    /**
+     * Method for searching for Trips that matches a search criteria.
+     * @param fylke Takes a passed "fylke" as a search parameter
+     * @param kommune Takes a passed "kommune" as a search parameter
+     * @return Gives back an array of the objects that matches the search criteria.
+     */
     public ArrayList<Trip> getTripsByCriteria(String fylke,String kommune){
         ArrayList<Trip> availableTrips = new ArrayList<>();
 

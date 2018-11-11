@@ -1,4 +1,4 @@
-package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
+package no.hiof.informatikk.gruppe6.rusletur.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
