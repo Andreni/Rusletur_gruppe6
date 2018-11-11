@@ -53,13 +53,13 @@
         <activity android:name=".UserManagement.UserRegistration" />
         <activity android:name=".Trips" />
         <activity android:name=".DisplayAtrip" />
+        <activity android:name=".MapsAndTrips.SaveTripActivity" />
         <activity android:name=".MapsAndTrips.ShowProgressOfTrip" />
 
         <service
             android:name=".MapsAndTrips.TripTracker"
             android:enabled="true" />
 
-        <activity android:name=".UserManagement.UserRegistration" />
         <activity android:name=".MapsAndTrips.LocalStorageTrips"></activity>
     </application>
 

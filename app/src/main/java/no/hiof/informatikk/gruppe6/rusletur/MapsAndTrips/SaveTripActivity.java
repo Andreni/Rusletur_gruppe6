@@ -1,53 +1,42 @@
-package no.hiof.informatikk.gruppe6.rusletur.fragment;
+package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
-import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
-import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
-import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
-public class SaveTripFragment extends Fragment{
+public class SaveTripActivity extends AppCompatActivity {
+
+    //Views
     private String selectedDifficulty;
     private EditText nameInput;
     private EditText descInput;
-    private EditText municipalityInput;
-    private EditText countyInput;
     private RadioGroup difficultyRadioGroup;
     private Button saveTripButton;
     private boolean checked;
@@ -55,51 +44,28 @@ public class SaveTripFragment extends Fragment{
     private String description;
     private String municipality;
     private String county;
-
-    private static ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
-    private static ArrayList<String> tmpFylker = new ArrayList<>();
-    private static ArrayList<String> tmpKommuner = new ArrayList<>();
-    private HttpURLConnection conn = null;
-    private Thread thread;
-    private static boolean threadFinished = false;
-
-    private static Spinner municipalitySpinner;
+    private Spinner municipalitySpinner;
     private Spinner countySpinner;
-    private static View view;
 
-    private static ArrayAdapter<String> countyAdapter;
-    private ArrayAdapter<Kommune> municipalityAdapter;
+    //Setup Spinner
+    private HttpURLConnection conn = null;
+    private ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
+    private ArrayList<String> tmpFylker = new ArrayList<>();
+    private ArrayList<String> tmpKommuner = new ArrayList<>();
 
 
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_savetrip);
 
-        final View view = inflater.inflate(R.layout.fragment_savetrip, container, false);
-        this.view = view;
-
-        /*
-        * This is a pretty simple XML which just displays a name input, description input
-        * and RadioButtons for selecting difficulty. Currently expanding.--------
-         */
-
-        Log.d(TAG, "onCreateView: setupSpinner: Setup array");
-
-        municipalitySpinner = view.findViewById(R.id.savetrip_selectMunicipality);
-        municipalitySpinner.setVisibility(View.INVISIBLE);
-        countySpinner = view.findViewById(R.id.savetrip_selectMunicipality);
-        countySpinner.setVisibility(View.INVISIBLE);
+        //Setup views
+        //countySpinner = findViewById(R.id.savetrip_selectCounty);
+        municipalitySpinner = findViewById(R.id.savetrip_selectMunicipality);
 
 
-        setupArray();
 
-
-        nameInput = view.findViewById(R.id.savetrip_nameOfTripInput);
-        descInput = view.findViewById(R.id.savetrip_descriptionInput);
-
-        difficultyRadioGroup = (RadioGroup) view.findViewById(R.id.savetrip_radioGroup);
-
+        difficultyRadioGroup = findViewById(R.id.savetrip_radioGroup);
         difficultyRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -117,92 +83,73 @@ public class SaveTripFragment extends Fragment{
             }
         });
 
-
-
-        saveTripButton = view.findViewById(R.id.savetrip_saveTripButton);
+        saveTripButton = findViewById(R.id.savetrip_saveTripButton);
         saveTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (nameInput != null && descInput != null && selectedDifficulty != null) {
                     /*
-                    * Check if input is not null lol.
-                    * If everything checks out, send input from name, description and radiogroup to
-                    * handleStorageOfTrips in MainScreen, and switch from this fragment back to the
-                    * MainMenuFragment. It happens lightning quick because Fragments are fucking rad bro.
+                     * Check if input is not null lol.
+                     * If everything checks out, send input from name, description and radiogroup to
+                     * handleStorageOfTrips in MainScreen, and switch from this fragment back to the
+                     * MainMenuFragment. It happens lightning quick because Fragments are fucking rad bro.
                      */
                     nameinput = nameInput.getText().toString();
                     description = descInput.getText().toString();
-                    municipality = municipalityInput.getText().toString();
-                    county = countyInput.getText().toString();
+                    //municipality = municipalityInput.getText().toString();
+                    //county = countyInput.getText().toString();
 
-                    new AlertDialog.Builder(getActivity())
+                    new AlertDialog.Builder(SaveTripActivity.this)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setTitle("Lagring")
                             .setMessage("Vil du dele turen?")
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
-                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                                    handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
+                                    //REDIRECT
 
                                 }
                             })
                             .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ((MainScreen) getActivity()).handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
-                                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                                    handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
+                                    //REDIRECT
                                 }
                             })
                             .show();
 
                 } else {
-                    Toast.makeText(getActivity(), "Er alle feltene fylt ut?", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SaveTripActivity.this, "Er alle feltene fylt ut?", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        loadList();
 
-        return view;
     }
 
-    private void setUpCountySpinner(){
+    public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
-        Log.d(TAG, "setUpCountySpinner: setupSpinner: setup");
+        //Upload to firebase, timer and location will be handled from timer in savetripfragment and location from geolocation/spinner with choices.
+        Trip.addTrip(tripName,MainScreen.savedTripCoordinateList,MainScreen.mUser,tripDifficulty,county,municipality,tripDescription,null,"Rusletur", "0", "", "Lokal");
+        //After add trip
+        MainScreen.savedTripCoordinateList.clear();
 
-        while(!thread.getState().toString().equals("TERMINATED")){
-            Log.d(TAG, "setUpCountySpinner: setupSpinner: threadfinished is false");
-        }
-        Log.d(TAG, "setUpCountySpinner: setupSpinner: Utenfor Wait while");
-
-        tmpFylker.clear();
-        tmpKommuner.clear();
-        for(int i = 0; i < fylkerOgKommuner.size(); i++){
-            tmpFylker.add(fylkerOgKommuner.get(i).get(0));
-        }
-
-        Log.d(TAG, "setUpCountySpinner: setupSpinner: tmpFylker: " + tmpFylker);
-
-        countyAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1, tmpFylker);
-        countyAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        countySpinner.setAdapter(countyAdapter);
-
-        Log.d(TAG, "setUpCountySpinner: setupSpinner: countyAdapter set");
     }
 
-    private void setUpMunicipalitySpinner(){
-        /*municipalitySpinner = (Spinner)view.findViewById(R.id.savetrip_selectMunicipality);
-        municipalityAdapter = new ArrayAdapter<Kommune>(getActivity(),android.R.layout.simple_list_item_1,FylkeList.getRegisterForFylke().get(0).getKommuneArrayList());
-        municipalityAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        municipalitySpinner.setAdapter(municipalityAdapter);*/
+    public void handleOfflineStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
+
+        String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
+
+        String msg = LocalStorageTrips.addAitemToStorage(this,new Trip(timestamp, tripName, null, tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","", MainScreen.savedTripCoordinateList, "0"));
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+
     }
 
-    private void setupArray(){
-        /*
-        * Under construction
-         */
-
-        thread = new Thread(new Runnable() {
+    private void loadList(){
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -243,32 +190,33 @@ public class SaveTripFragment extends Fragment{
                         }
                     }
 
-                    //Log.d(TAG, "run: setupSpinner: Fylkerogkommuner" + fylkerOgKommuner);
-                    threadFinished = true;
-
                 }catch (MalformedURLException e){
                     Log.d(TAG, "setupArray: setupSpinner: MAlformed url exception");
                     e.printStackTrace();
                 }catch (IOException e) {
                     Log.d(TAG, "setupArray: setupSpinner: IOexception");
                     e.printStackTrace();
-                }finally {
-                    thread.interrupt();
-                    Log.d(TAG, "run: setupspinner: thread state after interrupt " + thread.getState() );
                 }
+                setupFylkeSpinner();
             }
-        });
+        }).start();
+    }
 
-        thread.start();
-
-        if(thread.getState().toString().equals("RUNNABLE")){
-            Log.d(TAG, "setupArray: setupSpinner: thread state: " + thread.getState());
+    private void setupFylkeSpinner(){
+        tmpFylker.clear();
+        tmpKommuner.clear();
+        countySpinner = findViewById(R.id.savetrip_selectCounty);
+        for(int i = 0; i < fylkerOgKommuner.size(); i++){
+            tmpFylker.add(fylkerOgKommuner.get(i).get(0));
         }
-        setUpCountySpinner();
+        //ArrayAdapter
+        Log.d(TAG, "setupFylkeSpinner: setupSpinner: countySpinner: " + countySpinner);
+        ArrayAdapter<String> fylkeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tmpFylker);
+        fylkeAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        Log.d(TAG, "setupFylkeSpinner: setupSpinner: adapter: " + fylkeAdapter);
+        countySpinner.setAdapter(fylkeAdapter);
 
     }
 
 
 }
-
-

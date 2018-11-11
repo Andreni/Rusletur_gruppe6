@@ -48,6 +48,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.SaveTripActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
@@ -66,10 +67,10 @@ import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
         private FirebaseAuth mAuth;
-        private FirebaseUser mUser;
+        public static FirebaseUser mUser;
         private DrawerLayout drawerLayout;
         private String TAG = "MainScreen";
-        private ArrayList<LatLng> savedTripCoordinateList;
+        public static ArrayList<LatLng> savedTripCoordinateList;
         private Geocoder geocoder;
         private String fylke;
         private String kommune;
@@ -187,7 +188,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 ArrayList<LatLng> receivedList = intent.getParcelableArrayListExtra("LatLngArray");
                 Log.i(MapsActivity.TAG, "BroadcastReceiver got the Array! Size of Array: " + String.valueOf(receivedList.size()));
                 savedTripCoordinateList = receivedList;
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SaveTripFragment()).commit();
+                startActivity(new Intent(MainScreen.this, SaveTripActivity.class));
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SaveTripFragment()).commit();
             }
         };
 
