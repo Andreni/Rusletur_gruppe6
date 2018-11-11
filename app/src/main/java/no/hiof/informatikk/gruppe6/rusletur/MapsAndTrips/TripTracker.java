@@ -142,8 +142,11 @@ public class TripTracker extends Service {
 
 
         if(MainMenuFragment.saveWasClicked == true) {
-            Intent sendArrayIntent = new Intent("SendArrayList").putExtra("LatLngArray", savedLocations);
-            LocalBroadcastManager.getInstance(TripTracker.this).sendBroadcast(sendArrayIntent);
+            Intent startSaveTripIntent = new Intent();
+            startSaveTripIntent.setClass(this, SaveTripActivity.class);
+            startSaveTripIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startSaveTripIntent.putExtra("coordsArray", savedLocations);
+            startActivity(startSaveTripIntent);
         }
 
         /*

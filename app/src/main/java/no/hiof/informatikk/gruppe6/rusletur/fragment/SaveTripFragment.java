@@ -142,7 +142,7 @@ public class SaveTripFragment extends Fragment{
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
+                                   // ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
 
                                 }
@@ -150,7 +150,7 @@ public class SaveTripFragment extends Fragment{
                             .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ((MainScreen) getActivity()).handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
+                                    //((MainScreen) getActivity()).handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                                 }
                             })

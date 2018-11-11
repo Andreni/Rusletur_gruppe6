@@ -14,6 +14,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,6 +49,8 @@ public class SaveTripActivity extends AppCompatActivity {
     private Spinner municipalitySpinner;
     private Spinner countySpinner;
 
+    private ArrayList<LatLng> savedCoordinates = new ArrayList<>();
+
     //Setup Spinner
     private HttpURLConnection conn = null;
     private ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
@@ -63,7 +67,8 @@ public class SaveTripActivity extends AppCompatActivity {
         //countySpinner = findViewById(R.id.savetrip_selectCounty);
         municipalitySpinner = findViewById(R.id.savetrip_selectMunicipality);
 
-
+        savedCoordinates = getIntent().getParcelableArrayListExtra("coordsArray");
+        Log.i(TAG, String.valueOf(savedCoordinates.size()));
 
         difficultyRadioGroup = findViewById(R.id.savetrip_radioGroup);
         difficultyRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -126,16 +131,15 @@ public class SaveTripActivity extends AppCompatActivity {
             }
         });
 
-        loadList();
+        //loadList();
 
     }
 
     public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
         //Upload to firebase, timer and location will be handled from timer in savetripfragment and location from geolocation/spinner with choices.
-        Trip.addTrip(tripName,MainScreen.savedTripCoordinateList,MainScreen.mUser,tripDifficulty,county,municipality,tripDescription,null,"Rusletur", "0", "", "Lokal");
+        Trip.addTrip(tripName,savedCoordinates,MainScreen.mUser,tripDifficulty,county,municipality,tripDescription,null,"Rusletur", "0", "", "Lokal");
         //After add trip
-        MainScreen.savedTripCoordinateList.clear();
 
     }
 
@@ -143,7 +147,7 @@ public class SaveTripActivity extends AppCompatActivity {
 
         String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
 
-        String msg = LocalStorageTrips.addAitemToStorage(this,new Trip(timestamp, tripName, null, tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","", MainScreen.savedTripCoordinateList, "0"));
+        String msg = LocalStorageTrips.addAitemToStorage(this,new Trip(timestamp, tripName, null, tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","", savedCoordinates, "0"));
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
 
     }
