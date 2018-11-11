@@ -61,12 +61,13 @@ public class SaveTripFragment extends Fragment{
     private static ArrayList<String> tmpKommuner = new ArrayList<>();
     private HttpURLConnection conn = null;
     private Thread thread;
-    private boolean threadFinished = false;
+    private static boolean threadFinished = false;
 
-    private Spinner municipalitySpinner;
+    private static Spinner municipalitySpinner;
     private Spinner countySpinner;
+    private static View view;
 
-    private ArrayAdapter<String> countyAdapter;
+    private static ArrayAdapter<String> countyAdapter;
     private ArrayAdapter<Kommune> municipalityAdapter;
 
 
@@ -76,7 +77,7 @@ public class SaveTripFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_savetrip, container, false);
-
+        this.view = view;
 
         /*
         * This is a pretty simple XML which just displays a name input, description input
@@ -169,8 +170,8 @@ public class SaveTripFragment extends Fragment{
 
         Log.d(TAG, "setUpCountySpinner: setupSpinner: setup");
 
-        while(!threadFinished){
-            System.out.println("Wait");
+        while(!thread.getState().toString().equals("TERMINATED")){
+            Log.d(TAG, "setUpCountySpinner: setupSpinner: threadfinished is false");
         }
         Log.d(TAG, "setUpCountySpinner: setupSpinner: Utenfor Wait while");
 
@@ -182,9 +183,11 @@ public class SaveTripFragment extends Fragment{
 
         Log.d(TAG, "setUpCountySpinner: setupSpinner: tmpFylker: " + tmpFylker);
 
-        countyAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, tmpFylker);
+        countyAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1, tmpFylker);
         countyAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         countySpinner.setAdapter(countyAdapter);
+        
+        Log.d(TAG, "setUpCountySpinner: setupSpinner: countyAdapter set");
     }
 
     private void setUpMunicipalitySpinner(){
@@ -241,21 +244,26 @@ public class SaveTripFragment extends Fragment{
                     }
 
                     //Log.d(TAG, "run: setupSpinner: Fylkerogkommuner" + fylkerOgKommuner);
-
+                    threadFinished = true;
 
                 }catch (MalformedURLException e){
                     Log.d(TAG, "setupArray: setupSpinner: MAlformed url exception");
                     e.printStackTrace();
-                }catch (IOException e){
+                }catch (IOException e) {
                     Log.d(TAG, "setupArray: setupSpinner: IOexception");
                     e.printStackTrace();
+                }finally {
+                    thread.interrupt();
+                    Log.d(TAG, "run: setupspinner: thread state after interrupt " + thread.getState() );
                 }
-                threadFinished = true;
             }
         });
 
         thread.start();
 
+        if(thread.getState().toString().equals("RUNNABLE")){
+            Log.d(TAG, "setupArray: setupSpinner: thread state: " + thread.getState());
+        }
         setUpCountySpinner();
 
     }
