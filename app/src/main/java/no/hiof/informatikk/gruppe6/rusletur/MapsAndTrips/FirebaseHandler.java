@@ -11,17 +11,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
-import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 
 import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.TAG2;
 import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.getAllUserInfo;

@@ -17,8 +17,6 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.TripsRecycleViewAdapter;
 import no.hiof.informatikk.gruppe6.rusletur.Trips;

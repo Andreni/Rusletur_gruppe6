@@ -7,9 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -19,7 +17,6 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
-import android.webkit.GeolocationPermissions;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -28,30 +25,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import io.ticofab.androidgpxparser.parser.GPXParser;
 import io.ticofab.androidgpxparser.parser.domain.Gpx;
@@ -59,8 +42,8 @@ import io.ticofab.androidgpxparser.parser.domain.Track;
 import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import io.ticofab.androidgpxparser.parser.task.GpxFetchedAndParsed;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
