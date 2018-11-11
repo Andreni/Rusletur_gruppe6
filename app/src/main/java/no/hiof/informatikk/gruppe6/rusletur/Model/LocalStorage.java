@@ -40,8 +40,7 @@ public class LocalStorage extends SQLiteOpenHelper {
     private static LocalStorage instance = null;
 
     // We only want a singelton of this class.
-    public LocalStorage(Context context,String name, SQLiteDatabase.CursorFactory factory,
-                        int version){
+     LocalStorage(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
 
@@ -51,34 +50,34 @@ public class LocalStorage extends SQLiteOpenHelper {
      * @param context content provider contect
      * @return SQLite helper object.
      */
-   /*public static LocalStorage getInstance(Context context){
-        if(instance == null){
-            Log.d(TAG, "getInstance: call for getting a instance");
-            instance = new LocalStorage(context);
-        }else{
-            instance = getInstance(context);
-        }
-        return */
+   public static LocalStorage getInstance(Context context) {
+       if (instance == null) {
+           Log.d(TAG, "getInstance: call for getting a instance");
+           instance = new LocalStorage(context);
+       }
+
+       return instance;
+   }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "onCreate: Setting uo database");
-        String createStatement = "CREATE TABLE IF NOT EXISTS "+ TABLE_TRIPS + " (" +
-                COLUMN_ID + "TEXT PRIMARY KEY," +
-                COLUMN_NAVN + "TEXT," +
-                COLUMN_TAG + "TEXT," +
-                COLUMN_GRADERING + "TEXT," +
-                COLUMN_TILBYDER + "TEXT," +
-                COLUMN_FYLKE + "TEXT," +
-                COLUMN_KOMMUNE + "TEXT," +
-                COLUMN_BESKRIVELSE + "TEXT," +
-                COLUMN_LISENS + "TEXT," +
-                COLUMN_URL + "TEXT," +
-                COLUMN_TIDSBRUK + "TEXT," +
-                COLUMN_LATLNG + "TEXT" +
+        String createStatement = "CREATE TABLE "+ TABLE_TRIPS + " (" +
+                COLUMN_ID + " TEXT PRIMARY KEY," +
+                COLUMN_NAVN + " TEXT," +
+                COLUMN_TAG + " TEXT," +
+                COLUMN_GRADERING + " TEXT," +
+                COLUMN_TILBYDER + " TEXT," +
+                COLUMN_FYLKE + " TEXT," +
+                COLUMN_KOMMUNE + " TEXT," +
+                COLUMN_BESKRIVELSE + " TEXT," +
+                COLUMN_LISENS + " TEXT," +
+                COLUMN_URL + " TEXT," +
+                COLUMN_TIDSBRUK + " TEXT," +
+                COLUMN_LATLNG + " TEXT " +
                 ");";
         db.execSQL(createStatement);
-        db.close();
+
     }
 
     /**
@@ -112,7 +111,7 @@ public class LocalStorage extends SQLiteOpenHelper {
         values.put(COLUMN_TIDSBRUK,aTrip.getTidsbruk());
         values.put(COLUMN_LATLNG,Arrays.toString(mValue));
 
-        sqLiteDatabase.insert(TABLE_TRIPS,null,values);
+        sqLiteDatabase.insert("trips",null,values);
         sqLiteDatabase.close();
 
 
@@ -129,6 +128,11 @@ public class LocalStorage extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
+    /**
+     * Method for reading all the stored objects
+     *
+     * @return Gives a Built array with all the avalible trip Objects
+     */
     public ArrayList<Trip> getAllTrips(){
         ArrayList<Trip> availableTrips = new ArrayList<>();
 
@@ -136,7 +140,7 @@ public class LocalStorage extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_TRIPS + ";", null);
         if (cursor.moveToFirst()) {
             do {
-                String latLng = cursor.getString(12);
+                String latLng = cursor.getString(11);
                 // Fetch the string that contains the compressed Array
                 // Remove the [ ] from the recovered string
                 String arrRemoved = latLng.substring(1, latLng.length() - 1);
@@ -151,13 +155,13 @@ public class LocalStorage extends SQLiteOpenHelper {
                     arrayListLatLng.add(new LatLng(lat, longt));
                 }
                 // Build the retrieved trip object from storage
-                availableTrips.add(new Trip(cursor.getString(1),
-                        cursor.getString(2),cursor.getString(3),
-                        cursor.getString(4),cursor.getString(5),
-                        cursor.getString(6),cursor.getString(7),
-                        cursor.getString(8),cursor.getString(9),
-                        cursor.getString(10),
-                        arrayListLatLng,cursor.getString(11)));
+                availableTrips.add(new Trip(cursor.getString(0),
+                        cursor.getString(1),cursor.getString(2),
+                        cursor.getString(3),cursor.getString(4),
+                        cursor.getString(5),cursor.getString(6),
+                        cursor.getString(7),cursor.getString(8),
+                        cursor.getString(9),
+                        arrayListLatLng,cursor.getString(10)));
 
 
             } while ((cursor.moveToNext()));
