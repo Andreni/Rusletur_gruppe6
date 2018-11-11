@@ -15,7 +15,7 @@ import java.util.Arrays;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
 
 /**
- * Basic db for Rusletur
+ * Local DB for Rusletur
  * Allows only one copy of the database to be available for the user
  * Not thread safe
  */
@@ -131,7 +131,7 @@ public class LocalStorage extends SQLiteOpenHelper {
     /**
      * Method for reading all the stored objects
      *
-     * @return Gives a Built array with all the avalible trip Objects
+     * @return Gives a Built array with all the available trip Objects
      */
     public ArrayList<Trip> getAllTrips(){
         ArrayList<Trip> availableTrips = new ArrayList<>();
@@ -148,8 +148,8 @@ public class LocalStorage extends SQLiteOpenHelper {
                 String[] latLngArray = arrRemoved.split(", ");
                 ArrayList<LatLng> arrayListLatLng = new ArrayList<>();
                 // Split simple array into Lat[0} and Long[1]
-                for (int i = 0; i < latLngArray.length; i++) {
-                    String[] latLngSplits = latLngArray[i].split(" - ");
+                for (String aLatLngArray : latLngArray) {
+                    String[] latLngSplits = aLatLngArray.split(" - ");
                     Double lat = Double.parseDouble(latLngSplits[0]);
                     Double longt = Double.parseDouble(latLngSplits[1]);
                     arrayListLatLng.add(new LatLng(lat, longt));
@@ -189,8 +189,8 @@ public class LocalStorage extends SQLiteOpenHelper {
                 String[] latLngArray = arrRemoved.split(", ");
                 ArrayList<LatLng> arrayListLatLng = new ArrayList<>();
                 // Split simple array into Lat[0} and Long[1]
-                for (int i = 0; i < latLngArray.length; i++) {
-                    String[] latLngSplits = latLngArray[i].split(" - ");
+                for (String aLatLngArray : latLngArray) {
+                    String[] latLngSplits = aLatLngArray.split(" - ");
                     Double lat = Double.parseDouble(latLngSplits[0]);
                     Double longt = Double.parseDouble(latLngSplits[1]);
                     arrayListLatLng.add(new LatLng(lat, longt));

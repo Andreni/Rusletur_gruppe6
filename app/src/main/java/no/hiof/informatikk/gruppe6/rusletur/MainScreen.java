@@ -283,7 +283,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
             LocalStorage localStorage = LocalStorage.getInstance(this);
-            localStorage.addTrip(new Trip(timestamp, tripName, null, tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","", savedTripCoordinateList, "0"));
+            localStorage.addTrip(new Trip(timestamp, tripName, "bratt", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Ikke tilgjenlig", savedTripCoordinateList, "0"));
            //String msg = LocalStorageTrips.addAitemToStorage(this,);
            // Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
 
