@@ -53,6 +53,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
+import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.User.User;
 import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
@@ -281,9 +282,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             }*/
 
             String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
-
-           String msg = LocalStorageTrips.addAitemToStorage(this,new Trip(timestamp, tripName, null, tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","", savedTripCoordinateList, "0"));
-            Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+            LocalStorage localStorage = new LocalStorage(this,null,null,1);
+            localStorage.addTrip(new Trip(timestamp, tripName, null, tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","", savedTripCoordinateList, "0"));
+           //String msg = LocalStorageTrips.addAitemToStorage(this,);
+           // Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
 
 
         }
