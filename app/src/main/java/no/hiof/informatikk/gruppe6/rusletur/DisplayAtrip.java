@@ -28,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
+import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 /**
@@ -104,10 +105,9 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Log.i("SQLQ","row is " + rowId);
-                                    String msg = LocalStorageTrips.deleteTripFromTable(context,rowId);
-                                    Log.i("SQLQ","deleting row_" + rowId);
-                                    Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
+                                    aTrip.getId();
+                                    LocalStorage localStorage = LocalStorage.getInstance(context);
+                                    localStorage.deleteAtrip(aTrip.getId());
                                     startActivity(new Intent(context,MainScreen.class));
                                 }
                             })

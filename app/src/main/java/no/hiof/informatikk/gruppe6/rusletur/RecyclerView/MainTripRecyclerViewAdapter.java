@@ -66,9 +66,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
                 intent.putExtra("object", mItem.get(position));
                 intent.putExtra("sender",mContext.getClass().getSimpleName());
                 // If the sending class is LocalStorage, add the rowId to the intent
-                if(mContext.getClass().getSimpleName().equals("LocalStorageTrips")){
-                    intent.putExtra("rowid", LocalStorageTrips.getRowId(position));
-                }
+
                 mContext.startActivity(intent);
             }
         });

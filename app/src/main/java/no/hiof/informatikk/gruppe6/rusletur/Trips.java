@@ -29,6 +29,7 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.IdForTur;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
+import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
 
 /**
@@ -203,7 +204,7 @@ public class Trips extends AppCompatActivity  {
             //Pass the id to the API class to build a trip object from it
             Log.d(TAG, "fetchIds: Addede to turer");
             ApiNasjonalturbase.getTripInfo(selection, this);
-           Log.d("SQLQ", "Size " +LocalStorageTrips.retriveItemsFromStorage(this,selectionNameFylke,selectionNameKommune).size());
+
             //If the response to the query is greater than -1 add the results to the array
             Log.d("SQLQ", "Searching for: " + selectionNameKommune + " in" + selectionNameFylke );
 
@@ -265,9 +266,11 @@ public class Trips extends AppCompatActivity  {
                 //incrementing antall
                 antall++;
                 //Call to local storage:
-                if (LocalStorageTrips.retriveItemsFromStorage(getApplicationContext(),selectionNameFylke,selectionNameKommune).size()>0){
-                    turer.addAll(LocalStorageTrips.retriveItemsFromStorage(getApplicationContext(),selectionNameFylke,selectionNameKommune));
-                    antall+= LocalStorageTrips.retriveItemsFromStorage(getApplicationContext(),selectionNameFylke,selectionNameKommune).size();
+                LocalStorage localStorage = LocalStorage.getInstance(getApplicationContext());
+
+                if (localStorage.getTripsByCriteria(selectionNameFylke,selectionNameKommune).size()>0){
+                    turer.addAll(localStorage.getTripsByCriteria(selectionNameFylke,selectionNameKommune));
+                    antall+= localStorage.getTripsByCriteria(selectionNameFylke,selectionNameKommune).size();
                 }
 
 
