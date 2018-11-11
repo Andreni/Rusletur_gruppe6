@@ -234,7 +234,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (NullPointerException e) {
             Log.e(TAG,"tripStartLocation is NULL \n" + e.toString());
         }
-        //new LatLng(59.118741, 11.3865243)
 
     }
 

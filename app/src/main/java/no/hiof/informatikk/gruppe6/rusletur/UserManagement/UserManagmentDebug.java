@@ -52,17 +52,10 @@ public class UserManagmentDebug extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_managment_debug);
-        LatLng test = FirebaseHandler.getStartLocationOfTrip("Strandpromenaden langs Lågen i Øyer");
 
     }
 
     public void myDebugButton(View view) {
-        LatLng test = FirebaseHandler.getStartLocationOfTrip("Strandpromenaden langs Lågen i Øyer");
-        try {
-            Log.d(TAG, "Returned with: " + test.toString());
-        } catch (NullPointerException e) {
-            Log.e(TAG, "Returend null..\n" + e.toString());
-        }
 
     }
 

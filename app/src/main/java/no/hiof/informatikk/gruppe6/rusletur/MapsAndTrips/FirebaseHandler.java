@@ -141,7 +141,6 @@ public class FirebaseHandler {
         });
 
     }
-    /** DO NOT FUCKING WORK!! */
 
     //Takes UID from User in Auth, checks for corresponding UID in Database and retrieves username, firstname and lastname.
     public static void getUserInfo(final String userUid){
@@ -162,48 +161,6 @@ public class FirebaseHandler {
 
             }
         });
-
-    }
-
-
-
-
-
-
-
-    private static void createStartLocationOfTrip(final String tripName) {
-        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("trip");
-        zonesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                double lat = (double) dataSnapshot.child(tripName).child("LatLng").child("Lat").child("0").getValue();
-                double lon = (double) dataSnapshot.child(tripName).child("LatLng").child("Lon").child("0").getValue();
-                startPos = new LatLng(lat, lon);
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-    /** DO NOT FUCKING WORK!! */
-    public static LatLng getStartLocationOfTrip(final String tripName) {
-        createStartLocationOfTrip(tripName);
-        try {
-            TimeUnit.MILLISECONDS.sleep(200);
-            Log.d(TAG,"Waited 200ms");
-        }
-        catch (Exception e) {
-            Log.e(TAG, "Could not sleep... \n" + e.toString());
-        } finally {
-            Log.d(TAG,"Returning: " + startPos.toString());
-            return startPos;
-        }
 
     }
 
