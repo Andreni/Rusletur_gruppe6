@@ -64,7 +64,7 @@ public class Trip implements Parcelable {
      * @param fylke
      * @param kommune
      * @param beskrivelse
-     * @param tagList
+     * @param tag
      * @param lisens
      * @param tidsbruk
      * @param url
@@ -72,7 +72,7 @@ public class Trip implements Parcelable {
      */
     public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user,
                                String difficulty, String fylke, String kommune,
-                               String beskrivelse, ArrayList<String> tagList, String lisens,
+                               String beskrivelse, String tag, String lisens,
                                String tidsbruk, String url, String tilbyder) {
         if (user != null) {
             User.addTrip(tripname);
@@ -89,14 +89,10 @@ public class Trip implements Parcelable {
         myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
         myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
         myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
+        myRef.child("trip").child(tripname).child("Tag").setValue(tag);
         int count = 0;
         for (LatLng i : coords) {
             myRef.child("trip").child(tripname).child("LatLng").child(String.valueOf(count)).setValue(i.latitude + "¤" + i.longitude);
-            count++;
-        }
-        count = 0;
-        for(String tag : tagList) {
-            myRef.child("trip").child(tripname).child("Tag").child(String.valueOf(count)).setValue(tag);
             count++;
         }
         idCount++;

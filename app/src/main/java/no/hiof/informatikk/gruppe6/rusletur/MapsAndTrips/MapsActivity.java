@@ -186,10 +186,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             }
                         }
                         if(!FirebaseHandler.isTripInFirebaseDatabase(tripTitleName)) {
-                            ArrayList<String> tagList = new ArrayList<>();
-                            tagList.add("Bratt");
                             Trip.addTrip(tripTitleName, saveList, FirebaseAuth.getInstance().getCurrentUser(), "Normal", "",
-                                    "", "", tagList,
+                                    "", "", "Bratt",
                                     "", "20 min", "",FirebaseAuth.getInstance().getCurrentUser().getEmail());
                             Log.i(TAG,"Trip created!");
                         }
