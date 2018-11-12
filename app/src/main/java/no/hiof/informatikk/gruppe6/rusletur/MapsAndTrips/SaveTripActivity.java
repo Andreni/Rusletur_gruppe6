@@ -141,7 +141,7 @@ public class SaveTripActivity extends AppCompatActivity {
             }
         });
 
-        loadList();
+        //loadList();
 
     }
 
