@@ -30,6 +30,8 @@ import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpFylkerOgKommunerGitHub;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
+import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
@@ -69,6 +71,7 @@ public class SaveTripActivity extends AppCompatActivity {
         //Setup views
         //countySpinner = findViewById(R.id.savetrip_selectCounty);
         municipalitySpinner = findViewById(R.id.savetrip_selectMunicipality);
+
 
         savedCoordinates = getIntent().getParcelableArrayListExtra("coordsArray");
         Log.i(TAG, "SaveTripActivity mottok Array! : " + String.valueOf(savedCoordinates.size()));
@@ -152,10 +155,11 @@ public class SaveTripActivity extends AppCompatActivity {
 
     public void handleOfflineStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
+        //Generate a unique id for the trip:
         String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
-
-        String msg = LocalStorageTrips.addAitemToStorage(this,new Trip(timestamp, tripName, null, tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","", savedCoordinates, "0"));
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        LocalStorage localStorage = LocalStorage.getInstance(this);
+        localStorage.addTrip(new Trip(timestamp, tripName, "Gi et tag", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Blank", savedCoordinates, "0"));
+        Toast.makeText(this,"Tur lagret",Toast.LENGTH_SHORT).show();
 
     }
 

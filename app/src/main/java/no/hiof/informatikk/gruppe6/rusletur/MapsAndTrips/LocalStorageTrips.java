@@ -115,10 +115,9 @@ public class LocalStorageTrips extends AppCompatActivity {
                         }
                     }
 
-                    //Intent intent = new Intent(this,SaveTripActivity.class);
-                    //intent.putExtra("LatLngArray", parsedLatLng);
-                    //intent.putExtra("sender",this.getClass().getSimpleName());
-                    //startActivity(intent);
+                    Intent intent = new Intent(this,SaveTripActivity.class);
+                    intent.putExtra("coordsArray", parsedLatLng);
+                    startActivity(intent);
                 }
             }
         }
