@@ -68,7 +68,11 @@ public class SaveTripActivity extends AppCompatActivity {
         municipalitySpinner = findViewById(R.id.savetrip_selectMunicipality);
 
         savedCoordinates = getIntent().getParcelableArrayListExtra("coordsArray");
-        Log.i(TAG, String.valueOf(savedCoordinates.size()));
+        Log.i(TAG, "SaveTripActivity mottok Array! : " + String.valueOf(savedCoordinates.size()));
+
+        //String with custom time spent on trip. Can be in any format, Day:Hour:Minute:Seconds
+        String test = getIntent().getStringExtra("timeSpent");
+        Log.i(TAG, "SaveTripActivity mottok String au! : " + test);
 
         difficultyRadioGroup = findViewById(R.id.savetrip_radioGroup);
         difficultyRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

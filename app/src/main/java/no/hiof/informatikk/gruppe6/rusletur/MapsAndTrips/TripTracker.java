@@ -27,6 +27,7 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
@@ -50,6 +51,9 @@ public class TripTracker extends Service {
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
     public static final ArrayList<LatLng> savedLocations = new ArrayList<>();
+    private long timeStart;
+    private long timeStop;
+    private long timeDiff;
 
 
 
@@ -68,9 +72,16 @@ public class TripTracker extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(MapsActivity.TAG, "Tracker - onStartCommmand called");
+
+        timeStart = 0;
+        timeStop = 0;
+        timeDiff = 0;
+
+
         testMethod();
 
         savedLocations.clear();
+
 
 
         return START_STICKY;
@@ -83,6 +94,8 @@ public class TripTracker extends Service {
         * Define how often LocationRequest pings. Currently at 10s and fastet at 5, and
         * highest possible accuracy.
          */
+
+        timeStart = System.nanoTime();
 
         locationRequest = new LocationRequest();
         locationRequest.setInterval(10000);
@@ -131,6 +144,25 @@ public class TripTracker extends Service {
     @Override
     public void onDestroy() {
         Log.i(MapsActivity.TAG, "onDestroy called");
+        timeStop = System.nanoTime();
+        timeDiff = timeStop - timeStart;
+
+        /* Credits to Keppil @ stackoverflow */
+        long seconds = TimeUnit.SECONDS.convert(timeDiff, TimeUnit.NANOSECONDS);
+        int day = (int) TimeUnit.SECONDS.toDays(seconds);
+        long hours = TimeUnit.SECONDS.toHours(seconds) -
+                TimeUnit.DAYS.toHours(day);
+        long minute = TimeUnit.SECONDS.toMinutes(seconds) -
+                TimeUnit.DAYS.toMinutes(day) -
+                TimeUnit.HOURS.toMinutes(hours);
+        long second = TimeUnit.SECONDS.toSeconds(seconds) -
+                TimeUnit.DAYS.toSeconds(day) -
+                TimeUnit.HOURS.toSeconds(hours) -
+                TimeUnit.MINUTES.toSeconds(minute);
+
+        Log.i(MapsActivity.TAG, "Day : " + day + " Hour " + hours + " minutes: " + minute + " seconds : " + second);
+
+        String timeSpent = String.valueOf(day) + ":" + String.valueOf(hours) + ":" + String.valueOf(minute) + ":" + String.valueOf(second);
 
 
         /*
@@ -146,6 +178,7 @@ public class TripTracker extends Service {
             startSaveTripIntent.setClass(this, SaveTripActivity.class);
             startSaveTripIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startSaveTripIntent.putExtra("coordsArray", savedLocations);
+            startSaveTripIntent.putExtra("timeSpent", timeSpent);
             startActivity(startSaveTripIntent);
         }
 
