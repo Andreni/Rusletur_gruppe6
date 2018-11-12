@@ -18,17 +18,17 @@ public class DirectionsJSONParser {
     public List<List<HashMap<String,String>>> parse(JSONObject jObject){
 
         List<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String,String>>>() ;
+        String distance = null;
+        String duration = null;
         JSONArray jRoutes = null;
         JSONArray jLegs = null;
         JSONArray jSteps = null;
-        String distance = null;
-        String duration = null;
 
         try {
 
             jRoutes = jObject.getJSONArray("routes");
 
-            /** Traversing all routes */
+            /** For each route */
             for(int i=0;i<jRoutes.length();i++){
                 jLegs = ( (JSONObject)jRoutes.get(i)).getJSONArray("legs");
                 List path = new ArrayList<HashMap<String, String>>();
@@ -38,18 +38,18 @@ public class DirectionsJSONParser {
                     duration = (String) ((JSONObject) ((JSONObject) jLegs.get(0)).get("duration")).get("text");
                 }
 
-                /** Traversing all legs */
+                /** For each legs, get the steps */
                 for(int j=0;j<jLegs.length();j++){
                     jSteps = ( (JSONObject)jLegs.get(j)).getJSONArray("steps");
 
 
-                    /** Traversing all steps */
+                    /** Foe each steps, gets the list which each contain LatLng */
                     for(int k=0;k<jSteps.length();k++){
                         String polyline = "";
                         polyline = (String)((JSONObject)((JSONObject)jSteps.get(k)).get("polyline")).get("points");
                         List<LatLng> list = decodePoly(polyline);
 
-                        /** Traversing all points */
+                        /** For each LatLng, add it to hashmap hm. First loop gets the distance and duration */
                         for(int l=0;l<list.size();l++){
                             HashMap<String, String> hm = new HashMap<String, String>();
                             hm.put("lat", Double.toString(((LatLng)list.get(l)).latitude) );

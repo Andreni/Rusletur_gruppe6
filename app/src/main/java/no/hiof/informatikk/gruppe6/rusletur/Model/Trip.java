@@ -1,4 +1,4 @@
-package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
+package no.hiof.informatikk.gruppe6.rusletur.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
@@ -52,15 +53,34 @@ public class Trip implements Parcelable {
         this.tidsbruk = tidsbruk;
     }
 
+    /**
+     * A method to add a trip to the Firebase Realtimedatabase. As per default, the trip will be
+     * stored in a separated top-layer database named "trip". The key that binds the creator and
+     * user is the child "Created by". This will have the users email.
+     * @param tripname
+     * @param coords
+     * @param user
+     * @param difficulty
+     * @param fylke
+     * @param kommune
+     * @param beskrivelse
+     * @param tag
+     * @param lisens
+     * @param tidsbruk
+     * @param url
+     * @param tilbyder
+     */
     public static void addTrip(String tripname, ArrayList<LatLng> coords, FirebaseUser user,
                                String difficulty, String fylke, String kommune,
-                               String beskrivelse, ArrayList<String> tagList, String lisens,
+                               String beskrivelse, String tag, String lisens,
                                String tidsbruk, String url, String tilbyder) {
         if (user != null) {
             User.addTrip(tripname);
             myRef.child("trip").child(tripname).child("Created by").setValue(user.getEmail());
+        } else {
+            myRef.child("trip").child(tripname).child("Created by").setValue("Rusletur");
         }
-        myRef.child("trip").child(tripname).child("Id").setValue("rusletur_"+idCount);
+        myRef.child("trip").child(tripname).child("Id").setValue("rusletur_"+UUID.randomUUID());
         myRef.child("trip").child(tripname).child("Grad").setValue(difficulty);
         myRef.child("trip").child(tripname).child("Lisens").setValue(lisens);
         myRef.child("trip").child(tripname).child("Tidsbruk").setValue(tidsbruk);
@@ -69,17 +89,21 @@ public class Trip implements Parcelable {
         myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
         myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
         myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
+        myRef.child("trip").child(tripname).child("Tag").setValue(tag);
         int count = 0;
         for (LatLng i : coords) {
             myRef.child("trip").child(tripname).child("LatLng").child(String.valueOf(count)).setValue(i.latitude + "¤" + i.longitude);
             count++;
         }
-        count = 0;
-        for(String tag : tagList) {
-            myRef.child("trip").child(tripname).child("Tag").child(String.valueOf(count)).setValue(tag);
-            count++;
-        }
         idCount++;
+    }
+
+    /**
+     * Quick-way to get the start location of the trip
+     * @return the first LatLng of the trip
+     */
+    public LatLng getStartLatLng() {
+        return getCoordinates().get(0);
     }
 
 

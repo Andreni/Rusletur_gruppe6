@@ -8,12 +8,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,12 +20,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.firebase.auth.FirebaseAuth;
 
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.Trip;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
+import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 
 /**
  * Class used for displaying a trip object
@@ -104,10 +99,9 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Log.i("SQLQ","row is " + rowId);
-                                    String msg = LocalStorageTrips.deleteTripFromTable(context,rowId);
-                                    Log.i("SQLQ","deleting row_" + rowId);
-                                    Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
+                                    aTrip.getId();
+                                    LocalStorage localStorage = LocalStorage.getInstance(context);
+                                    localStorage.deleteAtrip(aTrip.getId());
                                     startActivity(new Intent(context,MainScreen.class));
                                 }
                             })
