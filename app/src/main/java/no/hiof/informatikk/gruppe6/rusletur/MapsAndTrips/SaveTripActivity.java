@@ -2,6 +2,7 @@ package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpFylkerOgKommunerGitHub;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
@@ -52,8 +54,9 @@ public class SaveTripActivity extends AppCompatActivity {
     private ArrayList<LatLng> savedCoordinates = new ArrayList<>();
 
     //Setup Spinner
-    private HttpURLConnection conn = null;
-    private ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
+    //private HttpURLConnection conn = null;
+    //private ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
+    public static boolean finished = false;
     private ArrayList<String> tmpFylker = new ArrayList<>();
     private ArrayList<String> tmpKommuner = new ArrayList<>();
 
@@ -135,7 +138,7 @@ public class SaveTripActivity extends AppCompatActivity {
             }
         });
 
-        //loadList();
+        loadList();
 
     }
 
@@ -156,66 +159,14 @@ public class SaveTripActivity extends AppCompatActivity {
 
     }
 
-    private void loadList(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    URL url =  new URL("https://raw.githubusercontent.com/Andreni/Rusletur_gruppe6/master/fylkerMedKommuner.txt?token=Ae4q3_gVHObUYa-Lnzn5cr33OnSZNJmvks5b8BTFwA%3D%3D");
-
-                    Log.d(TAG, "setupArray: setupSpinner: Made URL");
-
-                    conn = (HttpURLConnection) url.openConnection();
-                    Log.d(TAG, "setupArray: setupSpinner: Make conn");
-
-                    InputStream in = conn.getInputStream();
-                    Log.d(TAG, "setupArray: setupSpinner: Made inpustream");
-
-                    if(conn.getResponseCode() == 200){
-                        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-                        String inputLine;
-                        Log.d(TAG, "setupArray: setupSpinner: Buffered Reader");
-                        while((inputLine = br.readLine()) != null){
-                            Log.d(TAG, "setupArray: setupSpinner: WHILE");
-                            Log.d(TAG, "run: setupSpinner: inputLine: " + inputLine);
-                            String[] fylkeKommune = inputLine.split(":");
-                            Log.d(TAG, "run: setupSpinner: fylkeKommueArray plass 0: " + fylkeKommune[0] + "; Plass 1: " + fylkeKommune[1]);
-                            boolean fylkeExists = false;
-                            int fylkeIndex = 0;
-                            for(int i = 0; i < fylkerOgKommuner.size(); i++){
-                                if (fylkerOgKommuner.get(i).get(0).equals(fylkeKommune[0])) {
-                                    fylkeExists = true;
-                                    fylkeIndex = i;
-                                    break;
-                                }
-                            }
-                            if(fylkeExists){
-                                fylkerOgKommuner.get(fylkeIndex).add(fylkeKommune[1]);
-                            }else{
-                                Log.d(TAG, "run: setupSpinner: Fylkerogkommuner size: " + fylkerOgKommuner.size());
-                                fylkerOgKommuner.add(new ArrayList<String>(Arrays.asList(fylkeKommune[0], fylkeKommune[1])));
-                            }
-                        }
-                    }
-
-                }catch (MalformedURLException e){
-                    Log.d(TAG, "setupArray: setupSpinner: MAlformed url exception");
-                    e.printStackTrace();
-                }catch (IOException e) {
-                    Log.d(TAG, "setupArray: setupSpinner: IOexception");
-                    e.printStackTrace();
-                }
-                setupFylkeSpinner();
-            }
-        }).start();
-    }
 
     private void setupFylkeSpinner(){
+        Log.d(TAG, "setupFylkeSpinner: setupSpinner2: Started setup method");
         tmpFylker.clear();
         tmpKommuner.clear();
         countySpinner = findViewById(R.id.savetrip_selectCounty);
-        for(int i = 0; i < fylkerOgKommuner.size(); i++){
-            tmpFylker.add(fylkerOgKommuner.get(i).get(0));
+        for(int i = 0; i < LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.size(); i++){
+            tmpFylker.add(LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.get(i).get(0));
         }
         //ArrayAdapter
         Log.d(TAG, "setupFylkeSpinner: setupSpinner: countySpinner: " + countySpinner);
@@ -226,5 +177,32 @@ public class SaveTripActivity extends AppCompatActivity {
 
     }
 
+
+    private void loadList(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                LookUpFylkerOgKommunerGitHub lookup = new LookUpFylkerOgKommunerGitHub(SaveTripActivity.this);
+                lookup.createObjectsFromFile();
+            }
+        }).run();
+        checkFinished();
+
+    }
+
+    private void checkFinished(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(finished){
+                    setupFylkeSpinner();
+                }else{
+                    checkFinished();
+                }
+            }
+        }, 1000);
+    }
+    
 
 }
