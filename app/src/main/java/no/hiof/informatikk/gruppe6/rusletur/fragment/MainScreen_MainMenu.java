@@ -1,17 +1,15 @@
 package no.hiof.informatikk.gruppe6.rusletur.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import no.hiof.informatikk.gruppe6.rusletur.FindAtrip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.Trips;
 
 /**
  * Fragment that is loaded when the user logs on the application.
@@ -34,7 +32,7 @@ public class MainScreen_MainMenu extends Fragment {
         view.findViewById(R.id.mainScreenMainMenufragment_findAtrip_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),Trips.class));
+                startActivity(new Intent(getContext(),FindAtrip.class));
             }
         });
 

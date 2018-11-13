@@ -29,7 +29,7 @@ import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAda
  * Sends a call to start downloading register.json
  * Takes backs generated objects and populates the spinners with them
  */
-public class Trips extends AppCompatActivity  {
+public class FindAtrip extends AppCompatActivity  {
     private Spinner spinnerKommune;
     private Spinner spinnerFylke;
     private Boolean kommuneListLoaded = false;
@@ -60,7 +60,7 @@ public class Trips extends AppCompatActivity  {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(Trips.this);
+                LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(FindAtrip.this);
                 lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
                 setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
             }

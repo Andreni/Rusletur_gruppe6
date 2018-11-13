@@ -170,7 +170,7 @@ public class LocalStorage extends SQLiteOpenHelper {
     }
 
     /**
-     * Method for searching for Trips that matches a search criteria.
+     * Method for searching for FindAtrip that matches a search criteria.
      * @param fylke Takes a passed "fylke" as a search parameter
      * @param kommune Takes a passed "kommune" as a search parameter
      * @return Gives back an array of the objects that matches the search criteria.
