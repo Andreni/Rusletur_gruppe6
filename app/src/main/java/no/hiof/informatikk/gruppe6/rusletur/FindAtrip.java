@@ -62,9 +62,25 @@ public class FindAtrip extends AppCompatActivity  {
             public void run() {
                 LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(FindAtrip.this);
                 lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
-                setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
 
+                LocalStorage localStorage = LocalStorage.getInstance(FindAtrip.this);
+                ArrayList<Trip> localTrips = localStorage.getAllTrips();
 
+                for(Trip trip : localTrips){
+                    for(int i = 1; i < FylkeList.getFylkeListArrayList().size(); i++){
+                        if(FylkeList.getRegisterForFylke().get(i).getFylkeName().startsWith(trip.getFylke())){
+                            for(int j = 1; j < FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().size(); j++){
+                                if(FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().get(j).getKommuneNavn().startsWith(trip.getKommune())
+                                    || FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().get(j).getKommuneNavn().equals(trip.getKommune())
+                                    ){
+                                    Log.d(TAG, "run: Municipality already exists");
+                                }else{
+                                    FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().add(new Kommune(trip.getKommune()));
+                                }
+                            }
+                        }
+                    }
+                }
 
                 //  Get all ojects from SQLite db (this is fast :)
                //Start looping through the array for matches
@@ -79,7 +95,7 @@ public class FindAtrip extends AppCompatActivity  {
                     //Insert this kommune into selectable kommune objects!
                     //Proit
 
-
+                setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
 
 
             }
