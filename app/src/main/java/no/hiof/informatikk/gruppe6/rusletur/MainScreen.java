@@ -112,12 +112,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawerLayout.addDrawerListener(toggle);
             toggle.syncState();
-
+ 
 
             //Personalize navigation drawer.
             View headerView = navigationView.getHeaderView(0);
-            TextView navHeaderUsername = (TextView)headerView.findViewById(R.id.nav_header_username);
-            TextView navHeaderEmail = (TextView)headerView.findViewById(R.id.nav_header_email);
+            TextView navHeaderUsername = (TextView) headerView.findViewById(R.id.nav_header_username);
+            TextView navHeaderEmail = (TextView) headerView.findViewById(R.id.nav_header_email);
             navHeaderUsername.setText("Velkommen");
             Log.i(TAG2, "Navigation drawer ser: " + mainscreenUsername);
             navHeaderEmail.setText(mUser.getEmail());
