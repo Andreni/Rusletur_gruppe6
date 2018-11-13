@@ -86,7 +86,10 @@ public class SaveTripActivity extends AppCompatActivity {
 
         savedCoordinates = getIntent().getParcelableArrayListExtra("coordsArray");
         String senderActivity = getIntent().getStringExtra("sender");
+
+        //If the sender of the intent is LocalStorageTrips, we need to fill in time:
         if(senderActivity.equals("LocalStorageTrips")){
+            //Enable manual handling of time insertion
             editHour = findViewById(R.id.saveTrip_Hour_editText);
             editMin = findViewById(R.id.saveTrip_Min_editText);
             TextView textHour = findViewById(R.id.savetrip_timer_textview);
@@ -133,14 +136,17 @@ public class SaveTripActivity extends AppCompatActivity {
 
                 if (nameInput != null && descInput != null && selectedDifficulty != null && valgtKommune) {
 
-                    Boolean validInput = true;
-                    Boolean includeHour = false;
                     /*
                      * Check if input is not null.
                      * If everything checks out, send input from name, description and radiogroup to
                      * handleStorageOfTrips in MainScreen, and switch from this fragment back to the
-                     * MainMenuFragment. It happens lightning quick because Fragments are fucking rad bro.
+                     * MainMenuFragment.
                      */
+
+                    //Assume the input is valid when the trip is not imported:
+                    Boolean validInput = true;
+                    Boolean includeHour = false;
+
 
                     // If the trip is imported, check if the user has filled in time values:
                     if(isImport){
@@ -160,9 +166,8 @@ public class SaveTripActivity extends AppCompatActivity {
                                 if(includeHour){tripLength +=  editMin.getText().toString() + " minutt ";}else {tripLength =  editMin.getText().toString() + " minutt ";}
                             }
                         }
-
+                        //If the time value has not changed, the input is not valid:
                         if(tripLength.equals("0")) validInput = false;
-
                     }
 
                     nameinput = nameInput.getText().toString();
