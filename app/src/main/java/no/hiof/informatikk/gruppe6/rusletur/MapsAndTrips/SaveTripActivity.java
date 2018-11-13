@@ -270,6 +270,7 @@ public class SaveTripActivity extends AppCompatActivity {
 
     private void setupKommuneSpinner(int position){
         //Loading kommune from array
+        tmpKommuner.clear();
         tmpKommuner.add("Valg:");
         for(int i = 1; i < LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.get(position).size(); i++){
             tmpKommuner.add(LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.get(position).get(i));
