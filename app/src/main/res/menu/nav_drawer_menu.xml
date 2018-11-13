@@ -26,10 +26,6 @@
                 android:icon="@drawable/ic_settings"
                 android:title="@string/nav_settings" />
             <item
-                android:id="@+id/to_debug_page"
-                android:icon="@drawable/ic_perm_data_setting"
-                android:title="Debug Page" />
-            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
                 android:title="@string/nav_logout" />
