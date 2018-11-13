@@ -63,29 +63,54 @@ public class FindAtrip extends AppCompatActivity  {
                 LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(FindAtrip.this);
                 lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
 
-                LocalStorage localStorage = LocalStorage.getInstance(FindAtrip.this);
-                ArrayList<Trip> localTrips = localStorage.getAllTrips();
+                mergingCheck();
 
-                for(Trip trip : localTrips){
-                    for(int i = 1; i < FylkeList.getRegisterForFylke().size(); i++){
-                        if(FylkeList.getRegisterForFylke().get(i).getFylkeName().startsWith(trip.getFylke())){
-                            for(int j = 1; j < FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().size(); j++){
-                                if(FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().get(j).getKommuneNavn().startsWith(trip.getKommune())
-                                    || FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().get(j).getKommuneNavn().equals(trip.getKommune())
-                                    ){
-                                    Log.d(TAG, "run: Municipality already exists");
-                                }else{
-                                    FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().add(new Kommune(trip.getKommune()));
+            }
+        }).run();
+
+    }
+
+    public void mergingCheck(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "run: setupTrips: CHECK");
+                if(FylkeList.getRegisterForFylke().size() > 15){
+                    LocalStorage localStorage = LocalStorage.getInstance(FindAtrip.this);
+                    ArrayList<Trip> localTrips = localStorage.getAllTrips();
+
+
+
+                    Log.d(TAG, "run: setupTrips: Adding trips from local");
+                    for(Trip trip : localTrips){
+                        boolean kommuneExists = false;
+                        Log.d(TAG, "run: setupTrips: Fylke: " + trip.getFylke() + "; Kommune: " + trip.getKommune());
+                        Log.d(TAG, "run: setupTrips: getREgisterForFylke length: " + FylkeList.getRegisterForFylke().size());
+                        for(int i = 1; i < FylkeList.getRegisterForFylke().size(); i++){
+                            Log.d(TAG, "run: setupTrips> Before first if");
+                            if(FylkeList.getRegisterForFylke().get(i).getFylkeName().startsWith(trip.getFylke())){
+                                for(int j = 1; j < FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().size(); j++){
+                                    Log.d(TAG, "run: setupTrips> Before second if");
+                                    if(FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().get(j).getKommuneNavn().startsWith(trip.getKommune())
+                                            || FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().get(j).getKommuneNavn().equals(trip.getKommune())
+                                            ){
+                                        Log.d(TAG, "run: Municipality already exists");
+                                        kommuneExists = true;
+                                    }
                                 }
+                            }
+                            if(!kommuneExists){
+                                Log.d(TAG, "run: setupTrips: Adding municipality");
+                                FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().add(new Kommune(trip.getKommune()));
                             }
                         }
                     }
-                }
 
-                //  Get all ojects from SQLite db (this is fast :)
-               //Start looping through the array for matches
-                //for each loop that scans fylke
-                //if FylkeListe.aFylke == objectFromDB
+                    //  Get all ojects from SQLite db (this is fast :)
+                    //Start looping through the array for matches
+                    //for each loop that scans fylke
+                    //if FylkeListe.aFylke == objectFromDB
                     //This is the parent object we need to control "Kommune" on.
                     //If FylkeListe.aFylke.aKommune == objectFromDB
                     // Kommune already exist.... skipping
@@ -95,12 +120,12 @@ public class FindAtrip extends AppCompatActivity  {
                     //Insert this kommune into selectable kommune objects!
                     //Proit
 
-                setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
-
-
+                    setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
+                }else{
+                    mergingCheck();
+                }
             }
-        }).run();
-
+        }, 1000);
     }
 
 
