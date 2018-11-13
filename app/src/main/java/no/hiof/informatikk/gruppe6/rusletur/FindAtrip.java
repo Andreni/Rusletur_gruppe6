@@ -63,6 +63,25 @@ public class FindAtrip extends AppCompatActivity  {
                 LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(FindAtrip.this);
                 lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
                 setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
+
+
+
+                //  Get all ojects from SQLite db (this is fast :)
+               //Start looping through the array for matches
+                //for each loop that scans fylke
+                //if FylkeListe.aFylke == objectFromDB
+                    //This is the parent object we need to control "Kommune" on.
+                    //If FylkeListe.aFylke.aKommune == objectFromDB
+                    // Kommune already exist.... skipping
+
+                    // //If FylkeListe.aFylke.aKommune != objectFromDB
+                    //This is the parent object we want to make available for selection
+                    //Insert this kommune into selectable kommune objects!
+                    //Proit
+
+
+
+
             }
         }).run();
 
