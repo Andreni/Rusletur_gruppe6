@@ -1,19 +1,14 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,27 +18,18 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
-import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
-import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
-import no.hiof.informatikk.gruppe6.rusletur.UserManagement.UserManagmentDebug;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.NewUserFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -116,10 +102,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //Initialize drawerlayout
             drawerLayout = findViewById(R.id.drawerLayout);
 
-            //When activity starts, open the fragment immediately. SavedInstanceState handling for rotating phone.
-            if(savedInstanceState == null) {
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripsRecyclerViewFragment()).commit();
-            }
+
 
             //Clickhandling on navigationdrawer
             NavigationView navigationView = findViewById(R.id.navigationView);
@@ -171,9 +154,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                 case R.id.nav_trip:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                     break;
-                case R.id.to_debug_page:
-                    startActivity(new Intent(this, UserManagmentDebug.class));
-                    break;
                 case R.id.nav_logout:
                     FirebaseAuth.getInstance().signOut();
                     Intent intent = new Intent(MainScreen.this, MainActivity.class);
@@ -198,7 +178,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
             } else {
-                new AlertDialog.Builder(this)
+                /*new AlertDialog.Builder(this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Log ut")
                         .setMessage("Vil du logge ut?:")
@@ -216,7 +196,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
                             }
                         })
-                        .show();
+                        .show();*/
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
 
             }
         }

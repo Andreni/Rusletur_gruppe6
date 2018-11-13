@@ -49,7 +49,6 @@
         <activity
             android:name=".MapsAndTrips.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".UserManagement.UserManagmentDebug" />
         <activity android:name=".UserManagement.UserRegistration" />
         <activity android:name=".Trips" />
         <activity android:name=".DisplayAtrip" />
