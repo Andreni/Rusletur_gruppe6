@@ -54,9 +54,10 @@ public class MainMenuFragment extends Fragment {
     private ArrayList<LatLng> savedTrip;
     private Chronometer chronometer;
     private boolean timerRunning;
+    private Button recordTripButton;
+    private Button stopRecordButton;
+    private Button showInMapButton;
 
-
-    private boolean recordAlreadyClicked = false;
     //Worst practice = best practice.
     public static boolean saveWasClicked = false;
 
@@ -84,25 +85,28 @@ public class MainMenuFragment extends Fragment {
         chronometer = view.findViewById(R.id.fragment_mainscreen_chronometer);
         chronometer.setFormat("Tid brukt på tur: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
+        recordTripButton = view.findViewById(R.id.recordTripButton);
+        stopRecordButton = view.findViewById(R.id.stopRecordButton);
+        showInMapButton = view.findViewById(R.id.showContextOfArray);
+        stopRecordButton.setVisibility(View.INVISIBLE);
+        showInMapButton.setVisibility(View.INVISIBLE);
 
 
-        view.findViewById(R.id.recordTripButton).setOnClickListener(new View.OnClickListener() {
+
+
+        recordTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!recordAlreadyClicked) {
-                    Intent startRecordIntent = new Intent(getActivity(), TripTracker.class);
-                    getActivity().startService(startRecordIntent);
+                Intent startRecordIntent = new Intent(getActivity(), TripTracker.class);
+                getActivity().startService(startRecordIntent);
 
-                    chronometer.setBase(SystemClock.elapsedRealtime());
-                    chronometer.start();
-                    timerRunning = true;
+                recordTripButton.setVisibility(View.INVISIBLE);
+                stopRecordButton.setVisibility(View.VISIBLE);
+                showInMapButton.setVisibility(View.VISIBLE);
 
-
-                }
-                else{
-                    Toast.makeText(getActivity(), "Recording in prosess. Stop first", Toast.LENGTH_SHORT).show();
-                }
-                recordAlreadyClicked = true;
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.start();
+                timerRunning = true;
             }
         });
 
@@ -111,7 +115,7 @@ public class MainMenuFragment extends Fragment {
         * discarding their trip, or saving it.
          */
 
-        view.findViewById(R.id.stopRecordButton).setOnClickListener(new View.OnClickListener() {
+        stopRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -129,11 +133,13 @@ public class MainMenuFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.i(MapsActivity.TAG, "Yes selected");
                                 saveWasClicked = true;
-                                recordAlreadyClicked = false;
                                 Intent saveAndStopIntent = new Intent(getActivity(), TripTracker.class);
                                 getActivity().stopService(saveAndStopIntent);
-
                                 chronometer.stop();
+                                recordTripButton.setVisibility(View.VISIBLE);
+                                stopRecordButton.setVisibility(View.INVISIBLE);
+                                showInMapButton.setVisibility(View.INVISIBLE);
+
 
                             }
                         })
@@ -141,10 +147,12 @@ public class MainMenuFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Toast.makeText(getActivity(), "Tur slettet", Toast.LENGTH_SHORT).show();
-                                recordAlreadyClicked = false;
                                 saveWasClicked = false;
                                 Intent discardAndStopIntent = new Intent(getActivity(), TripTracker.class);
                                 getActivity().stopService(discardAndStopIntent);
+                                recordTripButton.setVisibility(View.VISIBLE);
+                                stopRecordButton.setVisibility(View.INVISIBLE);
+                                showInMapButton.setVisibility(View.INVISIBLE);
 
                                 chronometer.stop();
                             }
@@ -154,7 +162,7 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.showContextOfArray).setOnClickListener(new View.OnClickListener() {
+        showInMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), ShowProgressOfTrip.class);
