@@ -1,7 +1,12 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -30,20 +35,22 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
     private LatLng startLocation;
     public  final String TAG = "ShowProgressOfTrip";
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_progressmap);
 
-        receievedList = TripTracker.fetchArray();
-        Log.i(TAG, "onCreate size of array : " + String.valueOf(receievedList.size()));
+        receievedList = getIntent().getParcelableArrayListExtra("tempLocationArray");
 
+        Log.i(TAG, "onCreate size of array : " + String.valueOf(receievedList.size()));
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.progress_map_gmap);
         supportMapFragment.getMapAsync(this);
 
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -71,7 +78,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
     public void onBackPressed() {
         super.onBackPressed();
         //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
-
-
     }
+
+
 }

@@ -165,8 +165,7 @@ public class MainMenuFragment extends Fragment {
         showInMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), ShowProgressOfTrip.class);
-                    getActivity().startActivity(intent);
+                ((MainScreen)getActivity()).startShowProgressOfTrip();
             }
         });
 

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.nfc.Tag;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcelable;
@@ -50,16 +52,17 @@ public class TripTracker extends Service {
 
     private LocationRequest locationRequest;
     private LocationCallback locationCallback;
-    public static final ArrayList<LatLng> savedLocations = new ArrayList<>();
+    public final ArrayList<LatLng> savedLocations = new ArrayList<>();
     private long timeStart;
     private long timeStop;
     private long timeDiff;
 
+    private final IBinder trackerBinder = new LocalTrackBinder();
 
 
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return trackerBinder;
     }
 
 
@@ -135,11 +138,13 @@ public class TripTracker extends Service {
         }
 
     }
-
-    public static ArrayList<LatLng> fetchArray(){
+    public ArrayList<LatLng> getArray(){
         return savedLocations;
     }
 
+    public void toasty(){
+        Log.i(MapsActivity.TAG, "Service worked");
+    }
 
     @Override
     public void onDestroy() {
@@ -191,6 +196,13 @@ public class TripTracker extends Service {
         this.stopSelf();
         LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(locationCallback);
         super.onDestroy();
+    }
+
+    public class LocalTrackBinder extends Binder{
+        public TripTracker getService(){
+            return TripTracker.this;
+        }
+
     }
 
 

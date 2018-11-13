@@ -1,9 +1,12 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,16 +21,22 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
+
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.ShowProgressOfTrip;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker.LocalTrackBinder;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,6 +56,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         private DatabaseReference db;
         public final static String TAG2 = "Jesus";
 
+
+        private TripTracker tripTracker;
+        private boolean isBound = false;
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -57,6 +70,10 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             FirebaseHandler.getUserInfo(mUser.getUid());
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
+
+            //Bindtest
+            Intent bindToTrackerIntent = new Intent(this, TripTracker.class);
+            bindService(bindToTrackerIntent,serviceConnection, Context.BIND_AUTO_CREATE );
 
 
             FirebaseHandler.downloadAllCustomTrips();
@@ -107,7 +124,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             mainscreenLastname = lastname;
         }
 
-
+        public void startShowProgressOfTrip(){
+            ArrayList<LatLng> tempArray = new ArrayList<>();
+            tempArray = tripTracker.getArray();
+            Intent intent = new Intent(MainScreen.this, ShowProgressOfTrip.class);
+            intent.putExtra("tempLocationArray", tempArray);
+            startActivity(intent);
+        }
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -125,7 +148,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePageFragment()).commit();
                     break;
                 case R.id.nav_settings:
-                    Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+                    tripTracker.toasty();
                     break;
                 case R.id.nav_trip:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
@@ -177,5 +200,20 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             }
         }
+
+        private ServiceConnection serviceConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                LocalTrackBinder binder = (LocalTrackBinder) service;
+                tripTracker = binder.getService();
+                isBound = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                isBound = false;
+            }
+        };
+
 
     }
