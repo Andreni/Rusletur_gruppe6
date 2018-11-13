@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,6 +58,7 @@ public class SaveTripActivity extends AppCompatActivity {
     //private HttpURLConnection conn = null;
     //private ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
     public static boolean finished = false;
+    private boolean valgtKommune = false;
     private ArrayList<String> tmpFylker = new ArrayList<>();
     private ArrayList<String> tmpKommuner = new ArrayList<>();
 
@@ -95,7 +97,7 @@ public class SaveTripActivity extends AppCompatActivity {
         saveTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (nameInput != null && descInput != null && selectedDifficulty != null) {
+                if (nameInput != null && descInput != null && selectedDifficulty != null && valgtKommune) {
                     /*
                      * Check if input is not null lol.
                      * If everything checks out, send input from name, description and radiogroup to
@@ -161,6 +163,7 @@ public class SaveTripActivity extends AppCompatActivity {
         tmpFylker.clear();
         tmpKommuner.clear();
         countySpinner = findViewById(R.id.savetrip_selectCounty);
+        tmpFylker.add("Valg:");
         for(int i = 0; i < LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.size(); i++){
             tmpFylker.add(LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.get(i).get(0));
         }
@@ -170,7 +173,52 @@ public class SaveTripActivity extends AppCompatActivity {
         fylkeAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         Log.d(TAG, "setupFylkeSpinner: setupSpinner: adapter: " + fylkeAdapter);
         countySpinner.setAdapter(fylkeAdapter);
+        
+        countySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String fylkeSelected;
+                if(position == 0){
+                    //Do nothing
+                }else{
+                    setupKommuneSpinner(position-1);
+                    municipalitySpinner.setSelection(0);
+                }
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+    }
+
+    private void setupKommuneSpinner(int position){
+        //Loading kommune from array
+        tmpKommuner.add("Valg:");
+        for(int i = 1; i < LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.get(position).size(); i++){
+            tmpKommuner.add(LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.get(position).get(i));
+        }
+        ArrayAdapter<String> kommuneArray = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tmpKommuner);
+        kommuneArray.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        municipalitySpinner.setAdapter(kommuneArray);
+
+        municipalitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position == 0){
+                    valgtKommune = false;
+                }else{
+                    valgtKommune = true;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
@@ -183,7 +231,6 @@ public class SaveTripActivity extends AppCompatActivity {
             }
         }).run();
         checkFinished();
-
     }
 
     private void checkFinished(){
@@ -199,6 +246,6 @@ public class SaveTripActivity extends AppCompatActivity {
             }
         }, 1000);
     }
-    
+
 
 }
