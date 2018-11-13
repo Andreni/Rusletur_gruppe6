@@ -7,15 +7,13 @@
     android:layout_height="match_parent">
 
     <Chronometer
+        android:id="@+id/fragment_mainscreen_chronometer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="84dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:textSize="32dp"
-        android:id="@+id/fragment_mainscreen_chronometer"
-        app:layout_constraintBottom_toTopOf="@+id/recordTripButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,41 +21,44 @@
 
     <Button
         android:id="@+id/recordTripButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="124dp"
+        android:layout_height="51dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Record Trip"
-        app:layout_constraintBottom_toTopOf="@+id/stopRecordButton"
+        android:background="@color/colorPrimary"
+        android:text="@string/recordfragment_start_button"
+        android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_mainscreen_chronometer" />
 
     <Button
         android:id="@+id/stopRecordButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="121dp"
+        android:layout_height="51dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="248dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
-        android:text="Stop Recording"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        android:text="@string/recordfragment_stop_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_mainscreen_chronometer" />
 
     <Button
         android:id="@+id/showContextOfArray"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="121dp"
+        android:layout_height="51dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="SHOW ME"
+        android:background="@color/colorPrimary"
+        android:text="@string/recordfragment_showmap_button"
+        android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stopRecordButton" />
 

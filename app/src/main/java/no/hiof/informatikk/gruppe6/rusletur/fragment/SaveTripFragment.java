@@ -32,6 +32,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
@@ -55,15 +56,18 @@ public class SaveTripFragment extends Fragment{
     private String municipality;
     private String county;
 
-    private ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
-    private ArrayList<String> tmpFylker;
-    private ArrayList<String> tmpKommuner;
+    private static ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
+    private static ArrayList<String> tmpFylker = new ArrayList<>();
+    private static ArrayList<String> tmpKommuner = new ArrayList<>();
     private HttpURLConnection conn = null;
+    private Thread thread;
+    private static boolean threadFinished = false;
 
-    private Spinner municipalitySpinner;
+    private static Spinner municipalitySpinner;
     private Spinner countySpinner;
+    private static View view;
 
-    private ArrayAdapter<String> countyAdapter;
+    private static ArrayAdapter<String> countyAdapter;
     private ArrayAdapter<Kommune> municipalityAdapter;
 
 
@@ -73,14 +77,14 @@ public class SaveTripFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.fragment_savetrip, container, false);
-
+        this.view = view;
 
         /*
         * This is a pretty simple XML which just displays a name input, description input
-        * and RadioButtons for selecting difficulty. Currently expanding.
+        * and RadioButtons for selecting difficulty. Currently expanding.--------
          */
 
-        //setupArray();
+        Log.d(TAG, "onCreateView: setupSpinner: Setup array");
 
         municipalitySpinner = view.findViewById(R.id.savetrip_selectMunicipality);
         municipalitySpinner.setVisibility(View.INVISIBLE);
@@ -88,12 +92,11 @@ public class SaveTripFragment extends Fragment{
         countySpinner.setVisibility(View.INVISIBLE);
 
 
+        setupArray();
 
 
         nameInput = view.findViewById(R.id.savetrip_nameOfTripInput);
         descInput = view.findViewById(R.id.savetrip_descriptionInput);
-        municipalityInput = view.findViewById(R.id.savetrip_municipality_input);
-        countyInput = view.findViewById(R.id.savetrip_county_input);
 
         difficultyRadioGroup = (RadioGroup) view.findViewById(R.id.savetrip_radioGroup);
 
@@ -139,7 +142,7 @@ public class SaveTripFragment extends Fragment{
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
+                                   // ((MainScreen) getActivity()).handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
 
                                 }
@@ -147,7 +150,7 @@ public class SaveTripFragment extends Fragment{
                             .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    ((MainScreen) getActivity()).handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
+                                    //((MainScreen) getActivity()).handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
                                 }
                             })
@@ -166,15 +169,25 @@ public class SaveTripFragment extends Fragment{
     private void setUpCountySpinner(){
 
         Log.d(TAG, "setUpCountySpinner: setupSpinner: setup");
+
+        while(!thread.getState().toString().equals("TERMINATED")){
+            Log.d(TAG, "setUpCountySpinner: setupSpinner: threadfinished is false");
+        }
+        Log.d(TAG, "setUpCountySpinner: setupSpinner: Utenfor Wait while");
+
         tmpFylker.clear();
         tmpKommuner.clear();
         for(int i = 0; i < fylkerOgKommuner.size(); i++){
             tmpFylker.add(fylkerOgKommuner.get(i).get(0));
         }
 
-        countyAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, tmpFylker);
+        Log.d(TAG, "setUpCountySpinner: setupSpinner: tmpFylker: " + tmpFylker);
+
+        countyAdapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1, tmpFylker);
         countyAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         countySpinner.setAdapter(countyAdapter);
+
+        Log.d(TAG, "setUpCountySpinner: setupSpinner: countyAdapter set");
     }
 
     private void setUpMunicipalitySpinner(){
@@ -189,14 +202,11 @@ public class SaveTripFragment extends Fragment{
         * Under construction
          */
 
-
-        Log.d(TAG, "setupArray: setupSpinner: setup array");
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    URL url =  new URL("https://raw.githubusercontent.com/Andreni/Rusletur_gruppe6/master/fylkerMedKommuner.txt?token=Ae4q33Lvwx1AhhoKJi7-i8pPs-nqFcIQks5b7uiJwA%3D%3D");
+                    URL url =  new URL("https://raw.githubusercontent.com/Andreni/Rusletur_gruppe6/master/fylkerMedKommuner.txt?token=Ae4q3_gVHObUYa-Lnzn5cr33OnSZNJmvks5b8BTFwA%3D%3D");
 
                     Log.d(TAG, "setupArray: setupSpinner: Made URL");
 
@@ -212,11 +222,13 @@ public class SaveTripFragment extends Fragment{
                         Log.d(TAG, "setupArray: setupSpinner: Buffered Reader");
                         while((inputLine = br.readLine()) != null){
                             Log.d(TAG, "setupArray: setupSpinner: WHILE");
-                            String[] fylkeKommune = inputLine.split("|");
+                            Log.d(TAG, "run: setupSpinner: inputLine: " + inputLine);
+                            String[] fylkeKommune = inputLine.split(":");
+                            Log.d(TAG, "run: setupSpinner: fylkeKommueArray plass 0: " + fylkeKommune[0] + "; Plass 1: " + fylkeKommune[1]);
                             boolean fylkeExists = false;
                             int fylkeIndex = 0;
                             for(int i = 0; i < fylkerOgKommuner.size(); i++){
-                                if (fylkerOgKommuner.get(i).get(0) == fylkeKommune[0]) {
+                                if (fylkerOgKommuner.get(i).get(0).equals(fylkeKommune[0])) {
                                     fylkeExists = true;
                                     fylkeIndex = i;
                                     break;
@@ -225,24 +237,34 @@ public class SaveTripFragment extends Fragment{
                             if(fylkeExists){
                                 fylkerOgKommuner.get(fylkeIndex).add(fylkeKommune[1]);
                             }else{
-                                fylkerOgKommuner.get(fylkerOgKommuner.size()-1).add(fylkeKommune[0]);
-                                fylkerOgKommuner.get(fylkerOgKommuner.size()-1).add(fylkeKommune[1]);
+                                Log.d(TAG, "run: setupSpinner: Fylkerogkommuner size: " + fylkerOgKommuner.size());
+                                fylkerOgKommuner.add(new ArrayList<String>(Arrays.asList(fylkeKommune[0], fylkeKommune[1])));
                             }
                         }
                     }
 
-                    setUpCountySpinner();
+                    //Log.d(TAG, "run: setupSpinner: Fylkerogkommuner" + fylkerOgKommuner);
+                    threadFinished = true;
 
                 }catch (MalformedURLException e){
                     Log.d(TAG, "setupArray: setupSpinner: MAlformed url exception");
                     e.printStackTrace();
-                }catch (IOException e){
+                }catch (IOException e) {
                     Log.d(TAG, "setupArray: setupSpinner: IOexception");
                     e.printStackTrace();
+                }finally {
+                    thread.interrupt();
+                    Log.d(TAG, "run: setupspinner: thread state after interrupt " + thread.getState() );
                 }
             }
-        },0);
+        });
 
+        thread.start();
+
+        if(thread.getState().toString().equals("RUNNABLE")){
+            Log.d(TAG, "setupArray: setupSpinner: thread state: " + thread.getState());
+        }
+        setUpCountySpinner();
 
     }
 

@@ -33,7 +33,6 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     private Trip aTrip;
     private GoogleMap mMap;
-    private String rowId;
 
     Context context = this;
 
@@ -43,7 +42,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         setContentView(R.layout.activity_display_atrip);
 
         // Using getParcelableExtra(String key) method
-        aTrip = (Trip) getIntent().getParcelableExtra("object");
+        aTrip = getIntent().getParcelableExtra("object");
         // Get the class the activity was called from
         String senderClass = getIntent().getStringExtra("sender");
 
@@ -56,7 +55,6 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
             setupItems(false);
         }else if (senderClass.equals("LocalStorageTrips")){
             setupItems(true);
-           rowId = getIntent().getStringExtra("rowid");
         }
 
 
@@ -99,7 +97,6 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
                             .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    aTrip.getId();
                                     LocalStorage localStorage = LocalStorage.getInstance(context);
                                     localStorage.deleteAtrip(aTrip.getId());
                                     startActivity(new Intent(context,MainScreen.class));
