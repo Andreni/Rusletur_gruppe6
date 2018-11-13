@@ -21,6 +21,7 @@
     <string name="recordfragment_start_button">Begynn å gå!</string>
     <string name="recordfragment_stop_button">Avslutt tur</string>
     <string name="recordfragment_showmap_button">Vis tur i kart</string>
+    <string name="map_display_route_to_trip">Vis vei til tur</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
