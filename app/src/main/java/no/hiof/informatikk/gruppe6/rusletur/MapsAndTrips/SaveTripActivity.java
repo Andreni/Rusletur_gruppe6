@@ -73,7 +73,8 @@ public class SaveTripActivity extends AppCompatActivity {
         //Setup views
         //countySpinner = findViewById(R.id.savetrip_selectCounty);
         municipalitySpinner = findViewById(R.id.savetrip_selectMunicipality);
-
+        nameInput = findViewById(R.id.savetrip_nameOfTripInput);
+        descInput = findViewById(R.id.savetrip_descriptionInput);
 
         savedCoordinates = getIntent().getParcelableArrayListExtra("coordsArray");
         Log.i(TAG, "SaveTripActivity mottok Array! : " + String.valueOf(savedCoordinates.size()));
@@ -104,6 +105,9 @@ public class SaveTripActivity extends AppCompatActivity {
         saveTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Log.d(TAG, "onClick: setupSpinner: What is false: nameInput: " + nameInput + "; descInput: " + descInput + "; selectedDifficulty: " + selectedDifficulty + "; valgtKommuner: " + valgtKommune);
+
                 if (nameInput != null && descInput != null && selectedDifficulty != null && valgtKommune) {
                     /*
                      * Check if input is not null lol.
@@ -113,8 +117,8 @@ public class SaveTripActivity extends AppCompatActivity {
                      */
                     nameinput = nameInput.getText().toString();
                     description = descInput.getText().toString();
-                    //municipality = municipalityInput.getText().toString();
-                    //county = countyInput.getText().toString();
+                    municipality = municipalitySpinner.getSelectedItem().toString();
+                    county = countySpinner.getSelectedItem().toString();
 
                     new AlertDialog.Builder(SaveTripActivity.this)
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -125,6 +129,7 @@ public class SaveTripActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     //REDIRECT
+                                    onBackPressed();
 
                                 }
                             })
@@ -133,6 +138,8 @@ public class SaveTripActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     //REDIRECT
+                                    onBackPressed();
+
                                 }
                             })
                             .show();
