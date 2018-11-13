@@ -143,7 +143,7 @@ public class SaveTripActivity extends AppCompatActivity {
             }
         });
 
-        //loadList();
+        loadList();
 
     }
 
@@ -219,6 +219,7 @@ public class SaveTripActivity extends AppCompatActivity {
                     valgtKommune = false;
                 }else{
                     valgtKommune = true;
+                    Log.d(TAG, "onItemSelected: setupSpinner: kommune valgt?" + valgtKommune);
                 }
             }
 
