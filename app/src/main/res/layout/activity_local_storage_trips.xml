@@ -25,12 +25,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:onClick="back"
         android:text="Tilbake"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/localStorageTrips_Import_button"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        />
 
     <Button
         android:id="@+id/localStorageTrips_Import_button"
@@ -42,5 +46,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/localStorage_goBack_button" />
+        app:layout_constraintStart_toEndOf="@+id/localStorage_goBack_button"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        />
 </android.support.constraint.ConstraintLayout>

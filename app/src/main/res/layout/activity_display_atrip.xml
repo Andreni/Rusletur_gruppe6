@@ -18,7 +18,10 @@
         app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_goBack_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/displayAtrip_goBack_button" />
+        app:layout_constraintStart_toEndOf="@+id/displayAtrip_goBack_button"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        />
 
     <Button
         android:id="@+id/displayAtrip_goBack_button"
@@ -32,7 +35,10 @@
         app:layout_constraintEnd_toStartOf="@+id/displayAtrip_goTrip_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/colorPrimary"
+        android:textColor="#fff"
+        />
 
 
     <LinearLayout

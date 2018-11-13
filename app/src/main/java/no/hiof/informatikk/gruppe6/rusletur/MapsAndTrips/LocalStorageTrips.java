@@ -126,7 +126,9 @@ public class LocalStorageTrips extends AppCompatActivity {
 
 
 
-
+    public void back(View view){
+        onBackPressed();
+    }
 
     public void goBack(View view){
         super.onBackPressed();
