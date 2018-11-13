@@ -179,6 +179,7 @@ public class TripTracker extends Service {
             startSaveTripIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startSaveTripIntent.putExtra("coordsArray", savedLocations);
             startSaveTripIntent.putExtra("timeSpent", timeSpent);
+            startSaveTripIntent.putExtra("sender",this.getClass().getSimpleName());
             startActivity(startSaveTripIntent);
         }
 

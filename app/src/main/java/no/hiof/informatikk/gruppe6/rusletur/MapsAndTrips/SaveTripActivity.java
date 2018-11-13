@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -53,6 +54,11 @@ public class SaveTripActivity extends AppCompatActivity {
     private String county;
     private Spinner municipalitySpinner;
     private Spinner countySpinner;
+    EditText editHour;
+    EditText editMin;
+    Boolean isImport = false;
+    String tripLength = "0";
+
 
     private ArrayList<LatLng> savedCoordinates = new ArrayList<>();
 
@@ -76,7 +82,22 @@ public class SaveTripActivity extends AppCompatActivity {
         nameInput = findViewById(R.id.savetrip_nameOfTripInput);
         descInput = findViewById(R.id.savetrip_descriptionInput);
 
+
+
         savedCoordinates = getIntent().getParcelableArrayListExtra("coordsArray");
+        String senderActivity = getIntent().getStringExtra("sender");
+        if(senderActivity.equals("LocalStorageTrips")){
+            editHour = findViewById(R.id.saveTrip_Hour_editText);
+            editMin = findViewById(R.id.saveTrip_Min_editText);
+            TextView textHour = findViewById(R.id.savetrip_timer_textview);
+            textHour.setVisibility(View.VISIBLE);
+            TextView textMin = findViewById(R.id.savetrip_minutter_textview);
+            textMin.setVisibility(View.VISIBLE);
+            editHour.setVisibility(View.VISIBLE);
+            editMin.setVisibility(View.VISIBLE);
+            isImport=true;
+
+        }
         Log.i(TAG, "SaveTripActivity mottok Array! : " + String.valueOf(savedCoordinates.size()));
 
         //String with custom time spent on trip. Can be in any format, Day:Hour:Minute:Seconds
@@ -108,18 +129,47 @@ public class SaveTripActivity extends AppCompatActivity {
 
                 Log.d(TAG, "onClick: setupSpinner: What is false: nameInput: " + nameInput + "; descInput: " + descInput + "; selectedDifficulty: " + selectedDifficulty + "; valgtKommuner: " + valgtKommune);
 
+
+
                 if (nameInput != null && descInput != null && selectedDifficulty != null && valgtKommune) {
+
+                    Boolean validInput = true;
+                    Boolean includeHour = false;
                     /*
-                     * Check if input is not null lol.
+                     * Check if input is not null.
                      * If everything checks out, send input from name, description and radiogroup to
                      * handleStorageOfTrips in MainScreen, and switch from this fragment back to the
                      * MainMenuFragment. It happens lightning quick because Fragments are fucking rad bro.
                      */
+
+                    // If the trip is imported, check if the user has filled in time values:
+                    if(isImport){
+                        if(!editHour.getText().toString().equals("") && Integer.parseInt(editHour.getText().toString()) > 0){
+                            includeHour = true;
+                            if(Integer.parseInt(editHour.getText().toString())>1){
+                                tripLength =  editHour.getText().toString() + " timer ";
+                            }else{
+                                tripLength =  editHour.getText().toString() + " time ";
+                            }
+                        }
+                        if(!editMin.getText().toString().equals("") && Integer.parseInt(editMin.getText().toString()) > 0) {
+                            if(Integer.parseInt(editMin.getText().toString())>1){
+                                if(includeHour){tripLength +=  editMin.getText().toString() + " minutter ";}else {tripLength =  editMin.getText().toString() + " minutter ";}
+
+                            }else{
+                                if(includeHour){tripLength +=  editMin.getText().toString() + " minutt ";}else {tripLength =  editMin.getText().toString() + " minutt ";}
+                            }
+                        }
+
+                        if(tripLength.equals("0")) validInput = false;
+
+                    }
+
                     nameinput = nameInput.getText().toString();
                     description = descInput.getText().toString();
                     municipality = municipalitySpinner.getSelectedItem().toString();
                     county = countySpinner.getSelectedItem().toString();
-
+                if(validInput) {
                     new AlertDialog.Builder(SaveTripActivity.this)
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .setTitle("Lagring")
@@ -144,6 +194,9 @@ public class SaveTripActivity extends AppCompatActivity {
                             })
                             .show();
 
+                    }else{
+                    Toast.makeText(SaveTripActivity.this, "Du må fylle ut tid,", Toast.LENGTH_SHORT).show();
+                     }
                 } else {
                     Toast.makeText(SaveTripActivity.this, "Er alle feltene fylt ut?", Toast.LENGTH_SHORT).show();
                 }
@@ -153,6 +206,7 @@ public class SaveTripActivity extends AppCompatActivity {
         loadList();
 
     }
+
 
     public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
@@ -167,7 +221,7 @@ public class SaveTripActivity extends AppCompatActivity {
         //Generate a unique id for the trip:
         String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
         LocalStorage localStorage = LocalStorage.getInstance(this);
-        localStorage.addTrip(new Trip(timestamp, tripName, "Gi et tag", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Blank", savedCoordinates, "0"));
+        localStorage.addTrip(new Trip(timestamp, tripName, "Gi et tag", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Blank", savedCoordinates, tripLength));
         Toast.makeText(this,"Tur lagret",Toast.LENGTH_SHORT).show();
 
     }
