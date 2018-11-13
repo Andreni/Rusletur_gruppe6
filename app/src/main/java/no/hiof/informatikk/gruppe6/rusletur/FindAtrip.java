@@ -67,7 +67,7 @@ public class FindAtrip extends AppCompatActivity  {
                 ArrayList<Trip> localTrips = localStorage.getAllTrips();
 
                 for(Trip trip : localTrips){
-                    for(int i = 1; i < FylkeList.getFylkeListArrayList().size(); i++){
+                    for(int i = 1; i < FylkeList.getRegisterForFylke().size(); i++){
                         if(FylkeList.getRegisterForFylke().get(i).getFylkeName().startsWith(trip.getFylke())){
                             for(int j = 1; j < FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().size(); j++){
                                 if(FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().get(j).getKommuneNavn().startsWith(trip.getKommune())
