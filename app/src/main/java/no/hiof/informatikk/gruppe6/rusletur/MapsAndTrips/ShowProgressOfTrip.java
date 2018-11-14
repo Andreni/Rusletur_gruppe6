@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker.LocalTrackBinder;
 
 public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCallback {
 
@@ -35,6 +36,9 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
     private LatLng startLocation;
     public  final String TAG = "ShowProgressOfTrip";
 
+    private TripTracker tripTracker;
+    private boolean isBound = false;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,26 +46,30 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
 
         setContentView(R.layout.activity_progressmap);
 
-        receievedList = getIntent().getParcelableArrayListExtra("tempLocationArray");
-
-        Log.i(TAG, "onCreate size of array : " + String.valueOf(receievedList.size()));
+        Intent bindToTrackerIntent = new Intent(this, TripTracker.class);
+        bindService(bindToTrackerIntent,serviceConnection, Context.BIND_AUTO_CREATE );
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.progress_map_gmap);
         supportMapFragment.getMapAsync(this);
-
     }
+
+
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
 
+        tripTracker.getArray();
+        Log.i(MapsActivity.TAG, "Size of array : " + String.valueOf(tripTracker.getArray().size()));
+
+
         PolylineOptions poly = new PolylineOptions();
-        startLocation = new LatLng(receievedList.get(0).longitude, receievedList.get(0).latitude);
+        startLocation = new LatLng(tripTracker.getArray().get(0).longitude, tripTracker.getArray().get(0).latitude);
 
         //dRAW POLYLINES.
-        for(int i=0; i < receievedList.size();i++){
-            poly.add(new LatLng(receievedList.get(i).longitude, receievedList.get(i).latitude));
+        for(int i=0; i < tripTracker.getArray().size();i++){
+            poly.add(new LatLng(tripTracker.getArray().get(i).longitude, tripTracker.getArray().get(i).latitude));
         }
 
         //Fløtt kamera
@@ -79,6 +87,20 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
         super.onBackPressed();
         //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
     }
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            LocalTrackBinder binder = (LocalTrackBinder) service;
+            tripTracker = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
 
 
 }

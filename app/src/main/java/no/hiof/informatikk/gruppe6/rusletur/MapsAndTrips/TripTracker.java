@@ -142,9 +142,7 @@ public class TripTracker extends Service {
         return savedLocations;
     }
 
-    public void toasty(){
-        Log.i(MapsActivity.TAG, "Service worked");
-    }
+
 
     @Override
     public void onDestroy() {

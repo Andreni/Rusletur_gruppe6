@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.ShowProgressOfTrip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
@@ -124,13 +125,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             mainscreenLastname = lastname;
         }
 
-        public void startShowProgressOfTrip(){
-            ArrayList<LatLng> tempArray = new ArrayList<>();
-            tempArray = tripTracker.getArray();
-            Intent intent = new Intent(MainScreen.this, ShowProgressOfTrip.class);
-            intent.putExtra("tempLocationArray", tempArray);
-            startActivity(intent);
-        }
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -148,7 +142,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePageFragment()).commit();
                     break;
                 case R.id.nav_settings:
-                    tripTracker.toasty();
+                    Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.nav_trip:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
