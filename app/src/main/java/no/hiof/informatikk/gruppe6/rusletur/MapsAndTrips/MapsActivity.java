@@ -222,10 +222,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Start position
         LatLng tripStartPos = null;
-        tripStartPos = new LatLng(trip.getCoordinates().get(0).longitude, trip.getCoordinates().get(0).latitude);
+        tripStartPos = new LatLng(trip.getCoordinates().get(0).latitude, trip.getCoordinates().get(0).longitude);
 
         for(int i = 0; i < trip.getCoordinates().size(); i++){
-            options.add(new LatLng(trip.getCoordinates().get(i).longitude, trip.getCoordinates().get(i).latitude));
+            options.add(new LatLng(trip.getCoordinates().get(i).latitude, trip.getCoordinates().get(i).longitude));
         }
 
         mMap.addMarker(new MarkerOptions().position(tripStartPos).title(trip.getNavn()));
