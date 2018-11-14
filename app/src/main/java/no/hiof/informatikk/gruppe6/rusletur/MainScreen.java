@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
@@ -121,6 +122,13 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             navHeaderUsername.setText("Velkommen");
             Log.i(TAG2, "Navigation drawer ser: " + mainscreenUsername);
             navHeaderEmail.setText(mUser.getEmail());
+
+            loadFindAtripRegister();
+        }
+
+        public void loadFindAtripRegister(){
+            LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(this);
+            lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
         }
 
         //Static method required for getting data from FireBaseHandler
