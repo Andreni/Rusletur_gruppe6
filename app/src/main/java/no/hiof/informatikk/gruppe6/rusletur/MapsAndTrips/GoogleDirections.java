@@ -61,6 +61,18 @@ public class GoogleDirections {
         Log.d(TAG,"********************************************************************END********************************************************************");
     }
 
+    public String getDistance() {
+        return distance;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public String getTripName() {
+        return tripName;
+    }
+
     private String getDirectionsUrl(LatLng startPos, LatLng endPos) {
         //Builds an URL compatible with google maps. Send it to google maps and it will return the full trip with all info needed. Remember to parse.
         String str_origin = "origin=" + startPos.latitude + "," + startPos.longitude;

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.DisplayAtrip;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GoogleDirections;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
@@ -48,7 +49,9 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
 
         Log.d(TAG, "onBindViewHolder: created");
         if(mItem.get(0) != null){
+            GoogleDirections tripDirections = new GoogleDirections(mItem.get(position).getStartLatLng(), mItem.get(position).getNavn());
             holder.itemNavn.setText(mItem.get(position).getNavn());
+            holder.itemAvstandITid.setText(tripDirections.getDistance());
             holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
             holder.itemGradering.setText(mItem.get(position).getGradering());
         }
@@ -82,12 +85,14 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         RelativeLayout parentLayout;
         TextView itemNavn;
         TextView itemTidsbruk;
+        TextView itemAvstandITid;
         TextView itemGradering;
         public ViewHolder(View itemView){
             super(itemView);
 
             itemNavn = itemView.findViewById(R.id.itemNavn);
             itemTidsbruk = itemView.findViewById(R.id.itemTidsbruk);
+            itemAvstandITid = itemView.findViewById(R.id.itemAvstandITid);
             itemGradering = itemView.findViewById(R.id.itemGradering);
             parentLayout = itemView.findViewById(R.id.parentLayoutForListItem);
         }

@@ -218,7 +218,6 @@ public class Trips extends AppCompatActivity  {
      * @param aTrip the trip selected from the recycler view
      */
     public void passSelectedTrip(Trip aTrip){
-
         // using context and next component class to create intent
         Intent intent = new Intent(this, DisplayAtrip.class);
         // using putExtra(String key, Parcelable value) method
@@ -291,7 +290,7 @@ public class Trips extends AppCompatActivity  {
                 }
                 //If there isn't a new item
                 if(antall == turer.size()){
-                    Log.d(TAG, "run: onResonse: " + turer);
+                    Log.d(TAG, "run: onResponse: " + turer);
                     //Recursion. Checking again after 3 seconds
                     checkChange();
                 }
