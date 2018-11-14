@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import no.hiof.informatikk.gruppe6.rusletur.FindAtrip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
 /**
  * Fragment that is loaded when the user logs on the application.
@@ -32,7 +34,12 @@ public class MainScreen_MainMenu extends Fragment {
         view.findViewById(R.id.mainScreenMainMenufragment_findAtrip_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(),FindAtrip.class));
+                if(UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity())) {
+                    startActivity(new Intent(getContext(), FindAtrip.class));
+                }
+                else {
+                    Toast.makeText(getActivity(), "This won't happen", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -38,7 +38,7 @@ public class UserUtility {
         //Returns true if user has an active connection, else returns false.
         final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean userHasConnection = networkInfo.isConnected();
+        boolean userHasConnection = (networkInfo.isConnected() && networkInfo != null);
 
         return userHasConnection;
     }

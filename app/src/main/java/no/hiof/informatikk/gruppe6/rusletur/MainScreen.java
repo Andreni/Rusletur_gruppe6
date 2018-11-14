@@ -157,7 +157,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePageFragment()).commit();
                     break;
                 case R.id.nav_settings:
-                    Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+                    if(UserUtility.checkIfUserHasMobileNetworkEnabled(this)) {
+                        Toast.makeText(this, "Connection worked", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.nav_trip:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
