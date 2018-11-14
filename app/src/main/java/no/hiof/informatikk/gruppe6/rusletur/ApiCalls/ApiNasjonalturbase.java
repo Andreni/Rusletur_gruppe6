@@ -89,7 +89,7 @@ public class ApiNasjonalturbase {
                          for (int j = 0; j < coords.length(); j++) {
                              JSONArray coord = (JSONArray) coords.get(j);
                              for (int k = 0; k < coord.length(); k++) {
-                                 latlng.add(new LatLng(coord.getDouble(0), coord.getDouble(1)));
+                                 latlng.add(new LatLng(coord.getDouble(1), coord.getDouble(0)));
                              }
                          }
 

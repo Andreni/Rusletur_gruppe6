@@ -119,7 +119,7 @@ public class TripTracker extends Service {
                     Log.i(MapsActivity.TAG, "Tracker - onLocationResult resolved");
                     Log.i(MapsActivity.TAG, locationResult.getLocations().toString());
                     Log.i(MapsActivity.TAG, "Size of getLocations" + Integer.toString(locationResult.getLocations().size()));
-                    LatLng previousLocation = new LatLng(valueOf(locationResult.getLastLocation().getLongitude()), valueOf(locationResult.getLastLocation().getLatitude()));
+                    LatLng previousLocation = new LatLng(valueOf(locationResult.getLastLocation().getLatitude()), valueOf(locationResult.getLastLocation().getLongitude()));
                     Log.i(MapsActivity.TAG, previousLocation.toString());
                     savedLocations.add(previousLocation);
                     Log.i(MapsActivity.TAG, Integer.toString(savedLocations.size()));
