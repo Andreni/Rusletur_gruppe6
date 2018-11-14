@@ -25,11 +25,12 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
 
 /**
- * Class for selection of available trips for the user
- * Sends a call to start downloading register.json
- * Takes backs generated objects and populates the spinners with them
+ * Class for selection of available trips for the user.
+ * Checks first if there are any available trips in Fylkeliste, then checks with LocalStorage and
+ * Firebase Database.
+ * Takes backs generated objects and populates the spinners with them.
  */
-public class Trips extends AppCompatActivity  {
+public class FindAtrip extends AppCompatActivity  {
     private Spinner spinnerKommune;
     private Spinner spinnerFylke;
     private Boolean kommuneListLoaded = false;
@@ -43,9 +44,9 @@ public class Trips extends AppCompatActivity  {
     private MainTripRecyclerViewAdapter adapter;
     private int antall = 0;
     private ProgressBar pgsBar;
-
-
-
+    private Boolean onlyRusleturTrips = false;
+    private LocalStorage localStorage;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,21 +57,47 @@ public class Trips extends AppCompatActivity  {
         loadLists();
     }
 
-    public void loadLists(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                LookUpRegisterNasjonalTurbase lookUpRegisterNasjonalTurbase = new LookUpRegisterNasjonalTurbase(Trips.this);
-                lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
-                setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
+    /**
+     *
+     * Checks with Fylkelist to see what objects exists, then check all avalible trips stored
+     * locally on the device and on Firebase Database.
+     * Only {@see Fylke} and Kommune that contains Trip objects, will be selectable by the user
+     */
+    public void loadLists() {
+        if (FylkeList.getRegisterForFylke().size() > 15) {
+            localStorage = LocalStorage.getInstance(FindAtrip.this);
+            ArrayList<Trip> rusleTurTrips = localStorage.getAllTrips();
+            rusleTurTrips.addAll(Trip.allCustomTrips);
+            //If there exists a object with a Kommune that is not in the Register that was downloaded
+            for (Trip trip : rusleTurTrips) {
+                boolean kommuneExists = true;
+                for (int i = 1; i < FylkeList.getRegisterForFylke().size(); i++) {
+                    if (FylkeList.getRegisterForFylke().get(i).getFylkeName().startsWith(trip.getFylke())) {
+                        for (int j = 0; j < FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().size(); j++) {
+                            if (FylkeList.getRegisterForFylke().get(i).getKommuneArrayList()
+                                    .get(j).getKommuneNavn().equals(trip.getKommune())
+                                    ||FylkeList.getRegisterForFylke().get(i)
+                                    .getKommuneArrayList().get(j).getKommuneNavn().
+                                            startsWith(trip.getKommune())) {
+                                kommuneExists = true;
+                                break;
+                            }
+                            else{
+                               kommuneExists =false;
+                            }
+                        }
+                    }
+                    if (!kommuneExists) {
+                        FylkeList.getRegisterForFylke().get(i).getKommuneArrayList().add(new Kommune(trip.getKommune()));
+                        kommuneExists = true;
+                    }
+                }
             }
-        }).run();
-
+            setUpFylkeSpinner(FylkeList.getFylkeListArrayList().get(0));
+        }
     }
 
-
     //Initalize the fylke dropdown menu
-
     public void setUpFylkeSpinner(FylkeList alist){
         spinnerFylke = findViewById(R.id.tripsA_SelectFylke_spinner);
         //Load fylker from array
@@ -83,15 +110,12 @@ public class Trips extends AppCompatActivity  {
         //When only FylkeSpinner is in use and there is no valid selection, do not show kommuneSpinner
         spinnerKommune = findViewById(R.id.tripsA_SelectKommune_spinner2);
         spinnerKommune.setVisibility(View.INVISIBLE);
-
-
         spinnerFylke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                  String fylkeSelected;
                  turer.clear();
                  antall = 0;
-
                 //If the position is 0, nothing is selected
                 if (position==0){
                     spinnerKommune.setVisibility(View.INVISIBLE);
@@ -103,9 +127,7 @@ public class Trips extends AppCompatActivity  {
                     spinnerKommune.setVisibility(View.VISIBLE);
                     spinnerKommune.setSelection(0);
                     setupKommuneSpinner(position);
-
                 }
-
                 else{
                     //When a valid selection is made, pass the positon for the method,
                     //so the proper kommunelist can be loaded from the fylke.
@@ -121,12 +143,10 @@ public class Trips extends AppCompatActivity  {
 
             }
         });
-
     }
 
     //Load the kommunespinner
-
-    public void setupKommuneSpinner(Integer positonFylke){
+    public void setupKommuneSpinner(final Integer positonFylke){
         //Load Kommuner from array
         //Setup adapter for loading Kommune objects
         ArrayAdapter<Kommune> arrayAdapterKommune =
@@ -141,25 +161,20 @@ public class Trips extends AppCompatActivity  {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //Selection statement for K spinner
-
-                turer.clear();
                 antall = 0;
-
                 int lastPosition = position;
-
                     if (position==0){
-
+                        kommuneListLoaded = false;
+                        selectionKommune = 0;
                     }else{
                         kommuneListLoaded = true;
                         selectionKommune = position-1;
+                        selectionFylke = positonFylke;
                         pgsBar.setVisibility(View.VISIBLE);
                         //Send the position so we can start a search based on all the valid ids
                         fetchIds();
                     }
-                Log.d(TAG, "onItemSelected: " + turer.toString());
-
             }
-
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -169,77 +184,91 @@ public class Trips extends AppCompatActivity  {
 
     }
 
-
     /**
-     * When a valid id (Not 0 and 0) are chosen for Fylke and kommune. Fetch the valid ids
-     * stored on the kommune object, and pass them to the recycler view
+     * When a valid id (Not 0 and 0 on the Selection spinners) are chosen for Fylke and kommune. Fetch the valid ids
+     * stored on the kommune object, and pass them to the recycler view.
+     * Send a call to {@see getC}
      */
     public void fetchIds() {
-        //Loop to cycle to all ids stored on Kommune object chosen
-        for(int i = 0; i < FylkeList.getRegisterForFylke()
+
+        if (FylkeList.getRegisterForFylke()
                 .get(selectionFylke)
-                .getKommuneArrayList()
-                .get(selectionKommune)
-                .getIdForTurArrayList().size(); i++) {
-            //Fetch the id that is to be made an object from.
-            String selection = FylkeList.getRegisterForFylke()
+                .getKommuneArrayList().get(selectionKommune + 1).getIdForTurArrayList().size() == 0) {
+            onlyRusleturTrips = true;
+            Log.i(TAG, "fetchIds: this is a RULSETUR");
+            getSelectedFylkeAndKommune();
+            antall = 0;
+            turer.clear();
+            lookUpRusleTurTrips(localStorage);
+
+        }else if (!onlyRusleturTrips) {
+            Log.i(TAG, "fetchIds: Looking up from all sources");
+            turer.clear();
+            getSelectedFylkeAndKommune();
+            for (int i = 0; i < FylkeList.getRegisterForFylke()
                     .get(selectionFylke)
                     .getKommuneArrayList()
                     .get(selectionKommune)
-                    .getIdForTurArrayList().get(i).getIdForTur();
-           selectionNameFylke = FylkeList.getRegisterForFylke()
-                    .get(selectionFylke).toString();
-           selectionNameKommune = FylkeList.getRegisterForFylke()
-                   .get(selectionFylke)
-                   .getKommuneArrayList()
-                   .get(selectionKommune+1).toString();
-            //Pass the id to the API class to build a trip object from it
-            Log.d(TAG, "fetchIds: Addede to turer");
-            ApiNasjonalturbase.getTripInfo(selection, this);
+                    .getIdForTurArrayList().size(); i++) {
+                //Fetch the id that is to be made an object from.
+                String selection = FylkeList.getRegisterForFylke()
+                        .get(selectionFylke)
+                        .getKommuneArrayList()
+                        .get(selectionKommune)
+                        .getIdForTurArrayList().get(i).getIdForTur();
+                //If there exists no stored ids in register, skip checking with Nasjonal Turbase
+                ApiNasjonalturbase.getTripInfo(selection, this);
+            }
+        }
+        initRecyclerView();
+    }
 
-            //If the response to the query is greater than -1 add the results to the array
-            Log.d("SQLQ", "Searching for: " + selectionNameKommune + " in" + selectionNameFylke );
+    public void getSelectedFylkeAndKommune(){
+        selectionNameFylke = FylkeList.getRegisterForFylke()
+                .get(selectionFylke).toString();
+        selectionNameKommune = FylkeList.getRegisterForFylke()
+                .get(selectionFylke)
+                .getKommuneArrayList()
+                .get(selectionKommune + 1).toString();
+    }
 
-
-           // }
-
-
+    public void lookUpRusleTurTrips(LocalStorage localStorage){
+        //Check localStorage
+        if (localStorage.getTripsByCriteria(selectionNameFylke, selectionNameKommune).size() > 0) {
+            Log.i(TAG, "fetchIds: We found a match");
+            turer.addAll(localStorage.getTripsByCriteria(selectionNameFylke, selectionNameKommune));
+            antall += localStorage.getTripsByCriteria(selectionNameFylke, selectionNameKommune).size();
+            Log.i(TAG, "fetchIds: " + antall + " results");
+        }
+        if(Trip.allCustomTrips.size()>0){
+            for (Trip aTrip: Trip.allCustomTrips){
+                if (aTrip.getFylke().equals(selectionNameFylke)||selectionNameFylke.startsWith(aTrip.getFylke())){
+                    if(aTrip.getKommune().equals(selectionNameKommune)||selectionNameKommune.startsWith(aTrip.getKommune())){
+                        turer.add(aTrip);
+                        antall++;
+                    }
+                }
+            }
         }
 
-        Log.d(TAG, "onResponse: Init?");
-        initRecyclerView();
-
     }
 
-
-    /**
-     * Method for passing the selected trip, so it can be passed
-     * to the DisplayAtrip Activity
-     * @param aTrip the trip selected from the recycler view
-     */
-    public void passSelectedTrip(Trip aTrip){
-
-        // using context and next component class to create intent
-        Intent intent = new Intent(this, DisplayAtrip.class);
-        // using putExtra(String key, Parcelable value) method
-        intent.putExtra("object", aTrip);
-        startActivity(intent);
-    }
-
-
+    //Init the recycler view.
     public void initRecyclerView(){
 
         RecyclerView recyclerView = findViewById(R.id.tripsRecyclerView);
         adapter = new MainTripRecyclerViewAdapter(this, turer);
-
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         Log.d(TAG, "onResponse: Run check");
-        checkChange();
-
-
+        if(!onlyRusleturTrips){
+            checkChange();
+        }else{
+            //No more trips are to be loaded. Hide the loading bar
+            pgsBar.setVisibility(View.INVISIBLE);
+            onlyRusleturTrips = false;
+        }
     }
-
 
     //Handler for notifying a new item in recycler view
     private Handler handler = new Handler();
@@ -259,12 +288,8 @@ public class Trips extends AppCompatActivity  {
                 antall++;
                 //Call to local storage:
                 LocalStorage localStorage = LocalStorage.getInstance(getApplicationContext());
-
-                if (localStorage.getTripsByCriteria(selectionNameFylke,selectionNameKommune).size()>0){
-                    turer.addAll(localStorage.getTripsByCriteria(selectionNameFylke,selectionNameKommune));
-                    antall+= localStorage.getTripsByCriteria(selectionNameFylke,selectionNameKommune).size();
-                }
-
+                //Does there exists trips that matches the search criteria?
+                lookUpRusleTurTrips(localStorage);
 
                 //Recursion. Make sure to have a constant loop to always check if there is a new item in the arraylist
                 checkChange();
@@ -297,6 +322,5 @@ public class Trips extends AppCompatActivity  {
                 }
             }
         }, 3000);
-
     }
 }

@@ -1,6 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -184,7 +185,7 @@ public class SaveTripActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     handleStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     //REDIRECT
-                                    onBackPressed();
+                                    startActivity(new Intent(SaveTripActivity.this,MainScreen.class));
 
                                 }
                             })
@@ -193,7 +194,7 @@ public class SaveTripActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     handleOfflineStorageOfTrips(nameinput, description, selectedDifficulty, municipality, county);
                                     //REDIRECT
-                                    onBackPressed();
+                                    startActivity(new Intent(SaveTripActivity.this,MainScreen.class));
 
                                 }
                             })

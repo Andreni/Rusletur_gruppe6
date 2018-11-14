@@ -72,6 +72,7 @@ public class FirebaseHandler {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Trip.allCustomTrips.clear();
                 /** For each Child in Trip */
                 for(DataSnapshot aShot : dataSnapshot.getChildren()) {
                     /** HashMap that will store the String tripname and a Hashmap with all of the childs. */

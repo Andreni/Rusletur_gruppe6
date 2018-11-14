@@ -1,8 +1,6 @@
 package no.hiof.informatikk.gruppe6.rusletur.ApiCalls;
 
-import android.app.Application;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -10,20 +8,15 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.common.api.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.IdForTur;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
-import no.hiof.informatikk.gruppe6.rusletur.Trips;
 
 /**
  * Class for looking up available ids for User

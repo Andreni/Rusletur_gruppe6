@@ -51,7 +51,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapFrag);
         mapFragment.getMapAsync(( this));
-        if(senderClass.equals("Trips")){
+        if(senderClass.equals("FindAtrip")){
             setupItems(false);
         }else if (senderClass.equals("LocalStorageTrips")){
             setupItems(true);

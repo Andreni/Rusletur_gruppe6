@@ -28,7 +28,7 @@ public class LookUpFylkerOgKommunerGitHub {
 
     private Context currentContext;
     private RequestQueue mQueue;
-    private String url = "https://raw.githubusercontent.com/Andreni/Rusletur_gruppe6/master/fylkerMedKommuner.txt?token=Ae4q3_gVHObUYa-Lnzn5cr33OnSZNJmvks5b8BTFwA%3D%3D";
+    private String url = "https://raw.githubusercontent.com/Andreni/Rusletur_gruppe6/master/fylkerogkommuner.txt?token=Ae4q3zmOiCW5w_R5iHXOgVFPaEaPs-K_ks5b9F7GwA%3D%3D";
     public static ArrayList<ArrayList<String>> fylkerOgKommuner = new ArrayList<>();
 
 
