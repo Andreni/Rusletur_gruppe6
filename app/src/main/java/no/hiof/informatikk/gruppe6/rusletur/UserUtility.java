@@ -1,16 +1,23 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+
 public class UserUtility {
+
+    private static final int REQUEST_FINE_LOCATION = 1;
 
     /*
     * Activity: checkIfUserHasPermissionsEnabled(Activity.this)
     * Fragment: checkIfUserHasPermissionsEnabled(getActivity())
+    *
      */
 
     public static boolean checkIfUserHasPermissionsEnabled(Context context){
@@ -21,6 +28,10 @@ public class UserUtility {
         else {
             return false;
         }
+    }
+
+    public static void requestPermission(Activity activity){
+        ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_FINE_LOCATION);
     }
 
     public static boolean checkIfUserHasMobileNetworkEnabled(Context context){

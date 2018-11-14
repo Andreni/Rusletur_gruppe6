@@ -36,6 +36,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.ShowProgressOfTrip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
 public class MainMenuFragment extends Fragment {
 
@@ -97,16 +98,21 @@ public class MainMenuFragment extends Fragment {
         recordTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startRecordIntent = new Intent(getActivity(), TripTracker.class);
-                getActivity().startService(startRecordIntent);
+                if(UserUtility.checkIfUserHasPermissionsEnabled(getActivity())) {
+                    Intent startRecordIntent = new Intent(getActivity(), TripTracker.class);
+                    getActivity().startService(startRecordIntent);
 
-                recordTripButton.setVisibility(View.INVISIBLE);
-                stopRecordButton.setVisibility(View.VISIBLE);
-                showInMapButton.setVisibility(View.VISIBLE);
+                    recordTripButton.setVisibility(View.INVISIBLE);
+                    stopRecordButton.setVisibility(View.VISIBLE);
+                    showInMapButton.setVisibility(View.VISIBLE);
 
-                chronometer.setBase(SystemClock.elapsedRealtime());
-                chronometer.start();
-                timerRunning = true;
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    chronometer.start();
+                    timerRunning = true;
+                }
+                else {
+                    UserUtility.requestPermission(getActivity());
+                }
             }
         });
 
