@@ -61,10 +61,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //Global variable for permission:
 
-    private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA = 1;
+    private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE = 1;
 
     private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA };
+            android.Manifest.permission.READ_EXTERNAL_STORAGE };
 
 
     @Override
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             isPermissionsGranted = true;
         }else{
             EasyPermissions.requestPermissions(this, "Appen trenger tilattelser til å bruke \n" +
-                    "GPS, Kamera og Lagring",MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA,neededPermissions);
+                    "GPS, Kamera og Lagring",MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE,neededPermissions);
 
             }
 
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }else{
             //TODO Make into a variable
             EasyPermissions.requestPermissions(this, "For at applikasjonen skal fungere optimalt \n" +
-                    "trenger den tilattelse til å bruke GPS, Kamera og Laging  ",123,neededPermissions);
+                    "trenger den tilattelse til å bruke GPS og Lagring  ",123,neededPermissions);
         }
     }
 
