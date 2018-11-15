@@ -149,7 +149,7 @@ public class TripTracker extends Service {
 
         Log.i(TAG, "Day : " + day + " Hour " + hours + " minutes: " + minute + " seconds : " + second);
 
-        String timeSpent = ((day != 0) ? (day + "dager, "):"") + "" + ((hours != 0) ? (hours + " timer, ") : "") + "" + ((minute != 0) ? (minute + " minutter, ") : "0 minutter, ") + "" + ((minute != 0) ? (second + " sekunder") : "0 sekunder");
+        String timeSpent = ((day != 0) ? (day + "dager, "):"") + "" + ((hours != 0) ? (hours + " timer, ") : "") + "" + ((minute != 0) ? (minute + " minutter, ") : "0 minutter, ") + "" + ((second != 0) ? (second + " sekunder") : "0 sekunder");
 
         /*
         * When service is terminated, check if boolean is true in MainMenuFragment.
