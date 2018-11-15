@@ -294,6 +294,7 @@ public class FindAtrip extends AppCompatActivity  {
             }
         }
     };
+    private int antallSkejkker = 0;
 
     //Method for cheking new items in arraylist for recycler view
     private void checkChange(){
@@ -315,8 +316,13 @@ public class FindAtrip extends AppCompatActivity  {
                 //If there isn't a new item
                 if(antall == turer.size()){
                     Log.d(TAG, "run: onResonse: " + turer);
-                    //Recursion. Checking again after 3 seconds
-                    checkChange();
+                    antallSkejkker++;
+                    if(antallSkejkker > 4){
+                        
+                    }else{
+                        //Recursion. Checking again after 3 seconds
+                        checkChange();
+                    }
                 }
             }
         }, 3000);
