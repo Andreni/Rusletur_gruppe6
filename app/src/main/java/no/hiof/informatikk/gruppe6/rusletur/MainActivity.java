@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             isPermissionsGranted = true;
         }else{
             EasyPermissions.requestPermissions(this, "Appen trenger tilattelser til å bruke \n" +
-                    "GPS, Kamera og Lagring",MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE,neededPermissions);
+                    "GPS og lagring",MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE,neededPermissions);
 
             }
 

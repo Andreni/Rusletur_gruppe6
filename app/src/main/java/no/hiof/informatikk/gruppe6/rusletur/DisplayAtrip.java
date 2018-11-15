@@ -33,6 +33,8 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     private Trip aTrip;
     private GoogleMap mMap;
+    private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE };
 
     Context context = this;
 

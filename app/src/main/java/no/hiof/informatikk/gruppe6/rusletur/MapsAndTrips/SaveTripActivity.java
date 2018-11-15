@@ -32,11 +32,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpFylkerOgKommunerGitHub;
+import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import pub.devrel.easypermissions.EasyPermissions;
 
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
@@ -59,6 +61,8 @@ public class SaveTripActivity extends AppCompatActivity {
     EditText editMin;
     Boolean isImport = false;
     String tripLength = "0";
+    private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE };
 
 
     private ArrayList<LatLng> savedCoordinates = new ArrayList<>();
@@ -76,6 +80,7 @@ public class SaveTripActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_savetrip);
+        checkPermissions();
 
         //Setup views
         //countySpinner = findViewById(R.id.savetrip_selectCounty);
@@ -210,6 +215,19 @@ public class SaveTripActivity extends AppCompatActivity {
 
         loadList();
 
+    }
+
+    private boolean checkPermissions(){
+        boolean isPermissionsGranted = false;
+
+        if (EasyPermissions.hasPermissions(this,neededPermissions)){
+            isPermissionsGranted = true;
+        }else{
+            startActivity(new Intent(this,MainActivity.class));
+
+        }
+
+        return isPermissionsGranted;
     }
 
 

@@ -42,8 +42,10 @@ import io.ticofab.androidgpxparser.parser.domain.Track;
 import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import io.ticofab.androidgpxparser.parser.task.GpxFetchedAndParsed;
+import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import pub.devrel.easypermissions.EasyPermissions;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -70,6 +72,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private LatLng startLocation;
     private String tripName;
+    private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE };
 
     //Used for drawing up stuff
     private ArrayList<LatLng> receivedTripInProgress = new ArrayList<>();
@@ -82,6 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         Log.d(TAG,"MapsActivity has been initiated");
+        checkPermissions();
 
         aTrip = getIntent().getParcelableExtra("object");
 
@@ -119,6 +124,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         tripName = aTrip.getNavn();
 
 
+    }
+
+    private boolean checkPermissions(){
+        boolean isPermissionsGranted = false;
+
+        if (EasyPermissions.hasPermissions(this,neededPermissions)){
+            isPermissionsGranted = true;
+        }else{
+
+            startActivity(new Intent(this,MainActivity.class));
+            finish();
+        }
+
+        return isPermissionsGranted;
     }
 
     private void startTracking(){

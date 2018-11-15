@@ -32,6 +32,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -50,17 +51,15 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         public static String mainscreenLastname;
         private DatabaseReference db;
         public final static String TAG2 = "Jesus";
+        private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE };
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_screen);
+            checkPermissions();
 
-            if(ContextCompat.checkSelfPermission(context,android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                Intent byebyeIntent = new Intent(MainScreen.this, MainActivity.class);
-                Toast.makeText(this, "Denne applikasjonen trenger både GPS og lokal lagring ", Toast.LENGTH_SHORT).show();
-                startActivity(byebyeIntent);
-            }
 
             //Check user
             mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -123,6 +122,19 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             mainscreenFirstname = firstname;
             mainscreenLastname = lastname;
         }
+
+    private boolean checkPermissions(){
+        boolean isPermissionsGranted = false;
+
+        if (EasyPermissions.hasPermissions(this,neededPermissions)){
+            isPermissionsGranted = true;
+        }else{
+            startActivity(new Intent(this,MainActivity.class));
+
+        }
+
+        return isPermissionsGranted;
+    }
 
 
 

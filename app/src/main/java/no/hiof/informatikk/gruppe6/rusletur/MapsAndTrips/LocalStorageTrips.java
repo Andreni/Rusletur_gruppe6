@@ -47,7 +47,7 @@ public class LocalStorageTrips extends AppCompatActivity {
     GPXParser mParser;
     private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE };
-    private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE = 1;
+
 
 
     @Override
@@ -154,18 +154,6 @@ public class LocalStorageTrips extends AppCompatActivity {
         super.onBackPressed();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        EasyPermissions.onRequestPermissionsResult(requestCode,permissions,grantResults);
-        //Statement to check if we have the needed permissions:
-        if (EasyPermissions.hasPermissions(this,neededPermissions)){
-            //Proceed with current activity
-        }else{
-            startActivity(new Intent(this,MainActivity.class));
-        }
-    }
 }
 
 
