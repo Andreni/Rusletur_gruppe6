@@ -243,6 +243,7 @@ public class FindAtrip extends AppCompatActivity  {
                 if (aTrip.getFylke().equals(selectionNameFylke)||selectionNameFylke.startsWith(aTrip.getFylke())){
                     if(aTrip.getKommune().equals(selectionNameKommune)||selectionNameKommune.startsWith(aTrip.getKommune())){
                         turer.add(aTrip);
+                        Log.d(TAG, "lookUpRusleTurTrips: Tidsbruk: " + aTrip.getTidsbruk());
                         antall++;
                     }
                 }
