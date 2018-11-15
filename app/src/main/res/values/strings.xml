@@ -24,6 +24,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="item_to_be_dispalyed">Item to be dispalyed</string>
     <string-array name="kommune">
         <item>Sel</item>
         <item>Vågå</item>
