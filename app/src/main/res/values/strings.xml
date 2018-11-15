@@ -24,6 +24,7 @@
     <string name="map_display_route_to_trip">Vis vei til tur</string>
     <string name="permissions_denied">Denne applikasjonen trenger tilgang til GPS og lokal lagring</string>
     <string name="record_warning">OBS! Billig hardware kan gi dårlig resultat.\n Pass på å slå av strømsparing før du begynner turen</string>
+    <string name="nav_findtrip">Finn en tur</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
