@@ -25,11 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.NewUserFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -57,36 +55,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //Check user
             mUser = FirebaseAuth.getInstance().getCurrentUser();
-
+            FirebaseHandler.getUserInfo(mUser.getUid());
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
             Toast.makeText(this,"Gps is turnned on: " + UserUtility.checkIfUserHasGPSEnabled(this),Toast.LENGTH_SHORT).show();
 
             FirebaseHandler.downloadAllCustomTrips();
-
-            //Check if user is new user.
-            Bundle extras = getIntent().getExtras();
-            if(extras != null){
-                checkIfNewUser = extras.getBoolean("newUser");
-                Log.i(MapsActivity.TAG, String.valueOf(checkIfNewUser));
-            }
-            else {
-                Log.i(MapsActivity.TAG, "Extras contained nothing");
-            }
-
-            if(checkIfNewUser){
-                Toast.makeText(this, "Welcome, new user!", Toast.LENGTH_SHORT).show();
-                Log.i(MapsActivity.TAG, "MainScreen found new user");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewUserFragment()).commit();
-            }
-            else {
-                Log.i(MapsActivity.TAG, "checkIfNewUser is false");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
-                Log.i(TAG2, mUser.toString());
-                Log.i(TAG2, mUser.getUid());
-                FirebaseHandler.getUserInfo(mUser.getUid());
-            }
-
 
             //Calls location
             LocationHandler.forceUpdateOfCurrentLocation(this);
@@ -102,11 +76,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //Initialize drawerlayout
             drawerLayout = findViewById(R.id.drawerLayout);
 
-
-
             //Clickhandling on navigationdrawer
             NavigationView navigationView = findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
+
+            if(savedInstanceState == null){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
+                navigationView.setCheckedItem(R.id.nav_home);
+            }
 
             //Make a cool spinning animation for the hamburgermeny when navigationdrawer opens
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

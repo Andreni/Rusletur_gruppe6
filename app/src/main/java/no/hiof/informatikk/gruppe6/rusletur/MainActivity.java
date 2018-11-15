@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
+import no.hiof.informatikk.gruppe6.rusletur.User.NewUser;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -148,9 +149,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                             if(task.isSuccessful()){
                                 //Send user to second screen
                                 if(checkPermissions()){
-                                    Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
-                                    loginIntent.putExtra("newUser", newUser);
-                                    startActivity(loginIntent);
+                                    if(newUser){
+                                        Intent newUserIntent = new Intent(MainActivity.this, NewUser.class);
+                                        startActivity(newUserIntent);
+                                    }
+                                    else {
+                                        Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
+                                        startActivity(loginIntent);
+                                        newUser = false; //If user returns to login-screen.
+                                    }
 
                                 }else{
                                     writeMessageToUser("Du får ikke logget inn uten å ha gitt tilattelser");

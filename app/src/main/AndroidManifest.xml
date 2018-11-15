@@ -60,7 +60,8 @@
             android:name=".MapsAndTrips.TripTracker"
             android:enabled="true" />
 
-        <activity android:name=".MapsAndTrips.LocalStorageTrips"></activity>
+        <activity android:name=".MapsAndTrips.LocalStorageTrips" />
+        <activity android:name=".User.NewUser"></activity>
     </application>
 
 </manifest>
