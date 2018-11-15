@@ -35,7 +35,7 @@ public class MainScreen_MainMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 if(UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity())) {
-                    startActivity(new Intent(getContext(), FindAtrip.class));
+                    startActivity(new Intent(getActivity(), FindAtrip.class));
                 }
                 else {
                     Toast.makeText(getActivity(), "This won't happen", Toast.LENGTH_SHORT).show();
@@ -46,7 +46,11 @@ public class MainScreen_MainMenu extends Fragment {
         view.findViewById(R.id.mainScreenMainMenufragment_makeAtrip_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                if (UserUtility.checkIfUserHasGPSEnabled(getActivity())) {
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                }else{
+                    Toast.makeText(getActivity(),"Du må skru på GPS",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

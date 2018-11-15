@@ -60,10 +60,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
-
+            Toast.makeText(this,"Gps is turnned on: " + UserUtility.checkIfUserHasGPSEnabled(this),Toast.LENGTH_SHORT).show();
 
             FirebaseHandler.downloadAllCustomTrips();
-
 
             //Check if user is new user.
             Bundle extras = getIntent().getExtras();
