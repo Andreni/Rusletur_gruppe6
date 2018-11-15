@@ -49,6 +49,10 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         Log.d(TAG, "onBindViewHolder: created");
         if(mItem.get(0) != null){
             holder.itemNavn.setText(mItem.get(position).getNavn());
+            if(mItem.get(position).getGoogleDirections() != null) {
+                holder.itemAvstandTid.setText("Det tar deg: " + mItem.get(position).getGoogleDirections().getDuration() + " og gå til turen som er");
+                holder.itemAvstandKm.setText(mItem.get(position).getGoogleDirections().getDistance() + " unna deg.");
+            }
             holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
             holder.itemGradering.setText(mItem.get(position).getGradering());
         }
@@ -82,11 +86,15 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         RelativeLayout parentLayout;
         TextView itemNavn;
         TextView itemTidsbruk;
+        TextView itemAvstandTid;
+        TextView itemAvstandKm;
         TextView itemGradering;
         public ViewHolder(View itemView){
             super(itemView);
 
             itemNavn = itemView.findViewById(R.id.itemNavn);
+            itemAvstandKm = itemView.findViewById(R.id.itemAvstandKm);
+            itemAvstandTid = itemView.findViewById(R.id.itemAvstandTid);
             itemTidsbruk = itemView.findViewById(R.id.itemTidsbruk);
             itemGradering = itemView.findViewById(R.id.itemGradering);
             parentLayout = itemView.findViewById(R.id.parentLayoutForListItem);

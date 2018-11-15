@@ -2,6 +2,7 @@ package no.hiof.informatikk.gruppe6.rusletur.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseUser;
@@ -11,13 +12,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GoogleDirections;
 import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
 
 /**
  * A trip object
  */
-public class Trip implements Parcelable {
+public class Trip implements Parcelable, Comparable<Trip> {
 
 
     private String id;
@@ -32,6 +34,7 @@ public class Trip implements Parcelable {
     private String url;
     private String tidsbruk;
     private ArrayList<LatLng> coordinates;
+    private GoogleDirections googleDirections;
     private static int idCount = 0;
     public static ArrayList<Trip> trips;
     private static DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
@@ -51,6 +54,7 @@ public class Trip implements Parcelable {
         this.url = url;
         this.coordinates = coordinates;
         this.tidsbruk = tidsbruk;
+        createGoogleDirections();
     }
 
     /**
@@ -98,6 +102,17 @@ public class Trip implements Parcelable {
         idCount++;
     }
 
+    private void createGoogleDirections() {
+        setGoogleDirections(new GoogleDirections(getStartLatLng(),getNavn()));
+    }
+
+    @Override
+    public int compareTo(Trip o) {
+        int a = this.getGoogleDirections().getDistanceRaw();
+        int b = o.getGoogleDirections().getDistanceRaw();
+        return a-b;
+    }
+
     /**
      * Quick-way to get the start location of the trip
      * @return the first LatLng of the trip
@@ -106,6 +121,13 @@ public class Trip implements Parcelable {
         return getCoordinates().get(0);
     }
 
+    public GoogleDirections getGoogleDirections() {
+        return googleDirections;
+    }
+
+    public void setGoogleDirections(GoogleDirections googleDirections) {
+        this.googleDirections = googleDirections;
+    }
 
     public String getId() {
         return id;
@@ -215,5 +237,6 @@ public class Trip implements Parcelable {
             return new Trip[size];
         }
     };
+
 
 }

@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
@@ -279,6 +280,7 @@ public class FindAtrip extends AppCompatActivity  {
             //If antall (amaount of trips in recyclerView) is less than the amount of trips in ArrayList
             if(antall < turer.size()){
                 //When the loading is complete, remove progression bar
+                Collections.sort(turer);
                 pgsBar.setVisibility(View.GONE);
                 //The method for loading a new item that is in the array for the recyclerview
                 adapter.notifyItemInserted(0);
