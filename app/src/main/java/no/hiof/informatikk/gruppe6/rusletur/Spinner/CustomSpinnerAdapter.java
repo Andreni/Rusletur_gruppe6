@@ -1,9 +1,12 @@
 package no.hiof.informatikk.gruppe6.rusletur.Spinner;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.AppCompatDrawableManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +39,15 @@ public class CustomSpinnerAdapter extends ArrayAdapter<SpinnerData> {
 
             return customView;
         }else{
-
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View customView = layoutInflater.inflate(R.layout.spinner_layout_listitem, parent, false);
+
+            ConstraintLayout constraintLayout = customView.findViewById(R.id.customspinner_parent);
+            if(position % 2 == 0) {
+                constraintLayout.setBackground(context.getResources().getDrawable(context.getResources().getIdentifier("listitem_border_bottom_colorprimary", "drawable", context.getPackageName())));
+            }else{
+                constraintLayout.setBackground(context.getResources().getDrawable(context.getResources().getIdentifier("listitem_border_bottom_colorlight", "drawable", context.getPackageName())));
+            }
 
             TextView textView = customView.findViewById(R.id.spinner_textview);
             ImageView imageView = customView.findViewById(R.id.spinner_imageview);

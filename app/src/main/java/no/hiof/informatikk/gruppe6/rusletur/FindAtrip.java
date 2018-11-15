@@ -122,6 +122,9 @@ public class FindAtrip extends AppCompatActivity  {
             if(alist.getRegisterForFylke().get(i).getFylkeName().toLowerCase().contains("finnmark")){
                 name = "finnmark";
             }
+            if(alist.getRegisterForFylke().get(i).getFylkeName().toLowerCase().contains("trøndelag")){
+                name = "trondelag";
+            }
             customList.add(new SpinnerData(alist.getRegisterForFylke().get(i).getFylkeName(), getResources().getIdentifier(name, "drawable", getPackageName())));
             Log.d(TAG, "setUpFylkeSpinner: CustomSpinner: Name: " + name);
             Log.d(TAG, "setUpFylkeSpinner: CustomSpinner: added to customList: " + new SpinnerData(alist.getRegisterForFylke().get(i).getFylkeName(), getResources().getIdentifier(name, "drawable", getPackageName())));
