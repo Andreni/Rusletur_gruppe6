@@ -64,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location current = null;
     //Polyline options
     private PolylineOptions options;
-    private double differenceBeforePing = 0.0025;
+    private double differenceBeforePing = 0.0045;
     private String CHANNEL_1_ID = "default";
     private boolean STOP = false;
 
