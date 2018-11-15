@@ -2,12 +2,14 @@ package no.hiof.informatikk.gruppe6.rusletur.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +50,11 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
 
         Log.d(TAG, "onBindViewHolder: created");
         if(mItem.get(0) != null){
+            if(position % 2 == 0){
+                holder.listitemParent.setBackgroundColor(Color.rgb(250,250,250));
+            }else{
+                holder.listitemParent.setBackgroundColor(Color.rgb(240,240,240));
+            }
             holder.itemNavn.setText(mItem.get(position).getNavn());
             holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
             holder.itemGradering.setText(mItem.get(position).getGradering());
@@ -83,9 +90,11 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         TextView itemNavn;
         TextView itemTidsbruk;
         TextView itemGradering;
+        LinearLayout listitemParent;
         public ViewHolder(View itemView){
             super(itemView);
 
+            listitemParent = itemView.findViewById(R.id.listitem_tripsview_parent);
             itemNavn = itemView.findViewById(R.id.itemNavn);
             itemTidsbruk = itemView.findViewById(R.id.itemTidsbruk);
             itemGradering = itemView.findViewById(R.id.itemGradering);

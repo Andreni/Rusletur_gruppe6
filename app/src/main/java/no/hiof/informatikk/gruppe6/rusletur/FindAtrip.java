@@ -248,7 +248,6 @@ public class FindAtrip extends AppCompatActivity  {
                 }
             }
         }
-
     }
 
     //Init the recycler view.
