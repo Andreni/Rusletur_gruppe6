@@ -22,6 +22,7 @@
     <string name="recordfragment_stop_button">Avslutt tur</string>
     <string name="recordfragment_showmap_button">Vis tur i kart</string>
     <string name="map_display_route_to_trip">Vis vei til tur</string>
+    <string name="permissions_denied">Denne applikasjonen trenger tilgang til GPS og lokal lagring</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
