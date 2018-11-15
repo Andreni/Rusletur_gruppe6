@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -78,6 +79,10 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         displayDifficulty.setText(aTrip.getGradering());
         //ScrollView displayDescrption = findViewById(R.id.displayAtrip_tripDesc_ScrollView);
         TextView desc = findViewById(R.id.displayAtrip_description_TextView);
+        Log.i(MainScreen.TAG3   , "dISPLAY A TRIP ANTALL :"  + String.valueOf(aTrip.getCoordinates().size()));
+        for(int i = 0; i < aTrip.getCoordinates().size(); i++){
+            Log.i(MainScreen.TAG3, "Coords i display a trip : " + String.valueOf(aTrip.getCoordinates().get(i).latitude + " " +  String.valueOf(aTrip.getCoordinates().get(i).longitude)));
+        }
 
         desc.setText(Html.fromHtml(aTrip.getBeskrivelse()));
         //TextView displayTag = findViewById(R.id.displayAtrip_tagOfTrip_textView2);

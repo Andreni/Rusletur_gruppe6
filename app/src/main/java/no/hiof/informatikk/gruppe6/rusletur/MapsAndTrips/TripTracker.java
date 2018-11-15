@@ -102,6 +102,7 @@ public class TripTracker extends Service {
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
+
         /*
         * FusedLocationProvider gives the most accurate results.
         * On each LocationCallback (set by the interval above), convert that location into a
@@ -122,7 +123,7 @@ public class TripTracker extends Service {
                     LatLng previousLocation = new LatLng(valueOf(locationResult.getLastLocation().getLongitude()), valueOf(locationResult.getLastLocation().getLatitude()));
                     Log.i(MapsActivity.TAG, previousLocation.toString());
                     savedLocations.add(previousLocation);
-                    Log.i(MapsActivity.TAG, Integer.toString(savedLocations.size()));
+                    Log.i(MainScreen.TAG3, "TripTracker sin SavedLocations:" + Integer.toString(savedLocations.size()));
 
 
                     super.onLocationResult(locationResult);
@@ -137,6 +138,7 @@ public class TripTracker extends Service {
     }
 
     public static ArrayList<LatLng> fetchArray(){
+        Log.i(MainScreen.TAG3, "FetchArray blir kalt : " + String.valueOf(savedLocations.size()));
         return savedLocations;
     }
 
@@ -178,6 +180,7 @@ public class TripTracker extends Service {
             startSaveTripIntent.setClass(this, SaveTripActivity.class);
             startSaveTripIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startSaveTripIntent.putExtra("coordsArray", savedLocations);
+            Log.i(MainScreen.TAG3, "onDestroy blir kalt : " + String.valueOf(savedLocations.size()));
             startSaveTripIntent.putExtra("timeSpent", timeSpent);
             startSaveTripIntent.putExtra("sender",this.getClass().getSimpleName());
             startActivity(startSaveTripIntent);

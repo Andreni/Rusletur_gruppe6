@@ -105,7 +105,7 @@ public class SaveTripActivity extends AppCompatActivity {
             isImport=true;
 
         }
-        Log.i(TAG, "SaveTripActivity mottok Array! : " + String.valueOf(savedCoordinates.size()));
+        Log.i(MainScreen.TAG3, "SaveTripActivity mottok Array! : " + String.valueOf(savedCoordinates.size()));
 
         //String with custom time spent on trip. Can be in any format, Day:Hour:Minute:Seconds
         String timeSpent = getIntent().getStringExtra("timeSpent");
@@ -244,7 +244,7 @@ public class SaveTripActivity extends AppCompatActivity {
         //Generate a unique id for the trip:
         String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
         LocalStorage localStorage = LocalStorage.getInstance(this);
-        localStorage.addTrip(new Trip(timestamp, tripName, "Gi et tag", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Blank", savedCoordinates, tripLength));
+            localStorage.addTrip(new Trip(timestamp, tripName, "Gi et tag", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Blank", savedCoordinates, tripLength));
         Toast.makeText(this,"Tur lagret",Toast.LENGTH_SHORT).show();
 
     }

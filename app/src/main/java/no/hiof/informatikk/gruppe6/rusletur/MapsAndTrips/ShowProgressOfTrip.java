@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
@@ -44,7 +45,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
         setContentView(R.layout.activity_progressmap);
 
         receievedList = TripTracker.fetchArray();
-        Log.i(TAG, "onCreate size of array : " + String.valueOf(receievedList.size()));
+        Log.i(MainScreen.TAG3, "ShowProgressOfTrip receieved : " + String.valueOf(receievedList.size()));
 
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.progress_map_gmap);

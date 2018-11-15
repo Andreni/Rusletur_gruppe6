@@ -49,6 +49,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         public static String mainscreenUsername;
         public static String mainscreenFirstname;
         public static String mainscreenLastname;
+        public final static String TAG3 = "ArrayDebug";
         private DatabaseReference db;
         public final static String TAG2 = "Jesus";
         private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,

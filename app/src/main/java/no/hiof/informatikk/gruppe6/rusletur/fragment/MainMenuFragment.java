@@ -145,6 +145,7 @@ public class MainMenuFragment extends Fragment {
                                         recordTripButton.setVisibility(View.VISIBLE);
                                         stopRecordButton.setVisibility(View.INVISIBLE);
                                         showInMapButton.setVisibility(View.INVISIBLE);
+                                        
                                     }
                                     else {
                                         Toast.makeText(getActivity(), "Du mangler internett, får desverre ikke lagret turen", Toast.LENGTH_LONG).show();
