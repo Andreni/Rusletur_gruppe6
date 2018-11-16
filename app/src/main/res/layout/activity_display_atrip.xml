@@ -12,33 +12,30 @@
         android:id="@+id/displayAtrip_goTrip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorPrimary"
         android:onClick="goToMaps"
         android:text="Gå!"
+        android:textColor="#fff"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_goBack_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/displayAtrip_goBack_button"
-        android:background="@color/colorPrimary"
-        android:textColor="#fff"
-        />
+        app:layout_constraintHorizontal_bias="0.727"
+        app:layout_constraintStart_toEndOf="@+id/displayAtrip_goBack_button" />
 
     <Button
         android:id="@+id/displayAtrip_goBack_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
         android:onClick="goBack"
         android:text="Tilbake"
+        android:textColor="#fff"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_goTrip_button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/colorPrimary"
-        android:textColor="#fff"
-        />
+        tools:layout_editor_absoluteX="137dp" />
 
 
     <LinearLayout
@@ -264,15 +261,29 @@
         android:id="@+id/displayAtrip_DeleteAtrip_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="48dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:text="Slett"
         android:textSize="15sp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_goTrip_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/displayAtrip_goBack_button" />
+
+    <Button
+        android:id="@+id/displayAtrip_showPathToTrip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:onClick="showPathToTrip"
+        android:text="GPS"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_goBack_button"
+        app:layout_constraintHorizontal_bias="0.242"
         app:layout_constraintStart_toStartOf="parent" />
 
 
