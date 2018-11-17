@@ -57,7 +57,9 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
             }
             holder.itemNavn.setText(mItem.get(position).getNavn());
             if(mItem.get(position).getGoogleDirections() != null) {
-                holder.itemAvstandKm.setText("Avstand til tur: " + mItem.get(position).getGoogleDirections().getDistance() );
+                holder.itemAvstandKm.setText(mItem.get(position).getGoogleDirections().getDistance());
+            } else {
+                holder.itemAvstandKm.setText("? km");
             }
             holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
             holder.itemGradering.setText(mItem.get(position).getGradering());

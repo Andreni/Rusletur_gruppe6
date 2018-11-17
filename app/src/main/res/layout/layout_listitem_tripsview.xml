@@ -1,79 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="5dp"
-    android:id="@+id/parentLayoutForListItem">
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:padding="5dp"
+android:id="@+id/parentLayoutForListItem">
 
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentStart="true"
+    android:id="@+id/listitem_tripsview_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/itemNavn"
+        android:textStyle="bold|italic"
+        android:textColor="#000" />
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentStart="true"
-        android:id="@+id/listitem_tripsview_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/tidsbrukView"
+        android:weightSum="5">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/itemNavn"
-            android:textStyle="bold|italic"
-            android:textColor="#000" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/itemTidsbruk"
-            android:textColor="#000" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/itemGradering"
-            android:textColor="#000" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/itemAvstandKm"
-            android:textColor="#000" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/itemTidsbrukStaticText"
-                    android:text="Tidsbruk: "
-                    android:textColor="#000"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/itemGraderingStaticText"
-                    android:text="Vannsklighetsgrad: "
-                    android:textColor="#000"
-                    />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="3">
+                android:id="@+id/itemTidsbrukStaticText"
+                android:text="Tidsbruk: "
+                android:textColor="#000"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemGraderingStaticText"
+                android:text="Vannsklighetsgrad: "
+                android:textColor="#000"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemAvstandKMStaticText"
+                android:text="Avstand til tur: "
+                android:textColor="#000"
+                />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/itemTidsbruk"
-                    android:textColor="#000"
-                    android:layout_gravity="start"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/itemGradering"
-                    android:textColor="#000"
-                    android:layout_gravity="start"/>
-            </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="3">
 
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemTidsbruk"
+                android:textColor="#000"
+                android:layout_gravity="start"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/itemGradering"
+                android:textColor="#000"
+                android:layout_gravity="start"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/itemAvstandKm"
+                android:textColor="#000" />
+        </LinearLayout>
     </LinearLayout>
+
+
+</LinearLayout>
 
 
 
