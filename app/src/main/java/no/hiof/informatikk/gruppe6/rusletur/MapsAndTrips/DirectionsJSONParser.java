@@ -18,7 +18,9 @@ public class DirectionsJSONParser {
     public List<List<HashMap<String,String>>> parse(JSONObject jObject){
 
         List<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String,String>>>() ;
+        int distanceRaw = 0;
         String distance = null;
+        int durationRaw = 0;
         String duration = null;
         JSONArray jRoutes = null;
         JSONArray jLegs = null;
@@ -36,6 +38,8 @@ public class DirectionsJSONParser {
                 if(i == 0) {
                     distance = (String) ((JSONObject) ((JSONObject) jLegs.get(0)).get("distance")).get("text");
                     duration = (String) ((JSONObject) ((JSONObject) jLegs.get(0)).get("duration")).get("text");
+                    distanceRaw = ((JSONObject) ((JSONObject) jLegs.get(0)).get("duration")).getInt("value");
+                    durationRaw = ((JSONObject) ((JSONObject) jLegs.get(0)).get("duration")).getInt("value");
                 }
 
                 /** For each legs, get the steps */
@@ -56,9 +60,10 @@ public class DirectionsJSONParser {
                             hm.put("lng", Double.toString(((LatLng)list.get(l)).longitude) );
                             if(l == 0) {
                                 hm.put("distance", distance);
+                                hm.put("distanceRaw", String.valueOf(distanceRaw));
                                 hm.put("duration", duration);
+                                hm.put("durationRaw", String.valueOf(durationRaw));
                             }
-                            Log.d(TAG,"Lat: " + list.get(l).latitude + " Lon: " + list.get(l).longitude + " ...");
                             path.add(hm);
                         }
                     }
@@ -107,9 +112,9 @@ public class DirectionsJSONParser {
             LatLng p = new LatLng((((double) lat / 1E5)),
                     (((double) lng / 1E5)));
             poly.add(p);
-            Log.d(TAG,"Poly added, total: " + poly.size());
         }
 
+        Log.d(TAG,"Poly added, total: " + poly.size());
         return poly;
     }
 }

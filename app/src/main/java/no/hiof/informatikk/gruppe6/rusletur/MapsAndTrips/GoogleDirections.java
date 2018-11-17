@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -22,24 +24,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
+
 public class GoogleDirections {
     private static final String TAG = "GoogleDirections";
     private LatLng currentPosition;
     private LatLng tripStartLocation = null;
     private String status = "READY";
-    public final String STATUS_READY = "READY";
-    public final String STATUS_RUNNING = "RUNNING";
     private PolylineOptions polylineOptions = null;
     private String distance;
+    private int distanceRaw;
     private String duration;
-    private String tripName;
+    private int durationRaw;
+    private String tripName; 
+    private Trip trip;
 
-    public GoogleDirections(LatLng tripStartLocation, String name) {
-        this.tripName = name;
-        this.tripStartLocation = tripStartLocation;
-        setStatus(STATUS_RUNNING);
-        Log.d(TAG,"********************************************************************START********************************************************************");
-        Log.d(TAG," [0] Current location is set");
+    public GoogleDirections(Trip trip) {
+        this.trip = trip;
+        this.tripName = trip.getNavn();
+        this.tripStartLocation = trip.getStartLatLng();
         try {
             currentPosition = new LatLng(LocationHandler.getCurrentLocation().getLatitude(), LocationHandler.getCurrentLocation().getLongitude());
             String url = getDirectionsUrl(currentPosition, tripStartLocation);
@@ -58,7 +61,38 @@ public class GoogleDirections {
                 Log.e(TAG, "Something was null?\n" + e.toString());
             }
         }
-        Log.d(TAG,"********************************************************************END********************************************************************");
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public int getDistanceRaw() {
+        return distanceRaw;
+    }
+
+    public void setDistanceRaw(int distanceRaw) {
+        this.distanceRaw = distanceRaw;
+    }
+
+    public int getDurationRaw() {
+        return durationRaw;
+    }
+
+    public void setDurationRaw(int durationRaw) {
+        this.durationRaw = durationRaw;
     }
 
     private String getDirectionsUrl(LatLng startPos, LatLng endPos) {
@@ -72,6 +106,10 @@ public class GoogleDirections {
         String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + apiKey;
         Log.d(TAG,"URL complete. Result: " + url);
         return url;
+    }
+
+    public void addGoogleDirectionsToTrip() {
+        trip.setGoogleDirections(this);
     }
 
     //To download the JSON file
@@ -128,7 +166,13 @@ public class GoogleDirections {
     }
 
     public PolylineOptions getPolylineOptions() {
-        return polylineOptions;
+        if(polylineOptions != null) {
+            return polylineOptions;
+        }
+        else {
+            Log.e(TAG,"No polylines in googleDirection object.");
+            return null;
+        }
     }
 
     // Fetches data from url passed
@@ -194,8 +238,6 @@ public class GoogleDirections {
             ArrayList<LatLng> points = null;
             PolylineOptions lineOptions = null;
             MarkerOptions markerOptions = new MarkerOptions();
-            String distance = "";
-            String duration = "";
 
             if (result.size() < 1) {
                 Log.e(TAG,"No results from google directions...");
@@ -215,8 +257,10 @@ public class GoogleDirections {
                     HashMap<String, String> point = path.get(j);
 
                     if(j == 0) {
-                        distance = point.get("distance");
-                        duration = point.get("duration");
+                        setDistance(point.get("distance"));
+                        setDuration(point.get("duration"));
+                        setDurationRaw(Integer.parseInt(point.get("durationRaw")));
+                        setDistanceRaw(Integer.parseInt(point.get("distanceRaw")));
                     }
                     double lat = Double.parseDouble(point.get("lat"));
                     double lng = Double.parseDouble(point.get("lng"));
@@ -232,8 +276,7 @@ public class GoogleDirections {
             }
             polylineOptions = lineOptions;
             Log.d(TAG, "Distance: " + distance + " Duration: " + duration);
-            Log.d(TAG,"Polylines added to array...");
-            setStatus(STATUS_READY);
+            addGoogleDirectionsToTrip();
         }
     }
 }
