@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -59,6 +60,7 @@ public class MainMenuFragment extends Fragment {
     private Button stopRecordButton;
     private Button showInMapButton;
 
+
     //Worst practice = best practice.
     public static boolean saveWasClicked = false;
 
@@ -71,6 +73,14 @@ public class MainMenuFragment extends Fragment {
         //Inflate view. Basically "set" view.
         final View view = inflater.inflate(R.layout.fragment_mainscreen, container, false);
         Log.d("TESTER", "UTENFOR ONCLICK");
+
+        //Get the maker of the phone
+        String manufacturer = Build.MANUFACTURER;
+        if (manufacturer.equals("Huawei")||manufacturer.equals("HUAWEI")){
+            //If the user has a Huawei product, warn them about battery saving features:
+            TextView text_warning = view.findViewById(R.id.fragment_mainscreen_warning);
+            text_warning.setVisibility(View.VISIBLE);
+        }
 
 
         /*
