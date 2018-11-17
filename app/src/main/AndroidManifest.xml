@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     //TODO Check to see if there are more needed permissions
     <application
         android:allowBackup="true"
@@ -59,8 +59,7 @@
             android:name=".MapsAndTrips.TripTracker"
             android:enabled="true" />
 
-        <activity android:name=".MapsAndTrips.LocalStorageTrips" />
-        <activity android:name=".User.NewUser"></activity>
+        <activity android:name=".MapsAndTrips.LocalStorageTrips"></activity>
     </application>
 
 </manifest>

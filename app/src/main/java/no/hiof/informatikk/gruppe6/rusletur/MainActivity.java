@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
-import no.hiof.informatikk.gruppe6.rusletur.User.NewUser;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -61,10 +60,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     //Global variable for permission:
 
-    private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE = 1;
+    private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA = 1;
 
     private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE };
+            android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA };
 
 
     @Override
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             isPermissionsGranted = true;
         }else{
             EasyPermissions.requestPermissions(this, "Appen trenger tilattelser til å bruke \n" +
-                    "GPS og lagring",MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE,neededPermissions);
+                    "GPS, Kamera og Lagring",MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE_AND_CAMERA,neededPermissions);
 
             }
 
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }else{
             //TODO Make into a variable
             EasyPermissions.requestPermissions(this, "For at applikasjonen skal fungere optimalt \n" +
-                    "trenger den tilattelse til å bruke GPS og Lagring  ",123,neededPermissions);
+                    "trenger den tilattelse til å bruke GPS, Kamera og Laging  ",123,neededPermissions);
         }
     }
 
@@ -149,15 +148,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                             if(task.isSuccessful()){
                                 //Send user to second screen
                                 if(checkPermissions()){
-                                    if(newUser){
-                                        Intent newUserIntent = new Intent(MainActivity.this, NewUser.class);
-                                        startActivity(newUserIntent);
-                                    }
-                                    else {
-                                        Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
-                                        startActivity(loginIntent);
-                                        newUser = false; //If user returns to login-screen.
-                                    }
+                                    Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
+                                    loginIntent.putExtra("newUser", newUser);
+                                    startActivity(loginIntent);
 
                                 }else{
                                     writeMessageToUser("Du får ikke logget inn uten å ha gitt tilattelser");

@@ -23,7 +23,6 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Class for selection of available trips for the user.
@@ -47,14 +46,11 @@ public class FindAtrip extends AppCompatActivity  {
     private ProgressBar pgsBar;
     private Boolean onlyRusleturTrips = false;
     private LocalStorage localStorage;
-    private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.READ_EXTERNAL_STORAGE };
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trips);
-        checkPermissions();
 
         pgsBar = findViewById(R.id.progressBarForLoadingTrips);
 
@@ -325,18 +321,5 @@ public class FindAtrip extends AppCompatActivity  {
                 }
             }
         }, 3000);
-    }
-
-    private boolean checkPermissions(){
-        boolean isPermissionsGranted = false;
-
-        if (EasyPermissions.hasPermissions(this,neededPermissions)){
-            isPermissionsGranted = true;
-        }else{
-            startActivity(new Intent(this,MainActivity.class));
-
-        }
-
-        return isPermissionsGranted;
     }
 }

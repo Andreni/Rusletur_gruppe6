@@ -17,8 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -31,7 +29,6 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.ShowProgressOfTrip;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
 public class MainMenuFragment extends Fragment {
 
@@ -54,7 +51,6 @@ public class MainMenuFragment extends Fragment {
     private Button stopRecordButton;
     private Button showInMapButton;
 
-
     //Worst practice = best practice.
     public static boolean saveWasClicked = false;
 
@@ -67,14 +63,6 @@ public class MainMenuFragment extends Fragment {
         //Inflate view. Basically "set" view.
         final View view = inflater.inflate(R.layout.fragment_mainscreen, container, false);
         Log.d("TESTER", "UTENFOR ONCLICK");
-
-        //Get the maker of the phone
-        String manufacturer = Build.MANUFACTURER;
-        if (manufacturer.equals("Huawei")||manufacturer.equals("HUAWEI")){
-            //If the user has a Huawei product, warn them about battery saving features:
-            TextView text_warning = view.findViewById(R.id.fragment_mainscreen_warning);
-            text_warning.setVisibility(View.VISIBLE);
-        }
 
 
         /*
@@ -102,21 +90,16 @@ public class MainMenuFragment extends Fragment {
         recordTripButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity()) && UserUtility.checkIfUserHasGPSEnabled(getActivity())) {
-                    Intent startRecordIntent = new Intent(getActivity(), TripTracker.class);
-                    getActivity().startService(startRecordIntent);
+                Intent startRecordIntent = new Intent(getActivity(), TripTracker.class);
+                getActivity().startService(startRecordIntent);
 
-                    recordTripButton.setVisibility(View.INVISIBLE);
-                    stopRecordButton.setVisibility(View.VISIBLE);
-                    showInMapButton.setVisibility(View.VISIBLE);
+                recordTripButton.setVisibility(View.INVISIBLE);
+                stopRecordButton.setVisibility(View.VISIBLE);
+                showInMapButton.setVisibility(View.VISIBLE);
 
-                    chronometer.setBase(SystemClock.elapsedRealtime());
-                    chronometer.start();
-                    timerRunning = true;
-                }
-                else {
-                    Toast.makeText(getActivity(), "Trenger internett for å starte denne funksjonen", Toast.LENGTH_SHORT).show();
-                }
+                chronometer.setBase(SystemClock.elapsedRealtime());
+                chronometer.start();
+                timerRunning = true;
             }
         });
 
@@ -128,53 +111,48 @@ public class MainMenuFragment extends Fragment {
         stopRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    AlertDialog.Builder builder;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
-                    } else {
-                        builder = new AlertDialog.Builder(getActivity());
-                    }
 
-                    builder.setTitle("Avslutt tur")
-                            .setMessage("Vil du lagre denne turen?")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if(UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity()) && UserUtility.checkIfUserHasGPSEnabled(getActivity())) {
-                                        Log.i(MapsActivity.TAG, "Yes selected");
-                                        saveWasClicked = true;
-                                        Intent saveAndStopIntent = new Intent(getActivity(), TripTracker.class);
-                                        getActivity().stopService(saveAndStopIntent);
-                                        chronometer.stop();
-                                        recordTripButton.setVisibility(View.VISIBLE);
-                                        stopRecordButton.setVisibility(View.INVISIBLE);
-                                        showInMapButton.setVisibility(View.INVISIBLE);
-                                        
-                                    }
-                                    else {
-                                        Toast.makeText(getActivity(), "Du mangler internett, får desverre ikke lagret turen", Toast.LENGTH_LONG).show();
-                                    }
-
-
-                                }
-                            })
-                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Toast.makeText(getActivity(), "Tur slettet", Toast.LENGTH_SHORT).show();
-                                    saveWasClicked = false;
-                                    Intent discardAndStopIntent = new Intent(getActivity(), TripTracker.class);
-                                    getActivity().stopService(discardAndStopIntent);
-                                    recordTripButton.setVisibility(View.VISIBLE);
-                                    stopRecordButton.setVisibility(View.INVISIBLE);
-                                    showInMapButton.setVisibility(View.INVISIBLE);
-
-                                    chronometer.stop();
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(getActivity());
                 }
+
+                builder.setTitle("Avslutt tur")
+                        .setMessage("Vil du lagre denne turen?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.i(MapsActivity.TAG, "Yes selected");
+                                saveWasClicked = true;
+                                Intent saveAndStopIntent = new Intent(getActivity(), TripTracker.class);
+                                getActivity().stopService(saveAndStopIntent);
+                                chronometer.stop();
+                                recordTripButton.setVisibility(View.VISIBLE);
+                                stopRecordButton.setVisibility(View.INVISIBLE);
+                                showInMapButton.setVisibility(View.INVISIBLE);
+
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Toast.makeText(getActivity(), "Tur slettet", Toast.LENGTH_SHORT).show();
+                                saveWasClicked = false;
+                                Intent discardAndStopIntent = new Intent(getActivity(), TripTracker.class);
+                                getActivity().stopService(discardAndStopIntent);
+                                recordTripButton.setVisibility(View.VISIBLE);
+                                stopRecordButton.setVisibility(View.INVISIBLE);
+                                showInMapButton.setVisibility(View.INVISIBLE);
+
+                                chronometer.stop();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
         });
 
         showInMapButton.setOnClickListener(new View.OnClickListener() {
