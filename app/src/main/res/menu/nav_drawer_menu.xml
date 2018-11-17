@@ -17,6 +17,10 @@
             android:id="@+id/nav_trip"
             android:icon="@drawable/ic_trip"
             android:title="@string/nav_trip" />
+        <item
+            android:id="@+id/nav_findtrip"
+            android:icon="@drawable/ic_findtrip"
+            android:title="@string/nav_findtrip" />
     </group>
 
     <item android:title="Innstillinger">

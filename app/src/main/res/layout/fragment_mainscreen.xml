@@ -24,12 +24,13 @@
         android:layout_width="124dp"
         android:layout_height="51dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="148dp"
         android:layout_marginEnd="8dp"
         android:background="@color/colorPrimary"
         android:text="@string/recordfragment_start_button"
         android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_mainscreen_chronometer" />
 
@@ -38,12 +39,13 @@
         android:layout_width="121dp"
         android:layout_height="51dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="148dp"
         android:layout_marginEnd="8dp"
         android:background="@color/colorPrimary"
-        android:textColor="#fff"
         android:text="@string/recordfragment_stop_button"
+        android:textColor="#fff"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_mainscreen_chronometer" />
 
@@ -52,7 +54,7 @@
         android:layout_width="121dp"
         android:layout_height="51dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:background="@color/colorPrimary"
         android:text="@string/recordfragment_showmap_button"
@@ -61,6 +63,19 @@
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stopRecordButton" />
+
+    <TextView
+        android:id="@+id/fragment_mainscreen_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="52dp"
+        android:text="@string/record_warning"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/stopRecordButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <!--

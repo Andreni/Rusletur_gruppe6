@@ -2,10 +2,13 @@ package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,12 +28,12 @@ import com.google.firebase.database.DatabaseReference;
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.NewUserFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,47 +50,27 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         public static String mainscreenUsername;
         public static String mainscreenFirstname;
         public static String mainscreenLastname;
+        public final static String TAG3 = "ArrayDebug";
         private DatabaseReference db;
         public final static String TAG2 = "Jesus";
+        private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE };
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_screen);
+            checkPermissions();
+
 
             //Check user
             mUser = FirebaseAuth.getInstance().getCurrentUser();
-
+            FirebaseHandler.getUserInfo(mUser.getUid());
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
-
+            Toast.makeText(this,"Gps is turnned on: " + UserUtility.checkIfUserHasGPSEnabled(this),Toast.LENGTH_SHORT).show();
 
             FirebaseHandler.downloadAllCustomTrips();
-
-
-            //Check if user is new user.
-            Bundle extras = getIntent().getExtras();
-            if(extras != null){
-                checkIfNewUser = extras.getBoolean("newUser");
-                Log.i(MapsActivity.TAG, String.valueOf(checkIfNewUser));
-            }
-            else {
-                Log.i(MapsActivity.TAG, "Extras contained nothing");
-            }
-
-            if(checkIfNewUser){
-                Toast.makeText(this, "Welcome, new user!", Toast.LENGTH_SHORT).show();
-                Log.i(MapsActivity.TAG, "MainScreen found new user");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new NewUserFragment()).commit();
-            }
-            else {
-                Log.i(MapsActivity.TAG, "checkIfNewUser is false");
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
-                Log.i(TAG2, mUser.toString());
-                Log.i(TAG2, mUser.getUid());
-                FirebaseHandler.getUserInfo(mUser.getUid());
-            }
-
 
             //Calls location
             LocationHandler.forceUpdateOfCurrentLocation(this);
@@ -103,11 +86,14 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //Initialize drawerlayout
             drawerLayout = findViewById(R.id.drawerLayout);
 
-
-
             //Clickhandling on navigationdrawer
             NavigationView navigationView = findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
+
+            if(savedInstanceState == null){
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
+                navigationView.setCheckedItem(R.id.nav_home);
+            }
 
             //Make a cool spinning animation for the hamburgermeny when navigationdrawer opens
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -139,6 +125,19 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             mainscreenLastname = lastname;
         }
 
+    private boolean checkPermissions(){
+        boolean isPermissionsGranted = false;
+
+        if (EasyPermissions.hasPermissions(this,neededPermissions)){
+            isPermissionsGranted = true;
+        }else{
+            startActivity(new Intent(this,MainActivity.class));
+
+        }
+
+        return isPermissionsGranted;
+    }
+
 
 
         @Override
@@ -157,7 +156,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfilePageFragment()).commit();
                     break;
                 case R.id.nav_settings:
-                    Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show();
+                    if(UserUtility.checkIfUserHasMobileNetworkEnabled(this)) {
+                        Toast.makeText(this, "Connection worked", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(this, "Connection failed", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case R.id.nav_trip:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
@@ -168,6 +172,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     break;
+                case R.id.nav_findtrip:
+                    Intent findTripIntent = new Intent(MainScreen.this, FindAtrip.class);
+                    startActivity(findTripIntent);
 
             }
 

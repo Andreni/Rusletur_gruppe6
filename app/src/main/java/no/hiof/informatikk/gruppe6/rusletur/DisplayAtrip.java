@@ -34,6 +34,8 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     private Trip aTrip;
     private GoogleMap mMap;
+    private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE };
 
     Context context = this;
 
@@ -77,6 +79,10 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         displayDifficulty.setText(aTrip.getGradering());
         //ScrollView displayDescrption = findViewById(R.id.displayAtrip_tripDesc_ScrollView);
         TextView desc = findViewById(R.id.displayAtrip_description_TextView);
+        Log.i(MainScreen.TAG3   , "dISPLAY A TRIP ANTALL :"  + String.valueOf(aTrip.getCoordinates().size()));
+        for(int i = 0; i < aTrip.getCoordinates().size(); i++){
+            Log.i(MainScreen.TAG3, "Coords i display a trip : " + String.valueOf(aTrip.getCoordinates().get(i).latitude + " " +  String.valueOf(aTrip.getCoordinates().get(i).longitude)));
+        }
 
         desc.setText(Html.fromHtml(aTrip.getBeskrivelse()));
         //TextView displayTag = findViewById(R.id.displayAtrip_tagOfTrip_textView2);

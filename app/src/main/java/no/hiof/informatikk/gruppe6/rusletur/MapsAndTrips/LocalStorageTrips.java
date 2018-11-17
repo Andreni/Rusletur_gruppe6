@@ -3,6 +3,7 @@ package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,10 +26,12 @@ import io.ticofab.androidgpxparser.parser.domain.Gpx;
 import io.ticofab.androidgpxparser.parser.domain.Track;
 import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
+import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Class for displaying stored Trip objects
@@ -42,6 +45,9 @@ public class LocalStorageTrips extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
     private String TAG = "LocalStorageTrips";
     GPXParser mParser;
+    private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE };
+
 
 
     @Override
@@ -59,7 +65,21 @@ public class LocalStorageTrips extends AppCompatActivity {
         mainTripAdapter = new MainTripRecyclerViewAdapter(this, localStorage.getAllTrips());
         recyclerView.setAdapter(mainTripAdapter);
 
+        checkPermissions();
 
+
+    }
+    private boolean checkPermissions(){
+        boolean isPermissionsGranted = false;
+
+        if (EasyPermissions.hasPermissions(this,neededPermissions)){
+            isPermissionsGranted = true;
+        }else{
+            startActivity(new Intent(this,MainActivity.class));
+
+        }
+
+        return isPermissionsGranted;
     }
 
     public void importAtrip(View view){
@@ -133,6 +153,7 @@ public class LocalStorageTrips extends AppCompatActivity {
     public void goBack(View view){
         super.onBackPressed();
     }
+
 }
 
 
