@@ -20,22 +20,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:id="@+id/itemAvstandTid"
-            android:textColor="#000" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/itemAvstandKm"
-            android:textColor="#000" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
             android:id="@+id/itemTidsbruk"
             android:textColor="#000" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/itemGradering"
+            android:textColor="#000" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/itemAvstandKm"
             android:textColor="#000" />
 
     </LinearLayout>

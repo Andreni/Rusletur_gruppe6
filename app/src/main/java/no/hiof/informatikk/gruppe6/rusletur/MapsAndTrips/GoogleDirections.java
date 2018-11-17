@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.AsyncTask;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -22,24 +24,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
+
 public class GoogleDirections {
     private static final String TAG = "GoogleDirections";
     private LatLng currentPosition;
     private LatLng tripStartLocation = null;
     private String status = "READY";
-    public final String STATUS_READY = "READY";
-    public final String STATUS_RUNNING = "RUNNING";
     private PolylineOptions polylineOptions = null;
     private String distance;
     private int distanceRaw;
     private String duration;
     private int durationRaw;
-    private String tripName;
+    private String tripName; 
+    private Trip trip;
 
-    public GoogleDirections(LatLng tripStartLocation, String name) {
-        this.tripName = name;
-        this.tripStartLocation = tripStartLocation;
-        setStatus(STATUS_RUNNING);
+    public GoogleDirections(Trip trip) {
+        this.trip = trip;
+        this.tripName = trip.getNavn();
+        this.tripStartLocation = trip.getStartLatLng();
         try {
             currentPosition = new LatLng(LocationHandler.getCurrentLocation().getLatitude(), LocationHandler.getCurrentLocation().getLongitude());
             String url = getDirectionsUrl(currentPosition, tripStartLocation);
@@ -105,6 +108,10 @@ public class GoogleDirections {
         return url;
     }
 
+    public void addGoogleDirectionsToTrip() {
+        trip.setGoogleDirections(this);
+    }
+
     //To download the JSON file
     private String downloadUrl(String strUrl) throws IOException {
         Log.d(TAG,"Starting downloading of url...");
@@ -159,7 +166,13 @@ public class GoogleDirections {
     }
 
     public PolylineOptions getPolylineOptions() {
-        return polylineOptions;
+        if(polylineOptions != null) {
+            return polylineOptions;
+        }
+        else {
+            Log.e(TAG,"No polylines in googleDirection object.");
+            return null;
+        }
     }
 
     // Fetches data from url passed
@@ -263,7 +276,7 @@ public class GoogleDirections {
             }
             polylineOptions = lineOptions;
             Log.d(TAG, "Distance: " + distance + " Duration: " + duration);
-            setStatus(STATUS_READY);
+            addGoogleDirectionsToTrip();
         }
     }
 }

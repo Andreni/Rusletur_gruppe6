@@ -55,6 +55,7 @@ public class Trip implements Parcelable, Comparable<Trip> {
         this.coordinates = coordinates;
         this.tidsbruk = tidsbruk;
         createGoogleDirections();
+
     }
 
     /**
@@ -103,7 +104,7 @@ public class Trip implements Parcelable, Comparable<Trip> {
     }
 
     private void createGoogleDirections() {
-        setGoogleDirections(new GoogleDirections(getStartLatLng(),getNavn()));
+        new GoogleDirections(this);
     }
 
     @Override
@@ -237,6 +238,4 @@ public class Trip implements Parcelable, Comparable<Trip> {
             return new Trip[size];
         }
     };
-
-
 }

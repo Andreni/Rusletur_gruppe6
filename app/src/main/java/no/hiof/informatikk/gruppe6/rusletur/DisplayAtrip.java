@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -152,6 +153,8 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
     public void goBack(View view){
         super.onBackPressed();
     }
+
+
 
     public void goToMaps(View view){
         Intent intent = new Intent(this, MapsActivity.class);

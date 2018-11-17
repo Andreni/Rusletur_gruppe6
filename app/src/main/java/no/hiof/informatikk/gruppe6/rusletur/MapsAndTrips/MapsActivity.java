@@ -117,15 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startService(new Intent(this, TripTracker.class));
         Log.i(TAG, "startTracking is called");
     }
-    public void showPath(View view) {
-        if(count == 0) {
-            test = new GoogleDirections(tripStartLocation, tripTitleName);
-            count++;
-        }
-        if(test.getStatus() == test.STATUS_READY) {
-            mMap.addPolyline(test.getPolylineOptions());
-        }
-    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
