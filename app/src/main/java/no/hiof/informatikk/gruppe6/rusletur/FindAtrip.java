@@ -1,6 +1,5 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,15 +13,17 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
-import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
+import no.hiof.informatikk.gruppe6.rusletur.Spinner.CustomSpinnerAdapter;
+import no.hiof.informatikk.gruppe6.rusletur.Spinner.SpinnerData;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
@@ -103,13 +104,47 @@ public class FindAtrip extends AppCompatActivity  {
 
     //Initalize the fylke dropdown menu
     public void setUpFylkeSpinner(FylkeList alist){
+
+        final List<SpinnerData> customList = new ArrayList<>();
+
+        Log.d(TAG, "setUpFylkeSpinner: CustomSpinner aList: " + alist.getRegisterForFylke().size());
+        Log.d(TAG, "setUpFylkeSpinner: CustomSpinner aList data: " + alist.getRegisterForFylke().toString());
+        customList.add(new SpinnerData("Valg: "));
+        for(int i = 1; i < alist.getRegisterForFylke().size(); i++){
+            Log.d(TAG, "setUpFylkeSpinner: CustomSpinner: Inside forloop");
+            String name = alist.getRegisterForFylke().get(i).getFylkeName().toLowerCase();
+
+            if(alist.getRegisterForFylke().get(i).getFylkeName().toLowerCase().contains("ø")){
+                name = name.replace("ø", "o");
+            }
+            if(alist.getRegisterForFylke().get(i).getFylkeName().toLowerCase().contains("-")){
+                name = name.replace("-", "_");
+            }
+            if(alist.getRegisterForFylke().get(i).getFylkeName().toLowerCase().contains(" ")){
+                name = name.replace(" ", "_");
+            }
+            if(alist.getRegisterForFylke().get(i).getFylkeName().toLowerCase().contains("finnmark")){
+                name = "finnmark";
+            }
+            if(alist.getRegisterForFylke().get(i).getFylkeName().toLowerCase().contains("trøndelag")){
+                name = "trondelag";
+            }
+            customList.add(new SpinnerData(alist.getRegisterForFylke().get(i).getFylkeName(), getResources().getIdentifier(name, "drawable", getPackageName())));
+            Log.d(TAG, "setUpFylkeSpinner: CustomSpinner: Name: " + name);
+            Log.d(TAG, "setUpFylkeSpinner: CustomSpinner: added to customList: " + new SpinnerData(alist.getRegisterForFylke().get(i).getFylkeName(), getResources().getIdentifier(name, "drawable", getPackageName())));
+        }
+
         spinnerFylke = findViewById(R.id.tripsA_SelectFylke_spinner);
         //Load fylker from array
-        ArrayAdapter<Fylke> arrayAdapterFylke =
-                new ArrayAdapter<>(this,android.R.layout.simple_list_item_1
-                        ,alist.getRegisterForFylke());
-        arrayAdapterFylke.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        CustomSpinnerAdapter arrayAdapterFylke =
+                new CustomSpinnerAdapter(FindAtrip.this, R.layout.spinner_layout_listitem
+                        ,customList);
+        //arrayAdapterFylke.setDropDownViewResource(R.layout.spinner_layout_listitem);
         spinnerFylke.setAdapter(arrayAdapterFylke);
+
+        Log.d(TAG, "setUpFylkeSpinner: CustomSpinner: adapter set");
+        Log.d(TAG, "setUpFylkeSpinner: CustomSpinner: spinner.toString: " + spinnerFylke.toString());
+
 
         //When only FylkeSpinner is in use and there is no valid selection, do not show kommuneSpinner
         spinnerKommune = findViewById(R.id.tripsA_SelectKommune_spinner2);
@@ -249,12 +284,12 @@ public class FindAtrip extends AppCompatActivity  {
                 if (aTrip.getFylke().equals(selectionNameFylke)||selectionNameFylke.startsWith(aTrip.getFylke())){
                     if(aTrip.getKommune().equals(selectionNameKommune)||selectionNameKommune.startsWith(aTrip.getKommune())){
                         turer.add(aTrip);
+                        Log.d(TAG, "lookUpRusleTurTrips: Tidsbruk: " + aTrip.getTidsbruk());
                         antall++;
                     }
                 }
             }
         }
-
     }
 
     //Init the recycler view.

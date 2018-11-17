@@ -129,7 +129,7 @@ public class LocalStorageTrips extends AppCompatActivity {
                             Log.d(TAG, "  segment " + j + ":");
                             for (TrackPoint trackPoint : segment.getTrackPoints()) {
                                 Log.d(TAG, "    point: lat " + trackPoint.getLatitude() + ", lon " + trackPoint.getLongitude());
-                                parsedLatLng.add(new LatLng(trackPoint.getLongitude(),trackPoint.getLatitude()));
+                                parsedLatLng.add(new LatLng(trackPoint.getLatitude(),trackPoint.getLongitude()));
                             }
 
                         }

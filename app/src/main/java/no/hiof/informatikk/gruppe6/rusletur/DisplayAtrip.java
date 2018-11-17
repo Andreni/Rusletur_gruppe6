@@ -136,11 +136,11 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         PolylineOptions options = new PolylineOptions();
         //Start position
         LatLng tripStartLocation = null;
-        tripStartLocation = new LatLng(aTrip.getCoordinates().get(0).longitude, aTrip.getCoordinates().get(0).latitude);
+        tripStartLocation = new LatLng(aTrip.getCoordinates().get(0).latitude, aTrip.getCoordinates().get(0).longitude);
 
         //Registers the first polylines at the start of the trip, this will be used in the addMarker.
         for (int i = 0; i< aTrip.getCoordinates().size();i++) {
-            options.add(new LatLng(aTrip.getCoordinates().get(i).longitude,aTrip.getCoordinates().get(i).latitude));
+            options.add(new LatLng(aTrip.getCoordinates().get(i).latitude,aTrip.getCoordinates().get(i).longitude));
 
         }
 
