@@ -107,7 +107,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //SJEKK OM GPS STÅR PÅ
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            Toast.makeText(this, "plz turn on", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Du trenger GPS for denne funksjonen", Toast.LENGTH_SHORT).show();
         }
 
         //SJEKK OM ACCESS FINE LOCATION STÅR PÅ, HVIS PÅ KJØR STARTTRACKING
