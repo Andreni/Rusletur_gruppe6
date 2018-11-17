@@ -146,7 +146,7 @@ public class MainMenuFragment extends Fragment {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if(UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity())) {
+                                    if(UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity()) && UserUtility.checkIfUserHasGPSEnabled(getActivity())) {
                                         Log.i(MapsActivity.TAG, "Yes selected");
                                         saveWasClicked = true;
                                         Intent saveAndStopIntent = new Intent(getActivity(), TripTracker.class);
