@@ -45,6 +45,7 @@ import io.ticofab.androidgpxparser.parser.task.GpxFetchedAndParsed;
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
@@ -87,6 +88,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         Log.d(TAG,"MapsActivity has been initiated");
         checkPermissions();
+        if (!UserUtility.checkIfUserHasGPSEnabled(this)){
+            STOP = true;
+            super.onDestroy();
+        }
 
         aTrip = getIntent().getParcelableExtra("object");
 
