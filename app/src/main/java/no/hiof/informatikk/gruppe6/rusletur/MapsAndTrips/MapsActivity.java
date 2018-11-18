@@ -3,6 +3,7 @@ package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +46,7 @@ import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import io.ticofab.androidgpxparser.parser.task.GpxFetchedAndParsed;
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
@@ -388,6 +391,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onDestroy(){
         STOP = true;
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed(){
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Avslutt")
+                .setMessage("Vil du avslutte turen?")
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        startActivity(new Intent(getApplication(),MainScreen.class));
+
+                    }
+                })
+                .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
     }
 
 }
