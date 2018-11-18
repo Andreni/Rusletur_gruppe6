@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -108,6 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Button btnStart = findViewById(R.id.startTrip);
 
         //SJEKK OM GPS STÅR PÅ
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -177,6 +179,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             aTrip = getIntent().getParcelableExtra("object");
             parseObject(aTrip);
         }
+    }
+
+    public void startCurrentTrip(View view){
+        view.setVisibility(View.INVISIBLE);
     }
 
 

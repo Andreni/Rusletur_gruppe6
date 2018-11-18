@@ -29,6 +29,20 @@
                 android:onClick="showPath"
                 android:text="@string/map_display_route_to_trip" />
 
+            <Button
+                android:id="@+id/startTrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:textAlignment="center"
+                android:onClick="startCurrentTrip"
+                android:text="Start" />
+
         </fragment>
 
 
