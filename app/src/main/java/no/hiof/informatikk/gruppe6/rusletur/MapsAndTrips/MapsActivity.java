@@ -183,6 +183,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void startCurrentTrip(View view){
         view.setVisibility(View.INVISIBLE);
+        if (calcClosestMarker() > differenceBeforePing) {
+            Log.d(TAG, "onComplete: checkLocation: ALERT");
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MapsActivity.this, CHANNEL_1_ID)
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentTitle("Warning!")
+                    .setContentText("Du går bort fra turen")
+                    .setAutoCancel(true)
+                    .setPriority(NotificationManager.IMPORTANCE_HIGH);
+            mNotificationManager.notify(0, mBuilder.build());
+        }
+
+
     }
 
 
@@ -298,19 +311,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             current = (Location) task.getResult();
 
 
-                            if (calcClosestMarker() > differenceBeforePing) {
-                                Log.d(TAG, "onComplete: checkLocation: ALERT");
-                                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MapsActivity.this, CHANNEL_1_ID)
-                                        .setSmallIcon(R.mipmap.ic_launcher)
-                                        .setContentTitle("Warning!")
-                                        .setContentText("Du går bort fra turen")
-                                        .setAutoCancel(true)
-                                        .setPriority(NotificationManager.IMPORTANCE_HIGH);
-                                mNotificationManager.notify(0, mBuilder.build());
-                            }
-
-
                         } else {
                             Log.d(TAG, "onComplete: checkLocation: Failed to find location");
                         }
@@ -336,7 +336,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     getCurrentLocation();
                     checkLocation();
                 }
-            }, 5000);
+            }, 3000);
         }
 
     }
