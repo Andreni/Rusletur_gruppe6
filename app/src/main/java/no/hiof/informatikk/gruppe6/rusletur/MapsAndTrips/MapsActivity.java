@@ -336,7 +336,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     getCurrentLocation();
                     checkLocation();
                 }
-            }, 3000);
+            }, 30000);
         }
 
     }
