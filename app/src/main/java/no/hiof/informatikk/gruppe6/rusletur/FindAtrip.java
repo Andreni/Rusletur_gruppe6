@@ -2,6 +2,7 @@ package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -59,6 +60,9 @@ public class FindAtrip extends AppCompatActivity  {
         checkPermissions();
 
         pgsBar = findViewById(R.id.progressBarForLoadingTrips);
+
+        ConstraintLayout parent = findViewById(R.id.findatripparent);
+        parent.setBackground(getResources().getDrawable(getResources().getIdentifier("loginscreen_background", "drawable", getPackageName())));
 
         loadLists();
     }
@@ -189,12 +193,15 @@ public class FindAtrip extends AppCompatActivity  {
     public void setupKommuneSpinner(final Integer positonFylke){
         //Load Kommuner from array
         //Setup adapter for loading Kommune objects
-        ArrayAdapter<Kommune> arrayAdapterKommune =
-                new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,
-                FylkeList.getRegisterForFylke()
-                        .get(positonFylke)
-                        .getKommuneArrayList());
-        arrayAdapterKommune.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        final List<SpinnerData> kommuneData = new ArrayList<>();
+
+        for(int i = 0; i < FylkeList.getRegisterForFylke().get(positonFylke).getKommuneArrayList().size(); i++){
+            kommuneData.add(new SpinnerData(FylkeList.getRegisterForFylke().get(positonFylke).getKommuneArrayList().get(i).getKommuneNavn()));
+        }
+        CustomSpinnerAdapter arrayAdapterKommune =
+                new CustomSpinnerAdapter(this,android.R.layout.simple_list_item_1,
+                kommuneData);
+        //arrayAdapterKommune.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinnerKommune.setAdapter(arrayAdapterKommune);
 
         spinnerKommune.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

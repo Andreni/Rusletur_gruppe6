@@ -1,7 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur.Spinner;
 
 public class SpinnerData {
-    private int picture;
+    private int picture = 0;
     private String name;
 
     public SpinnerData(String name, int picture) {

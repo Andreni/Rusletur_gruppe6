@@ -26,12 +26,10 @@
         android:id="@+id/spinner_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="12dp"
         android:textColor="#000"
         android:textSize="15sp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner_imageview"
-        app:layout_constraintStart_toEndOf="@+id/spinner_imageview"
-        app:layout_constraintTop_toTopOf="@+id/spinner_imageview" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
