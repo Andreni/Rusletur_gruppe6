@@ -185,6 +185,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         view.setVisibility(View.INVISIBLE);
         checkLocation();
 
+        if(!STOP) {
+            Log.d(TAG, "getCurrentLocation: checkLocation Before fusedlocationprovider");
+            FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            try {
+                Task location = mFusedLocationProviderClient.getLastLocation();
+                Log.d(TAG, "getCurrentLocation: checkLocation: after init task");
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "onComplete: checkLocation: Location found");
+                            //Adds blue dot at your location
+                            mMap.setMyLocationEnabled(true);
+                            current = (Location) task.getResult();
+
+
+                        } else {
+                            Log.d(TAG, "onComplete: checkLocation: Failed to find location");
+                        }
+                    }
+                });
+                Log.d(TAG, "getCurrentLocation: checkLocation: Task complete");
+            } catch (SecurityException e) {
+                Log.d(TAG, "getCurrentLocation: checkLocation Permission not granted");
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -335,7 +362,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .setPriority(NotificationManager.IMPORTANCE_HIGH);
                         mNotificationManager.notify(0, mBuilder.build());
                     }
-                    
+
                     checkLocation();
 
                 }
