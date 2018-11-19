@@ -9,12 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
@@ -316,7 +318,6 @@ public class FindAtrip extends AppCompatActivity  {
             onlyRusleturTrips = false;
         }
     }
-
     //Handler for notifying a new item in recycler view
     private Handler handler = new Handler();
     //It's a handler/runnablew for doing it in a new thread
@@ -324,6 +325,7 @@ public class FindAtrip extends AppCompatActivity  {
         @Override
         public void run() {
             //If antall (amaount of trips in recyclerView) is less than the amount of trips in ArrayList
+
             if(antall < turer.size()){
                 //When the loading is complete, remove progression bar
                 pgsBar.setVisibility(View.GONE);
@@ -344,10 +346,9 @@ public class FindAtrip extends AppCompatActivity  {
         }
     };
 
+
     //Method for cheking new items in arraylist for recycler view
     private void checkChange(){
-        Log.d(TAG, "onResponse: Check runned");
-
         //Makes a new handler, it should run in a new thread so the UI dosnæt stop
         final Handler handler2 = new Handler();
         //Makes it so it chekcs every 3 seconds. Laggy if we constantly makes new threads?
@@ -363,7 +364,7 @@ public class FindAtrip extends AppCompatActivity  {
                 }
                 //If there isn't a new item
                 if(antall == turer.size()){
-                    Log.d(TAG, "run: onResonse: " + turer);
+                    //Log.d(TAG, "run: onResonse: " + turer);
                     //Recursion. Checking again after 3 seconds
                     checkChange();
                 }

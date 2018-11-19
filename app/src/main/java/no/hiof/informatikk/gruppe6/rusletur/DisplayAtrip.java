@@ -175,6 +175,8 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         super.onBackPressed();
     }
 
+
+
     public void goToMaps(View view){
         if (!UserUtility.checkIfUserHasGPSEnabled(this)){
             Toast.makeText(this, "Du må skru på GPS", Toast.LENGTH_SHORT).show();

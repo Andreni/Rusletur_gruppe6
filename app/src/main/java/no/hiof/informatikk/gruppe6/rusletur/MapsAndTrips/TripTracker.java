@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -111,6 +112,7 @@ public class TripTracker extends Service {
                     Log.i(TAG, previousLocation.toString());
                     savedLocations.add(previousLocation);
                     Log.i(MainScreen.TAG3, "TripTracker sin SavedLocations:" + Integer.toString(savedLocations.size()));
+                    Log.i(TAG, Integer.toString(savedLocations.size()));
 
 
                     super.onLocationResult(locationResult);
@@ -167,6 +169,7 @@ public class TripTracker extends Service {
             startSaveTripIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startSaveTripIntent.putExtra("coordsArray", savedLocations);
             Log.i(MainScreen.TAG3, "onDestroy blir kalt : " + String.valueOf(savedLocations.size()));
+            Log.d(TAG, "onDestroy: TimeSpent Tidsbruk: " + timeSpent);
             startSaveTripIntent.putExtra("timeSpent", timeSpent);
             startSaveTripIntent.putExtra("sender",this.getClass().getSimpleName());
             startActivity(startSaveTripIntent);

@@ -56,6 +56,11 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
                 holder.listitemParent.setBackgroundColor(Color.rgb(240,240,240));
             }
             holder.itemNavn.setText(mItem.get(position).getNavn());
+            if(mItem.get(position).getGoogleDirections() != null) {
+                holder.itemAvstandKm.setText(mItem.get(position).getGoogleDirections().getDistance());
+            } else {
+                holder.itemAvstandKm.setText("? km");
+            }
             holder.itemTidsbruk.setText(mItem.get(position).getTidsbruk());
             holder.itemGradering.setText(mItem.get(position).getGradering());
         }
@@ -89,6 +94,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         RelativeLayout parentLayout;
         TextView itemNavn;
         TextView itemTidsbruk;
+        TextView itemAvstandKm;
         TextView itemGradering;
         LinearLayout listitemParent;
         public ViewHolder(View itemView){
@@ -96,6 +102,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
 
             listitemParent = itemView.findViewById(R.id.listitem_tripsview_parent);
             itemNavn = itemView.findViewById(R.id.itemNavn);
+            itemAvstandKm = itemView.findViewById(R.id.itemAvstandKm);
             itemTidsbruk = itemView.findViewById(R.id.itemTidsbruk);
             itemGradering = itemView.findViewById(R.id.itemGradering);
             parentLayout = itemView.findViewById(R.id.parentLayoutForListItem);
