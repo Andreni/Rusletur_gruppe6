@@ -74,7 +74,7 @@ public class SaveTripActivity extends AppCompatActivity {
     private boolean valgtKommune = false;
     private ArrayList<String> tmpFylker = new ArrayList<>();
     private ArrayList<String> tmpKommuner = new ArrayList<>();
-
+    //
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
