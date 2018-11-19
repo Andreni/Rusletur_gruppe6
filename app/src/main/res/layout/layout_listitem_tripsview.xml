@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="5dp"
     android:id="@+id/parentLayoutForListItem"
-    android:background="#80ffffff">
+    android:paddingBottom="50dp">
 
     <LinearLayout
         android:orientation="vertical"
