@@ -328,7 +328,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public void run() {
 
 
-                    if (calcClosestMarker() > differenceBeforePing) {
+                    if (calcClosestMarker() > differenceBeforePing && !STOP) {
                         Log.d(TAG, "onComplete: checkLocation: ALERT");
                         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MapsActivity.this, CHANNEL_1_ID)
@@ -397,6 +397,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed(){
+        STOP = true;
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Avslutt")
