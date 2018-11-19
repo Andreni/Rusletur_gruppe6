@@ -160,6 +160,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(!firstTimeShowingPath) {
             aTrip.setGoogleDirections(GoogleDirections.findTripsGoogleDirection(aTrip));
             mMap.addPolyline(aTrip.getGoogleDirections().getPolylineOptions());
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(aTrip.getGoogleDirections().getPolylineOptions().getPoints().get(0), 15, 0, 0)));
             firstTimeShowingPath = true;
         }
     }
