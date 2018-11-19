@@ -137,6 +137,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             parseObject(aTrip);
         }
     }
+    private boolean firstTimeShowingPath = false;
+    public void showPath(View view) {
+        if(!firstTimeShowingPath) {
+            aTrip.setGoogleDirections(GoogleDirections.findTripsGoogleDirection(aTrip));
+            mMap.addPolyline(aTrip.getGoogleDirections().getPolylineOptions());
+            firstTimeShowingPath = true;
+        }
+    }
 
 
 

@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GoogleDirections;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
@@ -34,6 +35,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     private Trip aTrip;
     private GoogleMap mMap;
+    private GoogleDirections googleDirections;
 
     Context context = this;
 
@@ -60,6 +62,8 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
 
     }
+
+
 
 
     /**

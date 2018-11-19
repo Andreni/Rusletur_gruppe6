@@ -28,6 +28,7 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 
 public class GoogleDirections {
     private static final String TAG = "GoogleDirections";
+    public static ArrayList<GoogleDirections> googleDirectionsArrayList = new ArrayList<>();
     private LatLng currentPosition;
     private LatLng tripStartLocation = null;
     private String status = "READY";
@@ -61,6 +62,21 @@ public class GoogleDirections {
                 Log.e(TAG, "Something was null?\n" + e.toString());
             }
         }
+        googleDirectionsArrayList.add(this);
+
+    }
+    public String getTripName() {
+        return tripName;
+    }
+
+    public static GoogleDirections findTripsGoogleDirection(Trip trip) {
+        for(GoogleDirections i : GoogleDirections.googleDirectionsArrayList) {
+            if(i.getTripName().equals(trip.getNavn())) {
+                return i;
+            }
+        }
+        Log.e(TAG, "Did not find a googleDirections connected to trip...");
+        return null;
     }
 
     public String getDistance() {
