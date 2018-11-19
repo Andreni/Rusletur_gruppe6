@@ -155,13 +155,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startService(new Intent(this, TripTracker.class));
         Log.i(TAG, "startTracking is called");
     }
+    private boolean firstTimeShowingPath = false;
     public void showPath(View view) {
-        if(count == 0) {
-            test = new GoogleDirections(startLocation, tripName);
-            count++;
-        }
-        if(test.getStatus() == test.STATUS_READY) {
-            mMap.addPolyline(test.getPolylineOptions());
+        if(!firstTimeShowingPath) {
+            aTrip.setGoogleDirections(GoogleDirections.findTripsGoogleDirection(aTrip));
+            mMap.addPolyline(aTrip.getGoogleDirections().getPolylineOptions());
+            firstTimeShowingPath = true;
         }
     }
 

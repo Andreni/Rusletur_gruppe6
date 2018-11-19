@@ -38,6 +38,7 @@ public class GoogleDirections {
     private int durationRaw;
     private String tripName; 
     private Trip trip;
+    public static ArrayList<GoogleDirections> googleDirectionsArrayList = new ArrayList<>();
 
     public GoogleDirections(Trip trip) {
         this.trip = trip;
@@ -61,6 +62,21 @@ public class GoogleDirections {
                 Log.e(TAG, "Something was null?\n" + e.toString());
             }
         }
+        googleDirectionsArrayList.add(this);
+    }
+
+    public String getTripName() {
+        return tripName;
+    }
+
+    public static GoogleDirections findTripsGoogleDirection(Trip trip) {
+        for(GoogleDirections i : GoogleDirections.googleDirectionsArrayList) {
+            if(i.getTripName().equals(trip.getNavn())) {
+                return i;
+            }
+        }
+        Log.e(TAG, "Did not find a googleDirections connected to trip...");
+        return null;
     }
 
     public String getDistance() {
