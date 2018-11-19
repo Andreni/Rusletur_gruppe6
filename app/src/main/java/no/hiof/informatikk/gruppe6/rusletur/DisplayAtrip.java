@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Class used for displaying a trip object
@@ -48,7 +50,7 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
         aTrip = getIntent().getParcelableExtra("object");
         // Get the class the activity was called from
         String senderClass = getIntent().getStringExtra("sender");
-
+        checkPermissions();
 
         //Load the map Fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -126,6 +128,19 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    private boolean checkPermissions(){
+        boolean isPermissionsGranted = false;
+
+        if (EasyPermissions.hasPermissions(this,neededPermissions)){
+            isPermissionsGranted = true;
+        }else{
+            startActivity(new Intent(this,MainActivity.class));
+
+        }
+
+        return isPermissionsGranted;
+    }
+
     /**
      * Google Maps fragment for drawing a preview of the selected trip
      * @param map takes the map variable when is loaded.
@@ -163,10 +178,16 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
 
     public void goToMaps(View view){
-        Intent intent = new Intent(this, MapsActivity.class);
+        if (!UserUtility.checkIfUserHasGPSEnabled(this)){
+            Toast.makeText(this, "Du må skru på GPS", Toast.LENGTH_SHORT).show();
+        }else{
+            Intent intent = new Intent(this, MapsActivity.class);
 
-        intent.putExtra("object", aTrip);
-        startActivity(intent);
+            intent.putExtra("object", aTrip);
+            startActivity(intent);
+        }
+
+
     }
 
 }

@@ -3,6 +3,7 @@ package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -15,8 +16,10 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -43,8 +46,10 @@ import io.ticofab.androidgpxparser.parser.domain.TrackPoint;
 import io.ticofab.androidgpxparser.parser.domain.TrackSegment;
 import io.ticofab.androidgpxparser.parser.task.GpxFetchedAndParsed;
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
@@ -87,6 +92,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         Log.d(TAG,"MapsActivity has been initiated");
         checkPermissions();
+        if (!UserUtility.checkIfUserHasGPSEnabled(this)){
+            STOP = true;
+            super.onDestroy();
+        }
 
         aTrip = getIntent().getParcelableExtra("object");
 
@@ -103,11 +112,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Button btnStart = findViewById(R.id.startTrip);
 
         //SJEKK OM GPS STÅR PÅ
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            Toast.makeText(this, "plz turn on", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Du trenger GPS for denne funksjonen", Toast.LENGTH_SHORT).show();
         }
 
         //SJEKK OM ACCESS FINE LOCATION STÅR PÅ, HVIS PÅ KJØR STARTTRACKING
@@ -160,6 +170,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "Method onMapReady() started.");
         mMap = googleMap;
+        getCurrentLocation();
         checkLocation();
         options = new PolylineOptions();
 
@@ -173,6 +184,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             aTrip = getIntent().getParcelableExtra("object");
             parseObject(aTrip);
         }
+    }
+
+    public void startCurrentTrip(View view){
+        view.setVisibility(View.INVISIBLE);
+        checkLocation();
+
+
     }
 
 
@@ -288,19 +306,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             current = (Location) task.getResult();
 
 
-                            if (calcClosestMarker() > differenceBeforePing) {
-                                Log.d(TAG, "onComplete: checkLocation: ALERT");
-                                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MapsActivity.this, CHANNEL_1_ID)
-                                        .setSmallIcon(R.mipmap.ic_launcher)
-                                        .setContentTitle("Warning!")
-                                        .setContentText("Du går bort fra turen")
-                                        .setAutoCancel(true)
-                                        .setPriority(NotificationManager.IMPORTANCE_HIGH);
-                                mNotificationManager.notify(0, mBuilder.build());
-                            }
-
-
                         } else {
                             Log.d(TAG, "onComplete: checkLocation: Failed to find location");
                         }
@@ -323,10 +328,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void run() {
 
+
+                    if (calcClosestMarker() > differenceBeforePing && !STOP) {
+                        Log.d(TAG, "onComplete: checkLocation: ALERT");
+                        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(MapsActivity.this, CHANNEL_1_ID)
+                                .setSmallIcon(R.mipmap.ic_launcher)
+                                .setContentTitle("Warning!")
+                                .setContentText("Du går bort fra turen")
+                                .setAutoCancel(true)
+                                .setPriority(NotificationManager.IMPORTANCE_HIGH);
+                        mNotificationManager.notify(0, mBuilder.build());
+                    }
+
                     getCurrentLocation();
                     checkLocation();
+
                 }
-            }, 5000);
+            }, 30000);
         }
 
     }
@@ -375,6 +394,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onDestroy(){
         STOP = true;
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed(){
+        STOP = true;
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Avslutt")
+                .setMessage("Vil du avslutte turen?")
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        startActivity(new Intent(getApplication(),MainScreen.class));
+
+                    }
+                })
+                .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
     }
 
 }

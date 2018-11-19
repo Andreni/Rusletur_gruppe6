@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
+import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
@@ -23,6 +24,8 @@ public class ProfilePageFragment extends Fragment {
     private TextView username;
     private TextView usermail;
     private TextView fullName;
+    private TextView numberOfTrips;
+    private LocalStorage localStorage;
 
     @Nullable
     @Override
@@ -31,9 +34,13 @@ public class ProfilePageFragment extends Fragment {
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        username = (TextView) view.findViewById(R.id.fragment_profile_username);
-        usermail = (TextView) view.findViewById(R.id.fragment_profile_usermail);
-        fullName = (TextView) view.findViewById(R.id.fragment_profile_firstandlastname);
+        username = view.findViewById(R.id.fragment_profile_username);
+        usermail = view.findViewById(R.id.fragment_profile_usermail);
+        fullName = view.findViewById(R.id.fragment_profile_firstandlastname);
+        numberOfTrips = view.findViewById(R.id.fragment_profile_numberOfTrips);
+
+        localStorage = LocalStorage.getInstance(getActivity());
+
 
 
 
@@ -52,6 +59,11 @@ public class ProfilePageFragment extends Fragment {
         username.setText(MainScreen.mainscreenUsername);
         usermail.setText(mUser.getEmail());
         fullName.setText(MainScreen.mainscreenFirstname + " " + MainScreen.mainscreenLastname);
+        numberOfTrips.setText("Antall turer laget selv: " + String.valueOf(localStorage.getAllTrips().size()));
+
+
+
+
 
 
     }
