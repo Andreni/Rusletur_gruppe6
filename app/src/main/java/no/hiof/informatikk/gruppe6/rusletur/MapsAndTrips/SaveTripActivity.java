@@ -234,8 +234,16 @@ public class SaveTripActivity extends AppCompatActivity {
     public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
         //Upload to firebase, timer and location will be handled from timer in savetripfragment and location from geolocation/spinner with choices.
-        Trip.addTrip(tripName,savedCoordinates,MainScreen.mUser,tripDifficulty,county,municipality,tripDescription,null,"Rusletur", getIntent().getStringExtra("timeSpent"), "", "RusleTur");
+        Trip.addTrip(tripName,savedCoordinates,MainScreen.mUser,tripDifficulty,county,municipality,tripDescription,"I","Rusletur", getIntent().getStringExtra("timeSpent"), "", "RusleTur");
         //After add trip
+        //Generate a unique id for the trip:
+        String timestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date());
+        LocalStorage localStorage = LocalStorage.getInstance(this);
+        if(getIntent().hasExtra("timeSpent")){
+            tripLength = getIntent().getStringExtra("timeSpent");
+        }
+        localStorage.addTrip(new Trip(timestamp, tripName+"(Lokal)", "Normal", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Blank", savedCoordinates, tripLength));
+        Toast.makeText(this,"Tur lagret",Toast.LENGTH_SHORT).show();
 
     }
 
