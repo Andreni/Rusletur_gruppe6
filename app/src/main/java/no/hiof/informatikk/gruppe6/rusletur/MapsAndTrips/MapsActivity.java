@@ -82,7 +82,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //Used for drawing up stuff
     private ArrayList<LatLng> receivedTripInProgress = new ArrayList<>();
-
+    private Button btnStart;
+    private int amountOfCurrentGotten = 0;
 
     GPXParser mParser = new GPXParser(); // consider injection
 
@@ -112,7 +113,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Button btnStart = findViewById(R.id.startTrip);
+        btnStart = findViewById(R.id.startTrip);
+        btnStart.setVisibility(View.INVISIBLE);
 
         //SJEKK OM GPS STÅR PÅ
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -132,6 +134,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         startLocation = new LatLng(aTrip.getCoordinates().get(0).longitude, aTrip.getCoordinates().get(0).latitude);
         tripName = aTrip.getNavn();
+
 
 
     }
@@ -171,7 +174,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.i(TAG, "Method onMapReady() started.");
         mMap = googleMap;
         getCurrentLocation();
-        checkLocation();
         options = new PolylineOptions();
 
         //Display trip from url
@@ -189,8 +191,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void startCurrentTrip(View view){
         view.setVisibility(View.INVISIBLE);
         checkLocation();
-
-
     }
 
 
@@ -304,7 +304,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             //Adds blue dot at your location
                             mMap.setMyLocationEnabled(true);
                             current = (Location) task.getResult();
-
+                            if(amountOfCurrentGotten == 0){
+                                btnStart.setVisibility(View.VISIBLE);
+                                amountOfCurrentGotten = 1;
+                            }
 
                         } else {
                             Log.d(TAG, "onComplete: checkLocation: Failed to find location");
