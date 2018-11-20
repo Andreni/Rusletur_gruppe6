@@ -348,7 +348,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     checkLocation();
 
                 }
-            }, 30000);
+            }, 10000);
         }
 
     }
