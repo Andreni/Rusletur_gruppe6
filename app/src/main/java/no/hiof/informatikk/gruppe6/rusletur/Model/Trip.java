@@ -41,6 +41,23 @@ public class Trip implements Parcelable, Comparable<Trip> {
     public static ArrayList<Trip> allCustomTrips = new ArrayList<>();
 
 
+    /**
+     * Trip is a class that produces trip objects which contains all necessary variables used to
+     * show the trip in maps. Distinguish each trip form each other and to store difference kind of
+     * meta infromation, like coordinates and id.
+     * @param id the trip ID. If owned by Rusletur, ID then starts with "rusletur_", else random UUID
+     * @param navn name of the trip
+     * @param tag tag added to the trip
+     * @param gradering Difficulty of trip
+     * @param tilbyder which one offers this trip(Rusletur, a user, nasjonalturbase)
+     * @param fylke which fylke the trip is in
+     * @param kommune which kommune the trip is in
+     * @param beskrivelse description of the trip
+     * @param lisens What type of license the trip has
+     * @param url if it came from and url, show url.
+     * @param coordinates An arraylist of LatLng containing the whole trip.
+     * @param tidsbruk Estimated time of use from start to finnish of the trip
+     */
     public Trip(String id, String navn, String tag, String gradering, String tilbyder, String fylke, String kommune, String beskrivelse, String lisens, String url, ArrayList<LatLng> coordinates, String tidsbruk) {
         this.id = id;
         this.navn = navn;
@@ -102,11 +119,13 @@ public class Trip implements Parcelable, Comparable<Trip> {
         }
         idCount++;
     }
-
     private void createGoogleDirections() {
         new GoogleDirections(this);
     }
 
+    /**
+     * Sort by the length from user to trip start location
+     */
     @Override
     public int compareTo(Trip o) {
         int a = this.getGoogleDirections().getDistanceRaw();
@@ -122,24 +141,23 @@ public class Trip implements Parcelable, Comparable<Trip> {
         return getCoordinates().get(0);
     }
 
-    public GoogleDirections getGoogleDirections() {
-        return googleDirections;
-    }
 
+    /**
+     * Setters and getters for variables
+     */
     public void setGoogleDirections(GoogleDirections googleDirections) {
         this.googleDirections = googleDirections;
+    }
+    public void setName(String name) {
+        this.navn = name;
+    }
+    public GoogleDirections getGoogleDirections() {
+        return googleDirections;
     }
 
     public String getId() {
         return id;
     }
-
-    public void setName(String name) {
-        this.navn = name;
-    }
-    /*public String getTag() {
-        return tag;
-    }*/
     public String getGradering() {
         return gradering;
     }
@@ -170,7 +188,6 @@ public class Trip implements Parcelable, Comparable<Trip> {
     public String getTidsbruk(){
         return tidsbruk;
     }
-
     public String getTag() {
         return tag;
     }
@@ -180,6 +197,9 @@ public class Trip implements Parcelable, Comparable<Trip> {
         return beskrivelse;
     }
 
+    /**
+     * All code below is for Parcelable
+     */
     protected Trip(Parcel in) {
         id = in.readString();
         navn = in.readString();

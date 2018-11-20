@@ -66,6 +66,13 @@ public class User {
     public static void setLastname(String lastname) {
         uidRef.child("lastname").setValue(lastname);
     }
+
+    /**
+     * Lets the user change email.
+     * @param user current user applying to change email
+     * @param email email which user want to change to
+     * @param password password to user account
+     */
     public static void setEmail(FirebaseUser user, String email, String password) {
         mUser = user;
         //Change out password and NEW_EMAIL with real inputs
@@ -91,7 +98,7 @@ public class User {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.e(TAG,"Creditentials are invalid");
+                Log.e(TAG,"Credentials are invalid");
             }
         });
     }

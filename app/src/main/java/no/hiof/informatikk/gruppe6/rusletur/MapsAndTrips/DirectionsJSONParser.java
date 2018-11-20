@@ -14,7 +14,10 @@ import com.google.android.gms.maps.model.LatLng;
 public class DirectionsJSONParser {
     private final String TAG = "DirectionsJSONParser";
 
-    /** Receives a JSONObject and returns a list of lists containing latitude and longitude */
+    /** Receives a JSONObject and returns a list of lists containing latitude and longitude
+     *  Code from: https://bitbucket.org/snippets/faizan_mubasher_skm/89Edap
+     *  Edited to fit project.
+     * */
     public List<List<HashMap<String,String>>> parse(JSONObject jObject){
 
         List<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String,String>>>() ;
