@@ -41,7 +41,7 @@
             android:layout_marginLeft="20dp"
             android:textAlignment="center"
             android:onClick="startCurrentTrip"
-            android:text="Start" />
+            android:text="Assistent" />
 
     </fragment>
 
