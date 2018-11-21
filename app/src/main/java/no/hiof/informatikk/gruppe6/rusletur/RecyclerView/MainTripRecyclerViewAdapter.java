@@ -17,8 +17,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.DisplayAtrip;
+import no.hiof.informatikk.gruppe6.rusletur.FindAtrip;
+import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
+import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
+import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
+import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRecyclerViewAdapter.ViewHolder>{
 
@@ -65,21 +70,29 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
             holder.itemGradering.setText(mItem.get(position).getGradering());
         }
 
+            holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(mContext, mItem.get(position).getNavn() + " clicked", Toast.LENGTH_SHORT).show();
-                // using context and next component class to create intent
-                Intent intent = new Intent(mContext, DisplayAtrip.class);
-                // using putExtra(String key, Parcelable value) method
-                intent.putExtra("object", mItem.get(position));
-                intent.putExtra("sender",mContext.getClass().getSimpleName());
-                // If the sending class is LocalStorage, add the rowId to the intent
+                    if (!UserUtility.checkIfUserHasGPSEnabled(mContext)) {
+                        Toast.makeText(mContext, "Du må skru på GPS", Toast.LENGTH_SHORT).show();
+                    } else {
 
-                mContext.startActivity(intent);
-            }
-        });
+                        Toast.makeText(mContext, mItem.get(position).getNavn() + " clicked", Toast.LENGTH_SHORT).show();
+                        // using context and next component class to create intent
+                        Intent intent = new Intent(mContext, DisplayAtrip.class);
+                        // using putExtra(String key, Parcelable value) method
+                        intent.putExtra("object", mItem.get(position));
+                        intent.putExtra("sender", mContext.getClass().getSimpleName());
+                        // If the sending class is LocalStorage, add the rowId to the intent
+
+                        mContext.startActivity(intent);
+                    }
+                }
+            });
+
+
+
 
     }
 
@@ -88,7 +101,6 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         Log.d(TAG, "getItemCount: " + mItem.size());
         return mItem.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout parentLayout;

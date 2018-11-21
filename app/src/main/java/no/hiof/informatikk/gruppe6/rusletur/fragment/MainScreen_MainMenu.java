@@ -34,11 +34,14 @@ public class MainScreen_MainMenu extends Fragment {
         view.findViewById(R.id.mainScreenMainMenufragment_findAtrip_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity())) {
-                    startActivity(new Intent(getActivity(), FindAtrip.class));
-                }
-                else {
-                    Toast.makeText(getActivity(), "This won't happen", Toast.LENGTH_SHORT).show();
+                if (!UserUtility.checkIfUserHasGPSEnabled(getContext())) {
+                    Toast.makeText(getContext(), "Du må skru på GPS", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity())) {
+                        startActivity(new Intent(getActivity(), FindAtrip.class));
+                    } else {
+                        Toast.makeText(getActivity(), "This won't happen", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

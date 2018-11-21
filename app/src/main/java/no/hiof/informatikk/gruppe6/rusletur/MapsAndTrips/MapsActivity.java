@@ -68,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int count = 0;
     private String tripTitleName = null;
     //Current location
-    private Location current = null;
+    private Location current;
     //Polyline options
     private PolylineOptions options;
     private double differenceBeforePing = 0.0045;
@@ -84,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<LatLng> receivedTripInProgress = new ArrayList<>();
     private Button btnStart;
     private int amountOfCurrentGotten = 0;
+    private Button showPath;
 
     GPXParser mParser = new GPXParser(); // consider injection
 
@@ -98,6 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onDestroy();
         }
 
+        showPath = findViewById(R.id.showPath);
         aTrip = getIntent().getParcelableExtra("object");
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
@@ -160,11 +162,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
     private boolean firstTimeShowingPath = false;
     public void showPath(View view) {
-        if(!firstTimeShowingPath) {
+        if(!firstTimeShowingPath && current != null) {
+            Log.d(TAG, "showPath: CLICKED");
             aTrip.setGoogleDirections(GoogleDirections.findTripsGoogleDirection(aTrip));
             mMap.addPolyline(aTrip.getGoogleDirections().getPolylineOptions());
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(aTrip.getGoogleDirections().getPolylineOptions().getPoints().get(0), 15, 0, 0)));
             firstTimeShowingPath = true;
+        }else{
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    showPath.performClick();
+                }
+            }, 2000);
+
         }
     }
 
@@ -192,8 +203,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         view.setVisibility(View.INVISIBLE);
         checkLocation();
     }
-
-
 
     public void parseGpx(String urlToGpx){
         Log.i(TAG, "Method urlToGpx() started.");
@@ -323,7 +332,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void checkLocation(){
-        if(!STOP) {
+        if(!STOP && current != null) {
             Log.d(TAG, "checkLocation: Started");
             Handler currentLocHandler = new Handler();
             Log.d(TAG, "checkLocation: New handler");
@@ -349,6 +358,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
             }, 10000);
+        }else{
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    checkLocation();
+                }
+            }, 2000);
         }
 
     }
@@ -422,5 +438,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 })
                 .show();
     }
+
+
 
 }
