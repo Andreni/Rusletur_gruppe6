@@ -101,6 +101,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         showPath = findViewById(R.id.showPath);
         aTrip = getIntent().getParcelableExtra("object");
+        aTrip.setGoogleDirections(GoogleDirections.findTripsGoogleDirection(aTrip));
+
+        try {
+           if(aTrip.getGoogleDirections().getPolylineOptions().getPoints().size() > 1) {
+               View showPathButton = findViewById(R.id.showPath);
+               showPathButton.setVisibility(View.VISIBLE);
+           }
+        } catch (NullPointerException e) {
+            Log.e(TAG,"No google directions found...");
+        }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             NotificationChannel channel1 = new NotificationChannel(CHANNEL_1_ID, "Default", NotificationManager.IMPORTANCE_HIGH);
@@ -168,14 +178,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addPolyline(aTrip.getGoogleDirections().getPolylineOptions());
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(aTrip.getGoogleDirections().getPolylineOptions().getPoints().get(0), 15, 0, 0)));
             firstTimeShowingPath = true;
-        }else{
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    showPath.performClick();
-                }
-            }, 2000);
-
         }
     }
 

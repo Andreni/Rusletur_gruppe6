@@ -70,6 +70,7 @@ public class GoogleDirections {
                 Log.e(TAG, "Something was null?\n" + e.toString());
             }
         }
+
         googleDirectionsArrayList.add(this);
     }
 

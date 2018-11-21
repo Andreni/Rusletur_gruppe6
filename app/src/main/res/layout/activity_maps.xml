@@ -23,6 +23,7 @@
             android:background="@color/colorPrimary"
             android:textColor="#fff"
             android:padding="10dp"
+            android:visibility="invisible"
             android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             android:textAlignment="center"
