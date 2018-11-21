@@ -151,37 +151,25 @@ public class GoogleDirections {
         HttpURLConnection urlConnection = null;
         try {
             URL url = new URL(strUrl);
-            Log.d(TAG,"Trying to use http connection...");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.connect();
-            Log.d(TAG,"url connected, trying to get input stream...");
             iStream = urlConnection.getInputStream();
             BufferedReader buffReader = new BufferedReader(new InputStreamReader(iStream));
-            Log.d(TAG,"BufferReader created...");
             StringBuffer stringBuff = new StringBuffer();
-            Log.d(TAG,"StirngBuffer created. Starting to read all lines form buffer...");
             String line = "";
-            int lineCount = 0;
             while ((line = buffReader.readLine()) != null) {
-                Log.d(TAG,"Current line " + lineCount + ":  \n" + line);
                 stringBuff.append(line);
-                lineCount++;
             }
-            Log.d(TAG,"Finnished reading all lines. Total lines readed: " + lineCount + "...");
-            Log.d(TAG,"Converts StringBuffer to string...");
             data = stringBuff.toString();
             buffReader.close();
-            Log.d(TAG,"BufferReader is now closed...");
 
         } catch (Exception e) {
             Log.d(TAG, "Download failed\n\n" + e.toString());
         } finally {
             //Closes the stream
             iStream.close();
-            Log.d(TAG,"InputStream is now closed...");
             //Disconnects from the url
             urlConnection.disconnect();
-            Log.d(TAG,"Disconnected from url...");
         }
         return data;
     }

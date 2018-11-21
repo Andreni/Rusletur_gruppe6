@@ -211,10 +211,10 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Tidsbruk:"
-                android:textFontWeight="bold"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" />
+                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView"
+                />
 
             <TextView
                 android:id="@+id/displayAtrip_trip_TimeLength_textView"
@@ -250,7 +250,6 @@
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:text="Beskrivelse"
-                android:textFontWeight="bold"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
