@@ -26,6 +26,14 @@ import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 
+/**
+ *  An object containing the distance, duration and polylines from
+ *  users current location to start position of the trip selected.
+ *
+ *      Tutorial used to create this class:
+ *              https://www.journaldev.com/13373/android-google-map-drawing-route-two-points
+ */
+
 public class GoogleDirections {
     private static final String TAG = "GoogleDirections";
     private LatLng currentPosition;
@@ -65,122 +73,27 @@ public class GoogleDirections {
         googleDirectionsArrayList.add(this);
     }
 
+    /*****************************************
+     * Settere and gettere for all variables.
+     ****************************************/
     public String getTripName() {
         return tripName;
     }
-
-    public static GoogleDirections findTripsGoogleDirection(Trip trip) {
-        for(GoogleDirections i : GoogleDirections.googleDirectionsArrayList) {
-            if(i.getTripName().equals(trip.getNavn())) {
-                return i;
-            }
-        }
-        Log.e(TAG, "Did not find a googleDirections connected to trip...");
-        return null;
-    }
-
     public String getDistance() {
         return distance;
     }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public int getDistanceRaw() {
-        return distanceRaw;
-    }
-
-    public void setDistanceRaw(int distanceRaw) {
-        this.distanceRaw = distanceRaw;
-    }
-
     public int getDurationRaw() {
         return durationRaw;
     }
-
-    public void setDurationRaw(int durationRaw) {
-        this.durationRaw = durationRaw;
-    }
-
-    private String getDirectionsUrl(LatLng startPos, LatLng endPos) {
-        //Builds an URL compatible with google maps. Send it to google maps and it will return the full trip with all info needed. Remember to parse.
-        String str_origin = "origin=" + startPos.latitude + "," + startPos.longitude;
-        String str_dest = "destination=" + endPos.latitude + "," + endPos.longitude;
-        String sensor = "sensor=false";
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
-        String output = "json";
-        String apiKey = "&key=AIzaSyBWjR1IKXkbZKUGNhiI76AQJ1mt1YtRuZY";
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + apiKey;
-        Log.d(TAG,"URL complete. Result: " + url);
-        return url;
-    }
-
-    public void addGoogleDirectionsToTrip() {
-        trip.setGoogleDirections(this);
-    }
-
-    //To download the JSON file
-    private String downloadUrl(String strUrl) throws IOException {
-        Log.d(TAG,"Starting downloading of url...");
-        String data = null;
-        InputStream iStream = null;
-        HttpURLConnection urlConnection = null;
-        try {
-            URL url = new URL(strUrl);
-            /*TODO
-             * 1. Use https instead of http
-             */
-            Log.d(TAG,"Trying to use http connection...");
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.connect();
-            Log.d(TAG,"url connected, trying to get input stream...");
-            iStream = urlConnection.getInputStream();
-            BufferedReader buffReader = new BufferedReader(new InputStreamReader(iStream));
-            Log.d(TAG,"BufferReader created...");
-            StringBuffer stringBuff = new StringBuffer();
-            Log.d(TAG,"StirngBuffer created. Starting to read all lines form buffer...");
-            String line = "";
-            int lineCount = 0;
-            while ((line = buffReader.readLine()) != null) {
-                Log.d(TAG,"Current line " + lineCount + ":  \n" + line);
-                stringBuff.append(line);
-                lineCount++;
-            }
-            Log.d(TAG,"Finnished reading all lines. Total lines readed: " + lineCount + "...");
-            Log.d(TAG,"Converts StringBuffer to string...");
-            data = stringBuff.toString();
-            buffReader.close();
-            Log.d(TAG,"BufferReader is not closed...");
-
-        } catch (Exception e) {
-            Log.d(TAG, "Download failed\n\n" + e.toString());
-        } finally {
-            //Closes the stream
-            iStream.close();
-            Log.d(TAG,"InputStream is now closed...");
-            //Disconnects from the url
-            urlConnection.disconnect();
-            Log.d(TAG,"Disconnected from url...");
-        }
-        return data;
-    }
-
     public String getStatus() {
         return status;
     }
-    private void setStatus(String currentStatus) {
-        status = currentStatus;
+    public String getDuration() {
+        return duration;
     }
-
+    public int getDistanceRaw() {
+        return distanceRaw;
+    }
     public PolylineOptions getPolylineOptions() {
         if(polylineOptions != null) {
             return polylineOptions;
@@ -189,6 +102,91 @@ public class GoogleDirections {
             Log.e(TAG,"No polylines in googleDirection object.");
             return null;
         }
+    }
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+    public void setDistance(String distance) {
+        this.distance = distance;
+    }
+    public void setDistanceRaw(int distanceRaw) {
+        this.distanceRaw = distanceRaw;
+    }
+    public void setDurationRaw(int durationRaw) {
+        this.durationRaw = durationRaw;
+    }
+    public void addGoogleDirectionsToTrip() {
+        trip.setGoogleDirections(this);
+    }
+    private void setStatus(String currentStatus) {
+        status = currentStatus;
+    }
+
+    /**
+     * Builds a url compatible with google maps directions. Used to download directions json from google directions.
+     * @param startPos start location of trip selected.
+     * @param endPos end location of trip selected
+     * @return custom url for current trip selected.
+     */
+    private String getDirectionsUrl(LatLng startPos, LatLng endPos) {
+        //Builds an URL compatible with google maps. Send it to google maps and it will return the full trip with all info needed. Remember to parse.
+        String str_origin = "origin=" + startPos.latitude + "," + startPos.longitude;
+        String str_dest = "destination=" + endPos.latitude + "," + endPos.longitude;
+        String apiKey = "&key=AIzaSyBWjR1IKXkbZKUGNhiI76AQJ1mt1YtRuZY";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?" + str_origin + "&" + str_dest + "&sensor=false&mode=walking" + apiKey;
+        Log.d(TAG,"URL complete. Result: " + url);
+        return url;
+    }
+
+    /**
+     *  Downloads the json file from google directions. adds each line to strin data.
+     * @param strUrl pre-made google directions url
+     * @return String containing all data from google directions
+     * @throws IOException Could not download file
+     */
+    private String downloadUrl(String strUrl) throws IOException {
+        Log.d(TAG,"Starting downloading of url...");
+        String data = null;
+        InputStream iStream = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(strUrl);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.connect();
+            iStream = urlConnection.getInputStream();
+            BufferedReader buffReader = new BufferedReader(new InputStreamReader(iStream));
+            StringBuffer stringBuff = new StringBuffer();
+            String line = "";
+            while ((line = buffReader.readLine()) != null) {
+                stringBuff.append(line);
+            }
+            data = stringBuff.toString();
+            buffReader.close();
+
+        } catch (Exception e) {
+            Log.d(TAG, "Download failed\n\n" + e.toString());
+        } finally {
+            //Closes the stream
+            iStream.close();
+            //Disconnects from the url
+            urlConnection.disconnect();
+        }
+        return data;
+    }
+
+    /**
+     * Paring Trip object with the GoogleDirection object that was created by @param trip.
+     * @param trip trip that has googleDirection as null.
+     * @return the googleDirections that belong to trip.
+     */
+    public static GoogleDirections findTripsGoogleDirection(Trip trip) {
+        for(GoogleDirections i : GoogleDirections.googleDirectionsArrayList) {
+            if(i.getTripName().equals(trip.getNavn())) {
+                return i;
+            }
+        }
+        Log.e(TAG, "Did not find a googleDirections connected to trip...");
+        return null;
     }
 
     // Fetches data from url passed
@@ -211,9 +209,6 @@ public class GoogleDirections {
             }
             return data;
         }
-
-        // Executes in UI thread, after the execution of
-        // doInBackground()
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -224,8 +219,9 @@ public class GoogleDirections {
             parserTask.execute(result);
         }
     }
+
     /**
-     * A class to parse the Google Places in JSON format, by Google
+     * Uses the data from Google directions and extracts the data we need.
      */
     private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
 
