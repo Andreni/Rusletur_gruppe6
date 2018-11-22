@@ -76,6 +76,8 @@ public class SaveTripActivity extends AppCompatActivity {
     private Geocoder geocoder;
     private Location currentLocation;
     private boolean foundLocation;
+    private TextView countyText;
+    private TextView municipalityText;
 
     //Setup Spinner
     //private HttpURLConnection conn = null;
@@ -97,6 +99,8 @@ public class SaveTripActivity extends AppCompatActivity {
         municipalitySpinner = findViewById(R.id.savetrip_selectMunicipality);
         nameInput = findViewById(R.id.savetrip_nameOfTripInput);
         descInput = findViewById(R.id.savetrip_descriptionInput);
+        countyText = findViewById(R.id.savetrip_county_textview);
+        municipalityText = findViewById(R.id.savetrip_municipality_textview);
 
         savedCoordinates = getIntent().getParcelableArrayListExtra("coordsArray");
         String senderActivity = getIntent().getStringExtra("sender");
@@ -276,13 +280,17 @@ public class SaveTripActivity extends AppCompatActivity {
 
                 if(municipality != null && county != null){
                     Log.i(TAG, "municipality & county returned not null");
+                    Log.i(TAG, municipality + " ligger i " + county);
                     municipalitySpinner.setVisibility(View.INVISIBLE);
                     countySpinner.setVisibility(View.INVISIBLE);
+                    municipalityText.setVisibility(View.INVISIBLE);
+                    countyText.setVisibility(View.INVISIBLE);
+                    valgtKommune = true;
                     foundLocation = true;
 
                 }
                 else {
-                    Log.i(TAG, "municipality & county returned not null");
+                    Log.i(TAG, "municipality & county returned null");
                     foundLocation = false;
                     loadList();
                 }
