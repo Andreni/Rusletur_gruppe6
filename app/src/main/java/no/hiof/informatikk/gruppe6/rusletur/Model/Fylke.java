@@ -3,10 +3,9 @@ package no.hiof.informatikk.gruppe6.rusletur.Model;
 import java.util.ArrayList;
 
 /**
+ * "Fylke objects, Contains available "Kommune" that are available.
  * @author Andreas N.
  * @version 1.0
- * "Fylke objects, Contains available "Kommune" objects downloaded from Register.json
- * @see FylkeList
  */
 public class Fylke {
     String fylkeName;

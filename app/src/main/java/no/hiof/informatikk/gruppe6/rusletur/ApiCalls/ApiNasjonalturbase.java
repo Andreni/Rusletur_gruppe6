@@ -28,20 +28,23 @@ import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG
  * Class used for looking up objects located on Nasjonal Turbase server
  * Takes a ArrayList of id's as argument
  * Creating Trip objects and adding them to an ArrayList.
- * @return Returns ArrayList with trips
  * @author Andreas M.
  * @author Andreas N.
  * @version 1.0
  */
  public class ApiNasjonalturbase {
-
-     //public static RequestQueue mQueue;
      public static int antall = 0;
      static RequestQueue mQueue;
      private static Trip trip;
      private static Context kont;
-     
-         public static void getTripInfo(String idForTrip, final Context context) {
+
+    /**
+     * Method for retriving Trip objects
+     * @param idForTrip The id that was passed from the register, is used to fetch the Trip object stored
+     *                  on NasjonalTurbase Server
+     * @param context   The context the method was accessed from.
+     */
+    public static void getTripInfo(String idForTrip, final Context context) {
 
              kont = context;
              mQueue = Volley.newRequestQueue(context);
@@ -68,13 +71,9 @@ import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG
 
                          String beskrivelse = response.get("beskrivelse").toString();
                          String lisens = response.get("lisens").toString();
+                         
+                         String urlFraUrl = response.get("url").toString();
 
-
-                         String urlFraUrl;// = response.get("url").toString();
-
-                         String urlFraUrl1 = response.get("url").toString();
-
-                            urlFraUrl = urlFraUrl1;
                          ArrayList<LatLng> latlng = new ArrayList<>();
 
                          JSONObject geojson = (JSONObject) response.get("geojson");
@@ -82,7 +81,8 @@ import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG
                          for (int j = 0; j < coords.length(); j++) {
                              JSONArray coord = (JSONArray) coords.get(j);
                              for (int k = 0; k < coord.length(); k++) {
-                                 latlng.add(new LatLng(coord.getDouble(1), coord.getDouble(0)));
+                                 latlng.add(new LatLng(coord.getDouble(1),
+                                         coord.getDouble(0)));
                              }
                          }
 
@@ -118,8 +118,6 @@ import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG
 
                          FindAtrip.turer.add(trip);
 
-                         Log.d(TAG, "onResponse: " + FindAtrip.turer);
-
                      } catch (JSONException e) {
                          e.printStackTrace();
                      }
@@ -132,11 +130,7 @@ import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG
                  }
              });
 
-
-
              mQueue.add(request);
-             Log.d(TAG, "getTripInfo: " + trip);
-
          }
 
 

@@ -34,6 +34,7 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
 /**
+ * comment
  * @author Bjørnar P.
  *
  */

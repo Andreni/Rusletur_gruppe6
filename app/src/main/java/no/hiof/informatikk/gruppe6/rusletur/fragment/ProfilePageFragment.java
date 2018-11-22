@@ -19,6 +19,7 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
 /**
+ * comment
  * @author Bjørnar P.
  */
 public class ProfilePageFragment extends Fragment {

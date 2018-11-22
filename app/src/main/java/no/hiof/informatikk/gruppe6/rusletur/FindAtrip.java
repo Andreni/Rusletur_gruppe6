@@ -77,7 +77,7 @@ public class FindAtrip extends AppCompatActivity  {
      *
      * Checks with Fylkelist to see what objects exists, then check all avalible trips stored
      * locally on the device and on Firebase Database.
-     * Only {@see Fylke} and Kommune that contains Trip objects, will be selectable by the user
+     * Only Fylke and Kommune that contains Trip objects, will be selectable by the user
      */
     public void loadLists() {
         if (FylkeList.getRegisterForFylke().size() > 15) {
@@ -240,7 +240,7 @@ public class FindAtrip extends AppCompatActivity  {
     /**
      * When a valid id (Not 0 and 0 on the Selection spinners) are chosen for Fylke and kommune. Fetch the valid ids
      * stored on the kommune object, and pass them to the recycler view.
-     * Send a call to {@see getC}
+     * Send a call to {@link ApiNasjonalturbase}
      */
     public void fetchIds() {
 

@@ -23,6 +23,7 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
+ * comment
  * @author Bjørnar P
  * @author Andreas N.
  *
