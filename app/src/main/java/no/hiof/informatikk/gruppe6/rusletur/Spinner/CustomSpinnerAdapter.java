@@ -19,18 +19,33 @@ import java.util.List;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
 /**
+ * Adapter to setup fylke spinner in the FindAtrip class.
+ * Uses objects from SpinnerData.java as items in the spinner.
  * @author Andreas M.
  */
 public class CustomSpinnerAdapter extends ArrayAdapter<SpinnerData> {
     private Context context;
     private List<SpinnerData> spinnerData;
 
+    /**
+     * Constructor for the CustomSpinnerAdapter.
+     * @param context The current context from the activity you're comming from
+     * @param resource The resources you are using.
+     * @param spinnerData A list of spinnerData objects
+     */
     public CustomSpinnerAdapter(@NonNull Context context, @LayoutRes int resource, List<SpinnerData> spinnerData) {
         super(context, resource, spinnerData);
         this.context = context;
         this.spinnerData = spinnerData;
     }
 
+    /**
+     * Method where you say what variable from SpinnerData goes to what view in the viewGroup
+     * @param position What position the item that is being worked on is
+     * @param myView The item as a View
+     * @param parent The view group. Contains the views that is in the SpinnerData xml
+     * @return The view that is beeing showed in the spinner.
+     */
     private View myCustomSpinnerView(int position, @Nullable View myView, @Nullable ViewGroup parent){
         if(spinnerData.get(position).getPicture() == 0){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -70,12 +85,26 @@ public class CustomSpinnerAdapter extends ArrayAdapter<SpinnerData> {
         }
     }
 
+    /**
+     * Creates the view that is being showed.
+     * @param position What position the item that is being worked on is
+     * @param convertView
+     * @param parent The view group. Contains the views that is in the SpinnerData xml
+     * @return Returs the view that is being shoed in the spinner.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         return myCustomSpinnerView(position, convertView, parent);
     }
 
+    /**
+     * Defines how it's going to be showed in the dropdown form
+     * @param position What position the item that is being worked on is
+     * @param convertView
+     * @param parent The view group. Contains the views that is in the SpinnerData xml
+     * @return Returs the view that is being shoed in the spinner.
+     */
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         return myCustomSpinnerView(position, convertView, parent);

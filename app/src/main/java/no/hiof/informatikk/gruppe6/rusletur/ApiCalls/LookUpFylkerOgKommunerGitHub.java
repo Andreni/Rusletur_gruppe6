@@ -40,6 +40,11 @@ public class LookUpFylkerOgKommunerGitHub {
         this.currentContext = currentContext;
     }
 
+    /**
+     * Method for retrieving fylkerogkommuner from GitHub.
+     * Uses the URL for the text file that's on GitHub. Static url, won't change.
+     * Uses volley to retriev the text. Uses ":" as seperation character in the csv file
+     */
     public void createObjectsFromFile(){
         mQueue = Volley.newRequestQueue(currentContext);
 
