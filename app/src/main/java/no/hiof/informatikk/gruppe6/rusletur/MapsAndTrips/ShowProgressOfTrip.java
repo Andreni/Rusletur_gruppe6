@@ -5,17 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
@@ -23,10 +20,13 @@ import java.util.ArrayList;
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 
+/**
+ * @author Bjørnar P
+ * @author Andreas N.
+ *
+ */
 public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap gMap;

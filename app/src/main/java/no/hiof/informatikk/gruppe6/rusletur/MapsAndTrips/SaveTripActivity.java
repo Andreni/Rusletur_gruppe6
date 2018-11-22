@@ -48,6 +48,12 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
+/**
+ * @author Bjørnar P
+ * @author Andreas M
+ * @author Andreas N
+ * @version 1.1
+ */
 public class SaveTripActivity extends AppCompatActivity {
 
     //Views

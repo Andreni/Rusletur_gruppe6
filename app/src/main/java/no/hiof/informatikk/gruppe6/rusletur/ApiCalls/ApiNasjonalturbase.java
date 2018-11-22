@@ -24,14 +24,13 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
 /**
- *                  ApiNasjonalturbase.java
- */
- /**
+ * @author Andreas M.
+ *
+ *
  *      getTrips(String fylke, final String kommune, Context context)
  *
  * @return Returns a ArrayList with Trip objects that the user would see.
- */
- /**
+ *
  *              getTripInfo(ArrayList<String> id)
  *
  * Takes a ArrayList of id's as argument
@@ -39,9 +38,7 @@ import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG
  * @return Returns ArrayList with trips
  *
  */
-
-
-public class ApiNasjonalturbase {
+ public class ApiNasjonalturbase {
 
      //public static RequestQueue mQueue;
      public static int antall = 0;

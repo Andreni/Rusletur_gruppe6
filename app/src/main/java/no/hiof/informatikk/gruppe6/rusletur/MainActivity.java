@@ -32,6 +32,9 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
+ * @author Andreas N.
+ * @author Andreas M.
+ * @version 1.0
  * Sends a method call to see if the application has the needed permissions for
  * optimal function.(LOCATION,STORAGE,CAMERA)
  * If these requirements are not granted, the user will not be able to log in.

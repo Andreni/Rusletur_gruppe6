@@ -22,10 +22,9 @@ import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.TAG2;
 import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.getAllUserInfo;
 
 /**
+ * @author Magnus P.
  * A class used for checking data of the firebasedatabase.
  */
-
-
 public class FirebaseHandler {
 
     private final static String TAG = FirebaseHandler.class.toString();

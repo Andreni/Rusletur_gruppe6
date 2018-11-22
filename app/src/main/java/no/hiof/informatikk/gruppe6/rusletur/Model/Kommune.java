@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur.Model;
 import java.util.ArrayList;
 
 /**
+ * @author Andreas N
+ * @version 1.0
  * "Kommune" objects, Contains available "IdForTur" objects downloaded from Register.json
  * @see Fylke
  */

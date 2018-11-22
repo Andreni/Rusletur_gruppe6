@@ -15,6 +15,9 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
+/**
+ * @author Bjørnar P.
+ */
 public class NewUser extends AppCompatActivity {
 
     private EditText userName;

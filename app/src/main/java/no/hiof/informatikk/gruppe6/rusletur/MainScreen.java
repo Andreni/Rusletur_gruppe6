@@ -35,6 +35,11 @@ import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 
+/**
+ * @author Bjørnar P.
+ * @author Magnus P.
+ * @author Andreas N.
+ */
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
         private FirebaseAuth mAuth;

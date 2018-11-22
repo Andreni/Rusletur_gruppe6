@@ -33,6 +33,10 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.TripTracker;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
+/**
+ * @author Bjørnar P.
+ *
+ */
 public class MainMenuFragment extends Fragment {
 
     String userEmail;

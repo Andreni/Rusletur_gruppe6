@@ -29,6 +29,9 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
+ * @author Andreas N.
+ * @author Andreas M.
+ * @version 1.1
  * Class used for displaying a trip object
  * Takes the trip object that is passed, and displays the data that is stored in it.
  */

@@ -3,7 +3,6 @@ package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,12 +29,13 @@ import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAdapter;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.SaveTripFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
+ * @author Andreas N
+ * @version 1.1
  * Class for displaying stored Trip objects
- * SQLite
+ *
  * When the user either wants to store or load objects, the static methods are called upon
  */
 public class LocalStorageTrips extends AppCompatActivity {

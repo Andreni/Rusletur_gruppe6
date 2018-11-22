@@ -17,7 +17,11 @@ import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
 
 /**
+ * @author Andreas M.
+ * @author Magnus P.
+ * @author Andreas N.
  * A trip object
+ *
  */
 public class Trip implements Parcelable, Comparable<Trip> {
 
