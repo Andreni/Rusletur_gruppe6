@@ -40,6 +40,11 @@ public class LookUpFylkerOgKommunerGitHub {
         this.currentContext = currentContext;
     }
 
+    /**
+     * Method for retrieving fylkerogkommuner from GitHub
+     *
+     *
+     */
     public void createObjectsFromFile(){
         mQueue = Volley.newRequestQueue(currentContext);
 
