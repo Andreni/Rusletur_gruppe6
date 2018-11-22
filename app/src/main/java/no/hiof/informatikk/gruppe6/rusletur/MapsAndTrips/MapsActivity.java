@@ -158,6 +158,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * Method for checking od the user has granted permissions
+     * @return True or False. Based on ig the user has granted or not
+     */
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 
@@ -189,6 +193,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    /**
+     * Method runs automatically when the maps ahs finished loading.
+     * This makes sure that the map is complete before we do anything.
+     * @param googleMap The instance of GoogleMaps that needs to be loaded
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.i(TAG, "Method onMapReady() started.");
@@ -208,11 +217,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * Method for activating the assistent.
+     * Checks wvery 30 seconds if the user is more than 200 meters away from the trip course.
+     * @param view The button as a View
+     */
     public void startCurrentTrip(View view){
         view.setVisibility(View.INVISIBLE);
         checkLocation();
     }
 
+    /**
+     * Parse the trip if the activity is called with an url
+     * @param urlToGpx The url where the gpx file is placed
+     */
     public void parseGpx(String urlToGpx){
         Log.i(TAG, "Method urlToGpx() started.");
         //Standard GPX parser....
@@ -283,6 +301,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * Is called on if the activity is called on from with a {@link Trip} object
+     * @param trip The trip that the user has selected and passed onto this activity
+     */
     private void parseObject(Trip trip){
 
         //Start position
@@ -303,10 +325,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    /**
+     * Sets the start position of the {@link Trip} with latitude and longitude coordinates
+     * @param pos The position of the start of the {@link Trip}
+     */
     public void setTripStartLocation(LatLng pos) {
         tripStartLocation = pos;
     }
 
+    /**
+     * Gets the current location of the user.
+     * Is used before the calculation of the closest marker to the user in {@link #calcClosestMarker()}
+     */
     private void getCurrentLocation(){
         if(!STOP) {
             Log.d(TAG, "getCurrentLocation: checkLocation Before fusedlocationprovider");
@@ -340,6 +370,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * Method that creates the notification if the user is mroe than 200 meters away from the {@link Trip}
+     */
     private void checkLocation(){
         if(!STOP && current != null) {
             Log.d(TAG, "checkLocation: Started");
@@ -366,7 +399,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     checkLocation();
 
                 }
-            }, 10000);
+            }, 30000);
         }else{
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -377,7 +410,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
-    //Calculate the closetst point on the polyline
+
+    /**
+     * Calculates the closest marker to the user.
+     * Loops through the polyline markers and saves the closest point and the length between that point and the user.
+     * @return A double that is the distance between the closetst point and the user
+     */
     private double calcClosestMarker(){
 
         Log.d(TAG, "calcClosestMarker: checkLocation: started calculation");
@@ -418,12 +456,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return closestValue;
     }
 
+    /**
+     * Method that runs when the activity dies
+     */
     @Override
     public void onDestroy(){
         STOP = true;
         super.onDestroy();
     }
 
+    /**
+     * Overrides the super onBackPressed method.
+     * Makes a AlertDialog to make sure that the user really wants to quit the {@link Trip}
+     */
     @Override
     public void onBackPressed(){
         STOP = true;
