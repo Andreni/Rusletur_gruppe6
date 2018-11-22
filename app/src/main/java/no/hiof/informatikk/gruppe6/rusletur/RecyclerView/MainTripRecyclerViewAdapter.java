@@ -29,6 +29,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Adapter for displaying passed trip objects
  * @author Andreas M.
  * @author Andreas N.
+ * @author Bjørnar P.
  * @version 1.1
  */
 public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRecyclerViewAdapter.ViewHolder>{
