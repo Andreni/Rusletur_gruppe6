@@ -78,6 +78,7 @@ public class SaveTripActivity extends AppCompatActivity {
     private boolean foundLocation;
     private TextView countyText;
     private TextView municipalityText;
+    private int counter = 0;
 
     //Setup Spinner
     //private HttpURLConnection conn = null;
@@ -265,7 +266,6 @@ public class SaveTripActivity extends AppCompatActivity {
 
     public void reverseGeocoding(){
         Toast.makeText(this, "Found location", Toast.LENGTH_SHORT).show();
-        int counter = 0;
 
         geocoder = new Geocoder(this, Locale.getDefault());
         currentLocation = LocationHandler.getCurrentLocation();
