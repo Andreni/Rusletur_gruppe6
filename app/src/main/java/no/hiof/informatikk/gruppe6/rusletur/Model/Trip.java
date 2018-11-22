@@ -229,6 +229,11 @@ public class Trip implements Parcelable, Comparable<Trip> {
         return 0;
     }
 
+    /**
+     * Writes the object as a parcable
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);

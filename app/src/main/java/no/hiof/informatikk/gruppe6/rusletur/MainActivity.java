@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     }
 
-    /**Method for prompting the user to give consent on the the required permissions
-     *
+    /**
+     * Method for prompting the user to give consent on the the required permissions
      * @return Gives back a boolean to verify if the user has granted the required permissions
      */
     private boolean checkPermissions(){
@@ -117,6 +117,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
+    /**
+     * After the result of the request has come through
+     * @param requestCode What requestcode the permission has
+     * @param permissions String array with the permissions
+     * @param grantResults Integer array with the result of the request
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -126,7 +132,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (EasyPermissions.hasPermissions(this,neededPermissions)){
             //Proceed with current activity
         }else{
-            //TODO Make into a variable
             EasyPermissions.requestPermissions(this, "For at applikasjonen skal fungere optimalt \n" +
                     "trenger den tilattelse til å bruke GPS og Lagring  ",123,neededPermissions);
         }
@@ -201,10 +206,20 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
 
     }
+
+    /**
+     * When the "Register" button is pressed
+     * @param view The button as a View
+     */
     public void goToRegistration(View view){
         loginPage.setVisibility(View.INVISIBLE);
         registerPage.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * When the cancle registre button is pressed
+     * @param view The button as a View
+     */
     public void cancleRegistration(View view) {
         loginPage.setVisibility(View.VISIBLE);
         registerPage.setVisibility(View.INVISIBLE);
@@ -214,6 +229,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     //Check if field values entered are correct:
     //Option 1 checks loginpage for valid input
     //Option 2 checks registerpage for valid input
+
+    /**
+     * Checks the input fields for valid input.
+     * @param option What screen the user is comming from. 1 for loginpage and 2 for registerpage
+     * @return True or False. Based on if the input is correct or not
+     */
     private boolean checkForValidUserInput(int option){
 
         if(option==1) {
@@ -249,6 +270,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
 
     //Send message to user:
+
+    /**
+     * Writes a message for the user that is being Toasted
+     * @param messageToUser The message
+     */
     private void writeMessageToUser(String messageToUser){
         Toast.makeText(this,messageToUser.toString(),Toast.LENGTH_SHORT).show();
     }
@@ -259,6 +285,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     }
 
+    /**
+     * If the user denied the permission regquest
+     * @param requestCode The request code for the permission
+     * @param perms List with parameters
+     */
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
         if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
