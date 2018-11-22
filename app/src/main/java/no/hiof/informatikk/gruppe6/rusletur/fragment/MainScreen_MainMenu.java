@@ -15,7 +15,8 @@ import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
 /**
  * @author Andreas N.
- * @version 1.0
+ * @author Bjørnar P.
+ * @version 1.1
  * Fragment that is loaded when the user logs on the application.
  * From here the user selects one of the presented options
  */
