@@ -120,6 +120,7 @@ public class SaveTripActivity extends AppCompatActivity {
         }
         else {
             Log.i(TAG, "getCurrentLocation va null");
+            Toast.makeText(this, "Greide ikke finne din lokasjon. Vennligst fyll inn selv", Toast.LENGTH_LONG).show();
             foundLocation = false;
             loadList();
         }
@@ -292,12 +293,15 @@ public class SaveTripActivity extends AppCompatActivity {
                 }
                 else {
                     if(counter <= 2){
+                        //Let geolocation run three times before giving up
                         Log.i(TAG, "Ran " + String.valueOf(counter) + "times");
                         counter++;
                         reverseGeocoding();
                     }
                     else {
+                        //If geolocation fails, show the spinners instead.
                         Log.i(TAG, "municipality & county returned null");
+                        Toast.makeText(this, "Greide ikke finne din lokasjon. Vennligst fyll inn selv", Toast.LENGTH_LONG).show();
                         foundLocation = false;
                         loadList();
                     }
