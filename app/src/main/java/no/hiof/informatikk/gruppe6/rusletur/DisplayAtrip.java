@@ -133,6 +133,10 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    /**
+     * Checks if the user has granted the needed permissions
+     * @return
+     */
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 
@@ -176,12 +180,20 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+    /**
+     * Method for when the back button is pressed
+     * @param view The button as a View
+     */
     public void goBack(View view){
         super.onBackPressed();
     }
 
 
-
+    /**
+     * Method for when the "Gå" button is pressed.
+     * Sends the user to {@link MapsActivity}
+     * @param view The button as a View
+     */
     public void goToMaps(View view){
         if (!UserUtility.checkIfUserHasGPSEnabled(this)){
             Toast.makeText(this, "Du må skru på GPS", Toast.LENGTH_SHORT).show();

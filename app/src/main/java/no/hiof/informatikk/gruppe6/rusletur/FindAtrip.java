@@ -116,7 +116,7 @@ public class FindAtrip extends AppCompatActivity  {
 
     /**
      * Method for setting up the spinner for counties.
-     * When selected a county, you will call the method for setting up the municipality
+     * When selected a county, you will call the method {@link #setupKommuneSpinner(Integer)}
      * @param alist List of the counties that there are trips in
      */
     public void setUpFylkeSpinner(FylkeList alist){
@@ -205,7 +205,7 @@ public class FindAtrip extends AppCompatActivity  {
     /**
      * Method for setting up municipality after selecting county.
      * Since the county is selected, this method wil only retriev the different municipality that is in the current given county.
-     * When chosen municipality, you will run the fetchid method.
+     * When chosen municipality, you will run the method {@link #fetchIds()}
      * @param positonFylke Which position the county is. This corresponds with the index from the arrayList aList
      */
     public void setupKommuneSpinner(final Integer positonFylke){
@@ -252,6 +252,7 @@ public class FindAtrip extends AppCompatActivity  {
     /**
      * When a valid id (Not 0 and 0 on the Selection spinners) are chosen for Fylke and kommune. Fetch the valid ids
      * stored on the kommune object, and pass them to the recycler view.
+     * Uses {@link ApiNasjonalturbase} and will call {@link #initRecyclerView()} when done
      * Send a call to {@link ApiNasjonalturbase}
      */
     public void fetchIds() {
@@ -329,7 +330,8 @@ public class FindAtrip extends AppCompatActivity  {
     //Init the recycler view.
 
     /**
-     * Method for initializing the recycler view when there is items to dispaly.
+     * Method for initializing the recycler view when there is items to display.
+     * Calls on {@link #checkChange()} for seeing if there is new items
      */
     public void initRecyclerView(){
 
