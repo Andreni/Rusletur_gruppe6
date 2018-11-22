@@ -2,6 +2,10 @@ package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -30,6 +34,8 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpFylkerOgKommunerGitHub;
 import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
@@ -42,6 +48,12 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
+/**
+ * @author Bjørnar P
+ * @author Andreas M
+ * @author Andreas N
+ * @version 1.1
+ */
 public class SaveTripActivity extends AppCompatActivity {
 
     //Views
@@ -49,6 +61,7 @@ public class SaveTripActivity extends AppCompatActivity {
     private EditText nameInput;
     private EditText descInput;
     private RadioGroup difficultyRadioGroup;
+    private static final String TAG = "geo";
     private Button saveTripButton;
     private boolean checked;
     private String nameinput;
@@ -66,6 +79,12 @@ public class SaveTripActivity extends AppCompatActivity {
 
 
     private ArrayList<LatLng> savedCoordinates = new ArrayList<>();
+    private Geocoder geocoder;
+    private Location currentLocation;
+    private boolean foundLocation;
+    private TextView countyText;
+    private TextView municipalityText;
+    private int counter = 0;
 
     //Setup Spinner
     //private HttpURLConnection conn = null;
@@ -83,13 +102,35 @@ public class SaveTripActivity extends AppCompatActivity {
         checkPermissions();
 
         //Setup views
-        //countySpinner = findViewById(R.id.savetrip_selectCounty);
+        countySpinner = findViewById(R.id.savetrip_selectCounty);
         municipalitySpinner = findViewById(R.id.savetrip_selectMunicipality);
         nameInput = findViewById(R.id.savetrip_nameOfTripInput);
         descInput = findViewById(R.id.savetrip_descriptionInput);
+        countyText = findViewById(R.id.savetrip_county_textview);
+        municipalityText = findViewById(R.id.savetrip_municipality_textview);
 
         savedCoordinates = getIntent().getParcelableArrayListExtra("coordsArray");
         String senderActivity = getIntent().getStringExtra("sender");
+
+        //GeoLocation
+        try {
+            LocationHandler.forceUpdateOfCurrentLocation(this);
+            Log.i(TAG, "ForceUpdate klikka ikkje");
+        }
+        catch (Error e){
+            e.printStackTrace();
+        }
+        if(LocationHandler.getCurrentLocation() != null) {
+            Log.i(TAG, "getCurrentLocation va ikkje null");
+            reverseGeocoding();
+        }
+        else {
+            Log.i(TAG, "getCurrentLocation va null");
+            Toast.makeText(this, "Greide ikke finne din lokasjon. Vennligst fyll inn selv", Toast.LENGTH_LONG).show();
+            foundLocation = false;
+            loadList();
+        }
+
 
         //If the sender of the intent is LocalStorageTrips, we need to fill in time:
         if(senderActivity.equals("LocalStorageTrips")){
@@ -177,8 +218,10 @@ public class SaveTripActivity extends AppCompatActivity {
 
                     nameinput = nameInput.getText().toString();
                     description = descInput.getText().toString();
-                    municipality = municipalitySpinner.getSelectedItem().toString();
-                    county = countySpinner.getSelectedItem().toString();
+                    if(!foundLocation) {
+                        municipality = municipalitySpinner.getSelectedItem().toString();
+                        county = countySpinner.getSelectedItem().toString();
+                    }
                 if(validInput) {
                     new AlertDialog.Builder(SaveTripActivity.this)
                             .setIcon(android.R.drawable.ic_dialog_alert)
@@ -213,8 +256,6 @@ public class SaveTripActivity extends AppCompatActivity {
             }
         });
 
-        loadList();
-
     }
 
     private boolean checkPermissions(){
@@ -228,6 +269,57 @@ public class SaveTripActivity extends AppCompatActivity {
         }
 
         return isPermissionsGranted;
+    }
+
+    public void reverseGeocoding(){
+        Toast.makeText(this, "Found location", Toast.LENGTH_SHORT).show();
+
+        geocoder = new Geocoder(this, Locale.getDefault());
+        currentLocation = LocationHandler.getCurrentLocation();
+        double lat = currentLocation.getLatitude();
+        double lon = currentLocation.getLongitude();
+        try {
+            Log.i(TAG, "reversegeocoding - try catch");
+            List<Address> listAdresses = geocoder.getFromLocation(lat, lon, 1);
+            if (listAdresses != null && listAdresses.size() > 0) {
+                Log.i(TAG, "Listadresses contains items.");
+                municipality = listAdresses.get(0).getLocality();
+                county = listAdresses.get(0).getAdminArea();
+
+                if(municipality != null && county != null){
+                    Log.i(TAG, "municipality & county returned not null");
+                    Log.i(TAG, municipality + " ligger i " + county);
+                    municipalitySpinner.setVisibility(View.INVISIBLE);
+                    countySpinner.setVisibility(View.INVISIBLE);
+                    municipalityText.setVisibility(View.INVISIBLE);
+                    countyText.setVisibility(View.INVISIBLE);
+                    valgtKommune = true;
+                    foundLocation = true;
+
+                }
+                else {
+                    if(counter <= 2){
+                        //Let geolocation run three times before giving up
+                        Log.i(TAG, "Ran " + String.valueOf(counter) + "times");
+                        counter++;
+                        reverseGeocoding();
+                    }
+                    else {
+                        //If geolocation fails, show the spinners instead.
+                        Log.i(TAG, "municipality & county returned null");
+                        Toast.makeText(this, "Greide ikke finne din lokasjon. Vennligst fyll inn selv", Toast.LENGTH_LONG).show();
+                        foundLocation = false;
+                        loadList();
+                    }
+                }
+
+
+            } else {
+                Log.i(TAG, "Listadresses ga null eller va mindre enn 0");
+            }
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 
 
@@ -265,7 +357,6 @@ public class SaveTripActivity extends AppCompatActivity {
         Log.d(TAG, "setupFylkeSpinner: setupSpinner2: Started setup method");
         tmpFylker.clear();
         tmpKommuner.clear();
-        countySpinner = findViewById(R.id.savetrip_selectCounty);
         tmpFylker.add("Valg:");
         for(int i = 0; i < LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.size(); i++){
             tmpFylker.add(LookUpFylkerOgKommunerGitHub.fylkerOgKommuner.get(i).get(0));

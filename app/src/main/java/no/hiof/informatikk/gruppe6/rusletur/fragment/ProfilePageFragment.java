@@ -18,6 +18,9 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
+/**
+ * @author Bjørnar P.
+ */
 public class ProfilePageFragment extends Fragment {
 
     private FirebaseUser mUser;

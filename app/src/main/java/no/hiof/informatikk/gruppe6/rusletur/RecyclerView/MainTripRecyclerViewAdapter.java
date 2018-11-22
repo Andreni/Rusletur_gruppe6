@@ -25,6 +25,11 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 import pub.devrel.easypermissions.EasyPermissions;
 
+/**
+ * @author Andreas M.
+ * @author Andreas N.
+ * @version 1.1
+ */
 public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRecyclerViewAdapter.ViewHolder>{
 
     private ArrayList<Trip> mItem;

@@ -16,6 +16,8 @@ import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 /**
+ * @author Andreas N
+ * @version 1.0
  * Local DB for Rusletur
  * Allows only one copy of the database to be available for the user
  * Used for storing Trip Link{Trip} objects.

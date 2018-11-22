@@ -1,5 +1,8 @@
 package no.hiof.informatikk.gruppe6.rusletur.Spinner;
 
+/**
+ * @author Andreas M.
+ */
 public class SpinnerData {
     private int picture = 0;
     private String name;

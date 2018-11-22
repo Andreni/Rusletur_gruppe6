@@ -14,6 +14,8 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
 /**
+ * @author Andreas N.
+ * @version 1.0
  * Fragment that is loaded when the user logs on the application.
  * From here the user selects one of the presented options
  */
@@ -40,7 +42,7 @@ public class MainScreen_MainMenu extends Fragment {
                     if (UserUtility.checkIfUserHasMobileNetworkEnabled(getActivity())) {
                         startActivity(new Intent(getActivity(), FindAtrip.class));
                     } else {
-                        Toast.makeText(getActivity(), "This won't happen", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Du mangler internett tilkobling", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

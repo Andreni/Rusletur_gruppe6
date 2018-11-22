@@ -18,6 +18,9 @@ import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
+/**
+ * @author Andreas M.
+ */
 public class CustomSpinnerAdapter extends ArrayAdapter<SpinnerData> {
     private Context context;
     private List<SpinnerData> spinnerData;

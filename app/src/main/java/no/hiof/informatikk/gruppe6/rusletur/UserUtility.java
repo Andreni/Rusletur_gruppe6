@@ -18,7 +18,11 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/**
+ * @author Bjørnar P
+ * @author Andreas N
+ * @version 1.0
+ */
 public class UserUtility  {
 
     private static final int REQUEST_FINE_LOCATION = 1;

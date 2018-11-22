@@ -11,6 +11,9 @@ import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
 
+/**
+ * @author Magnus P.
+ */
 public class DirectionsJSONParser {
     private final String TAG = "DirectionsJSONParser";
 

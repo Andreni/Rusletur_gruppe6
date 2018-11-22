@@ -52,7 +52,14 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 import pub.devrel.easypermissions.EasyPermissions;
 
-
+/**
+ *
+ * @author Andreas M.
+ * @author Magnus P.
+ * @author Andreas N.
+ * @author Bjørnar P.
+ * @version 1.2
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;

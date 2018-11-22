@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
 /**
+ * @author Magnus P.
  *                              User.class
  * It is used as an easier way to collaborate the realtime database
  * with information from user and Authentication database.
@@ -38,7 +39,6 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
  *          This will update the email in the auth DB, and the RTDB.
  *
  */
-
 public class User {
 
     private static final String TAG = "User";

@@ -24,7 +24,8 @@ import static java.lang.Double.valueOf;
 import static no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity.TAG;
 
 
-/*
+    /**
+     * @author Bjørnar P.
     * In it's current state, this tracker is mainly for saving and storing trips.
     * All coordinates are sent to <LatLng> array where they will stay until the
     * service is terminated.
@@ -32,8 +33,6 @@ import static no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity.TAG
     * Todo:
     *
      */
-
-
 public class TripTracker extends Service {
 
     private LocationRequest locationRequest;

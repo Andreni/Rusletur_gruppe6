@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur.Model;
 import java.util.ArrayList;
 
 /**
+ * @author Andreas N.
+ * @version 1.0
  * Register object to keep track of existing "Fylke" made from Register.json
  * Stores "Fylke" objects
  * The "FylkeList" is made to keep track of valid ids for an existing "Fylke" and "Kommune"

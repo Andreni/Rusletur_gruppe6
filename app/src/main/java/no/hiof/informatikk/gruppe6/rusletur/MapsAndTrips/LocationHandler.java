@@ -31,11 +31,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/*
-    A class to handle operation like updating current location, force recall of new current location and to get current location.
-    Also shortens code, so that we wont have to write 27 lines of code everytime we need to get current location.
+/**
+ * @author Magnus P.
+ * A class to handle operation like updating current location, force recall of new current location and to get current location.
+ * Also shortens code, so that we wont have to write 27 lines of code everytime we need to get current location.
  */
-
 public class LocationHandler {
     final static String TAG = "LocationHandler";
     private static Location currentLocation;

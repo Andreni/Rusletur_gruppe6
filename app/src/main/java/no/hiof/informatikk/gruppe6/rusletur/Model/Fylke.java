@@ -3,6 +3,8 @@ package no.hiof.informatikk.gruppe6.rusletur.Model;
 import java.util.ArrayList;
 
 /**
+ * @author Andreas N.
+ * @version 1.0
  * "Fylke objects, Contains available "Kommune" objects downloaded from Register.json
  * @see FylkeList
  */
