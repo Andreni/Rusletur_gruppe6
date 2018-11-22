@@ -260,6 +260,10 @@ public class SaveTripActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Checks if the user has granted permissions
+     * @return True or False
+     */
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 
@@ -379,6 +383,10 @@ public class SaveTripActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Method to setup the county spinner.
+     * When finished it will call on the method {@link #setupKommuneSpinner(int)} when user has selected a county
+     */
     private void setupFylkeSpinner(){
         Log.d(TAG, "setupFylkeSpinner: setupSpinner2: Started setup method");
         tmpFylker.clear();
@@ -414,6 +422,11 @@ public class SaveTripActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method for setting up the municipality spinner.
+     * Retrieving only the municipalities that is in the current selected county.
+     * @param position What position the county is in. This corresponds with the index from array
+     */
     private void setupKommuneSpinner(int position){
         //Loading kommune from array
         tmpKommuner.clear();
@@ -443,7 +456,11 @@ public class SaveTripActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Method for loading the file from github that contains the counties and their municipalities.
+     * Uses {@link LookUpFylkerOgKommunerGitHub}
+     * Calls on {@link #checkFinished()} after the thread has started
+     */
     private void loadList(){
         new Thread(new Runnable() {
             @Override
@@ -455,6 +472,11 @@ public class SaveTripActivity extends AppCompatActivity {
         checkFinished();
     }
 
+    /**
+     * Makes a new handler with the postDelayed method.
+     * Assings a new Runnable that cheks if the {@link #loadList()} thread is finished.
+     * Has a interval of 1 seconds (1000 milliseconds), adn if the thread isn't finished the method calls itself
+     */
     private void checkFinished(){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
