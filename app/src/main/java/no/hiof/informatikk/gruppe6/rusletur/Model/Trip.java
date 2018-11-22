@@ -17,7 +17,9 @@ import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
 
 /**
- * A trip object
+ * Trip is a class that produces trip objects which contains all necessary variables used to
+ * show the trip in maps. Distinguish each trip form each other and to store difference kind of
+ * meta infromation, like coordinates and id.
  * @author Magnus P.
  * @author Andreas M.
  * @author Andreas N.
@@ -46,9 +48,7 @@ public class Trip implements Parcelable, Comparable<Trip> {
 
 
     /**
-     * Trip is a class that produces trip objects which contains all necessary variables used to
-     * show the trip in maps. Distinguish each trip form each other and to store difference kind of
-     * meta infromation, like coordinates and id.
+     * Trip constructor.
      * @param id the trip ID. If owned by Rusletur, ID then starts with "rusletur_", else random UUID
      * @param navn name of the trip
      * @param tag tag added to the trip

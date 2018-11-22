@@ -24,20 +24,20 @@ import java.util.ArrayList;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
 /**
- * @author Magnus P.
- *                              User.class
- * It is used as an easier way to collaborate the realtime database
+ * This class is used as an easier way to collaborate the realtime database
  * with information from user and Authentication database.
  *
  * Treat User.class as the logged in user, as the user.class will always store
  * its information directly onto the UID branch, and also call from the UID branch.
  *
- *      Example:
- *          Anna want to change her email,
- *          the app should do:
- *              User.setEmail(FirebaserUser, "AnnasNewEmail@Mail.com", "password");
- *          This will update the email in the auth DB, and the RTDB.
+ * Example:
+ * Anna want to change her email, the app should do:
  *
+ * User.setEmail(FirebaserUser, "AnnasNewEmail@Mail.com", "password");
+ *
+ * This will update the email in the auth DB, and the RTDB.
+ *
+ * @author Magnus P.
  */
 public class User {
 
@@ -102,12 +102,14 @@ public class User {
             }
         });
     }
+
+    /**
+     * Add the trip name for the users trip child, as a way to easy show the which trip the user has created
+     * @param tripName
+     */
     public static void addTrip(String tripName) {
         uidRef.child("trip").child(tripName);
     }
 
-    public static DatabaseReference getUidRef() {
-        return uidRef;
-    }
 
 }
