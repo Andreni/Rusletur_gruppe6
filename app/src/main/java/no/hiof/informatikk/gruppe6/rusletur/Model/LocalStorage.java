@@ -16,12 +16,13 @@ import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 /**
- * @author Andreas N
- * @version 1.0
  * Local DB for Rusletur
  * Allows only one copy of the database to be available for the user
  * Used for storing Trip Link{Trip} objects.
+ * @author Andreas N
+ * @version 1.0
  */
+
 public class LocalStorage extends SQLiteOpenHelper {
     private static final String TAG = "LocalStorageSQL";
     private static final String DATABASE_NAME = "Rusletur.db";
@@ -47,10 +48,10 @@ public class LocalStorage extends SQLiteOpenHelper {
         super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
 
-    /*
+
     /**
      * Get a singelton of the created object's helper
-     * @param context content provider contect
+     * @param context content provider context
      * @return SQLite helper object.
      */
    public static LocalStorage getInstance(Context context) {

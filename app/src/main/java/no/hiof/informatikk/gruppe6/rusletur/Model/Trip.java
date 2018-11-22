@@ -17,10 +17,10 @@ import no.hiof.informatikk.gruppe6.rusletur.User.User;
 
 
 /**
- * @author Andreas M.
- * @author Magnus P.
- * @author Andreas N.
  * A trip object
+ * @author Magnus P.
+ * @author Andreas M.
+ * @author Andreas N.
  *
  */
 public class Trip implements Parcelable, Comparable<Trip> {

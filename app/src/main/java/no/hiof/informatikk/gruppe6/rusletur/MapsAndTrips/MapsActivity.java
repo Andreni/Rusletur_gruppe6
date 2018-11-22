@@ -53,7 +53,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- *
+ * Displays the trip that was passed
  * @author Andreas M.
  * @author Magnus P.
  * @author Andreas N.

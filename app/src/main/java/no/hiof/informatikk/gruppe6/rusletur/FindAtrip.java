@@ -31,13 +31,14 @@ import no.hiof.informatikk.gruppe6.rusletur.Spinner.SpinnerData;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * @author Andreas N.
- * @author Andras M.
- * @author Magnus P.
+
  * Class for selection of available trips for the user.
  * Checks first if there are any available trips in Fylkeliste, then checks with LocalStorage and
  * Firebase Database.
  * Takes backs generated objects and populates the spinners with them.
+ * @author Andreas N.
+ * @author Andras M.
+ * @author Magnus P.
  */
 public class FindAtrip extends AppCompatActivity  {
     private Spinner spinnerKommune;

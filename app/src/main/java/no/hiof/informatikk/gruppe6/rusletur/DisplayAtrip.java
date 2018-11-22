@@ -34,6 +34,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @version 1.1
  * Class used for displaying a trip object
  * Takes the trip object that is passed, and displays the data that is stored in it.
+ * Used by {@link FindAtrip} and {@link no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips}
  */
 public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallback {
 

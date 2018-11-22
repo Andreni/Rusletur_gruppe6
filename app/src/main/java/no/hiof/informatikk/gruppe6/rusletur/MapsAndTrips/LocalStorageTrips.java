@@ -32,11 +32,10 @@ import no.hiof.informatikk.gruppe6.rusletur.RecyclerView.MainTripRecyclerViewAda
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
+ * Class for displaying stored Trip objects
+ * When the user either wants to store or load objects, the static methods are called upon
  * @author Andreas N
  * @version 1.1
- * Class for displaying stored Trip objects
- *
- * When the user either wants to store or load objects, the static methods are called upon
  */
 public class LocalStorageTrips extends AppCompatActivity {
     Button btnBack;

@@ -19,12 +19,13 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.IdForTur;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 
 /**
+
+ * Class for looking up available ids for User
+ * Downloads register.json and displays avalible ids in  {@link no.hiof.informatikk.gruppe6.rusletur.FindAtrip}
+ * Should be called upon on a separate thread
  * @author Andreas M.
  * @author Andreas N.
  * @version 1.0
- * Class for looking up available ids for User
- * Downloads register.json and selects ids that are relevant for the user.
- * Should be called upon on a separate thread
  */
 public class LookUpRegisterNasjonalTurbase {
 

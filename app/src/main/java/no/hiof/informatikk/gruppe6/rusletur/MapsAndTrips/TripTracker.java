@@ -25,12 +25,11 @@ import static no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity.TAG
 
 
     /**
-     * @author Bjørnar P.
     * In it's current state, this tracker is mainly for saving and storing trips.
     * All coordinates are sent to <LatLng> array where they will stay until the
     * service is terminated.
+     * @author Bjørnar P.
     *
-    * Todo:
     *
      */
 public class TripTracker extends Service {

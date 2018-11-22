@@ -26,6 +26,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
+ * Adapter for displaying passed trip objects
  * @author Andreas M.
  * @author Andreas N.
  * @version 1.1

@@ -32,9 +32,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
- * @author Andreas N.
- * @author Andreas M.
- * @version 1.0
  * Sends a method call to see if the application has the needed permissions for
  * optimal function.(LOCATION,STORAGE,CAMERA)
  * If these requirements are not granted, the user will not be able to log in.
@@ -42,13 +39,12 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
  * If no user is logged in, this is the first activity the user sees.
  * By checking if a user is logged in via firebase,
  * it is determind if the activity should be launched or not.
+ *  @author Andreas N.
+ *  @author Andreas M.
+ *  @version 1.0
  *
  */
 public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
-
-    //TEST COMMENT
-    //TEST COMMENT
-
     EditText edPass;
     EditText edEmail;
     ConstraintLayout loginPage;
@@ -137,8 +133,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
-
-    //Login user from input values:
+    /**
+     * Attempt to login the user
+     * @param view a button push
+     */
     public void loginUser(View view){
         //TODO Animate login process
         checkPermissions();
@@ -177,8 +175,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     }
 
 
-    
-    //When registration is pushed:
+    /**
+     * Method for switching displays and showing the user a register page
+     * @param view a button push
+     */
     public void registerUser(View view){
         //Hide login page
         if(checkForValidUserInput(2)){

@@ -49,6 +49,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
 /**
+ * Class used for storeing a trip that was recorded.
  * @author Bjørnar P
  * @author Andreas M
  * @author Andreas N
@@ -339,6 +340,14 @@ public class SaveTripActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * When the user does not want to share the trip object, this method is called for storing the Trip locally.
+     * @param tripName Name of trip
+     * @param tripDescription A description of the trip
+     * @param tripDifficulty Difficulty of the trip
+     * @param municipality The "fylke" the trip is in
+     * @param county The "kommune" where the trip is in.
+     */
     public void handleOfflineStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
         //Generate a unique id for the trip:

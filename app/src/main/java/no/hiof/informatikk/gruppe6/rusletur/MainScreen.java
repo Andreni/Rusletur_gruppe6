@@ -36,6 +36,7 @@ import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
+ * Main screen
  * @author Bjørnar P.
  * @author Magnus P.
  * @author Andreas N.

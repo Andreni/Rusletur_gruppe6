@@ -24,19 +24,14 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
 /**
- * @author Andreas M.
- *
- *
- *      getTrips(String fylke, final String kommune, Context context)
- *
- * @return Returns a ArrayList with Trip objects that the user would see.
- *
- *              getTripInfo(ArrayList<String> id)
- *
+
+ * Class used for looking up objects located on Nasjonal Turbase server
  * Takes a ArrayList of id's as argument
  * Creating Trip objects and adding them to an ArrayList.
  * @return Returns ArrayList with trips
- *
+ * @author Andreas M.
+ * @author Andreas N.
+ * @version 1.0
  */
  public class ApiNasjonalturbase {
 

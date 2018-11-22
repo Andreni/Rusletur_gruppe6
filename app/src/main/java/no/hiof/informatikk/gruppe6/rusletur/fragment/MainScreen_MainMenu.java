@@ -14,11 +14,11 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
 /**
+ * Fragment that is loaded when the user logs on the application.
+ * From here the user selects one of the presented options
  * @author Andreas N.
  * @author Bjørnar P.
  * @version 1.1
- * Fragment that is loaded when the user logs on the application.
- * From here the user selects one of the presented options
  */
 public class MainScreen_MainMenu extends Fragment {
 

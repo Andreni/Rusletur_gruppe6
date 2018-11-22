@@ -25,6 +25,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.SaveTripActivity;
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
 /**
+ * comments
  * @author Andreas M.
  */
 public class LookUpFylkerOgKommunerGitHub {

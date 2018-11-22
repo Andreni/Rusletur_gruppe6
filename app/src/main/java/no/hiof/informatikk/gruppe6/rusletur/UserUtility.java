@@ -19,20 +19,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * @author Bjørnar P
- * @author Andreas N
- * @version 1.0
+ * Used for checking if the device has internet and GPS enabled
+ *  @author Bjørnar P
+ *  @author Andreas N
+ *  * @version 1.0
  */
 public class UserUtility  {
 
     private static final int REQUEST_FINE_LOCATION = 1;
     private static final String TAG = "UserUtility" ;
 
-    /*
-    * Activity: checkIfUserHasPermissionsEnabled(Activity.this)
-    * Fragment: checkIfUserHasPermissionsEnabled(getActivity())
-    *
-     */
 
     public static boolean checkIfUserHasPermissionsEnabled(Context context){
         //Check if User has ACCESS_FINE_LOCATION permitted
