@@ -23,7 +23,8 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * comment
+ * This class uses the coordinates recorded by the ongoing background service and uses it to draw polylines in
+ * a google map fragment.
  * @author Bjørnar P
  * @author Andreas N.
  *
