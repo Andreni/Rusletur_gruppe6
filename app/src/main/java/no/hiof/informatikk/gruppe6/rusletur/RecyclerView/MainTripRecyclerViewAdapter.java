@@ -27,6 +27,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * @author Andreas M.
+ * @author Bjørnar P.
  * @author Andreas N.
  * @version 1.1
  */

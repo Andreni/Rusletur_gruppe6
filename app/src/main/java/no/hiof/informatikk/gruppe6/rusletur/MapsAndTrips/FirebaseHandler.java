@@ -23,6 +23,7 @@ import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.getAllUserInfo;
 
 /**
  * @author Magnus P.
+ * @author Bjørnar P.
  * A class used for checking data of the firebasedatabase.
  */
 public class FirebaseHandler {
