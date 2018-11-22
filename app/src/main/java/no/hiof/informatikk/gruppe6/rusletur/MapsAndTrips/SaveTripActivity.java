@@ -49,7 +49,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
 
 /**
- * Class used for storeing a trip that was recorded.
+ * Class created for handling storage of user-made trips. This class receives an intent from background service containing the
+ * length of the trip and an ArrayList with LatLng coordinates, and gets data from user input in SaveTrip's view.
  * @author Bjørnar P
  * @author Andreas M
  * @author Andreas N
@@ -272,6 +273,13 @@ public class SaveTripActivity extends AppCompatActivity {
         return isPermissionsGranted;
     }
 
+    /**
+     * If locationhandler receives a Location, this method uses geocoder to find municipality and county from
+     * users latitude and longitude. Geocoder has proven to be somewhat unreliable, so for good measure this method
+     * is given three attempts to find the relevant municipality and county of user. If both county and municipality
+     * returns something else than null, the spinners containing municipality and county choices are set invisible
+     * and a boolean is set to be ready for storage.
+     */
     public void reverseGeocoding(){
         Toast.makeText(this, "Found location", Toast.LENGTH_SHORT).show();
 
@@ -322,6 +330,15 @@ public class SaveTripActivity extends AppCompatActivity {
             io.printStackTrace();
         }
     }
+
+    /**
+     * Takes all relevant parameters and uploads to both firebase via the static addTrip method, and as a new Trip object for storing locally.
+     * @param tripName name of trip
+     * @param tripDescription description of trip
+     * @param tripDifficulty difficulty of trip
+     * @param municipality municipality of trip
+     * @param county county of trip
+     */
 
 
     public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
