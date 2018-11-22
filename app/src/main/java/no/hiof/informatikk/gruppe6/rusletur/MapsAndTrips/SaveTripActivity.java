@@ -265,6 +265,7 @@ public class SaveTripActivity extends AppCompatActivity {
 
     public void reverseGeocoding(){
         Toast.makeText(this, "Found location", Toast.LENGTH_SHORT).show();
+        int counter = 0;
 
         geocoder = new Geocoder(this, Locale.getDefault());
         currentLocation = LocationHandler.getCurrentLocation();
@@ -290,9 +291,16 @@ public class SaveTripActivity extends AppCompatActivity {
 
                 }
                 else {
-                    Log.i(TAG, "municipality & county returned null");
-                    foundLocation = false;
-                    loadList();
+                    if(counter <= 2){
+                        Log.i(TAG, "Ran " + String.valueOf(counter) + "times");
+                        counter++;
+                        reverseGeocoding();
+                    }
+                    else {
+                        Log.i(TAG, "municipality & county returned null");
+                        foundLocation = false;
+                        loadList();
+                    }
                 }
 
 
