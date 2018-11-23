@@ -76,43 +76,43 @@ public class FirebaseHandler {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Trip.allCustomTrips.clear();
-                /** For each Child in Trip */
+                /* For each Child in Trip */
                 for(DataSnapshot aShot : dataSnapshot.getChildren()) {
-                    /** HashMap that will store the String tripname and a Hashmap with all of the childs. */
+                    /* HashMap that will store the String tripname and a Hashmap with all of the childs. */
                     HashMap<String, HashMap<String, String>> outer = new HashMap<>();
-                    /** For storing the LatLng of current trip */
+                    /* For storing the LatLng of current trip */
                     ArrayList<LatLng> coords = new ArrayList<>();
-                    /** HashMap for every childnode in the DataSnapshot */
+                    /* HashMap for every childnode in the DataSnapshot */
                     HashMap<String, String> inner = new HashMap<>();
                     Log.d(TAG, "Obj: " + aShot.getKey());
-                    /** For each Child of current trip */
+                    /* For each Child of current trip */
                     for(DataSnapshot bShot : aShot.getChildren() ) {
                         Log.d(TAG, "LatLng == " + bShot.getKey());
-                        /** For each child of current child(Tag and LatLng) */
+                        /* For each child of current child(Tag and LatLng) */
                         for(DataSnapshot latLngTag : bShot.getChildren()) {
                             if(bShot.getKey().equals("Tag")) {
                                 continue;
                             }
-                            /** Splits the LatLng... Data[0] == Lat, Data[1] == Lon */
+                            /* Splits the LatLng... Data[0] == Lat, Data[1] == Lon */
                             String[] data = ((String)latLngTag.getValue()).split("¤");
-                            /** Creates a new LatLng and adds it to the coords ArrayList */
+                            /* Creates a new LatLng and adds it to the coords ArrayList */
                             coords.add(new LatLng(Double.parseDouble(data[0]),Double.parseDouble(data[1])));
 
                         }
-                        /** If a Key does not have a value, set value to "Not set..." to prevent nullPointerException. */
+                        /* If a Key does not have a value, set value to "Not set..." to prevent nullPointerException. */
                         if(TextUtils.isEmpty(bShot.getValue().toString())) {
                             inner.put(bShot.getKey(), "Not set...");
                             continue;
                         }
-                        /** Adds the Key and Value to the hashmap */
+                        /* Adds the Key and Value to the hashmap */
                         inner.put(bShot.getKey(), bShot.getValue().toString());
                     }
-                    /** Adds all the childnodes to the outer HashMap */
+                    /* Adds all the childnodes to the outer HashMap */
                     outer.put(aShot.getKey(), inner);
 
-                    /** For current trip */
+                    /* For current trip */
                     for(Map.Entry<String, HashMap<String, String>> i : outer.entrySet()) {
-                        /** Create variables for each parameter to create a trip */
+                        /* Create variables for each parameter to create a trip */
                         Log.d(TAG, "Navn: " + i.getKey());
                         Log.d(TAG,"Id: " + i.getValue().get("Id"));
                         String id = i.getValue().get("Id");
@@ -126,7 +126,7 @@ public class FirebaseHandler {
                         String lisens = i.getValue().get("Lisens");
                         String url = i.getValue().get("URL");
                         String tidsbruk = i.getValue().get("Tidsbruk");
-                        /** Add trip to public static allCustomTrip. */
+                        /* Add trip to public static allCustomTrip. */
                         Trip.allCustomTrips.add(new Trip(id, navn, tag, gradering, tilbyder, fylke, kommune, beskrivelse, lisens, url, coords, tidsbruk));
 
                     }

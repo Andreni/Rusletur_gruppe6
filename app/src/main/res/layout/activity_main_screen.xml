@@ -40,6 +40,7 @@
         android:layout_gravity="start"
         android:id="@+id/navigationView"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_drawer_menu"/>
+        app:menu="@menu/nav_drawer_menu"
+        app:itemBackground="@drawable/drawer_list_selector"/>
 
 </android.support.v4.widget.DrawerLayout>
