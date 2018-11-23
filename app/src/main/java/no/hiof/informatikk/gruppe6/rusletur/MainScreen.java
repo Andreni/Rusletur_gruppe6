@@ -26,7 +26,7 @@ import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurba
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.RecordFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -166,7 +166,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
                     }
                     break;
                 case R.id.nav_trip:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecordFragment()).commit();
                     break;
                 case R.id.nav_logout:
                     FirebaseAuth.getInstance().signOut();

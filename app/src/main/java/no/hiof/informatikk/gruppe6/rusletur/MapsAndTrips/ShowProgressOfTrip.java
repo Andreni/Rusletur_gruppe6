@@ -80,7 +80,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecordFragment()).commit();
 
 
     }

@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.SaveTripActivity;
 
-import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
+import static no.hiof.informatikk.gruppe6.rusletur.fragment.RecordFragment.TAG;
 
 /**
  * comments

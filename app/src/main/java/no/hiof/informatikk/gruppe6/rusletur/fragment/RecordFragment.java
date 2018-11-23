@@ -37,7 +37,7 @@ import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
  * @author Bjørnar P.
  *
  */
-public class MainMenuFragment extends Fragment {
+public class RecordFragment extends Fragment {
 
     String userEmail;
     Button signOut;
@@ -194,7 +194,7 @@ public class MainMenuFragment extends Fragment {
     }
 
     public void showcaseMethodTwo(){
-        Log.d("MainMenuFragment", "Called method OK");
+        Log.d("RecordFragment", "Called method OK");
     }
 
 

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.RecordFragment;
 
 import static java.lang.Double.valueOf;
 import static no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity.TAG;
@@ -139,7 +139,7 @@ public class TripTracker extends Service {
 
         /**
          * When service is terminated, calculate time startRecording was active and if
-         * a boolean was checked in MainMenuFragment, send both calculated time as String
+         * a boolean was checked in RecordFragment, send both calculated time as String
          * and the ArrayList to SaveTripActivity for further handling of storage.
          */
     @Override
@@ -166,14 +166,14 @@ public class TripTracker extends Service {
         String timeSpent = ((day != 0) ? (day + "dager, "):"") + "" + ((hours != 0) ? (hours + " timer, ") : "") + "" + ((minute != 0) ? (minute + " minutter, ") : "0 minutter, ") + "" + ((second != 0) ? (second + " sekunder") : "0 sekunder");
 
         /*
-        * When service is terminated, check if boolean is true in MainMenuFragment.
+        * When service is terminated, check if boolean is true in RecordFragment.
         * If true, send an Intent with the arraylist of LatLng's through a broadCast.
         * This broadcast will be picked up by a broadcastreceiver in MainScreen class.
         * Check MainScreen for further info.
          */
 
 
-        if(MainMenuFragment.saveWasClicked == true) {
+        if(RecordFragment.saveWasClicked == true) {
             Intent startSaveTripIntent = new Intent();
             startSaveTripIntent.setClass(this, SaveTripActivity.class);
             startSaveTripIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

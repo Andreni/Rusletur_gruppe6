@@ -177,7 +177,7 @@ public class SaveTripActivity extends AppCompatActivity {
                      * Check if input is not null.
                      * If everything checks out, send input from name, description and radiogroup to
                      * handleStorageOfTrips in MainScreen, and switch from this fragment back to the
-                     * MainMenuFragment.
+                     * RecordFragment.
                      */
 
                     //Assume the input is valid when the trip is not imported:
