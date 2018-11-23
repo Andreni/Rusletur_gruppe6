@@ -3,10 +3,10 @@ package no.hiof.informatikk.gruppe6.rusletur.Model;
 import java.util.ArrayList;
 
 /**
+ * A kommune object used by {@link no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurbase}
+ * "Kommune" objects, Contains available {@link IdForTur} objects.
  * @author Andreas N
  * @version 1.0
- * "Kommune" objects, Contains available "IdForTur" objects downloaded from Register.json
- * @see Fylke
  */
 public class Kommune {
     ArrayList<IdForTur> idForTurArrayList = new ArrayList<>();

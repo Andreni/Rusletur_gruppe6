@@ -3,26 +3,18 @@ package no.hiof.informatikk.gruppe6.rusletur.ApiCalls;
 import android.content.Context;
 import android.util.Log;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.SaveTripActivity;
 
-import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
+import static no.hiof.informatikk.gruppe6.rusletur.fragment.RecordFragment.TAG;
 
 /**
  * comments
@@ -40,6 +32,11 @@ public class LookUpFylkerOgKommunerGitHub {
         this.currentContext = currentContext;
     }
 
+    /**
+     * Method for retrieving fylkerogkommuner from GitHub.
+     * Uses the URL for the text file that's on GitHub. Static url, won't change.
+     * Uses volley to retriev the text. Uses ":" as seperation character in the csv file
+     */
     public void createObjectsFromFile(){
         mQueue = Volley.newRequestQueue(currentContext);
 

@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,10 +33,11 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
 
 /**
+ * comment
  * @author Bjørnar P.
  *
  */
-public class MainMenuFragment extends Fragment {
+public class RecordFragment extends Fragment {
 
     String userEmail;
     Button signOut;
@@ -194,7 +194,7 @@ public class MainMenuFragment extends Fragment {
     }
 
     public void showcaseMethodTwo(){
-        Log.d("MainMenuFragment", "Called method OK");
+        Log.d("RecordFragment", "Called method OK");
     }
 
 

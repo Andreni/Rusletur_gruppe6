@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -24,16 +23,9 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -43,13 +35,11 @@ import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;
-
 /**
- * Class used for storeing a trip that was recorded.
+ * Class created for handling storage of user-made trips. This class receives an intent from background service containing the
+ * length of the trip and an ArrayList with LatLng coordinates, and gets data from user input in SaveTrip's view.
  * @author Bjørnar P
  * @author Andreas M
  * @author Andreas N
@@ -187,7 +177,7 @@ public class SaveTripActivity extends AppCompatActivity {
                      * Check if input is not null.
                      * If everything checks out, send input from name, description and radiogroup to
                      * handleStorageOfTrips in MainScreen, and switch from this fragment back to the
-                     * MainMenuFragment.
+                     * RecordFragment.
                      */
 
                     //Assume the input is valid when the trip is not imported:
@@ -259,6 +249,10 @@ public class SaveTripActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Checks if the user has granted permissions
+     * @return True or False
+     */
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 
@@ -272,6 +266,13 @@ public class SaveTripActivity extends AppCompatActivity {
         return isPermissionsGranted;
     }
 
+    /**
+     * If locationhandler receives a Location, this method uses geocoder to find municipality and county from
+     * users latitude and longitude. Geocoder has proven to be somewhat unreliable, so for good measure this method
+     * is given three attempts to find the relevant municipality and county of user. If both county and municipality
+     * returns something else than null, the spinners containing municipality and county choices are set invisible
+     * and a boolean is set to be ready for storage.
+     */
     public void reverseGeocoding(){
         Toast.makeText(this, "Found location", Toast.LENGTH_SHORT).show();
 
@@ -323,6 +324,15 @@ public class SaveTripActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Takes all relevant parameters and uploads to both firebase via the static addTrip method, and as a new Trip object for storing locally.
+     * @param tripName name of trip
+     * @param tripDescription description of trip
+     * @param tripDifficulty difficulty of trip
+     * @param municipality municipality of trip
+     * @param county county of trip
+     */
+
 
     public void handleStorageOfTrips(String tripName, String tripDescription, String tripDifficulty, String municipality, String county){
 
@@ -362,6 +372,10 @@ public class SaveTripActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Method to setup the county spinner.
+     * When finished it will call on the method {@link #setupKommuneSpinner(int)} when user has selected a county
+     */
     private void setupFylkeSpinner(){
         Log.d(TAG, "setupFylkeSpinner: setupSpinner2: Started setup method");
         tmpFylker.clear();
@@ -397,6 +411,11 @@ public class SaveTripActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Method for setting up the municipality spinner.
+     * Retrieving only the municipalities that is in the current selected county.
+     * @param position What position the county is in. This corresponds with the index from array
+     */
     private void setupKommuneSpinner(int position){
         //Loading kommune from array
         tmpKommuner.clear();
@@ -426,7 +445,11 @@ public class SaveTripActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     * Method for loading the file from github that contains the counties and their municipalities.
+     * Uses {@link LookUpFylkerOgKommunerGitHub}
+     * Calls on {@link #checkFinished()} after the thread has started
+     */
     private void loadList(){
         new Thread(new Runnable() {
             @Override
@@ -438,6 +461,11 @@ public class SaveTripActivity extends AppCompatActivity {
         checkFinished();
     }
 
+    /**
+     * Makes a new handler with the postDelayed method.
+     * Assings a new Runnable that cheks if the {@link #loadList()} thread is finished.
+     * Has a interval of 1 seconds (1000 milliseconds), adn if the thread isn't finished the method calls itself
+     */
     private void checkFinished(){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

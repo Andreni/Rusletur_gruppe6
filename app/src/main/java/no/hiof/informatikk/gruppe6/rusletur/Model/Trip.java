@@ -2,7 +2,6 @@ package no.hiof.informatikk.gruppe6.rusletur.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseUser;
@@ -230,6 +229,11 @@ public class Trip implements Parcelable, Comparable<Trip> {
         return 0;
     }
 
+    /**
+     * Writes the object as a parcable
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);

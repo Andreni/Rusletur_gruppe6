@@ -13,12 +13,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 /**
  * Local DB for Rusletur
  * Allows only one copy of the database to be available for the user
- * Used for storing Trip Link{Trip} objects.
+ * Used for storing Trip {@link Trip} objects.
  * @author Andreas N
  * @version 1.0
  */

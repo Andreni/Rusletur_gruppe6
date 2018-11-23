@@ -18,35 +18,40 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.DisplayAtrip;
-import no.hiof.informatikk.gruppe6.rusletur.FindAtrip;
-import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Adapter for displaying passed trip objects
  * @author Andreas M.
  * @author Andreas N.
+ * @author Bjørnar P.
  * @version 1.1
  */
 public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRecyclerViewAdapter.ViewHolder>{
 
     private ArrayList<Trip> mItem;
     Context mContext;
-
-
     final String TAG = "RecyclerViewAdapterLogT";
 
+    /**
+     * Constructor for
+     * @param kont The current context from the activity the recycler view is used
+     * @param turer ArrayList with {@link Trip} objects
+     */
     public MainTripRecyclerViewAdapter(Context kont, ArrayList<Trip> turer){
         this.mItem = turer;
         this.mContext = kont;
         Log.d(TAG, "MainTripRecyclerViewAdapter: top " + turer.size());
     }
 
-
+    /**
+     * Method for creating the ViewHolder object
+     * @param viewGroup The viewGroup that contians the views in the xml
+     * @param i Counter that tells what position in the recycler view the item is
+     * @return Returns a ViewHolder object
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i){
@@ -57,8 +62,11 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         return holder;
     }
 
-
-
+    /**
+     * Bind the ViewHolder with the data from the arrayList with {@link Trip} objects
+     * @param holder The ViewHolder object that is created in {@link #onCreateViewHolder(ViewGroup, int)}
+     * @param position What position the item is in the recycler view
+     */
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
@@ -105,13 +113,20 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
 
     }
 
-
+    /**
+     * Method that gets the total amount of items in the ArrayList
+     * @return ArrayList size
+     */
     @Override
     public int getItemCount() {
         Log.d(TAG, "getItemCount: " + mItem.size());
         return mItem.size();
     }
 
+    /**
+     * Innerclass that defines the ViewHolder.
+     * Needed to create a group of the views from the xml
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
         RelativeLayout parentLayout;
         TextView itemNavn;
@@ -119,6 +134,11 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         TextView itemAvstandKm;
         TextView itemGradering;
         LinearLayout listitemParent;
+
+        /**
+         * Constructor for the ViewHolder
+         * @param itemView A view from the XML
+         */
         public ViewHolder(View itemView){
             super(itemView);
 

@@ -14,7 +14,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 
@@ -24,6 +23,7 @@ import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.getAllUserInfo;
 /**
  * A class used for checking data of the firebasedatabase.
  * @author Magnus P.
+ * @author Bjørnar P.
  */
 public class FirebaseHandler {
 
@@ -65,6 +65,10 @@ public class FirebaseHandler {
             return false;
         }
     }
+
+    /**
+     * Method for downloading the {@link Trip} objects from Firebase
+     */
     public static void downloadAllCustomTrips() {
         DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("trip");
         zonesRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -138,6 +142,11 @@ public class FirebaseHandler {
     }
 
     //Takes UID from User in Auth, checks for corresponding UID in Database and retrieves username, firstname and lastname.
+
+    /**
+     * Retrieving username, firstname and lastname og the user from firebase.
+     * @param userUid The users id from {@link no.hiof.informatikk.gruppe6.rusletur.User.User}
+     */
     public static void getUserInfo(final String userUid){
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("user");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {

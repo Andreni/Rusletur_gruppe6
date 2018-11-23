@@ -23,6 +23,8 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
+ * This class uses the coordinates recorded by the ongoing background service and uses it to draw polylines in
+ * a google map fragment.
  * @author Bjørnar P
  * @author Andreas N.
  *
@@ -60,7 +62,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
         PolylineOptions poly = new PolylineOptions();
         startLocation = new LatLng(receievedList.get(0).latitude, receievedList.get(0).longitude);
 
-        //dRAW POLYLINES.
+        //Draw polylines.
         for(int i=0; i < receievedList.size();i++){
             poly.add(new LatLng(receievedList.get(i).latitude, receievedList.get(i).longitude));
         }
@@ -78,7 +80,7 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+        //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecordFragment()).commit();
 
 
     }

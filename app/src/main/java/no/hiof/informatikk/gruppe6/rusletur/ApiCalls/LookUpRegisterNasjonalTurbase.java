@@ -35,12 +35,19 @@ public class LookUpRegisterNasjonalTurbase {
     String TAG = "JSON";
 
     //Constructor for creating downloader
+
+    /**
+     * Constructor for creating downloader
+     * @param currentContext The current context from the activity the class is called from
+     */
+
     public LookUpRegisterNasjonalTurbase(Context currentContext) {
         this.currentContext = currentContext;
     }
 
-    /*
-
+    /**
+     * Method using Volley to retrieve data from register.json, found on GitHub.
+     * Makes {@link no.hiof.informatikk.gruppe6.rusletur.Model.Trip} objects from the trips that the .json file contains
      */
     public void createObjectsFromRegister() {
         mQueue = Volley.newRequestQueue(currentContext);

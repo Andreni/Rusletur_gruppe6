@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
+import no.hiof.informatikk.gruppe6.rusletur.fragment.RecordFragment;
 
 import static java.lang.Double.valueOf;
 import static no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity.TAG;
@@ -55,6 +55,7 @@ public class TripTracker extends Service {
         Log.i(TAG, "Tracker - onCreate called");
     }
 
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "Tracker - onStartCommmand called");
@@ -64,7 +65,7 @@ public class TripTracker extends Service {
         timeDiff = 0;
 
 
-        testMethod();
+        startRecording();
 
         savedLocations.clear();
 
@@ -73,11 +74,20 @@ public class TripTracker extends Service {
         return START_STICKY;
     }
 
-    private void testMethod() {
+
+        /**
+         *  Initializes a timer, then sets up a LocationRequest defined to ping at an interval of 30s and fastest at 25 sec with the
+         *  highest possible accuracy.
+         *  FusedLocationProvider gives the most accurate results.
+         *  On each LocationCallback (set by the interval above), convert that location into a
+         *  LatLng object, and add that object to an array (savedLocations) which consists
+         *  of LatLng objects. In this format, it's ready to be sent directly to our firebase.
+         */
+    private void startRecording() {
         Log.i(TAG, "Tracker - testMethod called");
 
         /*
-        * Define how often LocationRequest pings. Currently at 10s and fastet at 5, and
+        * Define how often LocationRequest pings. Currently at 30s and fastest at 25, and
         * highest possible accuracy.
          */
 
@@ -89,12 +99,6 @@ public class TripTracker extends Service {
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
-        /*
-        * FusedLocationProvider gives the most accurate results.
-        * On each LocationCallback (set by the interval above), convert that location into a
-        * LatLng object, and add that object to an array (savedLocations) which consists
-        * of LatLng objects. In this format, it's ready to be sent directly to our firebase.
-         */
         int trackingGranted = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         if (trackingGranted == PackageManager.PERMISSION_GRANTED) {
             FusedLocationProviderClient fClient = LocationServices.getFusedLocationProviderClient(this);
@@ -124,12 +128,20 @@ public class TripTracker extends Service {
 
     }
 
+        /**
+         * Method used for allowing ShowProgressOfTrip access to coordinates.
+         * @return ArrayList containing LatLng objects recorded from service.
+         */
     public static ArrayList<LatLng> fetchArray(){
         Log.i(MainScreen.TAG3, "FetchArray blir kalt : " + String.valueOf(savedLocations.size()));
         return savedLocations;
     }
 
-
+        /**
+         * When service is terminated, calculate time startRecording was active and if
+         * a boolean was checked in RecordFragment, send both calculated time as String
+         * and the ArrayList to SaveTripActivity for further handling of storage.
+         */
     @Override
     public void onDestroy() {
         Log.i(TAG, "onDestroy called");
@@ -154,14 +166,14 @@ public class TripTracker extends Service {
         String timeSpent = ((day != 0) ? (day + "dager, "):"") + "" + ((hours != 0) ? (hours + " timer, ") : "") + "" + ((minute != 0) ? (minute + " minutter, ") : "0 minutter, ") + "" + ((second != 0) ? (second + " sekunder") : "0 sekunder");
 
         /*
-        * When service is terminated, check if boolean is true in MainMenuFragment.
+        * When service is terminated, check if boolean is true in RecordFragment.
         * If true, send an Intent with the arraylist of LatLng's through a broadCast.
         * This broadcast will be picked up by a broadcastreceiver in MainScreen class.
         * Check MainScreen for further info.
          */
 
 
-        if(MainMenuFragment.saveWasClicked == true) {
+        if(RecordFragment.saveWasClicked == true) {
             Intent startSaveTripIntent = new Intent();
             startSaveTripIntent.setClass(this, SaveTripActivity.class);
             startSaveTripIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

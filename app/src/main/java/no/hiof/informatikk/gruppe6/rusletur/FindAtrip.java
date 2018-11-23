@@ -9,19 +9,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
-import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
@@ -75,10 +71,9 @@ public class FindAtrip extends AppCompatActivity  {
     }
 
     /**
-     *
      * Checks with Fylkelist to see what objects exists, then check all avalible trips stored
      * locally on the device and on Firebase Database.
-     * Only {@see Fylke} and Kommune that contains Trip objects, will be selectable by the user
+     * Only Fylke and Kommune that contains Trip objects, will be selectable by the user
      */
     public void loadLists() {
         if (FylkeList.getRegisterForFylke().size() > 15) {
@@ -115,6 +110,12 @@ public class FindAtrip extends AppCompatActivity  {
     }
 
     //Initalize the fylke dropdown menu
+
+    /**
+     * Method for setting up the spinner for counties.
+     * When selected a county, you will call the method {@link #setupKommuneSpinner(Integer)}
+     * @param alist List of the counties that there are trips in
+     */
     public void setUpFylkeSpinner(FylkeList alist){
 
         final List<SpinnerData> customList = new ArrayList<>();
@@ -197,6 +198,13 @@ public class FindAtrip extends AppCompatActivity  {
     }
 
     //Load the kommunespinner
+
+    /**
+     * Method for setting up municipality after selecting county.
+     * Since the county is selected, this method wil only retriev the different municipality that is in the current given county.
+     * When chosen municipality, you will run the method {@link #fetchIds()}
+     * @param positonFylke Which position the county is. This corresponds with the index from the arrayList aList
+     */
     public void setupKommuneSpinner(final Integer positonFylke){
         //Load Kommuner from array
         //Setup adapter for loading Kommune objects
@@ -240,7 +248,8 @@ public class FindAtrip extends AppCompatActivity  {
     /**
      * When a valid id (Not 0 and 0 on the Selection spinners) are chosen for Fylke and kommune. Fetch the valid ids
      * stored on the kommune object, and pass them to the recycler view.
-     * Send a call to {@see getC}
+     * Uses {@link ApiNasjonalturbase} and will call {@link #initRecyclerView()} when done
+     * Send a call to {@link ApiNasjonalturbase}
      */
     public void fetchIds() {
 
@@ -276,6 +285,9 @@ public class FindAtrip extends AppCompatActivity  {
         initRecyclerView();
     }
 
+    /**
+     * Method for storing the current selected county and municipality
+     */
     public void getSelectedFylkeAndKommune(){
         selectionNameFylke = FylkeList.getRegisterForFylke()
                 .get(selectionFylke).toString();
@@ -285,6 +297,11 @@ public class FindAtrip extends AppCompatActivity  {
                 .get(selectionKommune + 1).toString();
     }
 
+    /**
+     * Method for retrieving the local stored trips.
+     * This is not retrived via Volley and nasjonalturbase.
+     * @param localStorage An instnce of the local storage for the app
+     */
     public void lookUpRusleTurTrips(LocalStorage localStorage){
         //Check localStorage
         if (localStorage.getTripsByCriteria(selectionNameFylke, selectionNameKommune).size() > 0) {
@@ -309,6 +326,11 @@ public class FindAtrip extends AppCompatActivity  {
 
 
     //Init the recycler view.
+
+    /**
+     * Method for initializing the recycler view when there is items to display.
+     * Calls on {@link #checkChange()} for seeing if there is new items
+     */
     public void initRecyclerView(){
 
         RecyclerView recyclerView = findViewById(R.id.tripsRecyclerView);
@@ -354,6 +376,12 @@ public class FindAtrip extends AppCompatActivity  {
 
 
     //Method for cheking new items in arraylist for recycler view
+
+    /**
+     * Loop for cheking if there is new items in the recycler view.
+     * Uses two handlers and two different runnables.
+     * If thre are any items in the recycler view, the method also removed the progress bar.
+     */
     private void checkChange(){
         //Makes a new handler, it should run in a new thread so the UI dosnæt stop
         final Handler handler2 = new Handler();
@@ -378,6 +406,10 @@ public class FindAtrip extends AppCompatActivity  {
         }, 3000);
     }
 
+    /**
+     * Checks that the user has granted permissions
+     * @return True or false
+     */
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 

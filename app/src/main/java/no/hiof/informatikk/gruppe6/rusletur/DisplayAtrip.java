@@ -29,12 +29,12 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * @author Andreas N.
- * @author Andreas M.
- * @version 1.1
  * Class used for displaying a trip object
  * Takes the trip object that is passed, and displays the data that is stored in it.
  * Used by {@link FindAtrip} and {@link no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips}
+ * @author Andreas N.
+ * @author Andreas M.
+ * @version 1.1
  */
 public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -71,7 +71,8 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
 
     /**
-     * Initializes the view items, and populates them with text.
+     * Method used when the Trip object is viewed from {@link no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocalStorageTrips}
+     * Initializes the view items, and populates them with text. Enables the delete button.
      */
     public void setupItems(Boolean editMode){
         Button btnGoTrip = findViewById(R.id.displayAtrip_goTrip_button);
@@ -131,6 +132,10 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+    /**
+     * Checks if the user has granted the needed permissions
+     * @return
+     */
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 
@@ -174,12 +179,20 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
+    /**
+     * Method for when the back button is pressed
+     * @param view The button as a View
+     */
     public void goBack(View view){
         super.onBackPressed();
     }
 
 
-
+    /**
+     * Method for when the "Gå" button is pressed.
+     * Sends the user to {@link MapsActivity}
+     * @param view The button as a View
+     */
     public void goToMaps(View view){
         if (!UserUtility.checkIfUserHasGPSEnabled(this)){
             Toast.makeText(this, "Du må skru på GPS", Toast.LENGTH_SHORT).show();

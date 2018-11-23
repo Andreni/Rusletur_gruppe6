@@ -53,7 +53,7 @@ public class MainScreen_MainMenu extends Fragment {
             @Override
             public void onClick(View v) {
                 if (UserUtility.checkIfUserHasGPSEnabled(getActivity())) {
-                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainMenuFragment()).commit();
+                    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new RecordFragment()).commit();
                 }else{
                     Toast.makeText(getActivity(),"Du må skru på GPS",Toast.LENGTH_SHORT).show();
                 }
