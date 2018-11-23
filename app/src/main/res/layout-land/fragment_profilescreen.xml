@@ -7,142 +7,138 @@
 
     <RelativeLayout
         android:id="@+id/fragment_profile_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="221dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
         android:background="@color/colorPrimary">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
             android:id="@+id/fragment_profile_userImage"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true">
+
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="80dp"
                 android:layout_margin="5dp"
-                android:src="@drawable/ic_dummyprofilepic"
                 android:adjustViewBounds="true"
-                />
+                android:src="@drawable/ic_dummyprofilepic" />
 
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/fragment_profile_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fragment_profile_userImage"
-            android:id="@+id/fragment_profile_username"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-light"
             android:text="James bond"
-            android:layout_marginTop="10dp"
             android:textColor="#fff"
-            android:textSize="32dp"
-            />
+            android:textSize="32dp" />
+
         <TextView
+            android:id="@+id/fragment_profile_usermail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_below="@+id/fragment_profile_username"
-            android:id="@+id/fragment_profile_usermail"
-            android:fontFamily="sans-serif-light"
-            android:text="007@mi6.gvt"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:textColor="#fff"
+            android:fontFamily="sans-serif-light"
             android:paddingBottom="10dp"
-            android:textSize="16dp"
-            />
+            android:text="007@mi6.gvt"
+            android:textColor="#fff"
+            android:textSize="16dp" />
 
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_below="@+id/fragment_profile_header"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="315dp"
+        android:layout_height="302dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="27dp"
+        android:layout_toEndOf="@+id/fragment_profile_header">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:id="@+id/fragment_profile_firstandlastname"
-                    android:text="Kjell"
                     android:paddingTop="14dp"
-                    />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/fragment_profile_numberOfTrips"
-                    android:textSize="20dp"
-                    android:text="Statistikk"
-                    android:paddingTop="14dp"
-                    />
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
                     android:text="Totalt antall turer"
-                    android:paddingTop="14dp"
-                    />
+                    android:textSize="20dp" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_profile_numberOfTrips"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="14dp"
+                    android:text="Statistikk"
+                    android:textSize="20dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:text="Demo"
                     android:paddingTop="14dp"
-                    />
+                    android:text="Demo"
+                    android:textSize="20dp" />
 
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/fragment_profile_firstandlastname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="14dp"
+                    android:text="Kjell"
+                    android:textSize="20dp" />
 
 
+            </LinearLayout>
 
         </LinearLayout>
-
-
-
-    </RelativeLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

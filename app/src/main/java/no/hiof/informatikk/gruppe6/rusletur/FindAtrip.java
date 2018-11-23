@@ -51,6 +51,7 @@ public class FindAtrip extends AppCompatActivity  {
     private int selectionKommune = 0;
     private String selectionNameKommune = "";
     public static ArrayList<Trip> turer = new ArrayList<>();
+    public static int kommunePosisjon = -1;
     private MainTripRecyclerViewAdapter adapter;
     private int antall = 0;
     private ProgressBar pgsBar;
@@ -209,7 +210,6 @@ public class FindAtrip extends AppCompatActivity  {
                 kommuneData);
         //arrayAdapterKommune.setDropDownViewResource(android.R.layout.simple_list_item_1);
         spinnerKommune.setAdapter(arrayAdapterKommune);
-
         spinnerKommune.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -220,9 +220,9 @@ public class FindAtrip extends AppCompatActivity  {
                         kommuneListLoaded = false;
                         selectionKommune = 0;
                     }else{
+                        kommunePosisjon = position;
                         kommuneListLoaded = true;
                         selectionKommune = position-1;
-                        selectionFylke = positonFylke;
                         pgsBar.setVisibility(View.VISIBLE);
                         //Send the position so we can start a search based on all the valid ids
                         fetchIds();
@@ -305,6 +305,8 @@ public class FindAtrip extends AppCompatActivity  {
             }
         }
     }
+
+
 
     //Init the recycler view.
     public void initRecyclerView(){

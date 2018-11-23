@@ -1,16 +1,11 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
-import android.Manifest;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -23,9 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
-import no.hiof.informatikk.gruppe6.rusletur.User.NewUser;
-import pub.devrel.easypermissions.AfterPermissionGranted;
+import no.hiof.informatikk.gruppe6.rusletur.User.CreateNewUser;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -151,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                 //Send user to second screen
                                 if(checkPermissions()){
                                     if(newUser){
-                                        Intent newUserIntent = new Intent(MainActivity.this, NewUser.class);
+                                        Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
                                         startActivity(newUserIntent);
                                     }
                                     else {

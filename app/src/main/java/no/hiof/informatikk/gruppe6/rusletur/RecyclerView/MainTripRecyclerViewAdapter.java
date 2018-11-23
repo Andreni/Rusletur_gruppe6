@@ -3,6 +3,7 @@ package no.hiof.informatikk.gruppe6.rusletur.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,6 +57,8 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
         return holder;
     }
 
+
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
@@ -101,6 +104,7 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
 
 
     }
+
 
     @Override
     public int getItemCount() {

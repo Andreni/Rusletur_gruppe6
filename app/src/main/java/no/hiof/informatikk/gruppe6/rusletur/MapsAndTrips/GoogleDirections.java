@@ -30,8 +30,8 @@ import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
  *  An object containing the distance, duration and polylines from
  *  users current location to start position of the trip selected.
  *
- *      Tutorial used to create this class:
- *              https://www.journaldev.com/13373/android-google-map-drawing-route-two-points
+ * Tutorial used to create this class:
+ * https://www.journaldev.com/13373/android-google-map-drawing-route-two-points
  * @author Magnus P.
  */
 public class GoogleDirections {

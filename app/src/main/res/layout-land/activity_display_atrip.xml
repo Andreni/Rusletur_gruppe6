@@ -10,52 +10,54 @@
 
     <Button
         android:id="@+id/displayAtrip_goTrip_button"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
         android:onClick="goToMaps"
         android:text="Gå!"
+        android:textColor="#fff"
         android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@+id/displayAtrip_goBack_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/displayAtrip_goBack_button"
-        android:background="@color/colorPrimary"
-        android:textColor="#fff"
-        />
+        app:layout_constraintStart_toEndOf="@+id/displayAtrip_DeleteAtrip_button"
+        app:layout_constraintTop_toTopOf="@+id/displayAtrip_DeleteAtrip_button"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/displayAtrip_goBack_button"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/colorPrimary"
         android:onClick="goBack"
         android:text="Tilbake"
+        android:textColor="#fff"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_goTrip_button"
+        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_DeleteAtrip_button"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/colorPrimary"
-        android:textColor="#fff"
-        />
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
+        app:layout_constraintTop_toTopOf="@+id/displayAtrip_DeleteAtrip_button"
+        app:layout_constraintVertical_bias="1.0" />
 
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="353dp"
-        android:layout_height="214dp"
-        android:layout_marginStart="26dp"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="26dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintStart_toEndOf="@+id/scrollView2"
+        app:layout_constraintTop_toTopOf="parent">
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/mapFrag"
@@ -63,13 +65,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="230dp" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
@@ -80,23 +75,24 @@
 
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="284dp"
+        android:id="@+id/scrollView2"
+        android:layout_width="331dp"
+        android:layout_height="356dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:layout_constraintVertical_bias="0.912">
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="284dp"
+            android:layout_height="match_parent"
             tools:context=".DisplayAtrip"
             tools:layout_editor_absoluteY="25dp">
 
@@ -104,38 +100,65 @@
                 android:id="@+id/displayAtrip_displayProviders_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="Tilbyder"
                 android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/displayAtrip_providerInfo_textView"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/displayAtrip_providerInfo_textView"
                 app:layout_constraintTop_toBottomOf="@+id/displayAtrip_providerInfo_textView" />
+
+            <ScrollView
+                android:id="@+id/scrollView3"
+                android:layout_width="match_parent"
+                android:layout_height="111dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_descriptionInfo_textViw"
+                app:layout_constraintVertical_bias="0.04000002">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/displayAtrip_description_TextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="TextView"
+                        tools:layout_editor_absoluteX="8dp"
+                        tools:layout_editor_absoluteY="131dp" />
+                </LinearLayout>
+            </ScrollView>
 
             <TextView
                 android:id="@+id/displayAtrip_providerInfo_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Tilbyder:"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.487"
+                app:layout_constraintHorizontal_bias="0.908"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/displayAtrip_LisensInfo_textView2" />
+                app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
 
             <TextView
                 android:id="@+id/displayAtrip_displayLisens_textView3"
                 android:layout_width="77dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="Lisens:"
                 android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/displayAtrip_LisensInfo_textView2"
+                app:layout_constraintHorizontal_bias="0.38"
+                app:layout_constraintStart_toStartOf="@+id/displayAtrip_LisensInfo_textView2"
                 app:layout_constraintTop_toBottomOf="@+id/displayAtrip_LisensInfo_textView2" />
 
             <TextView
@@ -143,14 +166,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Lisens:"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.083"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_description_TextView" />
+                app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
 
             <TextView
                 android:id="@+id/displayAtrip_gradeOfTrip_textView"
@@ -165,15 +188,16 @@
 
             <TextView
                 android:id="@+id/displayAtrip_tripName_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="236dp"
+                android:layout_height="26dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:text="TextView"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -181,22 +205,22 @@
                 android:id="@+id/displayAtrip_GraderingInfo_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="Gradering:"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.875"
+                app:layout_constraintBottom_toTopOf="@+id/displayAtrip_descriptionInfo_textViw"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" />
+                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/displayAtrip_urlForTrip_textView"
                 android:layout_width="match_parent"
-                android:layout_height="21dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="56dp"
+                android:layout_marginTop="72dp"
                 android:layout_marginEnd="8dp"
                 android:text="Lenke"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -208,51 +232,37 @@
                 android:id="@+id/displayAtrip_timeLengthInfo_textViw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="96dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="Tidsbruk:"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/displayAtrip_descriptionInfo_textViw"
+                app:layout_constraintStart_toEndOf="@+id/displayAtrip_GraderingInfo_textView"
                 app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView"
-                />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/displayAtrip_trip_TimeLength_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="248dp"
+                android:layout_marginEnd="34dp"
                 android:text="tidsbruk"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/displayAtrip_timeLengthInfo_textViw"
                 app:layout_constraintTop_toBottomOf="@+id/displayAtrip_timeLengthInfo_textViw" />
 
             <TextView
-                android:id="@+id/displayAtrip_description_TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_descriptionInfo_textViw" />
-
-            <TextView
                 android:id="@+id/displayAtrip_descriptionInfo_textViw"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="236dp"
+                android:layout_height="26dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="72dp"
+                android:layout_marginTop="76dp"
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:text="Beskrivelse"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_bias="0.544"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/displayAtrip_tripName_textView" />
 
@@ -261,18 +271,16 @@
 
     <Button
         android:id="@+id/displayAtrip_DeleteAtrip_button"
-        android:layout_width="wrap_content"
+        android:layout_width="75dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:text="Slett"
         android:textSize="15sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.782"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/displayAtrip_goTrip_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/displayAtrip_goBack_button" />
 
 
 </android.support.constraint.ConstraintLayout>
