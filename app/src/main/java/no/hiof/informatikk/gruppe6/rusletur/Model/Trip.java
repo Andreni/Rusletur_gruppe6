@@ -74,7 +74,9 @@ public class Trip implements Parcelable, Comparable<Trip> {
         this.url = url;
         this.coordinates = coordinates;
         this.tidsbruk = tidsbruk;
-        createGoogleDirections();
+        if(coordinates.size() > 1) {
+            createGoogleDirections();
+        }
 
     }
 
