@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
-import no.hiof.informatikk.gruppe6.rusletur.User.NewUser;
+import no.hiof.informatikk.gruppe6.rusletur.User.CreateNewUser;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
