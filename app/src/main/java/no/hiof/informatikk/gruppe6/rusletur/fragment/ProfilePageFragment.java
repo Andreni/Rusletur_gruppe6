@@ -31,6 +31,13 @@ public class ProfilePageFragment extends Fragment {
     private TextView numberOfTrips;
     private LocalStorage localStorage;
 
+    /**
+     * Constructor for the fragments viees
+     * @param inflater The view infaltor
+     * @param container The fragment container as a ViewGroup
+     * @param savedInstanceState A bundle for savedInsatnce
+     * @return The View that is being showed
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

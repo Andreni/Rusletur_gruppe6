@@ -74,9 +74,6 @@ public class GoogleDirections {
         googleDirectionsArrayList.add(this);
     }
 
-    /*****************************************
-     * Settere and gettere for all variables.
-     ****************************************/
     public String getTripName() {
         return tripName;
     }

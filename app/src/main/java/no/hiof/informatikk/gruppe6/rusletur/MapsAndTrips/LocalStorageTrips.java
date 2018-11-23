@@ -68,6 +68,11 @@ public class LocalStorageTrips extends AppCompatActivity {
 
 
     }
+
+    /**
+     * MEthod for checking if the user has granted permissions.
+     * @return True or False
+     */
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 
@@ -81,6 +86,10 @@ public class LocalStorageTrips extends AppCompatActivity {
         return isPermissionsGranted;
     }
 
+    /**
+     * Button for importing a GPX file that the user has on the unit.
+     * @param view The button as a View
+     */
     public void importAtrip(View view){
         Log.d(TAG, "importAtrip: ");
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -144,11 +153,18 @@ public class LocalStorageTrips extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Method for when the back button is pressed
+     * @param view The button as a View
+     */
     public void back(View view){
         onBackPressed();
     }
 
+    /**
+     * Method for when the back button is pressed
+     * @param view The button as a View
+     */
     public void goBack(View view){
         super.onBackPressed();
     }
