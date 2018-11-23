@@ -14,7 +14,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 

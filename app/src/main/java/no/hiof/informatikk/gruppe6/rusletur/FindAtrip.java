@@ -9,19 +9,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.ApiNasjonalturbase;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
-import no.hiof.informatikk.gruppe6.rusletur.Model.Fylke;
 import no.hiof.informatikk.gruppe6.rusletur.Model.FylkeList;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Kommune;
 import no.hiof.informatikk.gruppe6.rusletur.Model.LocalStorage;

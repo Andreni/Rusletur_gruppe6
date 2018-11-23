@@ -1,13 +1,9 @@
 package no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips;
 
 import android.graphics.Color;
-import android.location.Location;
 import android.os.AsyncTask;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;

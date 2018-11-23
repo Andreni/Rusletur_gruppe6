@@ -17,13 +17,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.DisplayAtrip;
-import no.hiof.informatikk.gruppe6.rusletur.FindAtrip;
-import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.MapsActivity;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 import no.hiof.informatikk.gruppe6.rusletur.UserUtility;
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Adapter for displaying passed trip objects

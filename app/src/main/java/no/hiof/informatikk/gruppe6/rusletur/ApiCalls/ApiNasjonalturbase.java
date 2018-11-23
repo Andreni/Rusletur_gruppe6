@@ -18,7 +18,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import no.hiof.informatikk.gruppe6.rusletur.FindAtrip;
-import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.GoogleDirections;
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment.TAG;

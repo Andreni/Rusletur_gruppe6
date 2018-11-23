@@ -2,7 +2,6 @@ package no.hiof.informatikk.gruppe6.rusletur.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseUser;

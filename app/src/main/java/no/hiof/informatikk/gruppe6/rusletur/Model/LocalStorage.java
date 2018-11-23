@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 /**
  * Local DB for Rusletur

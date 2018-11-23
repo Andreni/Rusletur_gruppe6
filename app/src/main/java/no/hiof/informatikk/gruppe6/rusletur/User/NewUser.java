@@ -13,7 +13,6 @@ import com.google.firebase.auth.FirebaseUser;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.R;
-import no.hiof.informatikk.gruppe6.rusletur.fragment.MainMenuFragment;
 
 /**
  * @author Bjørnar P.
