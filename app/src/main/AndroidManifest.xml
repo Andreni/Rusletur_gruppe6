@@ -60,7 +60,7 @@
             android:enabled="true" />
 
         <activity android:name=".MapsAndTrips.LocalStorageTrips" />
-        <activity android:name=".User.NewUser"></activity>
+        <activity android:name=".User.CreateNewUser"></activity>
     </application>
 
 </manifest>

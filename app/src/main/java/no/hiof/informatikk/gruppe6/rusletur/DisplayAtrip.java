@@ -125,7 +125,6 @@ public class DisplayAtrip extends AppCompatActivity implements OnMapReadyCallbac
                 }
             });
 
-            btnGoTrip.setVisibility(View.INVISIBLE);
         }
 
 

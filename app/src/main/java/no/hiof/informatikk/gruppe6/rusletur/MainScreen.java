@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,11 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+        private String loginUsername;
+        private String loginPassword;
+        private String registerUsername;
+        private String registerPassword;
+        private String registerPasswordVerf;
         private FirebaseAuth mAuth;
         public static FirebaseUser mUser;
         private DrawerLayout drawerLayout;
@@ -150,6 +158,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
              * opens a new fragment, which will display the relevant pages of the app once the
              * xml files follow the material design standard
              */
+
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
@@ -185,7 +194,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             return true;
         }
 
-        @Override
+
+    @Override
         public void onBackPressed() {
             /*
              * When the navigation drawer is open, clicking back will close the navigation drawer,
@@ -218,5 +228,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
 
             }
         }
+
+
 
     }

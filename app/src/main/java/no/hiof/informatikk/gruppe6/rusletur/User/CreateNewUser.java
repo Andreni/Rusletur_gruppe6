@@ -17,7 +17,7 @@ import no.hiof.informatikk.gruppe6.rusletur.R;
 /**
  * @author Bjørnar P.
  */
-public class NewUser extends AppCompatActivity {
+public class CreateNewUser extends AppCompatActivity {
 
     private EditText userName;
     private EditText firstName;
@@ -41,8 +41,8 @@ public class NewUser extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 User.setAll(userName.getText().toString(), firstName.getText().toString(), lastName.getText().toString());
-                Toast.makeText(NewUser.this, "Velkommen " + firstName.getText().toString(), Toast.LENGTH_SHORT).show();
-                Intent goToMainIntent = new Intent(NewUser.this, MainScreen.class);
+                Toast.makeText(CreateNewUser.this, "Velkommen " + firstName.getText().toString(), Toast.LENGTH_SHORT).show();
+                Intent goToMainIntent = new Intent(CreateNewUser.this, MainScreen.class);
                 FirebaseHandler.getUserInfo(mUser.getUid()); //why?
                 startActivity(goToMainIntent);
             }

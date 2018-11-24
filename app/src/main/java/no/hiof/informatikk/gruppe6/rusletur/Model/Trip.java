@@ -74,7 +74,9 @@ public class Trip implements Parcelable, Comparable<Trip> {
         this.url = url;
         this.coordinates = coordinates;
         this.tidsbruk = tidsbruk;
-        createGoogleDirections();
+        if(coordinates.size() > 1) {
+            createGoogleDirections();
+        }
 
     }
 
@@ -99,25 +101,26 @@ public class Trip implements Parcelable, Comparable<Trip> {
                                String difficulty, String fylke, String kommune,
                                String beskrivelse, String tag, String lisens,
                                String tidsbruk, String url, String tilbyder) {
+        String id = "rusletur_"+UUID.randomUUID();
         if (user != null) {
-            User.addTrip(tripname);
-            myRef.child("trip").child(tripname).child("Created by").setValue(user.getEmail());
+            User.addTrip(id);
+            myRef.child("trip").child(id).child("Created by").setValue(user.getEmail());
         } else {
-            myRef.child("trip").child(tripname).child("Created by").setValue("Rusletur");
+            myRef.child("trip").child(id).child("Created by").setValue("Rusletur");
         }
-        myRef.child("trip").child(tripname).child("Id").setValue("rusletur_"+UUID.randomUUID());
-        myRef.child("trip").child(tripname).child("Grad").setValue(difficulty);
-        myRef.child("trip").child(tripname).child("Lisens").setValue(lisens);
-        myRef.child("trip").child(tripname).child("Tidsbruk").setValue(tidsbruk);
-        myRef.child("trip").child(tripname).child("URL").setValue(url);
-        myRef.child("trip").child(tripname).child("Tilbyder").setValue(tilbyder);
-        myRef.child("trip").child(tripname).child("Fylke").setValue(fylke);
-        myRef.child("trip").child(tripname).child("Beskrivelse").setValue(beskrivelse);
-        myRef.child("trip").child(tripname).child("Kommune").setValue(kommune);
-        myRef.child("trip").child(tripname).child("Tag").setValue(tag);
+        myRef.child("trip").child(id).child("Id").setValue(id);
+        myRef.child("trip").child(id).child("Grad").setValue(difficulty);
+        myRef.child("trip").child(id).child("Lisens").setValue(lisens);
+        myRef.child("trip").child(id).child("Tidsbruk").setValue(tidsbruk);
+        myRef.child("trip").child(id).child("URL").setValue(url);
+        myRef.child("trip").child(id).child("Tilbyder").setValue(tilbyder);
+        myRef.child("trip").child(id).child("Fylke").setValue(fylke);
+        myRef.child("trip").child(id).child("Beskrivelse").setValue(beskrivelse);
+        myRef.child("trip").child(id).child("Kommune").setValue(kommune);
+        myRef.child("trip").child(id).child("Tag").setValue(tag);
         int count = 0;
         for (LatLng i : coords) {
-            myRef.child("trip").child(tripname).child("LatLng").child(String.valueOf(count)).setValue(i.latitude + "¤" + i.longitude);
+            myRef.child("trip").child(id).child("LatLng").child(String.valueOf(count)).setValue(i.latitude + "¤" + i.longitude);
             count++;
         }
         idCount++;
@@ -127,7 +130,7 @@ public class Trip implements Parcelable, Comparable<Trip> {
     }
 
     /**
-     * Sort by the length from user to trip start location
+     * Sort by the distance from user to trip start location
      */
     @Override
     public int compareTo(Trip o) {
@@ -138,7 +141,7 @@ public class Trip implements Parcelable, Comparable<Trip> {
 
     /**
      * Quick-way to get the start location of the trip
-     * @return the first LatLng of the trip
+     * @return the first LatLng of the trip coordinates
      */
     public LatLng getStartLatLng() {
         return getCoordinates().get(0);
