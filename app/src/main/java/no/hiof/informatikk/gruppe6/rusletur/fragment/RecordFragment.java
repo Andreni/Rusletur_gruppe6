@@ -204,10 +204,18 @@ public class RecordFragment extends Fragment {
 
     }
 
-    public void showcaseMethodTwo(){
-        Log.d("RecordFragment", "Called method OK");
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putLong("savedTime", chronometer.getBase());
+        super.onSaveInstanceState(outState);
     }
 
-
-
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if((savedInstanceState != null) && savedInstanceState.containsKey("savedTime")) {
+            chronometer.setBase(savedInstanceState.getLong("savedTime"));
+            chronometer.start();
+        }
+        super.onViewStateRestored(savedInstanceState);
+    }
 }
