@@ -53,15 +53,6 @@ public class User {
     }
 
     /**
-     * returns the username of user.
-     * @param user username of user.
-     * @return username of user.
-     */
-    public static String getUsername(FirebaseUser user) {
-        return uidRef.child("username").getKey();
-    }
-
-    /**
      * Sets the username for a user in the firebase.
      * @param username users new username
      */
