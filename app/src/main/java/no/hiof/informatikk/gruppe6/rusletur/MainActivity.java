@@ -1,6 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private boolean newUser;
 
+    private SharedPreferences pref;
+
     //Global variable for permission:
 
     private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE = 1;
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         checkPermissions();
         if (checkPermissions()){
             //Check if there is an active session with firebase and user is logged in:
-            if(mUser!=null){
+            if(mUser!=null && pref.getBoolean("newUser", true) == false){
                 startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         }
@@ -182,7 +185,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            
                             newUser = task.getResult().getAdditionalUserInfo().isNewUser();
+
+                            pref.edit().putBoolean("newUser", newUser).apply();
+
+
                             if(task.isSuccessful()){
                                 writeMessageToUser("Du er registrert :)");
                                 registerPage.setVisibility(View.INVISIBLE);
