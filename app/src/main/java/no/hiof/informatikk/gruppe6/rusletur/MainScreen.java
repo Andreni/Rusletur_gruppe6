@@ -44,27 +44,14 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 public class MainScreen extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-        private String loginUsername;
-        private String loginPassword;
-        private String registerUsername;
-        private String registerPassword;
-        private String registerPasswordVerf;
-        private FirebaseAuth mAuth;
+
         public static FirebaseUser mUser;
         private DrawerLayout drawerLayout;
         private String TAG = "MainScreen";
-        private Geocoder geocoder;
-        private String fylke;
-        private String kommune;
-        private Location currentLocation;
-        private Context context;
-        private boolean checkIfNewUser;
         public static String mainscreenUsername;
         public static String mainscreenFirstname;
         public static String mainscreenLastname;
-        public final static String TAG3 = "ArrayDebug";
-        private DatabaseReference db;
-        public final static String TAG2 = "Jesus";
+
         private String[] neededPermissions = { android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE };
 
@@ -78,9 +65,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             //Check user
             mUser = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseHandler.getUserInfo(mUser.getUid());
-            //Retrieving trips from nasjonalturbase.no
-            //ApiNasjonalturbase.jsonFetchTripList(this, 20);
-            Toast.makeText(this,"Gps is turnned on: " + UserUtility.checkIfUserHasGPSEnabled(this),Toast.LENGTH_SHORT).show();
 
             FirebaseHandler.downloadAllCustomTrips();
 
@@ -118,7 +102,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             TextView navHeaderUsername = (TextView) headerView.findViewById(R.id.nav_header_username);
             TextView navHeaderEmail = (TextView) headerView.findViewById(R.id.nav_header_email);
             navHeaderUsername.setText("Velkommen");
-            Log.i(TAG2, "Navigation drawer ser: " + mainscreenUsername);
             navHeaderEmail.setText(mUser.getEmail());
 
             loadFindAtripRegister();
@@ -137,7 +120,6 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
      */
         public static void getAllUserInfo(String username, String firstname, String lastname){
             mainscreenUsername = username;
-            Log.i(TAG2, username);
             mainscreenFirstname = firstname;
             mainscreenLastname = lastname;
         }
