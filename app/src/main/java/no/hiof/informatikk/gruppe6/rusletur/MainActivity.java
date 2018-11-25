@@ -1,11 +1,14 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +18,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
 import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.User.CreateNewUser;
@@ -66,6 +75,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+
+
+
+
         //First lets see if we have the necessary permissions
         checkPermissions();
         if (checkPermissions()){
@@ -85,6 +98,41 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         inputPassword = findViewById(R.id.mainA_registrerPass_editText);
         secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
         registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("user");
+                /** Adds a listener that will loop through all dataChange */
+                zonesRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        /** For each trip in Firebase-Trip */
+                        HashMap<String, String> hm = new HashMap<>();
+                        for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
+                            Log.d("MainActivity","Snapshot: " + zoneSnapshot.getKey());
+                            if(zoneSnapshot.getKey().equals(mUser.getUid())) {
+                                for(DataSnapshot x : zoneSnapshot.getChildren()) {
+                                    hm.put(x.getKey(),x.getValue().toString());
+                                }
+                            }
+
+                        }
+                        if(hm.get("username") == null || hm.get("firstname") == null || hm.get("lastname") == null) {
+                            Log.e("MainAcitivty","DID NOT FOUND USER INFORMATION");
+                            Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
+                            startActivity(newUserIntent);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
 
     }
 
