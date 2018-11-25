@@ -115,8 +115,8 @@ public class FirebaseHandler {
                         /* Create variables for each parameter to create a trip */
                         Log.d(TAG, "Navn: " + i.getKey());
                         Log.d(TAG,"Id: " + i.getValue().get("Id"));
-                        String id = i.getValue().get("Id");
-                        String navn = i.getKey();
+                        String navn = i.getValue().get("Navn");
+                        String id = i.getKey();
                         String gradering = i.getValue().get("Grad");
                         String tag = i.getValue().get("Tag");
                         String tilbyder = i.getValue().get("Tilbyder");

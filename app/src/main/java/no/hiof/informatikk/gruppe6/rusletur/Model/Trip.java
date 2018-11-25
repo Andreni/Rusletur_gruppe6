@@ -108,7 +108,7 @@ public class Trip implements Parcelable, Comparable<Trip> {
         } else {
             myRef.child("trip").child(id).child("Created by").setValue("Rusletur");
         }
-        myRef.child("trip").child(id).child("Id").setValue(id);
+        myRef.child("trip").child(id).child("Navn").setValue(tripname);
         myRef.child("trip").child(id).child("Grad").setValue(difficulty);
         myRef.child("trip").child(id).child("Lisens").setValue(lisens);
         myRef.child("trip").child(id).child("Tidsbruk").setValue(tidsbruk);
