@@ -107,33 +107,17 @@
                 app:layout_constraintStart_toStartOf="@+id/displayAtrip_providerInfo_textView"
                 app:layout_constraintTop_toBottomOf="@+id/displayAtrip_providerInfo_textView" />
 
-            <ScrollView
-                android:id="@+id/scrollView3"
+            <TextView
+                android:id="@+id/displayAtrip_description_TextView"
                 android:layout_width="match_parent"
-                android:layout_height="111dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="TextView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_descriptionInfo_textViw"
-                app:layout_constraintVertical_bias="0.04000002">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/displayAtrip_description_TextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="TextView"
-                        tools:layout_editor_absoluteX="8dp"
-                        tools:layout_editor_absoluteY="131dp" />
-                </LinearLayout>
-            </ScrollView>
+                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_descriptionInfo_textViw" />
 
             <TextView
                 android:id="@+id/displayAtrip_providerInfo_textView"
@@ -147,7 +131,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.908"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_description_TextView" />
 
             <TextView
                 android:id="@+id/displayAtrip_displayLisens_textView3"
@@ -173,7 +157,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.083"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
+                app:layout_constraintTop_toBottomOf="@+id/displayAtrip_description_TextView" />
 
             <TextView
                 android:id="@+id/displayAtrip_gradeOfTrip_textView"
