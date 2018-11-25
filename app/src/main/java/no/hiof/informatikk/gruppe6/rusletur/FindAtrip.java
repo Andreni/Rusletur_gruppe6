@@ -35,6 +35,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * @author Andreas N.
  * @author Andras M.
  * @author Magnus P.
+ * @version 1.1
  */
 public class FindAtrip extends AppCompatActivity  {
     private Spinner spinnerKommune;

@@ -86,9 +86,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
         registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
 
-        //TODO 1.4 Make horizontal layout (Non priority)
-        //Fragment?
-
     }
 
     /**
