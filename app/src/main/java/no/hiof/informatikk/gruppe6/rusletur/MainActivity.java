@@ -67,15 +67,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(getIntent().getExtras() != null){
-
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        if(getIntent().hasExtra("newUser")){
             SharedPreferences.Editor editor = pref.edit();
             editor.putBoolean("newUser", getIntent().getBooleanExtra("newUser",false));
             editor.apply();
         }
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        pref = PreferenceManager.getDefaultSharedPreferences(this);
+
 
 
         //First lets see if we have the necessary permissions
@@ -84,12 +84,11 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
             //Check if there is an active session with firebase and user is logged in:
             if(mUser!=null){
 
-                if(!pref.getBoolean("newUser", false)) {
-                    //Legger ved verdien om det er en ny bruker som intent.putExtra
+                if(pref.getBoolean("newUser", false)==false) {
                     startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
                 }
                 else {
-                    
+
                 }
             }
 
@@ -165,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                             if(task.isSuccessful()){
                                 //Send user to second screen
                                 if(checkPermissions()){
-                                    if(newUser){
+                                    if(pref.getBoolean("newUser",false)==true){
                                         Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
                                         startActivity(newUserIntent);
                                     }

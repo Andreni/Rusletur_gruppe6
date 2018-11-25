@@ -60,6 +60,7 @@ public class CreateNewUser extends AppCompatActivity {
                 User.setAll(userName.getText().toString(), firstName.getText().toString(), lastName.getText().toString());
                 Toast.makeText(CreateNewUser.this, "Velkommen " + firstName.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent goToMainIntent = new Intent(CreateNewUser.this, MainScreen.class);
+                goToMainIntent.putExtra("newUser",false);
                 FirebaseHandler.getUserInfo(mUser.getUid()); //why?
                 startActivity(goToMainIntent);
             }
