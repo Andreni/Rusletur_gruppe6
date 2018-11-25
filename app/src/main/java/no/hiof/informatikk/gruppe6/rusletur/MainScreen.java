@@ -35,9 +35,9 @@ import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * This is the landing page for all users once they're logged in. It's
- * Main screen
- * Default menu when the user is logged in
+ * This is the landing page for all users once they're logged in. This is where all
+ * fragments are displayed in a container. Navigation between fragments are done in
+ * navigation drawer.
  * @author Bjørnar P.
  * @author Magnus P.
  * @author Andreas N.
