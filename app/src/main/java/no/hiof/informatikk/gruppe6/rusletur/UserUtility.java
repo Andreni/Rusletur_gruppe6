@@ -22,6 +22,12 @@ public class UserUtility  {
     private static final String TAG = "UserUtility" ;
 
 
+    /**
+     * Checks if user has access fine location enabled. Takes relevant context for ease of use
+     * @param context this context.
+     * @return true if access_fine_location is enabled, false if not
+     */
+
     public static boolean checkIfUserHasPermissionsEnabled(Context context){
         //Check if User has ACCESS_FINE_LOCATION permitted
         if(ContextCompat.checkSelfPermission(context,android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
@@ -32,9 +38,20 @@ public class UserUtility  {
         }
     }
 
+    /**
+     * Requests permission. Takes relevant activity for ease of use.
+     * @param activity relevant activity.
+     */
+
     public static void requestPermission(Activity activity){
         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_FINE_LOCATION);
     }
+
+    /**
+     * Uses ConnectivityManager and NetworkInfo to check if an active connection is established or in progress.
+     * @param context class context
+     * @return true if connected/connecting, false if not
+     */
 
     public static boolean checkIfUserHasMobileNetworkEnabled(Context context){
         ConnectivityManager cm =
@@ -48,6 +65,11 @@ public class UserUtility  {
         return isConnected;
     }
 
+    /**
+     * Uses LocationManager to check for GPS provider
+     * @param context relevant context for ease of use
+     * @return returns true if gps_provider is enabled
+     */
 
     public static boolean checkIfUserHasGPSEnabled(Context context) {
         LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);

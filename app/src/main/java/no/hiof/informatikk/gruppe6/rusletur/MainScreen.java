@@ -140,6 +140,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             mainscreenLastname = lastname;
         }
 
+    /**
+     * Easy permissions.
+     * @return true or false depending on permission.
+     */
+
     private boolean checkPermissions(){
         boolean isPermissionsGranted = false;
 
@@ -199,6 +204,9 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             return true;
         }
 
+    /**
+     * If drawer is open, closes it first. Then sets fragment as mainscreen_mainmenu.
+     */
 
     @Override
         public void onBackPressed() {

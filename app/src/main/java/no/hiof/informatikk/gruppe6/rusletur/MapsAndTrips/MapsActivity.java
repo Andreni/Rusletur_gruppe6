@@ -175,7 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return isPermissionsGranted;
     }
-    
+
     private boolean firstTimeShowingPath = false;
     public void showPath(View view) {
         if(!firstTimeShowingPath && current != null) {
