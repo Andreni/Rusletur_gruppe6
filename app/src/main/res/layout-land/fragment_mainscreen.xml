@@ -60,8 +60,8 @@
 
         <TextView
             android:id="@+id/fragment_mainscreen_warning"
-            android:layout_width="245dp"
-            android:layout_height="42dp"
+            android:layout_width="269dp"
+            android:layout_height="98dp"
             android:text="@string/record_warning"
             android:textColor="@android:color/white"
             android:visibility="invisible"
@@ -79,7 +79,7 @@
             android:layout_marginEnd="8dp"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="26dp"
+            android:textSize="26sp"
             app:layout_constraintBottom_toTopOf="@+id/fragment_mainscreen_warning"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
