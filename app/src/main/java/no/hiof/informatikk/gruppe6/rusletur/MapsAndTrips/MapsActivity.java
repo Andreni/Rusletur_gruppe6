@@ -175,12 +175,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return isPermissionsGranted;
     }
-
-    private void startTracking(){
-        //Context.startService(new Intent(this, TripTracker.class))
-        startService(new Intent(this, TripTracker.class));
-        Log.i(TAG, "startTracking is called");
-    }
+    
     private boolean firstTimeShowingPath = false;
     public void showPath(View view) {
         if(!firstTimeShowingPath && current != null) {

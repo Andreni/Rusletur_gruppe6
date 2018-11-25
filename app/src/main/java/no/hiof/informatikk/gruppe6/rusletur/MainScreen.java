@@ -35,7 +35,7 @@ import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * Main screen
+ * This is the landing page for all users once they're logged in. It's
  * @author Bjørnar P.
  * @author Magnus P.
  * @author Andreas N.
@@ -127,7 +127,12 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             lookUpRegisterNasjonalTurbase.createObjectsFromRegister();
         }
 
-        //Static method required for getting data from FireBaseHandler
+    /**
+     * Method for retriving user information from FirebaseHandler.
+     * @param username user: username
+     * @param firstname user : given name
+     * @param lastname user: surname
+     */
         public static void getAllUserInfo(String username, String firstname, String lastname){
             mainscreenUsername = username;
             Log.i(TAG2, username);
@@ -148,16 +153,16 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
         return isPermissionsGranted;
     }
 
+    /**
+     *
+     *  Handle clicking for each item on navigation drawer. Each item clicked
+     *  opens a relevant fragment.
+     * @param menuItem Switches fragments.
+     * @return Selected fragment.
+     */
 
-
-        @Override
+    @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-            /*
-             *Handle clicking for each item on navigation drawer. Will change this so each item clicked
-             * opens a new fragment, which will display the relevant pages of the app once the
-             * xml files follow the material design standard
-             */
 
             switch (menuItem.getItemId()) {
                 case R.id.nav_home:
@@ -205,25 +210,7 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
                 drawerLayout.closeDrawer(GravityCompat.START);
             } else {
-                /*new AlertDialog.Builder(this)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Log ut")
-                        .setMessage("Vil du logge ut?:")
-                        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                FirebaseAuth.getInstance().signOut();
-                                startActivity(new Intent(getApplication(),MainActivity.class));
 
-                            }
-                        })
-                        .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-                            }
-                        })
-                        .show();*/
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainScreen_MainMenu()).commit();
 
             }

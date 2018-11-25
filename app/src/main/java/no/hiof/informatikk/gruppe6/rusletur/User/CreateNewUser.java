@@ -15,6 +15,9 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.R;
 
 /**
+ * If a new user is detected in MainActivity, the user will be sent to this screen
+ * where they fill out their credentials. Their username, firstname and lastname
+ * will then be set in firebase using the setAll method found in User.
  * @author Bjørnar P.
  */
 public class CreateNewUser extends AppCompatActivity {
