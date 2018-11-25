@@ -1,6 +1,7 @@
 package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private boolean newUser;
 
+    private SharedPreferences pref;
+
     //Global variable for permission:
 
     private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE = 1;
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         checkPermissions();
         if (checkPermissions()){
             //Check if there is an active session with firebase and user is logged in:
-            if(mUser!=null){
+            if(mUser!=null && !newUser){
                 startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         }
@@ -150,11 +153,14 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                 if(checkPermissions()){
                                     if(newUser){
                                         Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
+                                        newUserIntent.putExtra("newUser", newUser);
                                         startActivity(newUserIntent);
                                     }
                                     else {
                                         Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
+                                        loginIntent.putExtra();
                                         startActivity(loginIntent);
+
                                         newUser = false; //If user returns to login-screen.
                                     }
 
@@ -172,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         }
     }
 
-
     /**
      * Method for switching displays and showing the user a register page
      * @param view a button push
@@ -185,7 +190,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+
                             newUser = task.getResult().getAdditionalUserInfo().isNewUser();
+
+                            pref.edit().putBoolean("newUser", newUser).apply();
+
+
                             if(task.isSuccessful()){
                                 writeMessageToUser("Du er registrert :)");
                                 registerPage.setVisibility(View.INVISIBLE);
@@ -254,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 else {
                     Toast.makeText(this, "Passord matcher ikke", Toast.LENGTH_SHORT).show();
                 }
-            }else{
+            }else {
                 writeMessageToUser("Ugyldig input");
                 return false;
             }

@@ -29,6 +29,7 @@ import no.hiof.informatikk.gruppe6.rusletur.ApiCalls.LookUpRegisterNasjonalTurba
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.LocationHandler;
 
+import no.hiof.informatikk.gruppe6.rusletur.User.CreateNewUser;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.RecordFragment;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.MainScreen_MainMenu;
 import no.hiof.informatikk.gruppe6.rusletur.fragment.ProfilePageFragment;
@@ -75,9 +76,11 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             checkPermissions();
 
 
+
             //Check user
             mUser = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseHandler.getUserInfo(mUser.getUid());
+
             //Retrieving trips from nasjonalturbase.no
             //ApiNasjonalturbase.jsonFetchTripList(this, 20);
             Toast.makeText(this,"Gps is turnned on: " + UserUtility.checkIfUserHasGPSEnabled(this),Toast.LENGTH_SHORT).show();
