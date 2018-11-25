@@ -108,29 +108,34 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 zonesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        int count = 0;
-                        /** For each trip in Firebase-Trip */
-                        HashMap<String, String> hm = new HashMap<>();
-                        for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
-                            Log.d("MainActivity","Snapshot: " + zoneSnapshot.getKey());
-                            if(zoneSnapshot.getKey().equals(mUser.getUid())) {
-                                for(DataSnapshot x : zoneSnapshot.getChildren()) {
-                                    hm.put(x.getKey(),x.getValue().toString());
+                        try {
+                            int count = 0;
+                            /** For each trip in Firebase-Trip */
+                            HashMap<String, String> hm = new HashMap<>();
+                            for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
+                                Log.d("MainActivity", "Snapshot: " + zoneSnapshot.getKey());
+                                if (zoneSnapshot.getKey().equals(mUser.getUid())) {
+                                    for (DataSnapshot x : zoneSnapshot.getChildren()) {
+                                        hm.put(x.getKey(), x.getValue().toString());
+                                    }
                                 }
-                            }
 
-                        }
-                        if(hm.get("username") == null || hm.get("firstname") == null || hm.get("lastname") == null) {
-                            Log.e("MainAcitivty","DID NOT FOUND USER INFORMATION");
-                            if(count == 0) {
-                                Log.d("SendingToIntent","...");
-                                if(sendtToRegistrationPage == false) {
-                                    sendtToRegistrationPage = true;
-                                    Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
-                                    startActivity(newUserIntent);
-                                }
-                                count++;
                             }
+                            if (hm.get("username") == null || hm.get("firstname") == null || hm.get("lastname") == null) {
+                                Log.e("MainAcitivty", "DID NOT FOUND USER INFORMATION");
+                                if (count == 0) {
+                                    Log.d("SendingToIntent", "...");
+                                    if (sendtToRegistrationPage == false) {
+                                        sendtToRegistrationPage = true;
+                                        Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
+                                        startActivity(newUserIntent);
+                                    }
+                                    count++;
+                                }
+                            }
+                        }
+                        catch (NullPointerException e) {
+                            Log.i("MainActivity","User not logged in");
                         }
 
                     }
@@ -245,8 +250,10 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                 registerPage.setVisibility(View.INVISIBLE);
                                 loginPage.setVisibility(View.VISIBLE);
                                 edEmail.setText(inputEmail.getText());
-                                Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
-                                startActivity(loginIntent);
+                                if(sendtToRegistrationPage == true) {
+                                    Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
+                                    startActivity(loginIntent);
+                                }
                             }else{
                                 writeMessageToUser(task.getException().toString());
                             }
