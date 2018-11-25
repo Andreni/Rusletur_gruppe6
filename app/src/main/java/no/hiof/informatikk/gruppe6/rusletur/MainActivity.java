@@ -2,6 +2,7 @@ package no.hiof.informatikk.gruppe6.rusletur;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -52,9 +53,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private boolean newUser;
 
-    private SharedPreferences pref;
-
     //Global variable for permission:
+
+    private SharedPreferences pref;
 
     private static final int MY_PERMISSIONS_ACCESS_LOCATION_AND_STORAGE = 1;
 
@@ -69,15 +70,25 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+
+
         //First lets see if we have the necessary permissions
         checkPermissions();
         if (checkPermissions()){
             //Check if there is an active session with firebase and user is logged in:
-            if(mUser!=null && pref.getBoolean("newUser", true) == false){
+            if(mUser!=null){
 
-                //Legger ved verdien om det er en ny bruker som intent.putExtra
-                startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
+                if(!pref.getBoolean("newUser", false)) {
+                    //Legger ved verdien om det er en ny bruker som intent.putExtra
+                    startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
+                }
+                else {
+                    Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
+                    startActivity(newUserIntent);
+                }
             }
+
         }
 
         //If no user is logged in, show login screen:
@@ -190,7 +201,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                             
                             newUser = task.getResult().getAdditionalUserInfo().isNewUser();
 
-                            pref.edit().putBoolean("newUser", newUser).apply();
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putBoolean("newUser", newUser);
+                            editor.apply();
 
 
                             if(task.isSuccessful()){

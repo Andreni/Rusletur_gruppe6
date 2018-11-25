@@ -60,6 +60,8 @@ public class MainScreen extends AppCompatActivity implements NavigationView.OnNa
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_screen);
             checkPermissions();
+
+
             //sjekker om det ligger en verdi fra intenten som sendte oss til denne skjermen:
             //Finnes det en verdi les denne.
             //(Main activity)
