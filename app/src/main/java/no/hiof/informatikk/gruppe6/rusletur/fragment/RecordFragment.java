@@ -58,6 +58,8 @@ public class RecordFragment extends Fragment {
     private Button stopRecordButton;
     private Button showInMapButton;
 
+    private static boolean isTimerRunning;
+
 
     //Worst practice = best practice.
     public static boolean saveWasClicked = false;
@@ -100,6 +102,13 @@ public class RecordFragment extends Fragment {
         stopRecordButton.setVisibility(View.INVISIBLE);
         showInMapButton.setVisibility(View.INVISIBLE);
 
+        if(isTimerRunning){
+            recordTripButton.setVisibility(View.INVISIBLE);
+            stopRecordButton.setVisibility(View.VISIBLE);
+            showInMapButton.setVisibility(View.VISIBLE);
+        }
+
+
 
 
 
@@ -116,7 +125,7 @@ public class RecordFragment extends Fragment {
 
                     chronometer.setBase(SystemClock.elapsedRealtime());
                     chronometer.start();
-                    timerRunning = true;
+                    isTimerRunning = true;
                 }
                 else {
                     Toast.makeText(getActivity(), "Trenger internett for å starte denne funksjonen", Toast.LENGTH_SHORT).show();
@@ -153,6 +162,7 @@ public class RecordFragment extends Fragment {
                                         recordTripButton.setVisibility(View.VISIBLE);
                                         stopRecordButton.setVisibility(View.INVISIBLE);
                                         showInMapButton.setVisibility(View.INVISIBLE);
+                                        isTimerRunning = false;
                                         
                                     }
                                     else {
@@ -172,6 +182,7 @@ public class RecordFragment extends Fragment {
                                     recordTripButton.setVisibility(View.VISIBLE);
                                     stopRecordButton.setVisibility(View.INVISIBLE);
                                     showInMapButton.setVisibility(View.INVISIBLE);
+                                    isTimerRunning = false;
 
                                     chronometer.stop();
                                 }
