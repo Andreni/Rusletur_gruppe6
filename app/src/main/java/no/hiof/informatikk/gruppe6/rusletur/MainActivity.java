@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(getIntent()!=null){
+        if(getIntent().getExtras() != null){
+
             SharedPreferences.Editor editor = pref.edit();
             editor.putBoolean("newUser", getIntent().getBooleanExtra("newUser",false));
             editor.apply();
@@ -88,8 +89,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
                 }
                 else {
-                    Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
-                    startActivity(newUserIntent);
+                    
                 }
             }
 
