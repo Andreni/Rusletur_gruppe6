@@ -1,15 +1,26 @@
 package no.hiof.informatikk.gruppe6.rusletur.User;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
+import no.hiof.informatikk.gruppe6.rusletur.MainActivity;
 import no.hiof.informatikk.gruppe6.rusletur.MainScreen;
 import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.FirebaseHandler;
 import no.hiof.informatikk.gruppe6.rusletur.R;
@@ -46,10 +57,54 @@ public class CreateNewUser extends AppCompatActivity {
                 User.setAll(userName.getText().toString(), firstName.getText().toString(), lastName.getText().toString());
                 Toast.makeText(CreateNewUser.this, "Velkommen " + firstName.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent goToMainIntent = new Intent(CreateNewUser.this, MainScreen.class);
+                MainActivity.completedRegistrationPage = true;
                 FirebaseHandler.getUserInfo(mUser.getUid()); //why?
                 startActivity(goToMainIntent);
             }
         });
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("CreateNewUser","ON BACK PRESSED!");
+
+
+        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("user");
+        /** Adds a listener that will loop through all dataChange */
+        zonesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    /** For each trip in Firebase-Trip */
+                    HashMap<String, String> hm = new HashMap<>();
+                    for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
+                        Log.d("MainActivity", "Snapshot: " + zoneSnapshot.getKey());
+                        if (zoneSnapshot.getKey().equals(mUser.getUid())) {
+                            for (DataSnapshot x : zoneSnapshot.getChildren()) {
+                                hm.put(x.getKey(), x.getValue().toString());
+                            }
+                        }
+
+                    }
+                    if (hm.get("username") != null || hm.get("firstname") != null || hm.get("lastname") != null) {
+                        Intent newUserIntent = new Intent(CreateNewUser.this, MainActivity.class);
+                        startActivity(newUserIntent);
+                    }
+                }
+                catch (NullPointerException e) {
+                    Log.i("MainActivity","User not logged in");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
     }
