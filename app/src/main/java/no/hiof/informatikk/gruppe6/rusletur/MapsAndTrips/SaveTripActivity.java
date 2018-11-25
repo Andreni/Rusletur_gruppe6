@@ -365,7 +365,7 @@ public class SaveTripActivity extends AppCompatActivity {
         if(getIntent().hasExtra("timeSpent")){
             tripLength = getIntent().getStringExtra("timeSpent");
         }
-        localStorage.addTrip(new Trip(timestamp, tripName, "Normal", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Blank", savedCoordinates, tripLength));
+        localStorage.addTrip(new Trip(timestamp, tripName+"(Lokal)", "Normal", tripDifficulty, "Lokal", county, municipality, tripDescription, "Rusletur","Blank", savedCoordinates, tripLength));
         Toast.makeText(this,"Tur lagret",Toast.LENGTH_SHORT).show();
 
     }
