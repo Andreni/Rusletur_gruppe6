@@ -36,6 +36,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * This is the landing page for all users once they're logged in. It's
+ * Main screen
+ * Default menu when the user is logged in
  * @author Bjørnar P.
  * @author Magnus P.
  * @author Andreas N.

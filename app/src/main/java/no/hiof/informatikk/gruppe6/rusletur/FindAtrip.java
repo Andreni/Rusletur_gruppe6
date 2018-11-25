@@ -298,9 +298,9 @@ public class FindAtrip extends AppCompatActivity  {
     }
 
     /**
-     * Method for retrieving the local stored trips.
+     * Method for retrieving the local stored and Firebase trips.
      * This is not retrived via Volley and nasjonalturbase.
-     * @param localStorage An instnce of the local storage for the app
+     * @param localStorage An instance of the local storage for the app
      */
     public void lookUpRusleTurTrips(LocalStorage localStorage){
         //Check localStorage

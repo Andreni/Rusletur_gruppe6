@@ -17,7 +17,7 @@ import no.hiof.informatikk.gruppe6.rusletur.MapsAndTrips.SaveTripActivity;
 import static no.hiof.informatikk.gruppe6.rusletur.fragment.RecordFragment.TAG;
 
 /**
- * comments
+ * Class used for populating SaveAtrip spinners
  * @author Andreas M.
  */
 public class LookUpFylkerOgKommunerGitHub {

@@ -224,6 +224,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * Parse the trip if the activity is called with an url
+     * Feature currently not implemented for user
      * @param urlToGpx The url where the gpx file is placed
      */
     public void parseGpx(String urlToGpx){

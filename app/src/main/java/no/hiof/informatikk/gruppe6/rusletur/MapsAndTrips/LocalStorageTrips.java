@@ -60,7 +60,7 @@ public class LocalStorageTrips extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         LocalStorage localStorage = LocalStorage.getInstance(this);
 
-
+        //Display the locally stored trips in a recycler view
         mainTripAdapter = new MainTripRecyclerViewAdapter(this, localStorage.getAllTrips());
         recyclerView.setAdapter(mainTripAdapter);
 
@@ -101,6 +101,7 @@ public class LocalStorageTrips extends AppCompatActivity {
         startActivityForResult(intent, READ_REQUEST_CODE);
     }
 
+    //When a file is selected by the user:
     @Override
     public void onActivityResult(int requestCode, int resultCode,
                                  Intent resultData) {
