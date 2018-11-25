@@ -236,12 +236,12 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 if (edPass.getText().toString().length() > 5) {
                     return true;
                 } else {
-                    //TODO Write static variable
+
                     writeMessageToUser("Passordet er for kort.");
                     return false;
                 }
             } else {
-                //TODO Write static variable
+
                 writeMessageToUser("Kontroller hva du har skrevet inn");
                 return false;
             }
@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
      * @param messageToUser The message
      */
     private void writeMessageToUser(String messageToUser){
-        Toast.makeText(this,messageToUser.toString(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,messageToUser,Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -19,7 +19,7 @@ import android.support.v4.content.ContextCompat;
 public class UserUtility  {
 
     private static final String TAG = "UserUtility" ;
-    
+
     /**
      * Uses ConnectivityManager and NetworkInfo to check if an active connection is established or in progress.
      * @param context class context
