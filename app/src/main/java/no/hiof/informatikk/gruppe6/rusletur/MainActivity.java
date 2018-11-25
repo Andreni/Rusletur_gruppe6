@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
+    private static boolean sendtToRegistrationPage = false;
 
     private boolean newUser;
 
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 zonesRef.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int count = 0;
                         /** For each trip in Firebase-Trip */
                         HashMap<String, String> hm = new HashMap<>();
                         for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
@@ -120,8 +122,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                         }
                         if(hm.get("username") == null || hm.get("firstname") == null || hm.get("lastname") == null) {
                             Log.e("MainAcitivty","DID NOT FOUND USER INFORMATION");
-                            Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
-                            startActivity(newUserIntent);
+                            if(count == 0) {
+                                Log.d("SendingToIntent","...");
+                                if(sendtToRegistrationPage == false) {
+                                    sendtToRegistrationPage = true;
+                                    Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
+                                    startActivity(newUserIntent);
+                                }
+                                count++;
+                            }
                         }
 
                     }
@@ -236,6 +245,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                 registerPage.setVisibility(View.INVISIBLE);
                                 loginPage.setVisibility(View.VISIBLE);
                                 edEmail.setText(inputEmail.getText());
+                                Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
+                                startActivity(loginIntent);
                             }else{
                                 writeMessageToUser(task.getException().toString());
                             }
