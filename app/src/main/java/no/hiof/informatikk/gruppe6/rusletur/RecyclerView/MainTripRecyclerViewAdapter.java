@@ -94,15 +94,12 @@ public class MainTripRecyclerViewAdapter extends RecyclerView.Adapter<MainTripRe
                     if (!UserUtility.checkIfUserHasGPSEnabled(mContext)) {
                         Toast.makeText(mContext, "Du må skru på GPS", Toast.LENGTH_SHORT).show();
                     } else {
-
-                        Toast.makeText(mContext, mItem.get(position).getNavn() + " clicked", Toast.LENGTH_SHORT).show();
                         // using context and next component class to create intent
                         Intent intent = new Intent(mContext, DisplayAtrip.class);
                         // using putExtra(String key, Parcelable value) method
                         intent.putExtra("object", mItem.get(position));
                         intent.putExtra("sender", mContext.getClass().getSimpleName());
                         // If the sending class is LocalStorage, add the rowId to the intent
-
                         mContext.startActivity(intent);
                     }
                 }
