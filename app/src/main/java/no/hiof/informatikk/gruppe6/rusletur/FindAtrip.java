@@ -63,6 +63,8 @@ public class FindAtrip extends AppCompatActivity  {
         setContentView(R.layout.activity_trips);
         checkPermissions();
 
+        selectionFylke = 0;
+        selectionKommune = 0;
         pgsBar = findViewById(R.id.progressBarForLoadingTrips);
 
         ConstraintLayout parent = findViewById(R.id.findatripparent);
@@ -180,6 +182,7 @@ public class FindAtrip extends AppCompatActivity  {
                     spinnerKommune.setVisibility(View.VISIBLE);
                     spinnerKommune.setSelection(0);
                     setupKommuneSpinner(position);
+                    selectionFylke = position;
                 }
                 else{
                     //When a valid selection is made, pass the positon for the method,
