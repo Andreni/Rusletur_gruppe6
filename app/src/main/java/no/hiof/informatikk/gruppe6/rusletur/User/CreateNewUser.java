@@ -1,6 +1,8 @@
 package no.hiof.informatikk.gruppe6.rusletur.User;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,10 +29,14 @@ public class CreateNewUser extends AppCompatActivity {
     private EditText lastName;
     private FirebaseUser mUser;
 
+    private SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_newuser);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
 
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -43,6 +49,14 @@ public class CreateNewUser extends AppCompatActivity {
         findViewById(R.id.fragment_newuser_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                //Sjekk om pref er true eller false
+
+                //if true -> intent til mainscreen, false -> intent til mainactivity
+
+
+
                 User.setAll(userName.getText().toString(), firstName.getText().toString(), lastName.getText().toString());
                 Toast.makeText(CreateNewUser.this, "Velkommen " + firstName.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent goToMainIntent = new Intent(CreateNewUser.this, MainScreen.class);
