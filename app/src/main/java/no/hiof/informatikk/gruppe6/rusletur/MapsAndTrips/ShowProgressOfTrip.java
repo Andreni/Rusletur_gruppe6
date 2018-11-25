@@ -66,12 +66,12 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
             poly.add(new LatLng(receievedList.get(i).latitude, receievedList.get(i).longitude));
         }
 
-        //Fløtt kamera
-        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(startLocation, 12, 0, 0)));
+        //Move camera
+        gMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(startLocation, 16, 0, 0)));
 
-        //Fargefaen
+        //Colors and width
         poly.color(Color.GREEN);
-        poly.width(10);
+        poly.width(12);
         gMap.addPolyline(poly);
 
     }
