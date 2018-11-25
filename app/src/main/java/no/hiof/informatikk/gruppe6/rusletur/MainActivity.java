@@ -74,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         if (checkPermissions()){
             //Check if there is an active session with firebase and user is logged in:
             if(mUser!=null && pref.getBoolean("newUser", true) == false){
+
+                //Legger ved verdien om det er en ny bruker som intent.putExtra
                 startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         }
