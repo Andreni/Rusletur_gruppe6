@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
     private FirebaseAuth mAuth;
     private FirebaseUser mUser;
     private static boolean sendtToRegistrationPage = false;
+    public static boolean completedRegistrationPage = true;
 
     private boolean newUser;
 
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
         registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
 
-        new Handler().post(new Runnable() {
+         new Handler().post(new Runnable() {
             @Override
             public void run() {
                 DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("user");
@@ -109,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
-                            int count = 0;
                             /** For each trip in Firebase-Trip */
                             HashMap<String, String> hm = new HashMap<>();
                             for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
@@ -122,16 +122,15 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
 
                             }
                             if (hm.get("username") == null || hm.get("firstname") == null || hm.get("lastname") == null) {
-                                Log.e("MainAcitivty", "DID NOT FOUND USER INFORMATION");
-                                if (count == 0) {
+                                if(sendtToRegistrationPage == false || completedRegistrationPage == false) {
+                                    Log.e("MainAcitivty", "DID NOT FOUND USER INFORMATION");
                                     Log.d("SendingToIntent", "...");
-                                    if (sendtToRegistrationPage == false) {
-                                        sendtToRegistrationPage = true;
-                                        Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
-                                        startActivity(newUserIntent);
-                                    }
-                                    count++;
+                                    sendtToRegistrationPage = true;
+                                    completedRegistrationPage = false;
+                                    Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
+                                    startActivity(newUserIntent);
                                 }
+
                             }
                         }
                         catch (NullPointerException e) {
@@ -147,6 +146,8 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 });
             }
         });
+
+
 
     }
 
