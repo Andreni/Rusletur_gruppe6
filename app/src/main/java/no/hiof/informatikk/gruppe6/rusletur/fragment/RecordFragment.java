@@ -213,8 +213,10 @@ public class RecordFragment extends Fragment {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         if((savedInstanceState != null) && savedInstanceState.containsKey("savedTime")) {
-            chronometer.setBase(savedInstanceState.getLong("savedTime"));
-            chronometer.start();
+            if(isTimerRunning) {
+                chronometer.setBase(savedInstanceState.getLong("savedTime"));
+                chronometer.start();
+            }
         }
         super.onViewStateRestored(savedInstanceState);
     }
