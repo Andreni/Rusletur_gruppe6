@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.List;
 
 import no.hiof.informatikk.gruppe6.rusletur.User.CreateNewUser;
+import no.hiof.informatikk.gruppe6.rusletur.User.User;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         checkPermissions();
         if (checkPermissions()){
             //Check if there is an active session with firebase and user is logged in:
-            if(mUser!=null && !newUser){
+            if(mUser!=null && !User.getUsername(mUser).equals("username") && !User.getFirstname(mUser).equals("firstname")){
                 startActivity(new Intent(MainActivity.this, MainScreen.class).addFlags(FLAG_ACTIVITY_NEW_TASK));
             }
         }
@@ -158,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                     }
                                     else {
                                         Intent loginIntent = new Intent(MainActivity.this, MainScreen.class);
-                                        loginIntent.putExtra();
                                         startActivity(loginIntent);
 
                                         newUser = false; //If user returns to login-screen.
@@ -190,12 +190,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-
                             newUser = task.getResult().getAdditionalUserInfo().isNewUser();
-
-                            pref.edit().putBoolean("newUser", newUser).apply();
-
-
                             if(task.isSuccessful()){
                                 writeMessageToUser("Du er registrert :)");
                                 registerPage.setVisibility(View.INVISIBLE);

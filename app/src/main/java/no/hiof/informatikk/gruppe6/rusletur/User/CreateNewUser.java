@@ -3,6 +3,7 @@ package no.hiof.informatikk.gruppe6.rusletur.User;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,8 +33,10 @@ public class CreateNewUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_newuser);
 
-
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        Log.i("NewUser", User.getUsername(mUser));
+        Log.i("NewUser", User.getFirstname(mUser));
 
         userName = findViewById(R.id.fragment_newuser_username);
         firstName = findViewById(R.id.fragment_newuser_firstname);
@@ -46,7 +49,6 @@ public class CreateNewUser extends AppCompatActivity {
                 User.setAll(userName.getText().toString(), firstName.getText().toString(), lastName.getText().toString());
                 Toast.makeText(CreateNewUser.this, "Velkommen " + firstName.getText().toString(), Toast.LENGTH_SHORT).show();
                 Intent goToMainIntent = new Intent(CreateNewUser.this, MainScreen.class);
-                FirebaseHandler.getUserInfo(mUser.getUid()); //why?
                 startActivity(goToMainIntent);
             }
         });
