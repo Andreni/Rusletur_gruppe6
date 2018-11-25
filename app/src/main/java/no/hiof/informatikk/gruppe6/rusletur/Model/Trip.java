@@ -149,55 +149,129 @@ public class Trip implements Parcelable, Comparable<Trip> {
 
 
     /**
-     * Setters and getters for variables
+     * Sets the trips googleDirections
+     * @param googleDirections
      */
     public void setGoogleDirections(GoogleDirections googleDirections) {
         this.googleDirections = googleDirections;
     }
+
+    /**
+     * Sets the trips name
+     * @param name
+     */
     public void setName(String name) {
         this.navn = name;
     }
+
+    /**
+     * Returns the trip googleDirections object.
+     * @return the trips googleDirections object.
+     */
     public GoogleDirections getGoogleDirections() {
         return googleDirections;
     }
 
+    /**
+     * Returns the ID of the trip.
+     * @return ID of trip
+     */
     public String getId() {
         return id;
     }
+
+    /**
+     * Gets the difficulty of trip.
+     * @return gradering
+     */
     public String getGradering() {
         return gradering;
     }
+
+    /**
+     * Returns the author of the trip
+     * @return author of trip
+     */
     public String getTilbyder() {
         return tilbyder;
     }
+
+    /**
+     * Returns the county the trip is set in
+     * @return the county
+     */
     public String getFylke() {
         return fylke;
     }
+
+    /**
+     * Return the municipal the trip is set in
+     * @return the municipal
+     */
     public String getKommune() {
         return kommune;
     }
+
+    /**
+     * Returns the description of the trip
+     * @return description of the trip
+     */
     public String getBeskrivelse() {
         return beskrivelse;
     }
+
+    /**
+     * Returns the name of the trip
+     * @return name of the trip
+     */
     public String getNavn() {
         return navn;
     }
+
+    /**
+     * Returns the distribution license set to the trip.
+     * @return license to trip
+     */
     public String getLisens() {
         return lisens;
     }
+
+    /**
+     * Returns the URL the trip was fetched from.
+     * @return
+     */
     public String getUrl() {
         return url;
     }
+
+    /**
+     * Returns a list containing all the LatLng objects for the trip.
+     * @return arraylist with LatLng
+     */
     public ArrayList<LatLng> getCoordinates() {
         return coordinates;
     }
+
+    /**
+     * Returns the estimated time for completeing the trip.
+     * @return time used to complete trip.
+     */
     public String getTidsbruk(){
         return tidsbruk;
     }
+
+    /**
+     * Returns the tag set to the trip
+     * @return a tag of the trip
+     */
     public String getTag() {
         return tag;
     }
 
+    /**
+     * Returns the descriptions as default toString of object.
+     * @return description of the trip.
+     */
     @Override
     public String toString(){
         return beskrivelse;

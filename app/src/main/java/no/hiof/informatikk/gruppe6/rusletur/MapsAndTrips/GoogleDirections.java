@@ -70,24 +70,58 @@ public class GoogleDirections {
         googleDirectionsArrayList.add(this);
     }
 
+    /**
+     * Returns tripname
+     * @return tripname
+     */
     public String getTripName() {
         return tripName;
     }
+
+    /**
+     * Returns the distance to trip
+     * @return distance to trip
+     */
     public String getDistance() {
         return distance;
     }
+
+    /**
+     * Returns the duration in raw numbers.
+     * @return duration in raw numbers.
+     */
     public int getDurationRaw() {
         return durationRaw;
     }
+
+    /**
+     * Returns the status, if all variables are set.
+     * @return status of object
+     */
     public String getStatus() {
         return status;
     }
+
+    /**
+     * Returns the duration in a more readable numbers. (1 hours 5 minutes)
+     * @return duration in words
+     */
     public String getDuration() {
         return duration;
     }
+
+    /**
+     * Returns the Distance in raw numbers.
+     * @return distance in numbers
+     */
     public int getDistanceRaw() {
         return distanceRaw;
     }
+
+    /**
+     * Returns the polylinesoptions of the route
+     * @return polylines of the route
+     */
     public PolylineOptions getPolylineOptions() {
         if(polylineOptions != null) {
             return polylineOptions;
@@ -97,21 +131,50 @@ public class GoogleDirections {
             return null;
         }
     }
+
+    /**
+     * Sets the durations of the route
+     * @param duration
+     */
     public void setDuration(String duration) {
         this.duration = duration;
     }
+
+    /**
+     * Sets the distance of the route
+     * @param distance
+     */
     public void setDistance(String distance) {
         this.distance = distance;
     }
+
+    /**
+     * Sets the raw distance of the trip.
+     * @param distanceRaw
+     */
     public void setDistanceRaw(int distanceRaw) {
         this.distanceRaw = distanceRaw;
     }
+
+    /**
+     * Sets the raw duration of the trip.
+     * @param durationRaw
+     */
     public void setDurationRaw(int durationRaw) {
         this.durationRaw = durationRaw;
     }
+
+    /**
+     * Adds a googleDirection to a trip.
+     */
     public void addGoogleDirectionsToTrip() {
         trip.setGoogleDirections(this);
     }
+
+    /**
+     * Sets the status of the googleDirection object.
+     * @param currentStatus
+     */
     private void setStatus(String currentStatus) {
         status = currentStatus;
     }

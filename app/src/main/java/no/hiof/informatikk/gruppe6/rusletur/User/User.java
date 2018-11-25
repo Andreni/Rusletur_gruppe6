@@ -39,21 +39,46 @@ public class User {
     private static FirebaseUser mUser = null;
 
     //Method to set all basic information about user. Preferable used in Registration of user.
+
+    /**
+     * Method to set all basic information about user. Preferable used in registration of newusers.
+     * @param username Usernamed selected by user.
+     * @param firstname firstname of user.
+     * @param lastname lastname of user.
+     */
     public static void setAll(String username, String firstname, String lastname) {
         uidRef.child("username").setValue(username);
         uidRef.child("firstname").setValue(firstname);
         uidRef.child("lastname").setValue(lastname);
     }
+
+    /**
+     * returns the username of user.
+     * @param user username of user.
+     * @return username of user.
+     */
     public static String getUsername(FirebaseUser user) {
         return uidRef.child("username").getKey();
     }
 
+    /**
+     * Sets the username for a user in the firebase.
+     * @param username users new username
+     */
     public static void setUsername(String username) {
         uidRef.child("username").setValue(username);
     }
+    /**
+     * Sets the firstname for a user in the firebase.
+     * @param firstname users new firstname
+     */
     public static void setFirstname(String firstname) {
         uidRef.child("firstname").setValue(firstname);
     }
+    /**
+     * Sets the lastname for a user in the firebase.
+     * @param lastname users new lastname
+     */
     public static void setLastname(String lastname) {
         uidRef.child("lastname").setValue(lastname);
     }

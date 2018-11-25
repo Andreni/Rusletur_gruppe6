@@ -12,14 +12,15 @@ import org.json.JSONObject;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
+ * A class to parse the data recieved from Google Directions services.
+ * Code recreated and edited to fit the project from : https://bitbucket.org/snippets/faizan_mubasher_skm/89Edap
  * @author Magnus P.
  */
 public class DirectionsJSONParser {
     private final String TAG = "DirectionsJSONParser";
 
-    /** Receives a JSONObject and returns a list of lists containing latitude and longitude
-     *  Code from: https://bitbucket.org/snippets/faizan_mubasher_skm/89Edap
-     *  Edited to fit project.
+    /**
+     * Receives a JSONObject and returns a list of lists containing latitude and longitude
      * */
     public List<List<HashMap<String,String>>> parse(JSONObject jObject){
 
@@ -36,7 +37,7 @@ public class DirectionsJSONParser {
 
             jRoutes = jObject.getJSONArray("routes");
 
-            /** For each route */
+            /* For each route */
             for(int i=0;i<jRoutes.length();i++){
                 jLegs = ( (JSONObject)jRoutes.get(i)).getJSONArray("legs");
                 List path = new ArrayList<HashMap<String, String>>();
@@ -48,18 +49,18 @@ public class DirectionsJSONParser {
                     durationRaw = ((JSONObject) ((JSONObject) jLegs.get(0)).get("duration")).getInt("value");
                 }
 
-                /** For each legs, get the steps */
+                /* For each legs, get the steps */
                 for(int j=0;j<jLegs.length();j++){
                     jSteps = ( (JSONObject)jLegs.get(j)).getJSONArray("steps");
 
 
-                    /** Foe each steps, gets the list which each contain LatLng */
+                    /* Foe each steps, gets the list which each contain LatLng */
                     for(int k=0;k<jSteps.length();k++){
                         String polyline = "";
                         polyline = (String)((JSONObject)((JSONObject)jSteps.get(k)).get("polyline")).get("points");
                         List<LatLng> list = decodePoly(polyline);
 
-                        /** For each LatLng, add it to hashmap hm. First loop gets the distance and duration */
+                        /* For each LatLng, add it to hashmap hm. First loop gets the distance and duration */
                         for(int l=0;l<list.size();l++){
                             HashMap<String, String> hm = new HashMap<String, String>();
                             hm.put("lat", Double.toString(((LatLng)list.get(l)).latitude) );
