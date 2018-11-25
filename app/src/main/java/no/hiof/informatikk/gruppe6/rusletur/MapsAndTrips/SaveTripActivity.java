@@ -137,7 +137,6 @@ public class SaveTripActivity extends AppCompatActivity {
             isImport=true;
 
         }
-        Log.i(MainScreen.TAG3, "SaveTripActivity mottok Array! : " + String.valueOf(savedCoordinates.size()));
 
         //String with custom time spent on trip. Can be in any format, Day:Hour:Minute:Seconds
         String timeSpent = getIntent().getStringExtra("timeSpent");

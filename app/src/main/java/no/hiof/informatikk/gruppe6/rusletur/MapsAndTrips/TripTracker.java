@@ -113,7 +113,6 @@ public class TripTracker extends Service {
                     LatLng previousLocation = new LatLng(valueOf(locationResult.getLastLocation().getLatitude()), valueOf(locationResult.getLastLocation().getLongitude()));
                     Log.i(TAG, previousLocation.toString());
                     savedLocations.add(previousLocation);
-                    Log.i(MainScreen.TAG3, "TripTracker sin SavedLocations:" + Integer.toString(savedLocations.size()));
                     Log.i(TAG, Integer.toString(savedLocations.size()));
 
 
@@ -133,7 +132,6 @@ public class TripTracker extends Service {
          * @return ArrayList containing LatLng objects recorded from service.
          */
     public static ArrayList<LatLng> fetchArray(){
-        Log.i(MainScreen.TAG3, "FetchArray blir kalt : " + String.valueOf(savedLocations.size()));
         return savedLocations;
     }
 
@@ -178,7 +176,6 @@ public class TripTracker extends Service {
             startSaveTripIntent.setClass(this, SaveTripActivity.class);
             startSaveTripIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startSaveTripIntent.putExtra("coordsArray", savedLocations);
-            Log.i(MainScreen.TAG3, "onDestroy blir kalt : " + String.valueOf(savedLocations.size()));
             Log.d(TAG, "onDestroy: TimeSpent Tidsbruk: " + timeSpent);
             startSaveTripIntent.putExtra("timeSpent", timeSpent);
             startSaveTripIntent.putExtra("sender",this.getClass().getSimpleName());

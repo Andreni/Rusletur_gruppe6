@@ -91,8 +91,6 @@ public class LocalStorage extends SQLiteOpenHelper {
         Log.d(TAG, "addTrip: Adding trip");
         ContentValues values = new ContentValues();
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        Log.i(MainScreen.TAG3, "LocalStorage addTrip " + String.valueOf(aTrip.getCoordinates().size()));
-
         // Compress the LatLng array to a string, so all the values can be stored.
         String[] mValue = new String[aTrip.getCoordinates().size()];
         for (int i = 0; i < aTrip.getCoordinates().size(); i++) {

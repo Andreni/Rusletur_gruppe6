@@ -47,7 +47,6 @@ public class ShowProgressOfTrip extends FragmentActivity implements OnMapReadyCa
         setContentView(R.layout.activity_progressmap);
 
         receievedList = TripTracker.fetchArray();
-        Log.i(MainScreen.TAG3, "ShowProgressOfTrip receieved : " + String.valueOf(receievedList.size()));
 
 
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.progress_map_gmap);

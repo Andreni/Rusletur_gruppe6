@@ -17,7 +17,7 @@ import java.util.Map;
 
 import no.hiof.informatikk.gruppe6.rusletur.Model.Trip;
 
-import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.TAG2;
+
 import static no.hiof.informatikk.gruppe6.rusletur.MainScreen.getAllUserInfo;
 
 /**
@@ -155,9 +155,6 @@ public class FirebaseHandler {
                 String username = (String) dataSnapshot.child(userUid).child("username").getValue();
                 String firstname = (String) dataSnapshot.child(userUid).child("firstname").getValue();
                 String lastname = (String) dataSnapshot.child(userUid).child("lastname").getValue();
-                Log.i(TAG2, "Fra FirebaseHandler: " + username);
-                Log.i(TAG2, "Fra FirebaseHandler: " + firstname);
-                Log.i(TAG2, "Fra FirebaseHandler: " + lastname);
                 getAllUserInfo(username, firstname, lastname);
         }
             @Override
