@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                     return true;
                 }
                 else {
-                    Toast.makeText(this, "Passord matcher ikke", Toast.LENGTH_SHORT).show();
+                    writeMessageToUser("Passord matcher ikke");
                 }
             }else{
                 writeMessageToUser("Ugyldig input");
