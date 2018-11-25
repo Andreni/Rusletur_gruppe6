@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                                     Log.d("SendingToIntent", "...");
                                     sendtToRegistrationPage = true;
                                     completedRegistrationPage = false;
+                                    writeMessageToUser("Du har ikke fullført registreringen");
                                     Intent newUserIntent = new Intent(MainActivity.this, CreateNewUser.class);
                                     startActivity(newUserIntent);
                                 }
