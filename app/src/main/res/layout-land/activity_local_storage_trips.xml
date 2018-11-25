@@ -4,17 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapsAndTrips.LocalStorageTrips">
+    tools:context=".MapsAndTrips.LocalStorageTrips"
+    android:background="@drawable/loginscreen_background">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/local_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="274dp"
+        android:layout_width="415dp"
+        android:layout_height="276dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline4"
+        android:background="@drawable/round_corners"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,32 +28,32 @@
         android:id="@+id/localStorage_goBack_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimary"
         android:onClick="back"
         android:text="Tilbake"
+        android:textColor="#fff"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/localStorageTrips_Import_button"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/colorPrimary"
-        android:textColor="#fff"
-        />
+        app:layout_constraintStart_toStartOf="@+id/local_recyclerview" />
 
     <Button
         android:id="@+id/localStorageTrips_Import_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimary"
         android:onClick="importAtrip"
         android:text="Importer koordinater fra GPX"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/localStorage_goBack_button"
-        android:background="@color/colorPrimary"
         android:textColor="#fff"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/local_recyclerview"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/localStorage_goBack_button" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline4"

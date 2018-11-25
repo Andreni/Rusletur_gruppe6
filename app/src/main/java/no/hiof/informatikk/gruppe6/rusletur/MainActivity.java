@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
         secondInputPassword = findViewById(R.id.mainA_registrerPassConfirm_editText);
         registerPage = findViewById(R.id.mainA_registrerLayout_cLayoutLogin);
 
+        //Checks if user has completed the registration.
          new Handler().post(new Runnable() {
             @Override
             public void run() {
