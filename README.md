@@ -24,6 +24,7 @@ Android GPX Parser by https://github.com/ticofab/android-gpx-parser for importin
 
 
 
+License
 
 Copyright 2018 Andreas981, Andreni, bj0rnar, Magnus Pettersen
 
