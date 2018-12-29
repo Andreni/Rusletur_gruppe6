@@ -5,13 +5,14 @@ Rusletur, en applikasjon som gir deg en liste over turer i Norge. Rusletur gir d
 Developed as a school project for a Android developer class we had during the semester [aug 2018 - nov 2018] at HIOF.
 
 Contributers:
-Andreas981
-Andreni
-bj0rnar
-Magnus Pettersen
+Andreas981 https://github.com/Andreas981
+Andreni https://github.com/Andreni
+bj0rnar https://github.com/bj0rnar
+Magnus Pettersen https://github.com/NorskIT
 
 Thanks:
 Fabio Tiriticco - Fabway for GPX Parser : https://github.com/ticofab/android-gpx-parser
+
 
 
 
